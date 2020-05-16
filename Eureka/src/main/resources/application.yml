@@ -6,7 +6,7 @@ spring:
 server:
   port: 8761
 
-Eureka:
+eureka:
   instance:
     hostname: ${springboot.app.name:eureka-serviceregistry}
     prefer-ip-address: true
