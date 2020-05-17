@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class UserController {
@@ -30,12 +30,21 @@ public class UserController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<?> verifyUser() {
+    public ResponseEntity<?> verifyUser(@RequestBody String bearerToken) {
         try {
-            return new ResponseEntity<>(userService.verifyUser(), HttpStatus.OK);
+            userService.verifyUser(bearerToken);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping
+    public ResponseEntity<?> sayHello() {
+        System.out.println("Haluuu");
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+
 }

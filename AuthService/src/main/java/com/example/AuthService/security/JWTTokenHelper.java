@@ -1,10 +1,12 @@
 package com.example.AuthService.security;
 
+import com.example.AuthService.domain.Role;
 import com.example.AuthService.domain.User;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static com.example.AuthService.security.SecurityConstants.EXPIRE;
@@ -66,9 +68,17 @@ public class JWTTokenHelper {
     public List<String> getRolesFromJWT(String token) {
         try {
             Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
-            String roles = (String)claims.get("role");
-            System.out.println(roles);
-            return new ArrayList<>();
+            List<Role> roles = (List<Role>) claims.get("role", List.class);
+            String username = (String)claims.get("username");
+            System.out.println("Ispisujem jeahagagagagag");
+            System.out.println("ROles size" + roles.size());
+            System.out.println(username);
+
+            for(Role r : roles) {
+                System.out.println(r.getName());
+            }
+
+            return null;
         } catch (Exception e) {
             return null;
         }

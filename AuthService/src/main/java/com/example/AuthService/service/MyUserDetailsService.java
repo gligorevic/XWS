@@ -42,7 +42,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return getGrantedAuthorities(getPrivileges(roles));
     }
 
-    private List<String> getPrivileges(Collection<Role> roles) {
+    public List<String> getPrivileges(Collection<Role> roles) {
 
         List<String> privileges = new ArrayList<>();
         List<Privilege> collection = new ArrayList<>();
