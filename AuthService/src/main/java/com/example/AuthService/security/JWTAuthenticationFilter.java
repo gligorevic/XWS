@@ -35,7 +35,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String jwt = getJWTFromRequest(httpServletRequest);
 
         System.out.println("U filteru sam http");
-
         System.out.println(jwt);
 
         if(StringUtils.hasText(jwt) && jwtTokenHelper.validate(jwt)) {
@@ -47,9 +46,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             if(username != null && privileges != null) {
                 Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
-//                for (String role : roles) {
-//                    authorities.add(new SimpleGrantedAuthority(role));
-//                }
+                for (String privilege : privileges) {
+                    authorities.add(new SimpleGrantedAuthority(privilege));
+                }
 
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));

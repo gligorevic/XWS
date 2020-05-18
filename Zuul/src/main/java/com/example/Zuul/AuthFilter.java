@@ -46,7 +46,7 @@ public class AuthFilter extends ZuulFilter {
         System.out.println("U zuul filteru");
         System.out.println(accessToken);
 
-        ctx.addZuulRequestHeader("Authorization", accessToken);
+        ctx.addZuulRequestHeader("Auth", accessToken);
 
         return null;
     }

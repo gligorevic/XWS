@@ -124,7 +124,16 @@ public class JWTTokenHelper {
 
         Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(jwt).getBody();
 
-        System.out.println(claims.get("privileges").toString());
+        String privilegesString = claims.get("privileges").toString();
+
+        privilegesString = privilegesString.replaceFirst("\\[", "");
+        privilegesString = privilegesString.replace("\\]", "");
+
+        String[] privilegesArr = privilegesString.split(", ");
+
+        for(String privilege : privilegesArr) {
+            privileges.add(privilege);
+        }
 
         return privileges;
     }
