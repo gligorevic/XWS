@@ -34,18 +34,22 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String jwt = getJWTFromRequest(httpServletRequest);
 
+        System.out.println("U filteru sam http");
+
+        System.out.println(jwt);
+
         if(StringUtils.hasText(jwt) && jwtTokenHelper.validate(jwt)) {
             String username = jwtTokenHelper.getUserUsernameFromJWT(jwt);
-            List<String> roles = jwtTokenHelper.getRolesFromJWT(jwt);
+            List<String> privileges = jwtTokenHelper.getPrivilegesFromAccessToken(jwt);
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if(username != null && roles != null) {
+            if(username != null && privileges != null) {
                 Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
-                for (String role : roles) {
-                    authorities.add(new SimpleGrantedAuthority(role));
-                }
+//                for (String role : roles) {
+//                    authorities.add(new SimpleGrantedAuthority(role));
+//                }
 
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));

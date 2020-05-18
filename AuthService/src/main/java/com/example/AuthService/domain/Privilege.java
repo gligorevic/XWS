@@ -1,5 +1,7 @@
 package com.example.AuthService.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -30,4 +32,7 @@ public class Privilege {
         this.name = name;
     }
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "privileges")
+    private Collection<Role> roles;
 }

@@ -5,4 +5,6 @@ public class SecurityConstants {
     public static final String TOKEN_BEARER_PREFIX= "Bearer ";
     public static final String HEADER_BEARER_TOKEN = "Authorization";
     public static final long EXPIRE = 6000_000;
+
+    public static final long ACCESS_TOKEN_EXPIRE = 10000;
 }

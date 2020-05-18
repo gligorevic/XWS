@@ -1,7 +1,9 @@
 package com.example.AuthService.service;
 
+import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.domain.Role;
 import com.example.AuthService.dto.LoginRequestDTO;
+import com.example.AuthService.repository.PrivilegeRepository;
 import com.example.AuthService.repository.RoleRepository;
 import com.example.AuthService.security.JWTTokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +24,23 @@ public class UserService {
     private JWTTokenHelper tokenHelper;
 
     @Autowired
+    private PrivilegeRepository privilegeRepository;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
-    public boolean  verifyUser(String bearerToken) {
-        String jwt = getJWTFromBearerToken(bearerToken);
+    public String verifyUser(String bearerToken) {
+        String jwt = tokenHelper.getJWTFromBearerToken(bearerToken);
 
-        System.out.println(jwt);
         tokenHelper.validate(jwt);
 
-        System.out.println("Iscitavam role");
-        List<String> rolesFromJWT = tokenHelper.getRolesFromJWT(jwt);
+        List<Long> rolesIdFromJWT = tokenHelper.getRolesIdFromJWT(jwt);
 
+        List<Privilege> privileges =  privilegeRepository.findByRolesIn(rolesIdFromJWT);
 
-        return true;
+        String accessToken = tokenHelper.generateAccessToken(privileges, jwt);
+
+        return accessToken;
     }
 
     public String login(LoginRequestDTO loginRequestDTO) {
@@ -51,10 +57,5 @@ public class UserService {
         return jwt;
     }
 
-    private String getJWTFromBearerToken(String bearerToken){
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_BEARER_PREFIX)){
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
+
 }

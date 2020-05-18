@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
 
 @Component
 public class AuthFilter extends ZuulFilter {
@@ -35,16 +36,17 @@ public class AuthFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
 
+        //Dodati logiku da vraca null kad je generisan access token
         if(request.getHeader("Authorization") == null) {
             return null;
         }
 
-        String bearerToken = authClient.verify(request.getHeader("Authorization"));
+        String accessToken = authClient.verify(request.getHeader("Authorization"));
 
-        ctx.addZuulRequestHeader("Authorization", bearerToken);
+        System.out.println("U zuul filteru");
+        System.out.println(accessToken);
 
-        System.out.println(request.getHeader("Authorization"));
-        System.out.println("Unutar filtera");
+        ctx.addZuulRequestHeader("Authorization", accessToken);
 
         return null;
     }
