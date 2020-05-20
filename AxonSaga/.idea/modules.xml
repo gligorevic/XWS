@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AxonSaga.iml" filepath="$PROJECT_DIR$/AxonSaga.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Core-API/Core-API.iml" filepath="$PROJECT_DIR$/Core-API/Core-API.iml" />
+    </modules>
+  </component>
+</project>
