@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.AuthService.security.SecurityConstants.TOKEN_BEARER_PREFIX;
@@ -34,8 +36,13 @@ public class UserService {
 
         tokenHelper.validate(jwt);
 
+        //UBACITI PROVERU DA LI JE USER BLOKIRAN
+
         List<Long> rolesIdFromJWT = tokenHelper.getRolesIdFromJWT(jwt);
 
+        for(Long roleID : rolesIdFromJWT) {
+            System.out.println("ROLE ID " + roleID);
+        }
         List<Privilege> privileges =  privilegeRepository.findByRolesIn(rolesIdFromJWT);
 
         String accessToken = tokenHelper.generateAccessToken(privileges, jwt);

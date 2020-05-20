@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
 
-    @Query(value = "SELECT * FROM PRIVILEGE AS pr LEFT JOIN (SELECT DISTINCT privilege_id FROM ROLES_PRIVILEGES AS rp WHERE rp.role_id IN :roleIds) AS rp1 ON  pr.id = rp1.privilege_id" , nativeQuery=true)
+    @Query(value = "SELECT * FROM PRIVILEGE AS pr INNER JOIN (SELECT DISTINCT privilege_id FROM ROLES_PRIVILEGES AS rp WHERE rp.role_id in ?1) AS rp1 ON  pr.id = rp1.privilege_id" , nativeQuery=true)
     List<Privilege> findByRolesIn(@Param("roleIds") Collection<Long> roleIds);
+
 }
