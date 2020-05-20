@@ -68,8 +68,12 @@ INSERT INTO ROLES_PRIVILEGES (ROLE_ID, PRIVILEGE_ID) VALUES (1, 20);
 INSERT INTO ROLES_PRIVILEGES (ROLE_ID, PRIVILEGE_ID) VALUES (1, 21);
 
 ----DATA----
-INSERT INTO USER_TABLE (first_name, last_name, email, username, password) VALUES ('ENDUSER', 'ENDUSERIC', 'enduser@gmail.com', 'aske', '$2a$10$feiotRqclqYZ7aJnytCDSedhWmzztzhuwyujbVfVucV4nbmMRNnwa');
+INSERT INTO USER_TABLE (first_name, last_name, email, password) VALUES ('Admin', 'Adminic', 'admin@gmail.com', '$2a$10$feiotRqclqYZ7aJnytCDSedhWmzztzhuwyujbVfVucV4nbmMRNnwa');
 
 INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('1', '1');
+
+INSERT INTO USER_TABLE (first_name, last_name, email, password) VALUES ('ENDUSER', 'ENDUSERIC', 'enduser@gmail.com', '$2a$10$feiotRqclqYZ7aJnytCDSedhWmzztzhuwyujbVfVucV4nbmMRNnwa');
+
+INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('2', '2');
 
 

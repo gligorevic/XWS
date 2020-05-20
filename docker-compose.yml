@@ -7,6 +7,12 @@ services:
       - "8761:8761"
     tty: true
 
+  axon-server:
+    image: axoniq/axonserver:4.3.2
+    ports:
+      - 8024:8024
+      - 8124:8124
+
   auth:
     build: ./AuthService
     ports:
@@ -27,3 +33,39 @@ services:
     depends_on:
       - eureka-serviceregistry
       - auth
+
+  car-service:
+    build: ./AxonSaga/CarService
+    ports:
+    - "8082:8082"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - AXON_HOST=axon-server
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - axon-server
+
+  pricelist-service:
+    build: ./AxonSaga/PriceListService
+    ports:
+      - "8085:8085"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - AXON_HOST=axon-server
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - axon-server
+
+  search-service:
+    build: ./AxonSaga/SearchService
+    ports:
+      - "8084:8084"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - AXON_HOST=axon-server
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - axon-server

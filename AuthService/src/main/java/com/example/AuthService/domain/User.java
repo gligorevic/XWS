@@ -18,7 +18,6 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
-    private String username;
 
     @ManyToMany
     @JoinTable(
@@ -29,6 +28,15 @@ public class User implements UserDetails {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_blocked_privileges",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "privilege_id", referencedColumnName = "id"))
+    private Collection<Privilege> blockedPrivileges;
+
     public User() {
     }
 
@@ -38,14 +46,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstName() {
@@ -72,8 +72,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-
-
     public String getPassword() {
         return password;
     }
@@ -88,6 +86,19 @@ public class User implements UserDetails {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public Collection<Privilege> getBlockedPrivileges() {
+        return blockedPrivileges;
+    }
+
+    public void setBlockedPrivileges(Collection<Privilege> blockedPrivileges) {
+        this.blockedPrivileges = blockedPrivileges;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
