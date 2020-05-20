@@ -1,6 +1,8 @@
 package com.example.AuthService.controller;
 
+import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.dto.LoginRequestDTO;
+import com.example.AuthService.dto.PrivilegeChangeDTO;
 import com.example.AuthService.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.List;
 
 import static com.example.AuthService.security.SecurityConstants.TOKEN_BEARER_PREFIX;
 
@@ -43,12 +47,27 @@ public class UserController {
         }
     }
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('MESSAGE_CREATING')")
-    public ResponseEntity<?> sayHello() {
-        System.out.println("Haluuu");
-        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    @PutMapping
+    @PreAuthorize("hasAuthority('ENDUSER_PERMISION_CHANGING')")
+    public ResponseEntity<?> changeUserPrivileges(@RequestBody PrivilegeChangeDTO privilegeChangeDTO) {
+        try {
+            return new ResponseEntity<Boolean>(userService.changeUserPrivileges(privilegeChangeDTO.getPrivilegeList(), privilegeChangeDTO.getEnduserId(), privilegeChangeDTO.isRemove()), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>("Bad request", HttpStatus.BAD_REQUEST);
+        }
     }
 
+    @GetMapping
+    @PreAuthorize("hasAuthority('REQUEST_CREATING')")
+    public ResponseEntity<?> sayHelloEndUser() {
+        try {
+            System.out.println("HELLO BY ENDUSER");
+            return new ResponseEntity<String>("Very Good, you are not blocked", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>("Bad request", HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
