@@ -1,5 +1,6 @@
 package com.example.CarInfoService.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+@Entity
 public class Model {
 
     @Id
@@ -16,18 +18,18 @@ public class Model {
 
     private String modelName;
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "model", orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Collection<FuelType> fuelTypes = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "model", orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Collection<BodyType> bodyTypes = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "model", orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Collection<GearShiftType> gearShiftTypes = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="brand_id", updatable = false, nullable = false)
+    @JsonIgnore
     private Brand brand;
 
     public Model() {
