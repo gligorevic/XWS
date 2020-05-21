@@ -1,24 +1,27 @@
 # XWS
 
+# Operacije
+Deklaracije **operacija** koje će biti implementirane su u fajlu **"Operacije.pdf"**. 
+
 # Mikroservisi i model
-     Servisi                                Entiteti unutar servisa
-1.AuthService       -    User, Privilege, Role, Firm, FirmRequest, UserAgent, Admin 
-2.CarInfoService    -    Model, Brand, GearShift, Body, FuelType
-3.CarService        -    Car
-4.ChatService       -    Message
-5.FeedbackService   -    Grade, Comment
-6.Zuul              -    /
-7.Eureka            -    /
-8.LocationService   -    /
-9.MailService       -    /
-10.PriceListService -    PriceList, PriceListItem, Discount, Report
-11.RequestService   -    Request
-12.SearchService    -    Advertisement, ReservationPeriod
-13.ImageService     -    /
+U folderu **"rentacar model images"** nalaze se **slike modela** koji je odrađen pomoću PowerDesigner alata.
 
-U folderu *"rentacar model images"* nalaze se slike *modela* koji je odrađen pomoću PowerDesigner alata.
+| Servis  | Entiteti unutar servisa |
+| ------ | ------ |
+| AuthService  | User, Privilege, Role, Firm, FirmRequest, UserAgent, Admin |
+| CarInfoService | Model, Brand, GearShift, Body, FuelType | 
+| CarService | Car |
+| ChatService | Message |  
+| FeedbackService | Grade, Comment |
+| SearchService | Advertisement, ReservationPeriod |  
+| RequestService | Request |
+| PriceListService | PriceList, PriceListItem, Discount, Report |  
+| ImageService | / |  
+| MailService | / |
+| LocationService | / |  
+| Eureka | / |
+| Zuul | / |  
 
-Deklaracije *operacija* koje će biti implementirane su u fajlu *"Operacije.pdf"*. 
 
 # Autori:
 * RA99/2016 Igor Gligorevic
