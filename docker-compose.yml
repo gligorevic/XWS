@@ -33,7 +33,7 @@ services:
     depends_on:
       - eureka-serviceregistry
 
-  carInfo:
+  car-info:
     build: ./CarInfoService
     ports:
       - "8087:8087"
