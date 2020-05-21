@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -jar CarService-1.0.0.jar
+java -jar CarInfoService-1.0.0.jar
