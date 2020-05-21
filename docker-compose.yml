@@ -43,6 +43,27 @@ services:
     depends_on:
       - eureka-serviceregistry
 
+  feedback:
+    build: ./FeedbackService
+    ports:
+      - "8088:8088"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+
+  chat:
+    build: ./ChatService
+    ports:
+      - "8089:8089"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+
+
   zuul:
     build: ./Zuul
     ports:

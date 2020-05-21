@@ -86,6 +86,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>FeedbackService-1.0.0</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
