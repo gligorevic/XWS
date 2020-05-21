@@ -1,0 +1,11 @@
+package com.example.RequestService.repository;
+
+import com.example.RequestService.domain.Request;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface RequestRepository extends JpaRepository<Request, Long> {
+
+    
+}

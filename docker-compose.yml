@@ -22,6 +22,26 @@ services:
     tty: true
     depends_on:
       - eureka-serviceregistry
+  
+  request:
+    build: ./RequestService
+    ports:
+      - "8086:8086"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+
+  car-info:
+    build: ./CarInfoService
+    ports:
+      - "8087:8087"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
 
   zuul:
     build: ./Zuul
