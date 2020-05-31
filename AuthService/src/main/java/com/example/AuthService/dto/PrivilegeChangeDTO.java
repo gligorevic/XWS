@@ -5,7 +5,6 @@ import java.util.List;
 public class PrivilegeChangeDTO {
     List<Long> privilegeList;
     Long enduserId;
-    boolean remove;
 
     public List<Long> getPrivilegeList() {
         return privilegeList;
@@ -21,13 +20,5 @@ public class PrivilegeChangeDTO {
 
     public void setEnduserId(Long enduserId) {
         this.enduserId = enduserId;
-    }
-
-    public boolean isRemove() {
-        return remove;
-    }
-
-    public void setRemove(boolean remove) {
-        this.remove = remove;
     }
 }

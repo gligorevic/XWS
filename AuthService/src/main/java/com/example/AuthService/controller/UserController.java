@@ -100,9 +100,9 @@ public class UserController {
 
     @PutMapping
     @PreAuthorize("hasAuthority('ENDUSER_PERMISION_CHANGING')")
-    public ResponseEntity<?> changeUserPrivileges(@RequestBody PrivilegeChangeDTO privilegeChangeDTO) {
+    public ResponseEntity<?> setUserBlockedPrivileges(@RequestBody PrivilegeChangeDTO privilegeChangeDTO) {
         try {
-            return new ResponseEntity<Boolean>(userService.changeUserPrivileges(privilegeChangeDTO.getPrivilegeList(), privilegeChangeDTO.getEnduserId(), privilegeChangeDTO.isRemove()), HttpStatus.OK);
+            return new ResponseEntity<Boolean>(userService.changeUserPrivileges(privilegeChangeDTO.getPrivilegeList(), privilegeChangeDTO.getEnduserId()), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("Bad request", HttpStatus.BAD_REQUEST);

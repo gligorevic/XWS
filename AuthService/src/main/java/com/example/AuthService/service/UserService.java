@@ -46,23 +46,16 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public boolean changeUserPrivileges(List<Long> privilegeList, Long enduserId, boolean remove) throws Exception {
+    public boolean changeUserPrivileges(List<Long> privilegeList, Long enduserId) throws Exception {
         User user = userRepository.getOne(enduserId);
+
         if(user == null) {
             throw new Exception("User not found");
         }
 
-        if(remove) {
-            List<Privilege> privileges =  privilegeRepository.findAllById(privilegeList);
-            Set<Privilege> newBlockedPrivileges = new HashSet<>(privileges);
-            newBlockedPrivileges.addAll(user.getBlockedPrivileges());
-            user.setBlockedPrivileges(new ArrayList<>(newBlockedPrivileges));
-        } else {
-            List<Privilege> listOutput = user.getBlockedPrivileges().stream()
-                            .filter(e -> !privilegeList.contains(e.getId()))
-                            .collect(Collectors.toList());
-            user.setBlockedPrivileges(listOutput);
-        }
+        List<Privilege> privileges =  privilegeRepository.findAllById(privilegeList);
+        user.setBlockedPrivileges(privileges);
+
         userRepository.save(user);
 
         return true;
