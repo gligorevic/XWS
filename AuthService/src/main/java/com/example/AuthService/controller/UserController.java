@@ -59,7 +59,7 @@ public class UserController {
 
     @GetMapping("/user")
     @PreAuthorize("hasAuthority('ENDUSER_PERMISION_CHANGING')")
-    public ResponseEntity<?> getAllUsers(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> getAllUsers() {
         try {
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
         } catch (Exception e) {

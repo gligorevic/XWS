@@ -116,11 +116,16 @@ public class UserService {
         if(!userFromAuth.getEmail().equals(email)) {
             throw new Exception("Unauthorized");
         }
+        User user = userRepository.findByEmail(email);
+        user.getRoles();
+        user.getBlockedPrivileges();
 
-        return userRepository.findByEmail(email);
+        return user;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> allUsers = userRepository.findAll().stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+
+        return allUsers;
     }
 }

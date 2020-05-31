@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -13,13 +12,14 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import { getAllUsers, toggleBlock } from "../../store/actions/user";
+import { connect } from "react-redux";
+import BlockIcon from "@material-ui/icons/Block";
+import AutorenewIcon from "@material-ui/icons/Autorenew";
+import "./UserSelection.css";
+import Tooltip from "@material-ui/core/Tooltip";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -68,15 +68,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -154,24 +146,23 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = ({ isSelected, user }) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
 
   return (
     <Toolbar
       className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
+        [classes.highlight]: isSelected,
       })}
     >
-      {numSelected > 0 ? (
+      {isSelected ? (
         <Typography
           className={classes.title}
           color="inherit"
           variant="subtitle1"
           component="div"
         >
-          selected
+          {`User ${user.email} is selected`}
         </Typography>
       ) : (
         <Typography
@@ -211,32 +202,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTable = () => {
+const EnhancedTable = ({
+  getAllUsers,
+  toggleBlock,
+  allUsers,
+  currentUser,
+  selected,
+  handleClick,
+}) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
+
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [toggling, setToggling] = React.useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await getAllUsers();
+    })();
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, user) => {
-    setSelected(user);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -252,7 +244,14 @@ const EnhancedTable = () => {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => selected !== null && selected.id === id;
+
+  const toggleBlockUser = async (e, userId) => {
+    e.stopPropagation();
+    setToggling(userId);
+    await toggleBlock(userId);
+    setToggling(false);
+  };
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -260,7 +259,7 @@ const EnhancedTable = () => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar isSelected={selected != null} user={selected} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -270,29 +269,30 @@ const EnhancedTable = () => {
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {allUsers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                .map((user, index) => {
+                  const isItemSelected = isSelected(user.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, user)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={user.id}
                       selected={isItemSelected}
+                      style={{
+                        background: user.id == currentUser.id && "#c5e1a5",
+                      }}
                     >
                       <TableCell
                         component="th"
@@ -300,11 +300,33 @@ const EnhancedTable = () => {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {`${user.email} ${
+                          user.id == currentUser.id ? "(Me)" : ""
+                        }`}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
+                      <TableCell align="right">{user.firstName}</TableCell>
+                      <TableCell align="right">{user.lastName}</TableCell>
+                      <TableCell align="right">
+                        {user.id != currentUser.id &&
+                          (user.blocked ? (
+                            <Tooltip title="Unlock user">
+                              <AutorenewIcon
+                                className={toggling === user.id && "pulsing"}
+                                style={{ color: "#4caf50", cursor: "pointer" }}
+                                onClick={(e) => toggleBlockUser(e, user.id)}
+                                disabled
+                              />
+                            </Tooltip>
+                          ) : (
+                            <Tooltip title="Block user">
+                              <BlockIcon
+                                className={toggling === user.id && "pulsing"}
+                                style={{ color: "#f44336", cursor: "pointer" }}
+                                onClick={(e) => toggleBlockUser(e, user.id)}
+                              />
+                            </Tooltip>
+                          ))}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -334,4 +356,11 @@ const EnhancedTable = () => {
   );
 };
 
-export default EnhancedTable;
+const mapStateToProps = (state) => ({
+  allUsers: state.user.allUsers,
+  currentUser: state.user.user,
+});
+
+export default connect(mapStateToProps, { getAllUsers, toggleBlock })(
+  EnhancedTable
+);

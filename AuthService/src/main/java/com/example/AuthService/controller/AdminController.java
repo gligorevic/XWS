@@ -48,4 +48,15 @@ public class AdminController {
             return new ResponseEntity<String>(e.getMessage(), e.getHttpStatus());
         }
     }
+
+    @GetMapping("/user/blockedPrivileges/{userId}")
+    @PreAuthorize("hasAuthority('ENDUSER_PERMISION_CHANGING')")
+    public ResponseEntity<?> getPrivilegesByUserId(@PathVariable String userId) {
+        try {
+            return new ResponseEntity<>(adminService.getBlockedPrivilegesByUserId(userId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

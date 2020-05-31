@@ -36,9 +36,11 @@ const Profile = ({ profile, getProfile }) => {
     <>
       {profile === null && !blockedProfileView ? (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item sm={12} lg={6}>
-              <Skeleton height={400} />
+              <Skeleton height={300} />
+              <Skeleton />
+              <Skeleton />
             </Grid>
             <Grid item sm={6}>
               <Skeleton height={400} />

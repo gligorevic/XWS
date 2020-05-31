@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -57,5 +58,11 @@ public class AdminService {
         userRepository.save(user);
 
         return new UserDTO(user);
+    }
+
+    public List<Privilege> getBlockedPrivilegesByUserId(String userId) {
+        List<Privilege> blockedPrivileges = privilegeRepository.findBlockedPrivilegesByUserId(Long.parseLong(userId));
+
+        return blockedPrivileges;
     }
 }

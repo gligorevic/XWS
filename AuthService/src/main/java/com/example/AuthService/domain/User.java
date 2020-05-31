@@ -24,7 +24,7 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -33,7 +33,7 @@ public class User implements UserDetails {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_blocked_privileges",
             joinColumns = @JoinColumn(
