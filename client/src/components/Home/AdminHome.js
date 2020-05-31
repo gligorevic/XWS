@@ -14,6 +14,7 @@ import clsx from "clsx";
 import CertificatesList from "../Admin/CertificatesList";
 import RevocatedCertsList from "../Admin/RevocatedCertsList";
 import TabPanel from "../layouts/TabPanel";
+import ManipulatePrivileges from "../Admin/ManipulatePrivileges";
 
 import Profile from "../Pages/Profile";
 
@@ -100,7 +101,8 @@ function AdminHome(props) {
       >
         <Tab label="List of certificates" {...a11yProps(0)} />
         <Tab label="Revocated certificates" {...a11yProps(1)} />
-        <Tab label="Profile" {...a11yProps(1)} />
+        <Tab label="Profile" {...a11yProps(2)} />
+        <Tab label="Manipulate privileges" {...a11yProps(3)} />
       </Tabs>
     </div>
   );
@@ -139,6 +141,9 @@ function AdminHome(props) {
           </TabPanel>
           <TabPanel value={value} index={2}>
             {value === 2 && <Profile />}
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            {value === 3 && <ManipulatePrivileges />}
           </TabPanel>
         </main>
       </div>

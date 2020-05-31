@@ -9,6 +9,15 @@ public class UserDTO {
     private String password;
     private String roleName;
 
+    public UserDTO() {
+    }
+
+    public UserDTO(User user) {
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+    }
+
     public String getFirstName() {
         return firstName;
     }

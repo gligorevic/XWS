@@ -46,22 +46,8 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public boolean changeUserPrivileges(List<Long> privilegeList, Long enduserId) throws Exception {
-        User user = userRepository.getOne(enduserId);
 
-        if(user == null) {
-            throw new Exception("User not found");
-        }
-
-        List<Privilege> privileges =  privilegeRepository.findAllById(privilegeList);
-        user.setBlockedPrivileges(privileges);
-
-        userRepository.save(user);
-
-        return true;
-    }
-
-    public String verifyUser(String bearerToken) {
+    public String verifyUser(String bearerToken) throws CustomException {
         String jwt = tokenHelper.getJWTFromBearerToken(bearerToken);
 
         tokenHelper.validate(jwt);
@@ -132,5 +118,9 @@ public class UserService {
         }
 
         return userRepository.findByEmail(email);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

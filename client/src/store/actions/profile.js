@@ -11,10 +11,12 @@ export const getProfile = () => async (dispatch, getState) => {
     const profileState = getState().profile.profile;
     if (profileState === null) {
       const email = getState().user.user.username;
-      const profile = await axios.get(`/auth/user/${email}`);
-      dispatch(setProfile(profile.data));
+      const response = await axios.get(`/auth/user/${email}`);
+      dispatch(setProfile(response.data));
+      return response;
     }
   } catch (err) {
     console.log(err);
+    return err.response;
   }
 };
