@@ -1,5 +1,6 @@
 package com.example.CarInfoService.domain;
 
+import com.example.CarInfoService.dto.ModelDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -41,6 +42,11 @@ public class Model {
         this.bodyTypes = bodyTypes;
         this.gearShiftTypes = gearShiftTypes;
         this.brand = brand;
+    }
+
+    public Model(String modelName) {
+        this.modelName = modelName;
+
     }
 
     public Long getId() {
