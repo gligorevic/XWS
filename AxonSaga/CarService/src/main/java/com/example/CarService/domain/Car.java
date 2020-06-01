@@ -26,6 +26,16 @@ public class Car {
 
     private Long userAgentId;
 
+    public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, Long userAgentId) {
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.gearShiftName = gearShiftName;
+        this.fuelTypeName = fuelTypeName;
+        this.bodyName = bodyName;
+        this.kmPassed = kmPassed;
+        this.userAgentId = userAgentId;
+    }
+
     public Long getId() {
         return id;
     }

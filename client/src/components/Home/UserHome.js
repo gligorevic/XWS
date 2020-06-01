@@ -13,6 +13,7 @@ import clsx from "clsx";
 import TabPanel from "../layouts/TabPanel";
 
 import Profile from "../Pages/Profile";
+import AddCar from "../EndUser/AddCar";
 
 const drawerWidth = 240;
 
@@ -93,6 +94,7 @@ function UserHome(props) {
       >
         <Tab label="User Home Page" {...a11yProps(0)} />
         <Tab label="Profile" {...a11yProps(1)} />
+        <Tab label="Add car" {...a11yProps(2)} />
       </Tabs>
     </div>
   );
@@ -128,6 +130,9 @@ function UserHome(props) {
           </TabPanel>
           <TabPanel value={value} index={1}>
             {value === 1 && <Profile />}
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            {value === 2 && <AddCar />}
           </TabPanel>
         </main>
       </div>
