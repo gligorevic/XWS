@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Axios from "axios";
 import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
 }));
-const AddCar = ({}) => {
+const AddCar = ({ username }) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     brandName: "",
@@ -30,6 +31,7 @@ const AddCar = ({}) => {
     bodyName: "",
     kmPassed: "",
     isAgent: false,
+    userAgentId: username,
   });
 
   const handleChangeTextField = (e) => {
@@ -106,4 +108,8 @@ const AddCar = ({}) => {
   );
 };
 
-export default withRouter(AddCar);
+const mapStateToProps = (state) => ({
+  username: state.user.user.username,
+});
+
+export default withRouter(connect(mapStateToProps)(AddCar));

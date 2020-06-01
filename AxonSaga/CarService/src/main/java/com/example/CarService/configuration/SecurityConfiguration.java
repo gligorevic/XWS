@@ -26,11 +26,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
                 .exceptionHandling()
                 .and()
+                .headers().frameOptions().disable().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

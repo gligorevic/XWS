@@ -159,7 +159,7 @@ const CertificatesList = ({ getAllCertificates, certificates, history }) => {
     return certificates.sort((a, b) => {
       if (orderBy === "name") {
         return order === "asc"
-          ? a.name.ime < b.name
+          ? a.name < b.name
             ? 1
             : -1
           : b.name < a.name

@@ -24,9 +24,13 @@ public class Car {
 
     private Integer kmPassed;
 
-    private Long userAgentId;
+    private String userAgentId;
 
-    public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, Long userAgentId) {
+    public Car(){
+
+    }
+
+    public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, String userAgentId) {
         this.brandName = brandName;
         this.modelName = modelName;
         this.gearShiftName = gearShiftName;
@@ -92,11 +96,11 @@ public class Car {
         this.kmPassed = kmPassed;
     }
 
-    public Long getUserAgentId() {
+    public String getUserAgentId() {
         return userAgentId;
     }
 
-    public void setUserAgentId(Long userAgentId) {
+    public void setUserAgentId(String userAgentId) {
         this.userAgentId = userAgentId;
     }
 }

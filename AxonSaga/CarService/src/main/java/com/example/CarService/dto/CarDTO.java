@@ -13,7 +13,7 @@ public class CarDTO {
 
     private Integer kmPassed;
 
-    private Long userAgentId;
+    private String userAgentId;
 
     private boolean isAgent;
 
@@ -65,11 +65,11 @@ public class CarDTO {
         this.kmPassed = kmPassed;
     }
 
-    public Long getUserAgentId() {
+    public String getUserAgentId() {
         return userAgentId;
     }
 
-    public void setUserAgentId(Long userAgentId) {
+    public void setUserAgentId(String userAgentId) {
         this.userAgentId = userAgentId;
     }
 

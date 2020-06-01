@@ -21,4 +21,8 @@ public class CarService {
         Car car = new Car(carDTO.getBrandName(), carDTO.getModelName(), carDTO.getGearShiftName(), carDTO.getFuelTypeName(), carDTO.getBodyName(), carDTO.getKmPassed(), carDTO.getUserAgentId());
         return carRepository.save(car);
     }
+
+    public List<Car> getCars(String email){
+        return carRepository.findCarsByUserAgentId(email);
+    }
 }

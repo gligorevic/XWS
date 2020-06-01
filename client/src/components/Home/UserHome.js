@@ -14,6 +14,7 @@ import TabPanel from "../layouts/TabPanel";
 
 import Profile from "../Pages/Profile";
 import AddCar from "../EndUser/AddCar";
+import ListMyCars from "../EndUser/ListMyCars";
 
 const drawerWidth = 240;
 
@@ -95,6 +96,7 @@ function UserHome(props) {
         <Tab label="User Home Page" {...a11yProps(0)} />
         <Tab label="Profile" {...a11yProps(1)} />
         <Tab label="Add car" {...a11yProps(2)} />
+        <Tab label="My cars" {...a11yProps(3)} />
       </Tabs>
     </div>
   );
@@ -133,6 +135,9 @@ function UserHome(props) {
           </TabPanel>
           <TabPanel value={value} index={2}>
             {value === 2 && <AddCar />}
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            {value === 3 && <ListMyCars />}
           </TabPanel>
         </main>
       </div>
