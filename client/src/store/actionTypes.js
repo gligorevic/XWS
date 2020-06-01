@@ -9,3 +9,5 @@ export const USER_LOGOUT = "USER_LOGOUT";
 export const SET_PROFILE = "SET_PROFILE";
 
 export const SET_CARS = "SET_CARS";
+
+export const SET_CAR_FOR_ADVERTISEMENT = "SET_CAR_FOR_ADVERTISEMENT";

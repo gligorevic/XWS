@@ -36,6 +36,28 @@ public class Advertisement {
 
     private Boolean collisionDamage;
 
+    private String userAgentId;
+
+    public Advertisement() {
+
+    }
+
+    public Advertisement(Long carId,Integer kmRestriction, Integer priceFrom, Integer priceTo, String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed,Integer numberChildSeats, Boolean collisionDamage, String userAgentId){
+        this.carId = carId;
+        this.kmRestriction = kmRestriction;
+        this.priceFrom= priceFrom;
+        this.priceTo = priceTo;
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.gearShiftName = gearShiftName;
+        this.fuelTypeName = fuelTypeName;
+        this.bodyName = bodyName;
+        this.kmPassed = kmPassed;
+        this.numberChildSeats = numberChildSeats;
+        this.collisionDamage = collisionDamage;
+        this.userAgentId = userAgentId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -139,4 +161,14 @@ public class Advertisement {
     public void setCollisionDamage(Boolean collisionDamage) {
         this.collisionDamage = collisionDamage;
     }
+
+    public String getUserAgentId() {
+        return userAgentId;
+    }
+
+    public void setUserAgentId(String userAgentId) {
+        this.userAgentId = userAgentId;
+    }
+
+
 }

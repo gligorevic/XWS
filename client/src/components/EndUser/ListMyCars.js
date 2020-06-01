@@ -10,7 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCars } from "../../store/actions/cars";
+import { getCars, setCarForAdvertisement } from "../../store/actions/cars";
 import { Button } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListMyCars = ({ getCars, cars, history }) => {
+const ListMyCars = ({ getCars, cars, history, setCarForAdvertisement }) => {
   useEffect(() => {
     getCars();
   }, []);
@@ -76,8 +76,6 @@ const ListMyCars = ({ getCars, cars, history }) => {
     setPage(0);
   };
 
-  const handleAdvertisement = (e, row) => {};
-
   const sort = (cars) => {
     return cars.sort((a, b) => {
       if (orderBy === "brandName") {
@@ -90,20 +88,36 @@ const ListMyCars = ({ getCars, cars, history }) => {
           : -1;
       } else if (orderBy === "modelName") {
         return order === "asc"
-          ? a.modelName - b.modelName
-          : b.modelName - a.modelName;
+          ? a.modelName < b.modelName
+            ? 1
+            : -1
+          : b.modelName < a.modelName
+          ? 1
+          : -1;
       } else if (orderBy === "gearShiftName") {
         return order === "asc"
-          ? a.gearShiftName - b.gearShiftName
-          : b.gearShiftName - a.gearShiftName;
+          ? a.gearShiftName < b.gearShiftName
+            ? 1
+            : -1
+          : b.gearShiftName < a.gearShiftName
+          ? 1
+          : -1;
       } else if (orderBy === "fuelTypeName") {
         return order === "asc"
-          ? a.fuelTypeName - b.fuelTypeName
-          : b.fuelTypeName - a.fuelTypeName;
+          ? a.fuelTypeName < b.fuelTypeName
+            ? 1
+            : -1
+          : b.fuelTypeName < a.fuelTypeName
+          ? 1
+          : -1;
       } else if (orderBy === "bodyName") {
         return order === "asc"
-          ? a.bodyName - b.bodyName
-          : b.bodyName - a.bodyName;
+          ? a.bodyName < b.bodyName
+            ? 1
+            : -1
+          : b.bodyName < a.bodyName
+          ? 1
+          : -1;
       } else {
         return order === "asc"
           ? a.kmPassed < b.kmPassed
@@ -228,9 +242,12 @@ const ListMyCars = ({ getCars, cars, history }) => {
                                 <Button
                                   variant="outlined"
                                   color="secondary"
-                                  onClick={(event) =>
-                                    handleAdvertisement(event, row)
-                                  }
+                                  onClick={() => {
+                                    setCarForAdvertisement(row);
+                                    history.push({
+                                      pathname: `/advertisement`,
+                                    });
+                                  }}
                                 >
                                   Add advertisement
                                 </Button>
@@ -288,4 +305,6 @@ const mapStateToProps = (state) => ({
   cars: state.cars.myCars,
 });
 
-export default withRouter(connect(mapStateToProps, { getCars })(ListMyCars));
+export default withRouter(
+  connect(mapStateToProps, { getCars, setCarForAdvertisement })(ListMyCars)
+);

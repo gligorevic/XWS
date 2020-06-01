@@ -55,3 +55,15 @@ services:
     depends_on:
       - eureka-serviceregistry
       - axon-server
+      
+  search-service:
+    build: ./AxonSaga/SearchService
+    ports:
+      - "8084:8084"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - AXON_HOST=axon-server
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - axon-server
