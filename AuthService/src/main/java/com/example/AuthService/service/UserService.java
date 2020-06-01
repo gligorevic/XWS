@@ -46,29 +46,8 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public boolean changeUserPrivileges(List<Long> privilegeList, Long enduserId, boolean remove) throws Exception {
-        User user = userRepository.getOne(enduserId);
-        if(user == null) {
-            throw new Exception("User not found");
-        }
 
-        if(remove) {
-            List<Privilege> privileges =  privilegeRepository.findAllById(privilegeList);
-            Set<Privilege> newBlockedPrivileges = new HashSet<>(privileges);
-            newBlockedPrivileges.addAll(user.getBlockedPrivileges());
-            user.setBlockedPrivileges(new ArrayList<>(newBlockedPrivileges));
-        } else {
-            List<Privilege> listOutput = user.getBlockedPrivileges().stream()
-                            .filter(e -> !privilegeList.contains(e.getId()))
-                            .collect(Collectors.toList());
-            user.setBlockedPrivileges(listOutput);
-        }
-        userRepository.save(user);
-
-        return true;
-    }
-
-    public String verifyUser(String bearerToken) {
+    public String verifyUser(String bearerToken) throws CustomException {
         String jwt = tokenHelper.getJWTFromBearerToken(bearerToken);
 
         tokenHelper.validate(jwt);
@@ -137,7 +116,16 @@ public class UserService {
         if(!userFromAuth.getEmail().equals(email)) {
             throw new Exception("Unauthorized");
         }
+        User user = userRepository.findByEmail(email);
+        user.getRoles();
+        user.getBlockedPrivileges();
 
-        return userRepository.findByEmail(email);
+        return user;
+    }
+
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> allUsers = userRepository.findByEmailIsNotNull().stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+
+        return allUsers;
     }
 }

@@ -284,7 +284,7 @@ const SignUp = ({ registrate, user, history }) => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <InfoDialog
-        open={responseStatus === 200}
+        open={responseStatus === 201}
         title={"Successfull registration"}
         text={
           "You are successfully registrated. You can login with given username and password."

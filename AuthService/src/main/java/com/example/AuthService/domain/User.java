@@ -19,11 +19,12 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private String email;
+    private Boolean blocked = false;
 
     @JsonIgnore
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -32,7 +33,7 @@ public class User implements UserDetails {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_blocked_privileges",
             joinColumns = @JoinColumn(
@@ -88,6 +89,22 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean isBlocked() {
+        return blocked;
+    }
+
+    public void toggleBlock() {
+        this.blocked = !this.blocked;
+    }
+
+    public void logicalDelete() {
+        this.firstName = null;
+        this.lastName = null;
+        this.email = null;
+        this.password = null;
+        this.blocked = null;
     }
 
     public Collection<Role> getRoles() {

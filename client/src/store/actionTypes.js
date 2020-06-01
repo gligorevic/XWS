@@ -7,3 +7,8 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const USER_LOGOUT = "USER_LOGOUT";
 
 export const SET_PROFILE = "SET_PROFILE";
+
+export const SET_ALL_USERS = "SET_ALL_USERS";
+export const SET_USER_BLOCKED = "SET_USER_BLOCKED";
+
+export const SET_ALLUSER_DELETE = "SET_ALLUSER_DELETE";
