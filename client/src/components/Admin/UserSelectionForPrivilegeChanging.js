@@ -14,32 +14,13 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import { getAllUsers, toggleBlock } from "../../store/actions/user";
+import { getAllUsers, toggleBlock, deleteUser } from "../../store/actions/user";
 import { connect } from "react-redux";
 import BlockIcon from "@material-ui/icons/Block";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
+import DeleteIcon from "@material-ui/icons/Delete";
 import "./UserSelection.css";
 import Tooltip from "@material-ui/core/Tooltip";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Donut", 452, 25.0, 51, 4.9),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-  createData("Honeycomb", 408, 3.2, 87, 6.5),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Jelly Bean", 375, 0.0, 94, 0.0),
-  createData("KitKat", 518, 26.0, 65, 7.0),
-  createData("Lollipop", 392, 0.2, 98, 0.0),
-  createData("Marshmallow", 318, 0, 81, 2.0),
-  createData("Nougat", 360, 19.0, 9, 37.0),
-  createData("Oreo", 437, 18.0, 63, 4.0),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -146,7 +127,12 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTableToolbar = ({ isSelected, user }) => {
+const EnhancedTableToolbar = ({
+  isSelected,
+  user,
+  deleteUser,
+  allowDelete,
+}) => {
   const classes = useToolbarStyles();
 
   return (
@@ -154,6 +140,7 @@ const EnhancedTableToolbar = ({ isSelected, user }) => {
       className={clsx(classes.root, {
         [classes.highlight]: isSelected,
       })}
+      style={{ background: "#fafafa" }}
     >
       {isSelected ? (
         <Typography
@@ -162,7 +149,14 @@ const EnhancedTableToolbar = ({ isSelected, user }) => {
           variant="subtitle1"
           component="div"
         >
-          {`User ${user.email} is selected`}
+          <span>
+            User <strong>{user.email}</strong> is selected
+          </span>
+          {allowDelete && (
+            <Tooltip title="Delete user">
+              <DeleteIcon className="delete" onClick={deleteUser} />
+            </Tooltip>
+          )}
         </Typography>
       ) : (
         <Typography
@@ -187,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750,
+    minWidth: 550,
   },
   visuallyHidden: {
     border: 0,
@@ -209,6 +203,8 @@ const EnhancedTable = ({
   currentUser,
   selected,
   handleClick,
+  deleteUser,
+  setSelected,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
@@ -253,13 +249,25 @@ const EnhancedTable = ({
     setToggling(false);
   };
 
+  const deleteSelectedUser = async (e) => {
+    setSelected(null);
+    if (selected) {
+      await deleteUser(selected.id);
+    }
+  };
+
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, allUsers.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar isSelected={selected != null} user={selected} />
+        <EnhancedTableToolbar
+          isSelected={selected != null}
+          user={selected}
+          deleteUser={deleteSelectedUser}
+          allowDelete={selected && selected.id != currentUser.id}
+        />
         <TableContainer>
           <Table
             className={classes.table}
@@ -272,7 +280,6 @@ const EnhancedTable = ({
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
             />
             <TableBody>
               {allUsers
@@ -284,7 +291,9 @@ const EnhancedTable = ({
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, user)}
+                      onClick={(event) =>
+                        handleClick(event, user, user.id == currentUser.id)
+                      }
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -341,7 +350,7 @@ const EnhancedTable = ({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={allUsers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -361,6 +370,8 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.user,
 });
 
-export default connect(mapStateToProps, { getAllUsers, toggleBlock })(
-  EnhancedTable
-);
+export default connect(mapStateToProps, {
+  getAllUsers,
+  toggleBlock,
+  deleteUser,
+})(EnhancedTable);

@@ -124,7 +124,7 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
-        List<UserDTO> allUsers = userRepository.findAll().stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+        List<UserDTO> allUsers = userRepository.findByEmailIsNotNull().stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
 
         return allUsers;
     }

@@ -16,7 +16,7 @@ public class PrivilegesController {
 
     @GetMapping("/privilege")
     @PreAuthorize("hasAuthority('ENDUSER_PERMISION_CHANGING')")
-    public ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<?> getAllPrivileges() {
         try {
             return new ResponseEntity<>(privilegeService.getAllPrivileges(), HttpStatus.OK);
         } catch (Exception e) {

@@ -2,16 +2,14 @@ package com.example.AuthService.controller;
 
 import com.example.AuthService.domain.User;
 import com.example.AuthService.dto.LoginRequestDTO;
-import com.example.AuthService.dto.PrivilegeChangeDTO;
 import com.example.AuthService.dto.UserDTO;
 import com.example.AuthService.exception.CustomException;
+import com.example.AuthService.service.AdminService;
 import com.example.AuthService.service.UserService;
-import com.netflix.ribbon.proxy.annotation.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AdminService adminService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
@@ -73,7 +74,7 @@ public class UserController {
         try {
             if(userDTO.getEmail().equals("") || userDTO.getFirstName().equals("") || userDTO.getLastName().equals("") || userDTO.getPassword().equals("") || userDTO.getRoleName().equals("")){
                 throw new CustomException("Fields must not be empty.", HttpStatus.NOT_ACCEPTABLE);
-            }else if ( !emailPattern.matcher( userDTO.getEmail() ).matches()) {
+            }else if (!emailPattern.matcher( userDTO.getEmail() ).matches()) {
                 throw new CustomException( "Improper email format.", HttpStatus.NOT_ACCEPTABLE);
             }else if(!passwordPattern.matcher( userDTO.getPassword()).matches()){
                 throw new CustomException("Password doesn't match requirements.", HttpStatus.NOT_ACCEPTABLE);
@@ -108,4 +109,14 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/user/{userId}")
+    @PreAuthorize("hasAuthority('USER_DELETING')")
+    public ResponseEntity<?> logicalDeleteUser(@PathVariable String userId) {
+        try {
+            return new ResponseEntity<UserDTO>(adminService.logicalDeleteUser(Long.parseLong(userId)), HttpStatus.OK);
+        } catch (CustomException e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(e.getMessage(), e.getHttpStatus());
+        }
+    }
 }
