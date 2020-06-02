@@ -15,6 +15,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
+import AddResPeriodDialog from "../EndUser/AddResPeriodDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -248,13 +249,7 @@ const ListMyAdvertisements = ({ getUserAdvertisements, ads, history }) => {
                                 />
                               </TableCell>
                               <TableCell align="right">
-                                <Button
-                                  variant="outlined"
-                                  color="primary"
-                                  onClick={() => {}}
-                                >
-                                  Add reservation period
-                                </Button>
+                                <AddResPeriodDialog id={row.id} />
                               </TableCell>
                               <TableCell align="right">
                                 <Button

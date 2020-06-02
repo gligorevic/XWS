@@ -1,5 +1,6 @@
 package com.example.SearchService.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,6 +20,16 @@ public class ReservationPeriod {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="advertisement_id")
     private Advertisement advertisement;
+
+    public ReservationPeriod(){
+
+    }
+
+    public ReservationPeriod(Date startDate, Date endDate, Advertisement advertisement){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.advertisement = advertisement;
+    }
 
     public Long getId() {
         return id;

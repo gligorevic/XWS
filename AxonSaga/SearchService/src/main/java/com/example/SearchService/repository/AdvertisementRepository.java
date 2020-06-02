@@ -11,4 +11,5 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
 
     List<Advertisement> findAdvertisementsByUserAgentId(String userAgentId);
 
+    Advertisement findAdvertisementById(Long id);
 }
