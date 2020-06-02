@@ -6,6 +6,8 @@ import com.example.SearchService.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdvertisementService {
 
@@ -16,6 +18,10 @@ public class AdvertisementService {
         //za sada se za obe cene stavlja ona koju je user definisao jer jos nemamo cenovnik
         Advertisement advertisement = new Advertisement(dto.getCarId(), dto.getKmRestriction(), dto.getPrice(), dto.getPrice(), dto.getBrandName(), dto.getModelName(), dto.getGearShiftName(), dto.getFuelTypeName(), dto.getBodyName(), dto.getKmPassed(), dto.getNumberChildSeats(), dto.getCollisionDamage(), dto.getUserAgentId());
         return advertisementRepository.save(advertisement);
+    }
+
+    public List<Advertisement> getAdvertisementsByUserId(String email){
+        return advertisementRepository.findAdvertisementsByUserAgentId(email);
     }
 
 }
