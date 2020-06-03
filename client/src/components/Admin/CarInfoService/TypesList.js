@@ -54,7 +54,7 @@ const TypeList = ({
           <List
             component="nav"
             aria-label="main mailbox folders"
-            style={{ height: 352 }}
+            style={{ height: 352, overflowY: "scroll" }}
           >
             {allFuelTypes.map((fuelType) => {
               return (
@@ -84,7 +84,7 @@ const TypeList = ({
           <List
             component="nav"
             aria-label="main mailbox folders"
-            style={{ height: 352 }}
+            style={{ height: 352, overflowY: "scroll" }}
           >
             {allGearShiftTypes.map((gearShiftType) => {
               return (
@@ -116,7 +116,7 @@ const TypeList = ({
           <List
             component="nav"
             aria-label="main mailbox folders"
-            style={{ height: 352 }}
+            style={{ height: 352, overflowY: "scroll" }}
           >
             {allBodyTypes.map((bodyType) => {
               return (

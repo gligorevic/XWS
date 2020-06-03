@@ -43,7 +43,7 @@ const ModelList = ({
         <List
           component="nav"
           aria-label="main mailbox folders"
-          style={{ minHeight: 400 }}
+          style={{ height: 400, overflowY: "scroll" }}
         >
           {allModels.map((model) => {
             return (
