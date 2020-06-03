@@ -1,9 +1,12 @@
 package com.example.SearchService.domain;
 
+import com.example.SearchService.dto.AdvertisementDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Advertisement {
@@ -36,13 +39,19 @@ public class Advertisement {
 
     private Boolean collisionDamage;
 
-    private String userAgentId;
+    private String userEmail;
+
+    private String rentingLocation;
+
+    private Date freeFrom;
+
+    private Date freeTo;
 
     public Advertisement() {
 
     }
 
-    public Advertisement(Long carId,Integer kmRestriction, Integer priceFrom, Integer priceTo, String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed,Integer numberChildSeats, Boolean collisionDamage, String userAgentId){
+    public Advertisement(Long carId,Integer kmRestriction, Integer priceFrom, Integer priceTo, String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed,Integer numberChildSeats, Boolean collisionDamage, String userEmail, String rentingLocation, Date freeFrom, Date freeTo){
         this.carId = carId;
         this.kmRestriction = kmRestriction;
         this.priceFrom= priceFrom;
@@ -55,8 +64,31 @@ public class Advertisement {
         this.kmPassed = kmPassed;
         this.numberChildSeats = numberChildSeats;
         this.collisionDamage = collisionDamage;
-        this.userAgentId = userAgentId;
+        this.userEmail = userEmail;
+        this.rentingLocation = rentingLocation;
+        this.freeFrom = freeFrom;
+        this.freeTo = freeTo;
     }
+
+    public Advertisement(AdvertisementDTO advertisementDTO){
+        this.carId = advertisementDTO.getCarId();
+        this.kmRestriction = advertisementDTO.getKmRestriction();
+        this.priceFrom= advertisementDTO.getPrice();
+        this.priceTo = advertisementDTO.getPrice();
+        this.brandName = advertisementDTO.getBrandName();
+        this.modelName = advertisementDTO.getModelName();
+        this.gearShiftName = advertisementDTO.getGearShiftName();
+        this.fuelTypeName = advertisementDTO.getFuelTypeName();
+        this.bodyName =advertisementDTO.getBodyName();
+        this.kmPassed = advertisementDTO.getKmPassed();
+        this.numberChildSeats = advertisementDTO.getNumberChildSeats();
+        this.collisionDamage = advertisementDTO.getCollisionDamage();
+        this.userEmail = advertisementDTO.getUserEmail();
+        this.rentingLocation = advertisementDTO.getRentingLocation();
+        this.freeFrom = advertisementDTO.getFreeFrom();
+        this.freeTo = advertisementDTO.getFreeTo();
+    }
+
 
     public Long getId() {
         return id;
@@ -162,13 +194,35 @@ public class Advertisement {
         this.collisionDamage = collisionDamage;
     }
 
-    public String getUserAgentId() {
-        return userAgentId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserAgentId(String userAgentId) {
-        this.userAgentId = userAgentId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
+    public String getRentingLocation() {
+        return rentingLocation;
+    }
 
+    public void setRentingLocation(String rentingLocation) {
+        this.rentingLocation = rentingLocation;
+    }
+
+    public Date getFreeFrom() {
+        return freeFrom;
+    }
+
+    public void setFreeFrom(Date freeFrom) {
+        this.freeFrom = freeFrom;
+    }
+
+    public Date getFreeTo() {
+        return freeTo;
+    }
+
+    public void setFreeTo(Date freeTo) {
+        this.freeTo = freeTo;
+    }
 }

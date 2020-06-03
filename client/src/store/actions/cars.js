@@ -5,10 +5,6 @@ export const setCars = (myCars) => ({
   type: SET_CARS,
   myCars,
 });
-export const setCarForAdvertisement = (carForAdvertisement) => ({
-  type: SET_CAR_FOR_ADVERTISEMENT,
-  carForAdvertisement,
-});
 
 export const getCars = () => async (dispatch, getState) => {
   try {

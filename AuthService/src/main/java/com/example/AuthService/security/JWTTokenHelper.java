@@ -98,6 +98,7 @@ public class JWTTokenHelper {
         newClaims.put("id", userId);
         newClaims.put("username", claims.get("username"));
         newClaims.put("privileges", getNamesFromPrivileges(privileges));
+        newClaims.put("role", claims.get("role"));
 
         Date now = new Date(System.currentTimeMillis());
         Date expiryDate = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE);

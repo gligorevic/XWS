@@ -66,15 +66,14 @@ const ResponsiveDialog = ({ id }) => {
     e.preventDefault();
     console.log(state);
     setLoading(true);
-    const resp = await Axios.post(
-      "/advertisement/reservationPeriod",
-      state
-    ).catch((error) => {
-      if (error.response.status === 406) {
-        setLoading(false);
-        setOpenError(true);
+    const resp = await Axios.post("/search/reservationPeriod", state).catch(
+      (error) => {
+        if (error.response.status === 406) {
+          setLoading(false);
+          setOpenError(true);
+        }
       }
-    });
+    );
     setLoading(false);
     setOpen(false);
   };

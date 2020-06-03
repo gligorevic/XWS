@@ -46,8 +46,7 @@ const AddCar = ({ username }) => {
     fuelTypeName: "",
     bodyName: "",
     kmPassed: "",
-    isAgent: false,
-    userAgentId: username,
+    userEmail: username,
   });
 
   const handleChangeTextField = (e) => {
@@ -56,13 +55,17 @@ const AddCar = ({ username }) => {
 
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-
+  const [openSuccess, setOpenSuccess] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleCloseSuccess = () => {
+    setOpenSuccess(false);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log(state);
     const resp = await Axios.post("/car", state).catch((error) => {
       if (error.response.status === 403) {
         setLoading(false);
@@ -80,6 +83,7 @@ const AddCar = ({ username }) => {
         bodyName: "",
         kmPassed: "",
       });
+      setOpenSuccess(true);
     }
   };
 
@@ -153,6 +157,25 @@ const AddCar = ({ username }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openSuccess}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseSuccess}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="success">
+            You have successfully added a new car.
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseSuccess} color="primary">
             Ok
           </Button>
         </DialogActions>

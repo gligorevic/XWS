@@ -1,7 +1,11 @@
-import { SET_USER_ADVERTISEMENTS } from "../actionTypes";
+import {
+  SET_USER_ADVERTISEMENTS,
+  SET_RESERVATION_PERIODS,
+} from "../actionTypes";
 
 const DEFAULT_STATE = {
   myAdvertisements: [],
+  reservationPeriods: [],
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -10,6 +14,12 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         myAdvertisements: action.myAdvertisements,
+      };
+    }
+    case SET_RESERVATION_PERIODS: {
+      return {
+        ...state,
+        reservationPeriods: action.reservationPeriods,
       };
     }
     default:

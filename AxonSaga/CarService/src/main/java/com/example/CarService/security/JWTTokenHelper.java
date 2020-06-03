@@ -2,11 +2,13 @@ package com.example.CarService.security;
 
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.CarService.security.SecurityConstants.SECRET;
+import static com.example.CarService.security.SecurityConstants.TOKEN_BEARER_PREFIX;
 
 
 @Component
@@ -58,5 +60,47 @@ public class JWTTokenHelper {
         }
 
         return privileges;
+    }
+
+    public List<String> getRoleFromAccesToken(String jwt) {
+        List<String> rolesFromJWT = new ArrayList<>();
+
+        System.out.println(jwt);
+
+        Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(jwt).getBody();
+
+
+        String role = claims.get("role").toString();
+
+        System.out.println(role);
+        role = role.replaceFirst("\\[", "");
+        role = role.replace("]", "");
+
+        String[] roles = role.split(", ");
+
+        for(String r : roles) {
+            rolesFromJWT.add(r);
+        }
+
+
+        return rolesFromJWT;
+    }
+
+    public String getUserEmailFromAccesToken(String jwt) {
+        Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(jwt).getBody();
+
+        String email = claims.get("username").toString();
+
+        return email;
+    }
+
+    public String getJWTFromBearerToken(String bearerToken){
+
+
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_BEARER_PREFIX)){
+            return bearerToken.substring(7);
+        }
+
+        return null;
     }
 }

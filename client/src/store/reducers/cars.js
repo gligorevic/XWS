@@ -1,8 +1,7 @@
-import { SET_CARS, SET_CAR_FOR_ADVERTISEMENT } from "../actionTypes";
+import { SET_CARS } from "../actionTypes";
 
 const DEFAULT_STATE = {
   myCars: [],
-  carForAdvertisement: null,
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -13,11 +12,6 @@ export default (state = DEFAULT_STATE, action) => {
         myCars: action.myCars,
       };
     }
-    case SET_CAR_FOR_ADVERTISEMENT:
-      return {
-        ...state,
-        carForAdvertisement: action.carForAdvertisement,
-      };
     default:
       return state;
   }

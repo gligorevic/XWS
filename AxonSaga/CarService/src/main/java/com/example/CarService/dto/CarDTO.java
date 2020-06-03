@@ -13,9 +13,7 @@ public class CarDTO {
 
     private Integer kmPassed;
 
-    private String userAgentId;
-
-    private boolean isAgent;
+    private String userEmail;
 
     public String getBrandName() {
         return brandName;
@@ -65,19 +63,11 @@ public class CarDTO {
         this.kmPassed = kmPassed;
     }
 
-    public String getUserAgentId() {
-        return userAgentId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserAgentId(String userAgentId) {
-        this.userAgentId = userAgentId;
-    }
-
-    public boolean isAgent() {
-        return isAgent;
-    }
-
-    public void setAgent(boolean agent) {
-        isAgent = agent;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

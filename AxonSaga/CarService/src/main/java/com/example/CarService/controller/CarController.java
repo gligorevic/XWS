@@ -2,6 +2,7 @@ package com.example.CarService.controller;
 
 import com.example.CarService.domain.Car;
 import com.example.CarService.dto.CarDTO;
+import com.example.CarService.exception.CustomException;
 import com.example.CarService.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,22 +14,21 @@ import java.util.List;
 @RestController
 public class CarController {
 
-    @Autowired
-    private CarService carService;
-
     @PostMapping
-    private ResponseEntity<Car> addNewCar(@RequestBody CarDTO carDTO){
+    private ResponseEntity<?> addNewCar(@RequestBody CarDTO carDTO, @RequestHeader (name="Auth") String bearerToken){
         try{
-            Car c = carService.addNewCar(carDTO);
-            if(c==null){
-                return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
-            }
-            return new ResponseEntity<>(c, HttpStatus.OK);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(carService.addNewCar(carDTO, bearerToken), HttpStatus.OK);
+        } catch (CustomException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Autowired
+    private CarService carService;
 
     @GetMapping("/{email}")
     private ResponseEntity<List<Car>> getCars(@PathVariable String email){

@@ -16,12 +16,12 @@ public class AdvertisementService {
 
     public Advertisement addAdvertisement(AdvertisementDTO dto){
         //za sada se za obe cene stavlja ona koju je user definisao jer jos nemamo cenovnik
-        Advertisement advertisement = new Advertisement(dto.getCarId(), dto.getKmRestriction(), dto.getPrice(), dto.getPrice(), dto.getBrandName(), dto.getModelName(), dto.getGearShiftName(), dto.getFuelTypeName(), dto.getBodyName(), dto.getKmPassed(), dto.getNumberChildSeats(), dto.getCollisionDamage(), dto.getUserAgentId());
+        Advertisement advertisement = new Advertisement(dto);
         return advertisementRepository.save(advertisement);
     }
 
     public List<Advertisement> getAdvertisementsByUserId(String email){
-        return advertisementRepository.findAdvertisementsByUserAgentId(email);
+        return advertisementRepository.findAdvertisementsByUserEmail(email);
     }
 
 }

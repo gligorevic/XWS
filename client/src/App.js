@@ -13,7 +13,6 @@ import PrivateUserRoute from "./routing/PrivateUserRoute";
 import { setAuthorizationToken, setUser } from "./store/actions/auth";
 import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
-import Advertisement from "./components/EndUser/Advertisement";
 const store = configureStore();
 
 if (localStorage.jwtToken) {
@@ -43,11 +42,6 @@ function App() {
         <Switch>
           <PrivateAdminRoute exact path="/admin" component={AdminHome} />
           <PrivateUserRoute exact path="/user" component={UserHome} />
-          <PrivateUserRoute
-            exact
-            path="/advertisement"
-            component={Advertisement}
-          />
           <PrivateAdminRoute
             exact
             path="/admin/issueCertificate"

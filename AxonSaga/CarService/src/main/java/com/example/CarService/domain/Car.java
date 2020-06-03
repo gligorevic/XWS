@@ -1,5 +1,7 @@
 package com.example.CarService.domain;
 
+import com.example.CarService.dto.CarDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,20 +26,33 @@ public class Car {
 
     private Integer kmPassed;
 
-    private String userAgentId;
+    private String userEmail;
+
+    private String locationToken;
 
     public Car(){
 
     }
 
-    public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, String userAgentId) {
+    public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, String userAgentId, String locationToken) {
         this.brandName = brandName;
         this.modelName = modelName;
         this.gearShiftName = gearShiftName;
         this.fuelTypeName = fuelTypeName;
         this.bodyName = bodyName;
         this.kmPassed = kmPassed;
-        this.userAgentId = userAgentId;
+        this.userEmail = userAgentId;
+        this.locationToken = locationToken;
+    }
+
+    public Car(CarDTO carDTO) {
+        this.brandName = carDTO.getBrandName();
+        this.modelName = carDTO.getModelName();
+        this.gearShiftName = carDTO.getGearShiftName();
+        this.fuelTypeName = carDTO.getFuelTypeName();
+        this.bodyName = carDTO.getBodyName();
+        this.kmPassed = carDTO.getKmPassed();
+        this.userEmail = carDTO.getUserEmail();
     }
 
     public Long getId() {
@@ -96,11 +111,19 @@ public class Car {
         this.kmPassed = kmPassed;
     }
 
-    public String getUserAgentId() {
-        return userAgentId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserAgentId(String userAgentId) {
-        this.userAgentId = userAgentId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getLocationToken() {
+        return locationToken;
+    }
+
+    public void setLocationToken(String locationToken) {
+        this.locationToken = locationToken;
     }
 }

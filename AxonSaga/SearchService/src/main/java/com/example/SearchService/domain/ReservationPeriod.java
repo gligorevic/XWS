@@ -2,6 +2,7 @@ package com.example.SearchService.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class ReservationPeriod {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="advertisement_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Advertisement advertisement;
 
     public ReservationPeriod(){

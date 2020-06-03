@@ -1,5 +1,7 @@
 package com.example.SearchService.dto;
 
+import java.util.Date;
+
 public class AdvertisementDTO {
 
     private Long carId;
@@ -24,7 +26,13 @@ public class AdvertisementDTO {
 
     private Boolean collisionDamage;
 
-    private String userAgentId;
+    private String userEmail;
+
+    private String rentingLocation;
+
+    private Date freeFrom;
+
+    private Date freeTo;
 
     public Long getCarId() {
         return carId;
@@ -114,11 +122,35 @@ public class AdvertisementDTO {
         this.collisionDamage = collisionDamage;
     }
 
-    public String getUserAgentId() {
-        return userAgentId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserAgentId(String userAgentId) {
-        this.userAgentId = userAgentId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getRentingLocation() {
+        return rentingLocation;
+    }
+
+    public void setRentingLocation(String rentingLocation) {
+        this.rentingLocation = rentingLocation;
+    }
+
+    public Date getFreeFrom() {
+        return freeFrom;
+    }
+
+    public void setFreeFrom(Date freeFrom) {
+        this.freeFrom = freeFrom;
+    }
+
+    public Date getFreeTo() {
+        return freeTo;
+    }
+
+    public void setFreeTo(Date freeTo) {
+        this.freeTo = freeTo;
     }
 }

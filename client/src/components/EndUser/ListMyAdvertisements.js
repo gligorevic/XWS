@@ -16,6 +16,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import AddResPeriodDialog from "../EndUser/AddResPeriodDialog";
+import ViewResPeriodsDialog from "../EndUser/ViewResPeriodsDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -252,13 +253,7 @@ const ListMyAdvertisements = ({ getUserAdvertisements, ads, history }) => {
                                 <AddResPeriodDialog id={row.id} />
                               </TableCell>
                               <TableCell align="right">
-                                <Button
-                                  variant="outlined"
-                                  color="primary"
-                                  onClick={() => {}}
-                                >
-                                  View reservation periods
-                                </Button>
+                                <ViewResPeriodsDialog id={row.id} />
                               </TableCell>
                             </TableRow>
                           </>

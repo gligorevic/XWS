@@ -10,11 +10,12 @@ import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCars, setCarForAdvertisement } from "../../store/actions/cars";
+import { getCars } from "../../store/actions/cars";
 import { Button } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
+import AddAdvertisement from "../EndUser/AddAdvertisement";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListMyCars = ({ getCars, cars, history, setCarForAdvertisement }) => {
+const ListMyCars = ({ getCars, cars }) => {
   useEffect(() => {
     getCars();
   }, []);
@@ -239,18 +240,7 @@ const ListMyCars = ({ getCars, cars, history, setCarForAdvertisement }) => {
                               <TableCell align="left">{row.bodyName}</TableCell>
                               <TableCell align="left">{row.kmPassed}</TableCell>
                               <TableCell align="right">
-                                <Button
-                                  variant="outlined"
-                                  color="secondary"
-                                  onClick={() => {
-                                    setCarForAdvertisement(row);
-                                    history.push({
-                                      pathname: `/advertisement`,
-                                    });
-                                  }}
-                                >
-                                  Add advertisement
-                                </Button>
+                                <AddAdvertisement car={row} />
                               </TableCell>
                             </TableRow>
                           </>
@@ -305,6 +295,4 @@ const mapStateToProps = (state) => ({
   cars: state.cars.myCars,
 });
 
-export default withRouter(
-  connect(mapStateToProps, { getCars, setCarForAdvertisement })(ListMyCars)
-);
+export default withRouter(connect(mapStateToProps, { getCars })(ListMyCars));
