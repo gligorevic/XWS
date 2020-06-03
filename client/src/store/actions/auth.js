@@ -31,10 +31,11 @@ export const authUser = (userData) => async (dispatch) => {
     localStorage.setItem("jwtToken", pureJwt);
     setAuthorizationToken(pureJwt);
     const decodedToken = jwtDecode(pureJwt);
-    console.log(decodedToken);
     dispatch(setUser(decodedToken));
+    return jwt;
   } catch (err) {
     console.log(err);
+    return err.response;
   }
 };
 

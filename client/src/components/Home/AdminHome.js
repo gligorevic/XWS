@@ -14,7 +14,7 @@ import clsx from "clsx";
 import CertificatesList from "../Admin/CertificatesList";
 import RevocatedCertsList from "../Admin/RevocatedCertsList";
 import TabPanel from "../layouts/TabPanel";
-import ManipulatePrivileges from "../Admin/ManipulatePrivileges";
+import ManipulatePrivileges from "../Admin/UserPrivilegesManipulation/ManipulatePrivileges";
 
 import Profile from "../Pages/Profile";
 

@@ -14,7 +14,11 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import { getAllUsers, toggleBlock, deleteUser } from "../../store/actions/user";
+import {
+  getAllUsers,
+  toggleBlock,
+  deleteUser,
+} from "../../../store/actions/user";
 import { connect } from "react-redux";
 import BlockIcon from "@material-ui/icons/Block";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
