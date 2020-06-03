@@ -7,8 +7,6 @@
 	<groupId>com.example</groupId>
 	<artifactId>Core-API</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Core-API</name>
-	<description>Axon modelling</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,7 +21,6 @@
 			<version>4.3.2</version>
 			<scope>compile</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
