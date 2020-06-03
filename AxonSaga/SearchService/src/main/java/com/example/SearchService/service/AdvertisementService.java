@@ -24,4 +24,10 @@ public class AdvertisementService {
         return advertisementRepository.findAdvertisementsByUserEmail(email);
     }
 
+    public List<Advertisement> getAllAdvertisements(){
+
+        System.out.println("Usao u servis ");
+        return advertisementRepository.findAll();
+    }
+
 }

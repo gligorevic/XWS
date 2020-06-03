@@ -7,6 +7,7 @@ import com.example.CarService.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +15,12 @@ import java.util.List;
 @RestController
 public class CarController {
 
+    @Autowired
+    private CarService carService;
+
     @PostMapping
-    private ResponseEntity<?> addNewCar(@RequestBody CarDTO carDTO, @RequestHeader (name="Auth") String bearerToken){
+    @PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
+    public ResponseEntity<?> addNewCar(@RequestBody CarDTO carDTO, @RequestHeader (name="Auth") String bearerToken){
         try{
             return new ResponseEntity<>(carService.addNewCar(carDTO, bearerToken), HttpStatus.OK);
         } catch (CustomException e){
@@ -27,11 +32,10 @@ public class CarController {
         }
     }
 
-    @Autowired
-    private CarService carService;
 
     @GetMapping("/{email}")
-    private ResponseEntity<List<Car>> getCars(@PathVariable String email){
+    @PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
+    public ResponseEntity<List<Car>> getCars(@PathVariable String email){
         try{
             return new ResponseEntity<>(carService.getCars(email), HttpStatus.OK);
         }catch (Exception e){
