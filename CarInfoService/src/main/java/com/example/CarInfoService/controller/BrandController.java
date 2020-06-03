@@ -1,18 +1,14 @@
 package com.example.CarInfoService.controller;
 
-import com.example.CarInfoService.domain.BodyType;
 import com.example.CarInfoService.domain.Brand;
-import com.example.CarInfoService.domain.Model;
+import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.service.BrandService;
 import com.example.CarInfoService.service.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +22,14 @@ public class BrandController {
     @Autowired
     private ModelService modelService;
 
-    @PostMapping("brand/{brandName}")
+    @PostMapping("brand")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> addBrand(@PathVariable("brandName") String brandName){
+    public ResponseEntity<?> addBrand(@RequestBody String brandName){
         try{
-            Brand brand = brandService.add(brandName);
-
-            if(brand == null){
-                return new ResponseEntity<>("Brand already exists", HttpStatus.BAD_REQUEST);
-            }
-
-            return new ResponseEntity<>(brand, HttpStatus.CREATED);
-
-        }catch (Exception e){
+            return new ResponseEntity<>(brandService.add(brandName), HttpStatus.CREATED);
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }

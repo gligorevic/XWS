@@ -1,6 +1,7 @@
 package com.example.CarInfoService.controller;
 
 import com.example.CarInfoService.domain.FuelType;
+import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.service.FuelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,15 +25,12 @@ public class FuelTypeController {
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> addFuelType(@PathVariable("fuelTypeName") String fuelTypeName){
         try{
-            FuelType fuelType = fuelTypeService.add(fuelTypeName);
+            return new ResponseEntity<>(fuelTypeService.add(fuelTypeName), HttpStatus.CREATED);
 
-            if(fuelType == null){
-                return new ResponseEntity<>("Fuel type already exists", HttpStatus.BAD_REQUEST);
-            }
-
-            return new ResponseEntity<>(fuelType, HttpStatus.CREATED);
-
-        }catch (Exception e){
+        } catch (CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        }
+        catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }

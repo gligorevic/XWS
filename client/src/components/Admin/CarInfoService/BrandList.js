@@ -5,11 +5,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AddIcon from "@material-ui/icons/Add";
-import EditIcon from "@material-ui/icons/Edit";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-
-import { getAllBrands } from "../../../store/actions/carInfo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,67 +17,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BrandList = ({
-  getAllBrands,
   allBrands,
+  selectedBrand,
   setSelectedBrand,
   handleClickBrand,
+  handleOpenDialog,
 }) => {
   const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(null);
 
-  useEffect(() => {
-    (async () => {
-      await getAllBrands();
-    })();
-  }, []);
-
-  const handleListItemClick = (event, brand, index) => {
-    console.log(index);
-    setSelectedIndex(index);
-    setSelectedBrand(brand);
-    handleClickBrand(event, brand);
+  const handleListItemClick = (event, brand) => {
+    if (selectedBrand && brand.id === selectedBrand.id) setSelectedBrand(null);
+    else {
+      handleClickBrand(event, brand);
+      setSelectedBrand(brand);
+    }
   };
 
   return (
     <div className={classes.root}>
-      {allBrands && (
-        <List component="nav" aria-label="main mailbox folders">
-          {allBrands.map((brand, index) => {
-            return (
-              <ListItem
-                button
-                selected={selectedIndex === index}
-                onClick={(event) => handleListItemClick(event, brand, index)}
-              >
-                <ListItemText primary={brand.brandName} />
-              </ListItem>
-            );
-          })}
-          <Divider />
+      <List
+        component="nav"
+        aria-label="main mailbox folders"
+        style={{ height: 400, overflowY: "scroll" }}
+      >
+        {allBrands.map((brand) => {
+          return (
+            <ListItem
+              button
+              selected={selectedBrand && brand.id === selectedBrand.id}
+              onClick={(event) => handleListItemClick(event, brand)}
+            >
+              <ListItemText primary={brand.brandName} />
+            </ListItem>
+          );
+        })}
+      </List>
 
-          <ListItem
-            button
-            selected={selectedIndex === allBrands.length}
-            onClick={(event) =>
-              handleListItemClick(event, "newBrand", allBrands.length)
-            }
-          >
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add new brand" />
-          </ListItem>
-        </List>
-      )}
+      <List>
+        <Divider />
+        <ListItem button onClick={(e) => handleOpenDialog(e, 0)}>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText primary="Add new brand" />
+        </ListItem>
+      </List>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  allBrands: state.carInfo.allBrands,
-  currentUser: state.user.user,
-});
-
-export default connect(mapStateToProps, {
-  getAllBrands,
-})(BrandList);
+export default BrandList;

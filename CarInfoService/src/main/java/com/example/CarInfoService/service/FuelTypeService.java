@@ -1,8 +1,10 @@
 package com.example.CarInfoService.service;
 
 import com.example.CarInfoService.domain.FuelType;
+import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.repository.FuelTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +15,11 @@ public class FuelTypeService {
     @Autowired
     private FuelTypeRepository fuelTypeRepository;
 
-    public FuelType add(String fuelTypeName) {
-
-        if(fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName) == null){
-            FuelType fuelType = new FuelType(fuelTypeName);
-            fuelTypeRepository.save(fuelType);
-            return fuelType;
-        }
-
-        return null;
+    public FuelType add(String fuelTypeName) throws CustomException {
+        if(fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName) == null)
+            return fuelTypeRepository.save(new FuelType(fuelTypeName));
+        else
+            throw new CustomException("Fuel type already exists", HttpStatus.BAD_REQUEST);
     }
 
     public List<FuelType> getAllFuelTypes() {

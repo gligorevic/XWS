@@ -1,16 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 import BrandList from "./BrandList";
 import ModelList from "./ModelList";
 import TypesList from "./TypesList";
-import AddNewTypeForm from "./AddNewTypeForm";
 
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
 import Axios from "axios";
-import { Button } from "@material-ui/core";
+
+import AddNewDialog from "./AddNewDialog";
+import AddNewTypeDialog from "./AddNewTypeDialog";
+
+const dialogEnum = {
+  UNOPEND: -1,
+  NEWBRAND: 0,
+  NEWMODEL: 1,
+  NEWFUELTYPE: 2,
+  NEWGEARSHIFTTYPE: 3,
+  NEWBODYTYPE: 4,
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,34 +27,30 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
   },
+  listContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+  },
 }));
 
 export default function ManipulateCarInfo() {
   const classes = useStyles();
 
-  const [selectedValueType, setSelectedValueType] = React.useState("");
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(null);
 
-  const [selectedBrand, setSelectedBrand] = React.useState(null);
-  const [selectedModel, setSelectedModel] = React.useState(null);
+  const [availableTypeList, setAvailableTypeList] = useState([]);
 
-  const [availableTypeList, setAvailableTypeList] = React.useState([]);
+  const [newEntityData, setNewEntityData] = useState("");
 
-  const [stateType, setStateType] = React.useState("");
-  const [stateModel, setStateModel] = React.useState({
-    modelName: "",
-    brandName: "",
-  });
-  const [stateBrand, setStateBrand] = React.useState("");
-
-  const [addNewType, setAddNewType] = React.useState(null);
-  const [addNewModel, setAddNewModel] = React.useState(false);
-  const [addNewBrand, setAddNewBrand] = React.useState(false);
-
-  const [allModels, setAllModels] = React.useState([]);
-  const [allFuelTypes, setAllFuelTypes] = React.useState([]);
-  const [allGearShiftTypes, setAllGearShiftTypes] = React.useState([]);
-  const [allBodyTypes, setAllBodyTypes] = React.useState([]);
-  const [allBrands, setAllBrands] = React.useState([]);
+  const [addDialogOpened, setAddDialogOpened] = useState(dialogEnum.UNOPEND);
+  const [allModels, setAllModels] = useState([]);
+  const [allFuelTypes, setAllFuelTypes] = useState([]);
+  const [allGearShiftTypes, setAllGearShiftTypes] = useState([]);
+  const [allBodyTypes, setAllBodyTypes] = useState([]);
+  const [allBrands, setAllBrands] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -56,70 +60,86 @@ export default function ManipulateCarInfo() {
   }, []);
 
   const handleClickBrand = async (event, brand) => {
-    if (brand !== "newBrand") {
-      const res = await Axios.get(`/car-info/brand/${brand.brandName}/model`);
-      setAllModels(res.data);
-      console.log(allModels);
-      brand.models = res.data;
-      setSelectedBrand(brand);
-    } else {
-      setSelectedBrand(null);
-      setAddNewBrand(true);
-    }
+    const res = await Axios.get(`/car-info/brand/${brand.brandName}/model`);
+    setAllModels(res.data);
+
+    brand.models = res.data;
   };
 
-  const handleClickModel = async (event, model) => {
-    if (model !== "newModel") {
-      const fuelType = await Axios.get(
-        `/car-info/model/${model.modelName}/fuel-type`
-      );
-      const gearShiftType = await Axios.get(
-        `/car-info/model/${model.modelName}/gear-shift-type`
-      );
-      const bodyType = await Axios.get(
-        `/car-info/model/${model.modelName}/body-type`
-      );
-      setAllBodyTypes(bodyType.data);
-      setAllFuelTypes(fuelType.data);
-      setAllGearShiftTypes(gearShiftType.data);
-      setSelectedModel(model);
-    } else {
-      setSelectedModel(null);
-      setAddNewModel(true);
-    }
+  const handleClickModel = async (e, model) => {
+    const fuelType = await Axios.get(
+      `/car-info/model/${model.modelName}/fuel-type`
+    );
+    const gearShiftType = await Axios.get(
+      `/car-info/model/${model.modelName}/gear-shift-type`
+    );
+    const bodyType = await Axios.get(
+      `/car-info/model/${model.modelName}/body-type`
+    );
+
+    setAllBodyTypes(bodyType.data);
+    setAllFuelTypes(fuelType.data);
+    setAllGearShiftTypes(gearShiftType.data);
+
+    setSelectedModel(model);
+    setAddDialogOpened(dialogEnum.UNOPEND);
+  };
+
+  const handleOpenDialog = (e, dialogType) => {
+    setAddDialogOpened(dialogType);
   };
 
   const handleClickType = async (event, type) => {
-    var getAvailableTypeList = [];
+    let getAvailableTypeList;
     switch (type) {
       case "newFuelType":
-        setAddNewType("fuel");
         getAvailableTypeList = await Axios.get(`/car-info/fuel-type`);
-        setAvailableTypeList(getAvailableTypeList.data);
-        return "";
+        setAvailableTypeList(
+          getAvailableTypeList.data.filter((availableType) =>
+            allFuelTypes.every(
+              (ownedFuelType) => availableType.id !== ownedFuelType.id
+            )
+          )
+        );
+        setAddDialogOpened(dialogEnum.NEWFUELTYPE);
+        break;
 
       case "newGearShiftType":
-        setAddNewType("gear");
         getAvailableTypeList = await Axios.get(`/car-info/gear-shift-type`);
-        setAvailableTypeList(getAvailableTypeList.data);
-        return "";
+        setAvailableTypeList(
+          getAvailableTypeList.data.filter((availableType) =>
+            allGearShiftTypes.every(
+              (ownedGearShift) => ownedGearShift.id !== availableType.id
+            )
+          )
+        );
+        setAddDialogOpened(dialogEnum.NEWGEARSHIFTTYPE);
+        break;
 
       case "newBodyType":
-        setAddNewType("body");
         getAvailableTypeList = await Axios.get(`/car-info/body-type`);
-        setAvailableTypeList(getAvailableTypeList.data);
-        return "";
-      default:
-        return "";
+        setAvailableTypeList(
+          getAvailableTypeList.data.filter((availableType) =>
+            allBodyTypes.every(
+              (ownedBodyType) => ownedBodyType.id !== availableType.id
+            )
+          )
+        );
+        setAddDialogOpened(dialogEnum.NEWBODYTYPE);
+        break;
     }
   };
 
   const handleSubmitModel = async (e) => {
     try {
       e.preventDefault();
-      stateModel.brandName = selectedBrand.brandName;
-      const newModelType = await Axios.post("/car-info/model", stateModel);
-      setAddNewModel(false);
+      const newModel = {
+        modelName: newEntityData,
+        brandName: selectedBrand.brandName,
+      };
+      await Axios.post("/car-info/model", newModel);
+      setAllModels((oldState) => [...oldState, newModel]);
+      setAddDialogOpened(dialogEnum.UNOPEND);
     } catch (e) {
       console.log(e);
     }
@@ -128,135 +148,112 @@ export default function ManipulateCarInfo() {
   const handleSubmitBrand = async (e) => {
     try {
       e.preventDefault();
-      const newBrandType = await Axios.post(
-        `/car-info/brand/${stateBrand.brandName}`
-      );
-      setAddNewBrand(false);
+      const response = await Axios.post(`/car-info/brand`, newEntityData, {
+        headers: { "Content-Type": "text/plain" },
+      });
+      console.log(allBrands);
+      console.log(response.data);
+      setAllBrands((oldBrands) => [...oldBrands, response.data]);
+      setAddDialogOpened(dialogEnum.UNOPEND);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleChangeModel = (e) => {
-    setStateModel({ ...stateModel, [e.target.name]: e.target.value });
+  const handleClose = (e) => {
+    setAddDialogOpened(dialogEnum.UNOPEND);
   };
 
-  const handleChangeBrand = (e) => {
-    setStateBrand({ ...stateBrand, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setNewEntityData(e.target.value);
+  };
+
+  const addingDialog = () => {
+    let availableTypes;
+
+    switch (addDialogOpened) {
+      case dialogEnum.NEWBRAND:
+        return (
+          <AddNewDialog
+            helperText="Brand name"
+            title="Add new brand"
+            handleSubmit={handleSubmitBrand}
+            handleClose={handleClose}
+            handleChange={handleChange}
+            open={dialogEnum.NEWBRAND === addDialogOpened}
+          />
+        );
+      case dialogEnum.NEWMODEL:
+        return (
+          <AddNewDialog
+            helperText="Model name"
+            title="Add new model"
+            handleSubmit={handleSubmitModel}
+            handleClose={handleClose}
+            handleChange={handleChange}
+            open={dialogEnum.NEWMODEL === addDialogOpened}
+          />
+        );
+      case dialogEnum.NEWFUELTYPE:
+      case dialogEnum.NEWGEARSHIFTTYPE:
+      case dialogEnum.NEWBODYTYPE:
+        return (
+          <AddNewTypeDialog
+            handleClose={handleClose}
+            setAddDialogOpened={setAddDialogOpened}
+            selectedModel={selectedModel}
+            open={addDialogOpened >= dialogEnum.NEWFUELTYPE}
+            currentDialog={addDialogOpened}
+            availableTypes={availableTypeList}
+            setAllFuelTypes={setAllFuelTypes}
+            setAllGearShiftTypes={setAllGearShiftTypes}
+            setAllBodyTypes={setAllBodyTypes}
+            isModelSelected={selectedModel !== null}
+          />
+        );
+    }
   };
 
   return (
-    <Grid container spacing={3}>
-      <Grid item sm={12} lg={5}>
-        {addNewBrand === false && (
-          <>
-            <h2 style={{ textAlign: "center" }}>Brands List</h2>
-            <BrandList
-              handleClickBrand={handleClickBrand}
-              setSelectedBrand={setSelectedBrand}
-            />
-          </>
-        )}
-        {addNewBrand === true && (
-          <>
-            <h2 style={{ textAlign: "center" }}>Add new brand</h2>
-            <form
-              className={classes.root}
-              noValidate
-              autoComplete="off"
-              onSubmit={handleSubmitBrand}
-            >
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="brandName"
-                label="Brand name"
-                id="brandName"
-                onChange={handleChangeBrand}
+    <>
+      <Grid container spacing={2}>
+        <Grid item sm={12} xl={7}>
+          <Grid container spacing={1}>
+            <Grid item sm={12} lg={6} className={classes.listContainer}>
+              <h2>Brands List</h2>
+              <BrandList
+                allBrands={allBrands}
+                selectedBrand={selectedBrand}
+                handleClickBrand={handleClickBrand}
+                setSelectedBrand={setSelectedBrand}
+                handleOpenDialog={handleOpenDialog}
               />
-              <br />
-              <Button type="submit" variant="contained" color="primary">
-                Add new brand
-              </Button>
-            </form>
-          </>
-        )}
-      </Grid>
-
-      <Grid item sm={12} lg={5}>
-        {addNewModel === false && (
-          <>
-            <h2 style={{ textAlign: "center" }}>Car Model List</h2>
-            <ModelList
-              selectedModel={selectedModel}
-              allModels={allModels}
-              handleClickModel={handleClickModel}
-              setSelectedModel={setSelectedModel}
-            />
-          </>
-        )}
-        {addNewModel === true && (
-          <>
-            <h2 style={{ textAlign: "center" }}>Add new model</h2>
-            <form
-              className={classes.root}
-              noValidate
-              autoComplete="off"
-              onSubmit={handleSubmitModel}
-            >
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="modelName"
-                label="Model name"
-                id="modelName"
-                onChange={handleChangeModel}
+            </Grid>
+            <Grid item sm={12} lg={6} className={classes.listContainer}>
+              <h2 style={{ textAlign: "center" }}>Car Model List</h2>
+              <ModelList
+                isSelectedBrand={selectedBrand !== null}
+                selectedModel={selectedModel}
+                allModels={allModels}
+                handleClickModel={handleClickModel}
+                setSelectedModel={setSelectedModel}
+                handleOpenDialog={handleOpenDialog}
               />
-              <br />
-              <Button
-                disabled={selectedBrand === null}
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
-                Add new model
-              </Button>
-            </form>
-          </>
-        )}
-      </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
 
-      <Grid item textAlign="center">
-        {addNewType === null && (
-          <Paper>
-            <h2 style={{ textAlign: "center" }}>Types</h2>
-            <TypesList
-              allBodyTypes={allBodyTypes}
-              allFuelTypes={allFuelTypes}
-              allGearShiftTypes={allGearShiftTypes}
-              handleClickType={handleClickType}
-            />
-          </Paper>
-        )}
-        {addNewType !== null && (
-          <Paper>
-            <AddNewTypeForm
-              setAddNewType={setAddNewType}
-              addNewType={addNewType}
-              allBodyTypes={allBodyTypes}
-              allFuelTypes={allFuelTypes}
-              allGearShiftTypes={allGearShiftTypes}
-              availableTypeList={availableTypeList}
-              setAvailableTypeList={setAvailableTypeList}
-              selectedModel={selectedModel}
-            ></AddNewTypeForm>
-          </Paper>
-        )}
+        <Grid item sm={12} xl={4} className={classes.listContainer}>
+          <h2 style={{ textAlign: "center" }}>Types</h2>
+          <TypesList
+            allBodyTypes={allBodyTypes}
+            allFuelTypes={allFuelTypes}
+            allGearShiftTypes={allGearShiftTypes}
+            handleClickType={handleClickType}
+          />
+        </Grid>
       </Grid>
-    </Grid>
+      {addDialogOpened !== dialogEnum.UNOPEND && addingDialog()}
+    </>
   );
 }

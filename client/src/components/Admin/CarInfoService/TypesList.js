@@ -15,7 +15,6 @@ import { getAllBrands } from "../../../store/actions/carInfo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -27,15 +26,13 @@ const TypeList = ({
   handleClickType,
 }) => {
   const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(null);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleListItemClick = (event, type, index) => {
-    setSelectedIndex(index);
+  const handleListItemClick = (event, type) => {
     handleClickType(event, type);
   };
 
@@ -52,105 +49,100 @@ const TypeList = ({
         <Tab label="Gearshift type" />
         <Tab label="Body type" />
       </Tabs>
-      {allFuelTypes && value === 0 && (
-        <List component="nav" aria-label="main mailbox folders">
-          {allFuelTypes.map((fuelType, index) => {
-            return (
-              <ListItem
-                button
-                selected={selectedIndex === index}
-                onClick={(event) => handleListItemClick(event, fuelType, index)}
-              >
-                <ListItemText primary={fuelType.fuelTypeName} />
-              </ListItem>
-            );
-          })}
-          <Divider />
-
-          <ListItem
-            button
-            selected={selectedIndex === allFuelTypes.length}
-            onClick={(event) =>
-              handleListItemClick(event, "newFuelType", allFuelTypes.length)
-            }
+      {value === 0 && (
+        <>
+          <List
+            component="nav"
+            aria-label="main mailbox folders"
+            style={{ height: 352 }}
           >
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add new type" />
-          </ListItem>
-        </List>
+            {allFuelTypes.map((fuelType) => {
+              return (
+                <ListItem>
+                  <ListItemText primary={fuelType.fuelTypeName} />
+                </ListItem>
+              );
+            })}
+          </List>
+          <List>
+            <Divider />
+
+            <ListItem
+              button
+              onClick={(event) => handleListItemClick(event, "newFuelType")}
+            >
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add new type" />
+            </ListItem>
+          </List>
+        </>
       )}
-      {allGearShiftTypes && value === 1 && (
-        <List component="nav" aria-label="main mailbox folders">
-          {allGearShiftTypes.map((gearShiftType, index) => {
-            return (
-              <ListItem
-                button
-                selected={selectedIndex === index}
-                onClick={(event) =>
-                  handleListItemClick(event, gearShiftType, index)
-                }
-              >
-                <ListItemText primary={gearShiftType.gearShiftName} />
-              </ListItem>
-            );
-          })}
-          <Divider />
-
-          <ListItem
-            button
-            selected={selectedIndex === allGearShiftTypes.length}
-            onClick={(event) =>
-              handleListItemClick(
-                event,
-                "newGearShiftType",
-                allGearShiftTypes.length
-              )
-            }
+      {value === 1 && (
+        <>
+          <List
+            component="nav"
+            aria-label="main mailbox folders"
+            style={{ height: 352 }}
           >
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add new type" />
-          </ListItem>
-        </List>
+            {allGearShiftTypes.map((gearShiftType) => {
+              return (
+                <ListItem>
+                  <ListItemText primary={gearShiftType.gearShiftName} />
+                </ListItem>
+              );
+            })}
+          </List>
+          <List>
+            <Divider />
+
+            <ListItem
+              button
+              onClick={(event) =>
+                handleListItemClick(event, "newGearShiftType")
+              }
+            >
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add new type" />
+            </ListItem>
+          </List>
+        </>
       )}
-      {allBodyTypes && value === 2 && (
-        <List component="nav" aria-label="main mailbox folders">
-          {allBodyTypes.map((bodyType, index) => {
-            return (
-              <ListItem
-                button
-                selected={selectedIndex === index}
-                onClick={(event) => handleListItemClick(event, bodyType, index)}
-              >
-                <ListItemText primary={bodyType.bodyTypeName} />
-              </ListItem>
-            );
-          })}
-          <Divider />
-
-          <ListItem
-            button
-            selected={selectedIndex === allBodyTypes.length}
-            onClick={(event) =>
-              handleListItemClick(event, "newBodyType", allBodyTypes.length)
-            }
+      {value === 2 && (
+        <>
+          <List
+            component="nav"
+            aria-label="main mailbox folders"
+            style={{ height: 352 }}
           >
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add new type" />
-          </ListItem>
-        </List>
+            {allBodyTypes.map((bodyType) => {
+              return (
+                <ListItem>
+                  <ListItemText primary={bodyType.bodyTypeName} />
+                </ListItem>
+              );
+            })}
+          </List>
+          <List>
+            <Divider />
+
+            <ListItem
+              button
+              onClick={(event) => handleListItemClick(event, "newBodyType")}
+            >
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add new type" />
+            </ListItem>
+          </List>
+        </>
       )}
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.user,
-});
-
-export default connect(mapStateToProps)(TypeList);
+export default TypeList;

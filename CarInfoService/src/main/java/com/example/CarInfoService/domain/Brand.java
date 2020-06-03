@@ -13,7 +13,7 @@ public class Brand {
 
     private String brandName;
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     private Collection<Model> models = new HashSet<>();
 
     public Brand() {
