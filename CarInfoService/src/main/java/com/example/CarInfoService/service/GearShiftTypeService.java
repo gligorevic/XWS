@@ -1,8 +1,10 @@
 package com.example.CarInfoService.service;
 
 import com.example.CarInfoService.domain.GearShiftType;
+import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.repository.GearShiftTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +15,7 @@ public class GearShiftTypeService {
     @Autowired
     private GearShiftTypeRepository gearShiftTypeRepository;
 
-    public GearShiftType add(String gearShiftTypeName) {
+    public GearShiftType add(String gearShiftTypeName) throws CustomException {
 
         if(gearShiftTypeRepository.findGearShiftTypeByGearShiftName(gearShiftTypeName) == null){
             GearShiftType gearShiftType = new GearShiftType(gearShiftTypeName);
@@ -21,16 +23,16 @@ public class GearShiftTypeService {
             return gearShiftType;
         }
 
-        return null;
+        throw new CustomException("Gearshift type already exists", HttpStatus.BAD_REQUEST);
     }
 
     public List<GearShiftType> getAllGearShiftTypes() {
         return gearShiftTypeRepository.findAll();
     }
 
-    public GearShiftType getGearShiftTypeByName(String gearShiftTypeName) {
+    public GearShiftType getGearShiftTypeByName(String gearShiftTypeName) throws CustomException {
         if(gearShiftTypeRepository.findGearShiftTypeByGearShiftName(gearShiftTypeName) == null)
-            return null;
+            throw new CustomException("Gearshift type doesn't exists", HttpStatus.BAD_REQUEST);
 
         return gearShiftTypeRepository.findGearShiftTypeByGearShiftName(gearShiftTypeName);
     }

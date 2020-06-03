@@ -2,8 +2,10 @@ package com.example.CarInfoService.service;
 
 import com.example.CarInfoService.domain.*;
 import com.example.CarInfoService.dto.ModelDTO;
+import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class ModelService {
     private FuelTypeRepository fuelTypeRepository;
 
 
-    public Model addNewModel(ModelDTO modelDTO) {
+    public Model addNewModel(ModelDTO modelDTO) throws CustomException {
 
         Model model = new Model(modelDTO.getModelName());
 
@@ -42,7 +44,7 @@ public class ModelService {
             for (String bodyTypeName : modelDTO.getBodyTypeNames()) {
                 BodyType bodyType = bodyTypeRepository.findBodyTypeByBodyTypeName(bodyTypeName);
                 if (bodyType == null)
-                    return null;
+                    throw  new CustomException("Body type doesn't exists", HttpStatus.BAD_REQUEST);
                 model.getBodyTypes().add(bodyType);
             }
         }
@@ -51,7 +53,7 @@ public class ModelService {
             for (String fuelTypeName : modelDTO.getFuelTypeNames()) {
                 FuelType fuelType = fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName);
                 if (fuelType == null)
-                    return null;
+                    throw  new CustomException("Fuel type doesn't exists", HttpStatus.BAD_REQUEST);
                 model.getFuelTypes().add(fuelType);
             }
         }
@@ -60,30 +62,30 @@ public class ModelService {
             for (String gearShiftName : modelDTO.getBodyTypeNames()) {
                 GearShiftType gearShiftType = gearShiftTypeRepository.findGearShiftTypeByGearShiftName(gearShiftName);
                 if (gearShiftType == null)
-                    return null;
+                    throw  new CustomException("Gearshift type doesn't exists", HttpStatus.BAD_REQUEST);
                 model.getGearShiftTypes().add(gearShiftType);
             }
         }
 
-        modelRepository.save(model);
-
-        return model;
+        return modelRepository.save(model);
     }
 
     public List<Model> getAllModels() {
         return modelRepository.findAll();
     }
 
-    public Model getModelByName(String modelName) {
+    public Model getModelByName(String modelName) throws CustomException {
         if(modelRepository.findModelByModelName(modelName) == null)
-            return null;
+            throw  new CustomException("Model doesn't exists", HttpStatus.BAD_REQUEST);
 
         return modelRepository.findModelByModelName(modelName);
     }
 
-    public List<Model> getModelsByBrandName(String brandName) {
+    public List<Model> getModelsByBrandName(String brandName) throws CustomException {
 
         Brand brand = brandRepository.findBrandByBrandName(brandName);
+        if(brand == null)
+            throw  new CustomException("Brand doesn't exists", HttpStatus.BAD_REQUEST);
 
         return modelRepository.findModelsByBrand(brand.getId());
     }
@@ -146,5 +148,12 @@ public class ModelService {
         modelRepository.save(model);
 
         return model;
+    }
+
+    public Model getModelById(Long modelId) throws CustomException {
+        if(modelRepository.findModelById(modelId) == null)
+            throw  new CustomException("Model doesn't exists", HttpStatus.BAD_REQUEST);
+
+        return modelRepository.findModelById(modelId);
     }
 }

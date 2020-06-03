@@ -29,17 +29,30 @@ export default function AddNewTypeDialog({
       switch (currentDialog) {
         case 2:
           const newfuelType = await Axios.post(
-            `/car-info/fuel-type/${stateType}`
+            `/car-info/fuel-type`,
+            stateType,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
           );
           break;
         case 3:
           const newGearType = await Axios.post(
-            `/car-info/gear-shift-type/${stateType}`
+            `/car-info/gear-shift-type`,
+            stateType,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
           );
           break;
         case 4:
+          console.log(stateType.toString());
           const newBodyType = await Axios.post(
-            `/car-info/body-type/${stateType}`
+            `/car-info/body-type`,
+            stateType.toString(),
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
           );
 
           break;
@@ -61,7 +74,11 @@ export default function AddNewTypeDialog({
       switch (currentDialog) {
         case 2:
           const newfuelType = await Axios.post(
-            `/car-info/model/${selectedModel.modelName}/fuel-type/${selectedType}`
+            `/car-info/model/${selectedModel.id}/fuel-type`,
+            selectedType,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
           );
           setAllFuelTypes((oldState) => {
             console.log(oldState);
@@ -70,13 +87,21 @@ export default function AddNewTypeDialog({
           break;
         case 3:
           const newGearType = await Axios.post(
-            `/car-info/model/${selectedModel.modelName}/gear-shift-type/${selectedType}`
+            `/car-info/model/${selectedModel.id}/gear-shift-type`,
+            selectedType,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
           );
           setAllGearShiftTypes((oldState) => [...oldState, forStateUpdate]);
           break;
         case 4:
           const newBodyType = await Axios.post(
-            `/car-info/model/${selectedModel.modelName}/body-type/${selectedType}`
+            `/car-info/model/${selectedModel.id}/body-type`,
+            selectedType,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
           );
 
           setAllBodyTypes((oldState) => [...oldState, forStateUpdate]);

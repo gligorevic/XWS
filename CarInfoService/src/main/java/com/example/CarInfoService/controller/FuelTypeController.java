@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +18,9 @@ public class FuelTypeController {
     @Autowired
     private FuelTypeService fuelTypeService;
 
-    @PostMapping("fuel-type/{fuelTypeName}")
+    @PostMapping("fuel-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> addFuelType(@PathVariable("fuelTypeName") String fuelTypeName){
+    public ResponseEntity<?> addFuelType(@RequestBody String fuelTypeName){
         try{
             return new ResponseEntity<>(fuelTypeService.add(fuelTypeName), HttpStatus.CREATED);
 
@@ -59,12 +56,10 @@ public class FuelTypeController {
     public ResponseEntity<?> getFuelTypeByName(@PathVariable("fuelTypeName") String fuelTypeName){
         try{
 
-            FuelType fuelType = fuelTypeService.getFuelTypeByName(fuelTypeName);
+            return new ResponseEntity<>(fuelTypeService.getFuelTypeByName(fuelTypeName), HttpStatus.OK);
 
-            if(fuelType == null)
-                return new ResponseEntity<>("No fuel type with that name.", HttpStatus.BAD_REQUEST);
-
-            return new ResponseEntity<>(fuelType, HttpStatus.OK);
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();

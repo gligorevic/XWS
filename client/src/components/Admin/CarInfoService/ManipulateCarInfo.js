@@ -67,15 +67,11 @@ export default function ManipulateCarInfo() {
   };
 
   const handleClickModel = async (e, model) => {
-    const fuelType = await Axios.get(
-      `/car-info/model/${model.modelName}/fuel-type`
-    );
+    const fuelType = await Axios.get(`/car-info/model/${model.id}/fuel-type`);
     const gearShiftType = await Axios.get(
-      `/car-info/model/${model.modelName}/gear-shift-type`
+      `/car-info/model/${model.id}/gear-shift-type`
     );
-    const bodyType = await Axios.get(
-      `/car-info/model/${model.modelName}/body-type`
-    );
+    const bodyType = await Axios.get(`/car-info/model/${model.id}/body-type`);
 
     setAllBodyTypes(bodyType.data);
     setAllFuelTypes(fuelType.data);

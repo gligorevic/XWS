@@ -5,6 +5,7 @@ import com.example.CarInfoService.domain.FuelType;
 import com.example.CarInfoService.domain.GearShiftType;
 import com.example.CarInfoService.domain.Model;
 import com.example.CarInfoService.dto.ModelDTO;
+import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.service.BodyTypeService;
 import com.example.CarInfoService.service.FuelTypeService;
 import com.example.CarInfoService.service.GearShiftTypeService;
@@ -38,13 +39,11 @@ public class ModelController {
     @PostMapping("model")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> addModel(@RequestBody ModelDTO modelDTO){
-
         try{
-            Model model = modelService.addNewModel(modelDTO);
-            if(model == null)
-                return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(modelService.addNewModel(modelDTO), HttpStatus.CREATED);
 
-            return new ResponseEntity<>(model, HttpStatus.CREATED);
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch(Exception e){
             e.printStackTrace();
@@ -52,52 +51,55 @@ public class ModelController {
         }
     }
 
-    @PostMapping("model/{modelName}/fuel-type/{fuelTypeName}")
+    @PostMapping("model/{modelId}/fuel-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> addFuelTypeToModel(@PathVariable("modelName") String modelName, @PathVariable("fuelTypeName") String fuelTypeName){
+    public ResponseEntity<?> addFuelTypeToModel(@PathVariable("modelId") Long modelId, @RequestBody String fuelTypeName){
 
         try{
-            Model model = modelService.getModelByName(modelName);
+            Model model = modelService.getModelById(modelId);
             FuelType fuelType = fuelTypeService.getFuelTypeByName(fuelTypeName);
-            if(model == null || fuelType == null)
-                return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
 
             return new ResponseEntity<>(modelService.addFuelTypeToModel(model, fuelType), HttpStatus.CREATED);
 
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
         }catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("model/{modelName}/gear-shift-type/{gearShiftTypeName}")
+    @PostMapping("model/{modelId}/gear-shift-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> addGearShiftTypeToModel(@PathVariable("modelName") String modelName, @PathVariable("gearShiftTypeName") String gearShiftTypeName){
+    public ResponseEntity<?> addGearShiftTypeToModel(@PathVariable("modelId") Long modelId, @RequestBody String gearShiftTypeName){
 
         try{
-            Model model = modelService.getModelByName(modelName);
+            Model model = modelService.getModelById(modelId);
             GearShiftType gearShiftType = gearShiftTypeService.getGearShiftTypeByName(gearShiftTypeName);
-            if(model == null || gearShiftType == null)
-                return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
 
             return new ResponseEntity<>(modelService.addGearShiftTypeToModel(model, gearShiftType), HttpStatus.CREATED);
 
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
         }catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("model/{modelName}/body-type/{bodyTypeName}")
+    @PostMapping("model/{modelId}/body-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> addBodyTypeToModel(@PathVariable("modelName") String modelName, @PathVariable("bodyTypeName") String bodyTypeName){
+    public ResponseEntity<?> addBodyTypeToModel(@PathVariable("modelId") Long modelId, @RequestBody String bodyTypeName){
 
         try{
-            Model model = modelService.getModelByName(modelName);
+            Model model = modelService.getModelById(modelId);
             BodyType bodyType = bodyTypeService.getBodyTypeByName(bodyTypeName);
-            if(model == null || bodyType == null)
-                return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
 
             return new ResponseEntity<>(modelService.addBodyTypeToModel(model, bodyType), HttpStatus.CREATED);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch(Exception e){
             e.printStackTrace();
@@ -111,12 +113,7 @@ public class ModelController {
     public ResponseEntity<?> getAllModels(){
         try{
 
-            List<Model> models = modelService.getAllModels();
-
-            if(models == null || models.isEmpty())
-                models = new ArrayList<>();
-
-            return new ResponseEntity<>(models, HttpStatus.OK);
+            return new ResponseEntity<>(modelService.getAllModels(), HttpStatus.OK);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -124,17 +121,15 @@ public class ModelController {
         }
     }
 
-    @GetMapping("model/{modelName}")
+    @GetMapping("model/{modelId}")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> getModelByName(@PathVariable("modelName") String modelName){
+    public ResponseEntity<?> getModelById(@PathVariable("modelId") Long modelId){
         try{
 
-            Model model = modelService.getModelByName(modelName);
+            return new ResponseEntity<>(modelService.getModelById(modelId), HttpStatus.OK);
 
-            if(model == null)
-                return new ResponseEntity<>("No model with that name.", HttpStatus.BAD_REQUEST);
-
-            return new ResponseEntity<>(model, HttpStatus.OK);
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -142,53 +137,53 @@ public class ModelController {
         }
     }
 
-    @GetMapping("model/{modelName}/body-type")
+    @GetMapping("model/{modelId}/body-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> getBodyTypeByModelName(@PathVariable("modelName") String modelName){
+    public ResponseEntity<?> getBodyTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
 
-            Model model = modelService.getModelByName(modelName);
-
-            if(model == null)
-                return new ResponseEntity<>("No model with that name.", HttpStatus.BAD_REQUEST);
+            Model model = modelService.getModelById(modelId);
 
             return new ResponseEntity<>(modelService.getBodyTypesFromModel(model.getId()), HttpStatus.OK);
 
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("model/{modelName}/gear-shift-type")
+    @GetMapping("model/{modelId}/gear-shift-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> getGearShiftTypeByModelName(@PathVariable("modelName") String modelName){
+    public ResponseEntity<?> getGearShiftTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
 
-            Model model = modelService.getModelByName(modelName);
-
-            if(model == null)
-                return new ResponseEntity<>("No model with that name.", HttpStatus.BAD_REQUEST);
+            Model model = modelService.getModelById(modelId);
 
             return new ResponseEntity<>(modelService.getGearShiftTypesFromModel(model.getId()), HttpStatus.OK);
 
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("model/{modelName}/fuel-type")
+    @GetMapping("model/{modelId}/fuel-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> getFuelTypeByModelName(@PathVariable("modelName") String modelName){
+    public ResponseEntity<?> getFuelTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
 
-            Model model = modelService.getModelByName(modelName);
-
-            if(model == null)
-                return new ResponseEntity<>("No model with that name.", HttpStatus.BAD_REQUEST);
+            Model model = modelService.getModelById(modelId);
 
             return new ResponseEntity<>(modelService.getFuelTypesFromModel(model.getId()), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();

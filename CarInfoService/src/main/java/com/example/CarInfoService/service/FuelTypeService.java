@@ -26,9 +26,9 @@ public class FuelTypeService {
         return fuelTypeRepository.findAll();
     }
 
-    public FuelType getFuelTypeByName(String fuelTypeName) {
+    public FuelType getFuelTypeByName(String fuelTypeName) throws CustomException {
         if(fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName) == null)
-            return null;
+            throw new CustomException("Fuel type doesn't exists", HttpStatus.BAD_REQUEST);
 
         return fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName);
     }

@@ -26,9 +26,9 @@ public class BrandService {
         return brandRepository.findAll();
     }
 
-    public Brand getBrandByName(String brandName) {
+    public Brand getBrandByName(String brandName) throws CustomException {
         if(brandRepository.findBrandByBrandName(brandName) == null)
-            return null;
+            throw  new CustomException("Brand doesn't exists", HttpStatus.BAD_REQUEST);
 
         return brandRepository.findBrandByBrandName(brandName);
     }

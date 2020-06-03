@@ -1,15 +1,13 @@
 package com.example.CarInfoService.controller;
 
 import com.example.CarInfoService.domain.BodyType;
+import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.service.BodyTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +18,15 @@ public class BodyTypeController {
     @Autowired
     private BodyTypeService bodyTypeService;
 
-    @PostMapping("body-type/{bodyTypeName}")
+    @PostMapping("body-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
-    public ResponseEntity<?> addBodyType(@PathVariable("bodyTypeName") String bodyTypeName){
+    public ResponseEntity<?> addBodyType(@RequestBody String bodyTypeName){
         try{
-            BodyType bodyType = bodyTypeService.addBodyType(bodyTypeName);
 
-            if(bodyType == null){
-                return new ResponseEntity<>("Body type already exists", HttpStatus.BAD_REQUEST);
-            }
+            return new ResponseEntity<>(bodyTypeService.addBodyType(bodyTypeName), HttpStatus.CREATED);
 
-            return new ResponseEntity<>(bodyType, HttpStatus.CREATED);
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -61,12 +57,10 @@ public class BodyTypeController {
     public ResponseEntity<?> getBodyTypeByName(@PathVariable("bodyTypeName") String bodyTypeName){
         try{
 
-            BodyType bodyType = bodyTypeService.getBodyTypeByName(bodyTypeName);
+            return new ResponseEntity<>(bodyTypeService.getBodyTypeByName(bodyTypeName), HttpStatus.OK);
 
-            if(bodyType == null)
-                return new ResponseEntity<>("No body type with that name.", HttpStatus.BAD_REQUEST);
-
-            return new ResponseEntity<>(bodyType, HttpStatus.OK);
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();

@@ -57,13 +57,10 @@ public class BrandController {
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getBrandByName(@PathVariable("brandName") String brandName){
         try{
+            return new ResponseEntity<>(brandService.getBrandByName(brandName), HttpStatus.OK);
 
-            Brand brand = brandService.getBrandByName(brandName);
-
-            if(brand == null)
-                return new ResponseEntity<>("No brand with that name.", HttpStatus.BAD_REQUEST);
-
-            return new ResponseEntity<>(brand, HttpStatus.OK);
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -75,13 +72,10 @@ public class BrandController {
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getModelsFromBrand(@PathVariable("brandName") String brandName){
         try{
-
-            Brand brand = brandService.getBrandByName(brandName);
-
-            if(brand == null)
-                return new ResponseEntity<>("No brand with that name.", HttpStatus.BAD_REQUEST);
-
             return new ResponseEntity<>(modelService.getModelsByBrandName(brandName), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();
