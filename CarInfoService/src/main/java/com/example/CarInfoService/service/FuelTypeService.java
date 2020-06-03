@@ -1,10 +1,11 @@
 package com.example.CarInfoService.service;
 
-import com.example.CarInfoService.domain.BodyType;
 import com.example.CarInfoService.domain.FuelType;
 import com.example.CarInfoService.repository.FuelTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class FuelTypeService {
@@ -21,5 +22,16 @@ public class FuelTypeService {
         }
 
         return null;
+    }
+
+    public List<FuelType> getAllFuelTypes() {
+        return fuelTypeRepository.findAll();
+    }
+
+    public FuelType getFuelTypeByName(String fuelTypeName) {
+        if(fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName) == null)
+            return null;
+
+        return fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName);
     }
 }

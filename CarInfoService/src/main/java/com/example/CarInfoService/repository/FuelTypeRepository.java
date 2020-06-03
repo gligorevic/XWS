@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface FuelTypeRepository extends JpaRepository<FuelType, Long> {
 
     FuelType findFuelTypeByFuelTypeName(String fuelTypeName);
+
+    FuelType findFuelTypeById(Long id);
 }

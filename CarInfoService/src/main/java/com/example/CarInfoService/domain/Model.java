@@ -19,14 +19,35 @@ public class Model {
 
     private String modelName;
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Collection<FuelType> fuelTypes = new HashSet<>();
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "MODEL_FUEL_TYPES",
+            joinColumns = @JoinColumn(
+                    name = "MODEL_ID", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "FUEL_TYPE_ID", referencedColumnName = "id"))
+    private List<FuelType> fuelTypes = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Collection<BodyType> bodyTypes = new HashSet<>();
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "MODEL_BODY_TYPES",
+            joinColumns = @JoinColumn(
+                    name = "MODEL_ID", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "BODY_TYPE_ID", referencedColumnName = "id"))
+    private List<BodyType> bodyTypes = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Collection<GearShiftType> gearShiftTypes = new HashSet<>();
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "MODEL_GEAR_SHIFT_TYPES",
+            joinColumns = @JoinColumn(
+                    name = "MODEL_ID", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "GEAR_SHIFT_TYPE_ID", referencedColumnName = "id"))
+    private List<GearShiftType> gearShiftTypes = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="brand_id", updatable = false, nullable = false)
@@ -36,7 +57,7 @@ public class Model {
     public Model() {
     }
 
-    public Model(String modelName, Collection<FuelType> fuelTypes, Collection<BodyType> bodyTypes, Collection<GearShiftType> gearShiftTypes, Brand brand) {
+    public Model(String modelName, List<FuelType> fuelTypes, List<BodyType> bodyTypes, List<GearShiftType> gearShiftTypes, Brand brand) {
         this.modelName = modelName;
         this.fuelTypes = fuelTypes;
         this.bodyTypes = bodyTypes;
@@ -65,27 +86,27 @@ public class Model {
         this.modelName = modelName;
     }
 
-    public Collection<FuelType> getFuelTypes() {
+    public List<FuelType> getFuelTypes() {
         return fuelTypes;
     }
 
-    public void setFuelTypes(Collection<FuelType> fuelTypes) {
+    public void setFuelTypes(List<FuelType> fuelTypes) {
         this.fuelTypes = fuelTypes;
     }
 
-    public Collection<BodyType> getBodyTypes() {
+    public List<BodyType> getBodyTypes() {
         return bodyTypes;
     }
 
-    public void setBodyTypes(Collection<BodyType> bodyTypes) {
+    public void setBodyTypes(List<BodyType> bodyTypes) {
         this.bodyTypes = bodyTypes;
     }
 
-    public Collection<GearShiftType> getGearShiftTypes() {
+    public List<GearShiftType> getGearShiftTypes() {
         return gearShiftTypes;
     }
 
-    public void setGearShiftTypes(Collection<GearShiftType> gearShiftTypes) {
+    public void setGearShiftTypes(List<GearShiftType> gearShiftTypes) {
         this.gearShiftTypes = gearShiftTypes;
     }
 
