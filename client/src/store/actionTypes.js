@@ -12,3 +12,6 @@ export const SET_ALL_USERS = "SET_ALL_USERS";
 export const SET_USER_BLOCKED = "SET_USER_BLOCKED";
 
 export const SET_ALLUSER_DELETE = "SET_ALLUSER_DELETE";
+
+export const SET_ALL_BRANDS = "SET_ALL_BRANDS";
+export const SET_ALL_MODELS = "SET_ALL_MODELS";
