@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = ({ authUser, user, history }) => {
   const classes = useStyles();
 
+  const [error, setError] = useState(false);
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -65,19 +66,20 @@ const Login = ({ authUser, user, history }) => {
       ...prevState,
       [name]: value,
     }));
+    setError(false);
   };
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      console.log("saljem req");
-      await authUser({ username: state.email, password: state.password });
-
-      console.log("evo odg");
+    e.preventDefault();
+    const res = await authUser({
+      username: state.email,
+      password: state.password,
+    });
+    if (res.status === 200) {
       history.push("/");
-    } catch (e) {
-      console.log(e);
     }
+
+    setError(true);
   };
 
   return (
@@ -106,6 +108,8 @@ const Login = ({ authUser, user, history }) => {
               autoComplete="email"
               value={state.email}
               onChange={handleChange}
+              error={error}
+              helperText={error && "Invalid username/password."}
               autoFocus
             />
             <TextField
@@ -119,6 +123,8 @@ const Login = ({ authUser, user, history }) => {
               id="password"
               autoComplete="current-password"
               value={state.password}
+              error={error}
+              helperText={error && "Invalid username/password."}
               onChange={handleChange}
             />
             <FormControlLabel
