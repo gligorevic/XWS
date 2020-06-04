@@ -17,6 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Paper from "@material-ui/core/Paper";
+import AdvertisementDetails from "../Dialogs/AdvertisementDetails";
 
 const useStyles = makeStyles({
   root: {
@@ -81,9 +82,7 @@ const Home = ({ ads, getAllAdvertisements }) => {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
-                      View more
-                    </Button>
+                    <AdvertisementDetails id={row.id} />
                     <IconButton
                       color="primary"
                       aria-label="add to shopping cart"

@@ -25,7 +25,7 @@ export const getUserAdvertisements = () => async (dispatch, getState) => {
     const profileState = getState().profile.profile;
     if (profileState === null) {
       const email = getState().user.user.username;
-      const advertisements = await axios.get(`/search/${email}`);
+      const advertisements = await axios.get(`/search/user/${email}`);
       dispatch(setUserAdvertisements(advertisements.data));
     }
   } catch (err) {

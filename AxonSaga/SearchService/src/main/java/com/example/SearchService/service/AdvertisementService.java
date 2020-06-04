@@ -30,4 +30,8 @@ public class AdvertisementService {
         return advertisementRepository.findAll();
     }
 
+    public Advertisement getAdvertisementById(Long id){
+        return advertisementRepository.findAdvertisementById(id);
+    }
+
 }
