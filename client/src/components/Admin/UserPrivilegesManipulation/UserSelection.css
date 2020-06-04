@@ -1,0 +1,38 @@
+.pulsing {
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.delete {
+  color: #ef5350;
+  float: right;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 30px !important;
+}
+
+.delete:hover {
+  color: #f44336;
+  transition: all 0.3s ease;
+  transform: scale(1.4);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  30% {
+    transform: scale(1.4);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}

@@ -3,8 +3,10 @@ package com.example.AuthService.service;
 import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.domain.Role;
 import com.example.AuthService.domain.User;
+import com.example.AuthService.exception.CustomException;
 import com.example.AuthService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +33,8 @@ public class MyUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
+        } else if(user.isBlocked()) {
+            throw new UsernameNotFoundException("User is blocked");
         }
 
         return user;

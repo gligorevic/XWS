@@ -1,9 +1,8 @@
 package com.example.CarInfoService.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 public class Brand {
@@ -12,13 +11,16 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String bodyName;
+    private String brandName;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<Model> models = new HashSet<>();
 
     public Brand() {
     }
 
-    public Brand(String bodyName) {
-        this.bodyName = bodyName;
+    public Brand(String brandName) {
+        this.brandName = brandName;
     }
 
     public Long getId() {
@@ -29,11 +31,19 @@ public class Brand {
         this.id = id;
     }
 
-    public String getBodyName() {
-        return bodyName;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setBodyName(String bodyName) {
-        this.bodyName = bodyName;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public Collection<Model> getModels() {
+        return models;
+    }
+
+    public void setModels(Collection<Model> models) {
+        this.models = models;
     }
 }

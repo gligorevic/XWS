@@ -1,14 +1,24 @@
 package com.example.CarInfoService.dto;
 
+import java.util.HashSet;
+
 public class ModelDTO {
 
     private String modelName;
     private String brandName;
-    private String fuelTypeName;
-    private String gearShiftName;
-    private String bodyTypeName;
+    private HashSet<String> fuelTypeNames;
+    private HashSet<String> gearShiftNames;
+    private HashSet<String> bodyTypeNames;
 
     public ModelDTO() {
+    }
+
+    public ModelDTO(String modelName, String brandName, HashSet<String> fuelTypeNames, HashSet<String> gearShiftNames, HashSet<String> bodyTypeNames) {
+        this.modelName = modelName;
+        this.brandName = brandName;
+        this.fuelTypeNames = fuelTypeNames;
+        this.gearShiftNames = gearShiftNames;
+        this.bodyTypeNames = bodyTypeNames;
     }
 
     public String getModelName() {
@@ -27,35 +37,27 @@ public class ModelDTO {
         this.brandName = brandName;
     }
 
-    public String getFuelTypeName() {
-        return fuelTypeName;
+    public HashSet<String> getFuelTypeNames() {
+        return fuelTypeNames;
     }
 
-    public void setFuelTypeName(String fuelTypeName) {
-        this.fuelTypeName = fuelTypeName;
+    public void setFuelTypeNames(HashSet<String> fuelTypeName) {
+        this.fuelTypeNames = fuelTypeName;
     }
 
-    public String getGearShiftName() {
-        return gearShiftName;
+    public HashSet<String> getGearShiftNames() {
+        return gearShiftNames;
     }
 
-    public void setGearShiftName(String gearShiftName) {
-        this.gearShiftName = gearShiftName;
+    public void setGearShiftNames(HashSet<String> gearShiftName) {
+        this.gearShiftNames = gearShiftName;
     }
 
-    public String getBodyTypeName() {
-        return bodyTypeName;
+    public HashSet<String> getBodyTypeNames() {
+        return bodyTypeNames;
     }
 
-    public void setBodyTypeName(String bodyTypeName) {
-        this.bodyTypeName = bodyTypeName;
-    }
-
-    public ModelDTO(String modelName, String brandName, String fuelTypeName, String gearShiftName, String bodyTypeName) {
-        this.modelName = modelName;
-        this.brandName = brandName;
-        this.fuelTypeName = fuelTypeName;
-        this.gearShiftName = gearShiftName;
-        this.bodyTypeName = bodyTypeName;
+    public void setBodyTypeNames(HashSet<String> bodyTypeName) {
+        this.bodyTypeNames = bodyTypeName;
     }
 }

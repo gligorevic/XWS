@@ -1,9 +1,11 @@
 package com.example.AuthService.security;
 
 import com.example.AuthService.domain.User;
+import com.example.AuthService.exception.CustomException;
 import com.example.AuthService.repository.UserRepository;
 import com.example.AuthService.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,23 +44,28 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         System.out.println("U filteru sam http");
         System.out.println(jwt);
 
-        if(StringUtils.hasText(jwt) && jwtTokenHelper.validate(jwt)) {
-            String username = jwtTokenHelper.getUserUsernameFromJWT(jwt);
-            List<String> privileges = jwtTokenHelper.getPrivilegesFromAccessToken(jwt);
+        try {
+            if(StringUtils.hasText(jwt) && jwtTokenHelper.validate(jwt)) {
+                String username = jwtTokenHelper.getUserUsernameFromJWT(jwt);
+                List<String> privileges = jwtTokenHelper.getPrivilegesFromAccessToken(jwt);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if(username != null && privileges != null) {
-                Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+                if(username != null && privileges != null) {
+                    Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
-                for (String privilege : privileges) {
-                    authorities.add(new SimpleGrantedAuthority(privilege));
+                    for (String privilege : privileges) {
+                        authorities.add(new SimpleGrantedAuthority(privilege));
+                    }
+
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                    SecurityContextHolder.getContext().setAuthentication(auth);
                 }
-
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(auth);
             }
+        } catch (CustomException e) {
+            e.printStackTrace();
+            httpServletResponse.sendError(e.getHttpStatus().value(), e.getMessage());
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);

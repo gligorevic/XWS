@@ -4,7 +4,9 @@ import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.domain.Role;
 import com.example.AuthService.domain.User;
 
+import com.example.AuthService.exception.CustomException;
 import io.jsonwebtoken.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -30,6 +32,7 @@ public class JWTTokenHelper {
         claims.put("id", (Long.toString(user.getId())));
         claims.put("username", user.getEmail());
         claims.put("role", user.getRoles());
+        claims.put("blocked", user.isBlocked());
 
         return Jwts.builder()
                 .setSubject(userId)
@@ -40,22 +43,21 @@ public class JWTTokenHelper {
                 .compact();
     }
 
-    public boolean validate(String token){
+    public boolean validate(String token) throws CustomException {
         try{
             Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
             return true;
         }catch (SignatureException ex){
-            System.out.println("Invalid JWT Signature");
+            throw  new CustomException("Invalid JWT Signature", HttpStatus.BAD_REQUEST);
         }catch (MalformedJwtException ex){
-            System.out.println("Invalid JWT Token");
+            throw  new CustomException("Invalid JWT Token", HttpStatus.BAD_REQUEST);
         }catch (ExpiredJwtException ex){
-            System.out.println("Expired JWT token");
+            throw  new CustomException("Expired JWT token", HttpStatus.BAD_REQUEST);
         }catch (UnsupportedJwtException ex){
-            System.out.println("Unsupported JWT token");
+            throw  new CustomException("Unsupported JWT token", HttpStatus.BAD_REQUEST);
         }catch (IllegalArgumentException ex){
-            System.out.println("JWT claims string is empty");
+            throw  new CustomException("JWT claims string is empty", HttpStatus.BAD_REQUEST);
         }
-        return false;
     }
 
     public String getUserUsernameFromJWT(String token){
