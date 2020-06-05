@@ -43,6 +43,21 @@ const Home = ({ ads, getAllAdvertisements }) => {
     getAllAdvertisements();
   }, []);
   const classes = useStyles();
+
+  const handleAddToCart = (event, adId) => {
+    event.preventDefault();
+    let cartState = JSON.parse(localStorage.getItem("Cart")) || [];
+
+    if (cartState === []) {
+      cartState = [adId];
+      localStorage.setItem("Cart", JSON.stringify(cartState));
+    } else {
+      if (cartState.includes(adId)) return;
+      cartState = [...cartState, adId];
+      localStorage.setItem("Cart", JSON.stringify(cartState));
+    }
+  };
+
   return (
     <div className={classes.back}>
       <MainNavbar />
@@ -85,6 +100,7 @@ const Home = ({ ads, getAllAdvertisements }) => {
                       View more
                     </Button>
                     <IconButton
+                      onClick={(event) => handleAddToCart(event, row.id)}
                       color="primary"
                       aria-label="add to shopping cart"
                     >

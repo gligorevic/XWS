@@ -6,6 +6,7 @@ import com.example.SearchService.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,4 +31,11 @@ public class AdvertisementService {
         return advertisementRepository.findAll();
     }
 
+    public Advertisement getAdvertisement(Long adId) {
+       return advertisementRepository.findAdvertisementById(adId);
+    }
+
+    public List<Advertisement> getAdvertisementsCart(Long[] adIds) {
+        return advertisementRepository.findAllByIdIn(adIds);
+    }
 }
