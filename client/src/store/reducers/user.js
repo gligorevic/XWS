@@ -3,10 +3,12 @@ import {
   SET_ALL_USERS,
   SET_USER_BLOCKED,
   SET_ALLUSER_DELETE,
+  SET_CART_ITEMS_NUM,
 } from "../actionTypes";
 
 const DEFAULT_STATE = {
   isAuthenticated: false,
+  cartItemsNum: 0,
   user: {},
   allUsers: [],
 };
@@ -35,6 +37,11 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         allUsers: state.allUsers.filter((user) => user.id !== action.userId),
+      };
+    case SET_CART_ITEMS_NUM:
+      return {
+        ...state,
+        cartItemsNum: action.cartItemsNum,
       };
     default:
       return state;

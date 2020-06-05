@@ -1,22 +1,50 @@
 package com.example.RequestService.dto;
 
 import com.example.RequestService.domain.PaidState;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 public class RequestDTO {
 
-    private PaidState paidState;
+    private Long id;
 
-    //------Need to change variable type to Collection<Advertisement> when class Advertisement is made-------
-    private Long advertisementIds;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
+    private Date freeFrom;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
+    private Date freeTo;
 
     public RequestDTO() {
     }
 
-    public PaidState getPaidState() {
-        return paidState;
+    public RequestDTO(Long id, Date freeFrom, Date freeTo) {
+        this.id = id;
+        this.freeFrom = freeFrom;
+        this.freeTo = freeTo;
     }
 
-    public void setPaidState(PaidState paidState) {
-        this.paidState = paidState;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getFreeFrom() {
+        return freeFrom;
+    }
+
+    public void setFreeFrom(Date freeFrom) {
+        this.freeFrom = freeFrom;
+    }
+
+    public Date getFreeTo() {
+        return freeTo;
+    }
+
+    public void setFreeTo(Date freeTo) {
+        this.freeTo = freeTo;
     }
 }

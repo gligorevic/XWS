@@ -109,7 +109,6 @@ public class ModelController {
 
 
     @GetMapping("model")
-    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getAllModels(){
         try{
 
@@ -138,7 +137,6 @@ public class ModelController {
     }
 
     @GetMapping("model/{modelId}/body-type")
-    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getBodyTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
 
@@ -156,7 +154,6 @@ public class ModelController {
     }
 
     @GetMapping("model/{modelId}/gear-shift-type")
-    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getGearShiftTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
 
@@ -174,7 +171,6 @@ public class ModelController {
     }
 
     @GetMapping("model/{modelId}/fuel-type")
-    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getFuelTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
 

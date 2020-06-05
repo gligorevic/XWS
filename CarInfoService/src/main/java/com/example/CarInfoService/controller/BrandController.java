@@ -36,7 +36,6 @@ public class BrandController {
     }
 
     @GetMapping("brand")
-    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getAllBrands(){
         try{
 
@@ -69,7 +68,6 @@ public class BrandController {
     }
 
     @GetMapping("brand/{brandName}/model")
-    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getModelsFromBrand(@PathVariable("brandName") String brandName){
         try{
             return new ResponseEntity<>(modelService.getModelsByBrandName(brandName), HttpStatus.OK);

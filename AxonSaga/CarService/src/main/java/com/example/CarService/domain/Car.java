@@ -1,9 +1,10 @@
 package com.example.CarService.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.CarService.dto.CarDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Car {
@@ -24,7 +25,35 @@ public class Car {
 
     private Integer kmPassed;
 
-    private Long userAgentId;
+    private String userEmail;
+
+    private String locationToken;
+
+    private Date crationDate;
+
+    public Car(){
+    }
+
+    public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, String userAgentId, String locationToken) {
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.gearShiftName = gearShiftName;
+        this.fuelTypeName = fuelTypeName;
+        this.bodyName = bodyName;
+        this.kmPassed = kmPassed;
+        this.userEmail = userAgentId;
+        this.locationToken = locationToken;
+    }
+
+    public Car(CarDTO carDTO) {
+        this.brandName = carDTO.getBrandName();
+        this.modelName = carDTO.getModelName();
+        this.gearShiftName = carDTO.getGearShiftName();
+        this.fuelTypeName = carDTO.getFuelTypeName();
+        this.bodyName = carDTO.getBodyName();
+        this.kmPassed = carDTO.getKmPassed();
+        this.userEmail = carDTO.getUserEmail();
+    }
 
     public Long getId() {
         return id;
@@ -82,11 +111,32 @@ public class Car {
         this.kmPassed = kmPassed;
     }
 
-    public Long getUserAgentId() {
-        return userAgentId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserAgentId(Long userAgentId) {
-        this.userAgentId = userAgentId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getLocationToken() {
+        return locationToken;
+    }
+
+    public void setLocationToken(String locationToken) {
+        this.locationToken = locationToken;
+    }
+
+    public Date getCrationDate() {
+        return crationDate;
+    }
+
+    public void setCrationDate(Date crationDate) {
+        this.crationDate = crationDate;
+    }
+
+    @PrePersist
+    protected void onCreate(){
+        this.crationDate= new Date();
     }
 }

@@ -1,26 +1,41 @@
 import React from "react";
 import MainNavbar from "../layouts/Navbar/MainNavbar";
-import InfoDialog from "../Dialogs/InfoDialog";
 import ficaImage from "../../images/fica.jpg";
 
-const Home = ({}) => {
+import { makeStyles } from "@material-ui/core/styles";
+
+import Advertisements from "./Advertisements";
+import Search from "../Search/Search";
+
+const useStyles = makeStyles((theme) => ({
+  back: {
+    backgroundImage:
+      "linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(" +
+      ficaImage +
+      ")",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    height: "100vh",
+  },
+  center: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+}));
+
+const Home = () => {
+  const classes = useStyles();
+
   return (
-    <>
+    <div className={classes.back}>
       <MainNavbar />
-      <img
-        src={ficaImage}
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: -1,
-          opacity: 0.6,
-        }}
-      />
-      <p>Stranica sa oglasima</p>
-    </>
+      <div className={classes.center}>
+        <Search />
+        <Advertisements />
+      </div>
+    </div>
   );
 };
 

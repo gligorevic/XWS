@@ -1,6 +1,8 @@
 package com.example.SearchService.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,13 +14,26 @@ public class ReservationPeriod {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date startDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="advertisement_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Advertisement advertisement;
+
+    public ReservationPeriod(){
+
+    }
+
+    public ReservationPeriod(Date startDate, Date endDate, Advertisement advertisement){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.advertisement = advertisement;
+    }
 
     public Long getId() {
         return id;

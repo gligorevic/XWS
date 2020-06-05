@@ -8,12 +8,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { configureStore } from "./store/index";
 import Home from "./components/Home/Home";
 import Login from "./components/Pages/Login";
+import CartPage from "./components/EndUser/Cart-Request/CartPage";
 import PrivateAdminRoute from "./routing/PrivateAdminRoute";
 import PrivateUserRoute from "./routing/PrivateUserRoute";
 import { setAuthorizationToken, setUser } from "./store/actions/auth";
 import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
-
 const store = configureStore();
 
 if (localStorage.jwtToken) {
@@ -36,6 +36,14 @@ if (localStorage.jwtToken) {
   }
 }
 
+if (localStorage.Cart && JSON.parse(localStorage.Cart).length > 0) {
+  console.log(localStorage.Cart);
+  store.dispatch({
+    type: "SET_CART_ITEMS_NUM",
+    cartItemsNum: JSON.parse(localStorage.Cart).length,
+  });
+}
+
 function App() {
   return (
     <Provider store={store}>
@@ -43,6 +51,7 @@ function App() {
         <Switch>
           <PrivateAdminRoute exact path="/admin" component={AdminHome} />
           <PrivateUserRoute exact path="/user" component={UserHome} />
+          <PrivateUserRoute exact path="/cart" component={CartPage} />
           <PrivateAdminRoute
             exact
             path="/admin/issueCertificate"
