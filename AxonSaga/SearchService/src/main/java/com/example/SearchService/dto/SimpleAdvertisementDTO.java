@@ -8,6 +8,7 @@ public class SimpleAdvertisementDTO {
     private String brandName;
     private String modelName;
     private String cityName;
+    private String mainImagePath;
 
     public SimpleAdvertisementDTO() {
     }
@@ -18,6 +19,7 @@ public class SimpleAdvertisementDTO {
         this.brandName = advertisement.getBrandName();
         this.cityName = advertisement.getRentingCityLocation().getName();
         this.modelName = advertisement.getModelName();
+        this.mainImagePath = advertisement.getMainImagePath();
     }
 
     public Long getId() {
@@ -58,5 +60,13 @@ public class SimpleAdvertisementDTO {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getMainImagePath() {
+        return mainImagePath;
+    }
+
+    public void setMainImagePath(String mainImagePath) {
+        this.mainImagePath = mainImagePath;
     }
 }

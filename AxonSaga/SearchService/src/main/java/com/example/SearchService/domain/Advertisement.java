@@ -39,6 +39,8 @@ public class Advertisement {
 
     private String userEmail;
 
+    private String mainImagePath;
+
     @ManyToOne
     private City rentingCityLocation;
 
@@ -71,6 +73,7 @@ public class Advertisement {
         this.rentingStreetLocation = advertisementDTO.getRentingStreetLocation();
         this.freeFrom = advertisementDTO.getFreeFrom();
         this.freeTo = advertisementDTO.getFreeTo();
+        this.mainImagePath = advertisementDTO.getMainImagePath();
     }
 
 
@@ -216,5 +219,13 @@ public class Advertisement {
 
     public void setFreeTo(Date freeTo) {
         this.freeTo = freeTo;
+    }
+
+    public String getMainImagePath() {
+        return mainImagePath;
+    }
+
+    public void setMainImagePath(String mainImagePath) {
+        this.mainImagePath = mainImagePath;
     }
 }

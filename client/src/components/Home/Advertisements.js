@@ -73,7 +73,7 @@ const Advertisements = ({ ads, getAllAdvertisements, increaseCartNum }) => {
                 />
                 <CardMedia
                   className={classes.media}
-                  image="/static/images/cards/paella.jpg"
+                  image={"/search/" + row.mainImagePath}
                   title="Paella dish"
                 />
                 <CardContent></CardContent>

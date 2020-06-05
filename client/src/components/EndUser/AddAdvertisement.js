@@ -58,6 +58,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const AddAdvertisement = ({ carId, open, setOpen }) => {
   const [cityName, setCityName] = useState("");
   const [error, setError] = useState(false);
+  const [mainImg, setMainImg] = useState(null);
 
   const [state, setState] = React.useState({
     carId: "",
@@ -84,7 +85,7 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
       const res = await Axios.get(`/car/${carId}`);
       const car = res.data;
       setState({
-        carId: car.id,
+        carId: carId,
         brandName: car.brandName,
         modelName: car.modelName,
         gearShiftName: car.gearShiftName,
@@ -102,6 +103,15 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
       });
     })();
   }, [open]);
+
+  const handleChangeImage = (e) => {
+    if (e.target.files[0]) {
+      setMainImg({
+        url: URL.createObjectURL(e.target.files[0]),
+        file: e.target.files[0],
+      });
+    }
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -140,9 +150,23 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(state);
+    let fd = new FormData();
+
+    fd.append("file", mainImg.file);
+
     setLoading(true);
-    const resp = await Axios.post("/search", { ...state, cityName });
+
+    const resp = await Axios.post("/search", {
+      ...state,
+      cityName,
+      mainImagePath: `/static/images/${mainImg.file.name}`,
+    });
+
+    const imgResp = await Axios.post("/search/upload/image", fd, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     setLoading(false);
     if (resp.status === 200) {
       console.log("Uspesno");
@@ -330,6 +354,24 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
                 Add
               </Button>
             </Paper>
+          </Grid>
+          <Grid item sm={12}>
+            <img
+              alt="Main image"
+              src={mainImg && mainImg.url}
+              style={{
+                maxHeight: 200,
+                maxWidth: 200,
+              }}
+            />
+
+            <input
+              accept="image/*"
+              className={classes.input}
+              id="icon-button-file"
+              type="file"
+              onChange={handleChangeImage}
+            />
           </Grid>
           <Backdrop className={classes.backdrop} open={loading}>
             <CircularProgress color="inherit" />

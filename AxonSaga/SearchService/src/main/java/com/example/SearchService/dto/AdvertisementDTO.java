@@ -36,6 +36,8 @@ public class AdvertisementDTO {
 
     private Date freeTo;
 
+    private String mainImagePath;
+
     public Long getCarId() {
         return carId;
     }
@@ -162,5 +164,13 @@ public class AdvertisementDTO {
 
     public void setRentingStreetLocation(String rentingStreetLocation) {
         this.rentingStreetLocation = rentingStreetLocation;
+    }
+
+    public String getMainImagePath() {
+        return mainImagePath;
+    }
+
+    public void setMainImagePath(String mainImagePath) {
+        this.mainImagePath = mainImagePath;
     }
 }

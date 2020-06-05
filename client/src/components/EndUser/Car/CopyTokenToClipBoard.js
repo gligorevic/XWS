@@ -14,6 +14,7 @@ export default function AlertDialog({ open, setToken, token }) {
   const [copySuccess, setCopySuccess] = useState(false);
 
   const handleClose = () => {
+    setCopySuccess(false);
     setToken(null);
   };
 
