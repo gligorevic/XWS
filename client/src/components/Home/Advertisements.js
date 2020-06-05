@@ -2,21 +2,18 @@ import React, { useEffect } from "react";
 import { getAllAdvertisements } from "../../store/actions/advertisement";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import "./Avertisements.css";
+import ViewDetails from "../Dialogs/AdvertisementDetails";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +48,7 @@ const Advertisements = ({ ads, getAllAdvertisements }) => {
                   action={
                     <IconButton aria-label="settings" className="priceToggler">
                       <LocalOfferIcon className="priceButton" />
-                      <span className="purePrice">{row.priceFrom}</span>
+                      <span className="purePrice">{row.price}</span>
                     </IconButton>
                   }
                   title={`${row.brandName} - ${row.modelName}`}
@@ -64,9 +61,7 @@ const Advertisements = ({ ads, getAllAdvertisements }) => {
                 />
                 <CardContent></CardContent>
                 <CardActions>
-                  <Button size="small" color="primary">
-                    View more
-                  </Button>
+                  <ViewDetails id={row.id} />
                   <IconButton color="primary" aria-label="add to shopping cart">
                     <AddShoppingCartIcon />
                   </IconButton>

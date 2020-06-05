@@ -21,6 +21,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const useStyles = makeStyles((theme) => ({
   text: {},
@@ -28,12 +29,11 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
-  appBar: {
-    position: "relative",
-  },
+
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
+    padding: 10,
   },
   datePicker: {
     padding: 10,
@@ -94,6 +94,7 @@ const AddAdvertisement = ({ id }) => {
               </Typography>
             </Toolbar>
           </AppBar>
+          <CssBaseline />
           <Grid item xs={6}>
             <Paper style={{ padding: 50, paddingBottom: 75 }}>
               <Typography
@@ -161,7 +162,8 @@ const AddAdvertisement = ({ id }) => {
                     <ListItem>
                       <ListItemText primary="Renting location" />
                       <Typography variant="subtitle1">
-                        {ad.rentingLocation}
+                        {ad.rentingCityLocation.name},{" "}
+                        {ad.rentingStreetLocation}
                       </Typography>
                     </ListItem>
                     <ListItem>

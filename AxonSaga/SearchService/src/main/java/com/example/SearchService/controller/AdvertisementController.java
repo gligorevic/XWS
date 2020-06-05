@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class AdvertisementController {
@@ -32,7 +31,7 @@ public class AdvertisementController {
     @GetMapping("/ad/{adId}")
     public ResponseEntity<?> getAdvertisement(@PathVariable("adId") Long adId){
         try{
-            return new ResponseEntity<>(advertisementService.getAdvertisement(adId), HttpStatus.OK);
+            return new ResponseEntity<>(advertisementService.getAdvertisementById(adId), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

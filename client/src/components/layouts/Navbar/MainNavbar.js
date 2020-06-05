@@ -26,6 +26,7 @@ import { logout } from "../../../store/actions/auth";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const drawerWidth = 240;
 
@@ -150,14 +151,6 @@ const MainNavbar = ({
                 Home
               </Button>
 
-              <Button
-                color="inherit"
-                onClick={() =>
-                  location.pathname !== "/cart" && history.push("/cart")
-                }
-              >
-                My Cart
-              </Button>
               <Button color="inherit">MenuItem</Button>
               {!isAuthenticated ? (
                 <>
@@ -178,6 +171,44 @@ const MainNavbar = ({
                   >
                     Registrate
                   </Button>
+                  <span
+                    color="inherit"
+                    onClick={() =>
+                      location.pathname !== "/cart" && history.push("/cart")
+                    }
+                    style={{
+                      position: "relative",
+                      display: "inline-block",
+                      width: 30,
+                      height: 30,
+                      margin: "0px 10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: -8,
+                        right: -8,
+                        fontSize: 14,
+                        borderRadius: 50,
+                        background: "#ff9800dd",
+                        width: 19,
+                        zIndex: 3,
+                        textAlign: "center",
+                        color: "white",
+                        fontWeight: 700,
+                      }}
+                    >
+                      3
+                    </span>
+                    <ShoppingCartIcon
+                      style={{
+                        position: "absolute",
+                        fontSize: 30,
+                      }}
+                    />
+                  </span>
                 </>
               ) : (
                 <>
