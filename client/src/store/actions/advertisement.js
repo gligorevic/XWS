@@ -46,8 +46,21 @@ export const getReservationPeriods = (id) => async (dispatch, getState) => {
 
 export const getAllAdvertisements = () => async (dispatch, getState) => {
   try {
-    console.log("pozivam");
     const allAdvertisements = await axios.get(`/search`);
+    dispatch(setAllAdvertisements(allAdvertisements.data));
+    return allAdvertisements;
+  } catch (err) {
+    console.log(err.response);
+    return err.response;
+  }
+};
+
+export const searchAdvertisements = (searchParams) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const allAdvertisements = await axios.post(`/search/search`, searchParams);
     dispatch(setAllAdvertisements(allAdvertisements.data));
     return allAdvertisements;
   } catch (err) {
