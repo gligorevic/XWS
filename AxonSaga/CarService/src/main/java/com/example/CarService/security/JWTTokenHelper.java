@@ -1,11 +1,11 @@
 package com.example.CarService.security;
 
+import com.example.CarService.domain.Car;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.example.CarService.security.SecurityConstants.SECRET;
 import static com.example.CarService.security.SecurityConstants.TOKEN_BEARER_PREFIX;
@@ -102,5 +102,18 @@ public class JWTTokenHelper {
         }
 
         return null;
+    }
+
+    public String generateLocationToken(Car car) {
+        Map<String,Object> claims = new HashMap<>();
+        claims.put("carId", (Long.toString(car.getId())));
+        claims.put("ownerUsername", car.getUserEmail());
+
+        return Jwts.builder()
+                .setSubject(car.getId().toString())
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .compact();
     }
 }

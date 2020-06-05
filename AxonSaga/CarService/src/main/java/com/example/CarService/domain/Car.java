@@ -1,11 +1,10 @@
 package com.example.CarService.domain;
 
 import com.example.CarService.dto.CarDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Car {
@@ -30,8 +29,9 @@ public class Car {
 
     private String locationToken;
 
-    public Car(){
+    private Date crationDate;
 
+    public Car(){
     }
 
     public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, String userAgentId, String locationToken) {
@@ -125,5 +125,18 @@ public class Car {
 
     public void setLocationToken(String locationToken) {
         this.locationToken = locationToken;
+    }
+
+    public Date getCrationDate() {
+        return crationDate;
+    }
+
+    public void setCrationDate(Date crationDate) {
+        this.crationDate = crationDate;
+    }
+
+    @PrePersist
+    protected void onCreate(){
+        this.crationDate= new Date();
     }
 }

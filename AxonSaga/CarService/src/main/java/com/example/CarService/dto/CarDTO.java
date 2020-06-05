@@ -1,6 +1,12 @@
 package com.example.CarService.dto;
 
+import com.example.CarService.domain.Car;
+
+import java.util.Date;
+
 public class CarDTO {
+    private Long id;
+
     private String brandName;
 
     private String modelName;
@@ -14,6 +20,23 @@ public class CarDTO {
     private Integer kmPassed;
 
     private String userEmail;
+
+    private Date creationDate;
+
+    public CarDTO() {
+    }
+
+    public CarDTO(Car car) {
+        this.id = car.getId();
+        this.brandName = car.getBrandName();
+        this.modelName = car.getModelName();
+        this.gearShiftName = car.getGearShiftName();
+        this.fuelTypeName = car.getFuelTypeName();
+        this.bodyName = car.getBodyName();
+        this.kmPassed = car.getKmPassed();
+        this.userEmail = car.getUserEmail();
+        this.creationDate = car.getCrationDate();
+    }
 
     public String getBrandName() {
         return brandName;
@@ -69,5 +92,13 @@ public class CarDTO {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

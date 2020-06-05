@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -31,6 +31,8 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
+import CitySearch from "../Search/CitySearch";
+
 const useStyles = makeStyles((theme) => ({
   text: {},
   backdrop: {
@@ -53,28 +55,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddAdvertisement = ({ car }) => {
-  const classes = useStyles();
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+const AddAdvertisement = ({ carId, open, setOpen }) => {
+  const [cityName, setCityName] = useState("");
+  const [error, setError] = useState(false);
 
   const [state, setState] = React.useState({
-    carId: car.id,
-    brandName: car.brandName,
-    modelName: car.modelName,
-    gearShiftName: car.gearShiftName,
-    fuelTypeName: car.fuelTypeName,
-    bodyName: car.bodyName,
-    kmPassed: car.kmPassed,
-    userEmail: car.userEmail,
+    carId: "",
+    brandName: "",
+    modelName: "",
+    gearShiftName: "",
+    fuelTypeName: "",
+    bodyName: "",
+    kmPassed: "",
+    userEmail: "",
     kmRestriction: "",
     price: "",
     numberChildSeats: "",
@@ -83,6 +76,36 @@ const AddAdvertisement = ({ car }) => {
     freeFrom: new Date(),
     freeTo: new Date(),
   });
+
+  const classes = useStyles();
+
+  useEffect(() => {
+    (async () => {
+      const res = await Axios.get(`/car/${carId}`);
+      const car = res.data;
+      setState({
+        carId: car.id,
+        brandName: car.brandName,
+        modelName: car.modelName,
+        gearShiftName: car.gearShiftName,
+        fuelTypeName: car.fuelTypeName,
+        bodyName: car.bodyName,
+        kmPassed: car.kmPassed,
+        userEmail: car.userEmail,
+        kmRestriction: "",
+        price: "",
+        numberChildSeats: "",
+        collisionDamage: false,
+        rentingStreetLocation: "",
+        freeFrom: new Date(),
+        freeTo: new Date(),
+      });
+    })();
+  }, [open]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event) => {
     setState({
@@ -119,7 +142,7 @@ const AddAdvertisement = ({ car }) => {
   const handleSubmit = async (e) => {
     console.log(state);
     setLoading(true);
-    const resp = await Axios.post("/search", state);
+    const resp = await Axios.post("/search", { ...state, cityName });
     setLoading(false);
     if (resp.status === 200) {
       console.log("Uspesno");
@@ -130,33 +153,30 @@ const AddAdvertisement = ({ car }) => {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add advertisement
-      </Button>
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <Grid container spacing={2}>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={handleClose}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                Add advertisement
-              </Typography>
-            </Toolbar>
-          </AppBar>
+        <AppBar>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Add advertisement
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Grid container spacing={2} style={{ padding: 60, paddingTop: 120 }}>
           <Grid item xs={6}>
-            <Paper style={{ padding: 50, paddingBottom: 75 }}>
+            <Paper style={{ padding: 50 }}>
               <Typography
                 variant="h4"
                 component="h2"
@@ -164,44 +184,44 @@ const AddAdvertisement = ({ car }) => {
               >
                 Car
               </Typography>
-              {car && (
+              {state && (
                 <>
                   <List disablePadding>
                     <ListItem>
                       <ListItemText primary="Brand" />
                       <Typography variant="subtitle1">
-                        {car.brandName}
+                        {state.brandName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Model" />
                       <Typography variant="subtitle1">
-                        {car.modelName}
+                        {state.modelName}
                       </Typography>
                     </ListItem>
                     <Divider />
                     <ListItem>
                       <ListItemText primary="Gear shift" />
                       <Typography variant="subtitle1">
-                        {car.gearShiftName}
+                        {state.gearShiftName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Fuel type" />
                       <Typography variant="subtitle1">
-                        {car.fuelTypeName}
+                        {state.fuelTypeName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Body" />
                       <Typography variant="subtitle1">
-                        {car.bodyName}
+                        {state.bodyName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Km passed" />
                       <Typography variant="subtitle1">
-                        {car.kmPassed}
+                        {state.kmPassed}
                       </Typography>
                     </ListItem>
 
@@ -212,7 +232,7 @@ const AddAdvertisement = ({ car }) => {
             </Paper>
           </Grid>
           <Grid item xs={6}>
-            <Paper style={{ padding: 50, paddingBottom: 75 }}>
+            <Paper style={{ padding: 50 }}>
               <Typography
                 variant="h4"
                 component="h2"
@@ -299,6 +319,12 @@ const AddAdvertisement = ({ car }) => {
                   />
                 }
                 label="Collision Damage Wavier"
+              />
+              <CitySearch
+                cityName={cityName}
+                setCityName={setCityName}
+                error={error}
+                setError={setError}
               />
               <Button onClick={handleSubmit} color="primary">
                 Add
