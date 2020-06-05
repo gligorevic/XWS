@@ -74,6 +74,12 @@ const ResponsiveDialog = ({ id }) => {
         }
       }
     );
+    if (resp.status >= 200 && resp.status < 300) {
+      const resp2 = await Axios.put("/request", state).catch((error) => {
+        console.log(error.message);
+      });
+    }
+
     setLoading(false);
     setOpen(false);
   };

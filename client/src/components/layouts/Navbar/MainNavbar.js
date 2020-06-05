@@ -105,7 +105,8 @@ const MainNavbar = ({
   history,
   location,
   logout,
-  user: { isAuthenticated, user },
+
+  user: { isAuthenticated, user, cartItemsNum },
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -120,6 +121,12 @@ const MainNavbar = ({
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  window.addEventListener("localStorage", (e) => {
+    console.log("asdasdasdasd");
+    console.log(e);
+  });
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -171,6 +178,29 @@ const MainNavbar = ({
                   >
                     Registrate
                   </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    color="inherit"
+                    onClick={() => {
+                      switch (user.role.length > 0 && user.role[0].name) {
+                        case "ROLE_ADMIN":
+                          history.push("/admin");
+                          break;
+                        case "ROLE_ENDUSER":
+                        case "ROLE_AGENT":
+                          history.push("/user");
+                          break;
+                      }
+                    }}
+                  >
+                    Profile
+                  </Button>
+                  <div className={classes.username}>
+                    <AccountCircleIcon />
+                    <p style={{ paddingLeft: 5 }}>{user.username}</p>
+                  </div>
                   <span
                     color="inherit"
                     onClick={() =>
@@ -200,7 +230,7 @@ const MainNavbar = ({
                         fontWeight: 700,
                       }}
                     >
-                      3
+                      {cartItemsNum}
                     </span>
                     <ShoppingCartIcon
                       style={{
@@ -209,29 +239,6 @@ const MainNavbar = ({
                       }}
                     />
                   </span>
-                </>
-              ) : (
-                <>
-                  <Button
-                    color="inherit"
-                    onClick={() => {
-                      switch (user.role.length > 0 && user.role[0].name) {
-                        case "ROLE_ADMIN":
-                          history.push("/admin");
-                          break;
-                        case "ROLE_ENDUSER":
-                        case "ROLE_AGENT":
-                          history.push("/user");
-                          break;
-                      }
-                    }}
-                  >
-                    Profile
-                  </Button>
-                  <div className={classes.username}>
-                    <AccountCircleIcon />
-                    <p style={{ paddingLeft: 5 }}>{user.username}</p>
-                  </div>
                   <Button
                     color="inherit"
                     onClick={() => {
