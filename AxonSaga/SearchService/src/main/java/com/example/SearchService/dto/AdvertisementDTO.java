@@ -28,7 +28,9 @@ public class AdvertisementDTO {
 
     private String userEmail;
 
-    private String rentingLocation;
+    private String cityName;
+
+    private String rentingStreetLocation;
 
     private Date freeFrom;
 
@@ -130,14 +132,6 @@ public class AdvertisementDTO {
         this.userEmail = userEmail;
     }
 
-    public String getRentingLocation() {
-        return rentingLocation;
-    }
-
-    public void setRentingLocation(String rentingLocation) {
-        this.rentingLocation = rentingLocation;
-    }
-
     public Date getFreeFrom() {
         return freeFrom;
     }
@@ -152,5 +146,21 @@ public class AdvertisementDTO {
 
     public void setFreeTo(Date freeTo) {
         this.freeTo = freeTo;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getRentingStreetLocation() {
+        return rentingStreetLocation;
+    }
+
+    public void setRentingStreetLocation(String rentingStreetLocation) {
+        this.rentingStreetLocation = rentingStreetLocation;
     }
 }

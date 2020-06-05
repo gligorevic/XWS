@@ -1,48 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MainNavbar from "../layouts/Navbar/MainNavbar";
 import ficaImage from "../../images/fica.jpg";
-import { getAllAdvertisements } from "../../store/actions/advertisement";
+
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Paper from "@material-ui/core/Paper";
-import AdvertisementDetails from "../Dialogs/AdvertisementDetails";
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-    minWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
-  grid: {
-    padding: 20,
-    flexGrow: 1,
-  },
+import Advertisements from "./Advertisements";
+import Search from "../Search/Search";
+
+const useStyles = makeStyles((theme) => ({
   back: {
-    background: "url(" + ficaImage + ")",
+    backgroundImage:
+      "linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(" +
+      ficaImage +
+      ")",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    height: "100vh",
   },
-  paper: {
-    marginTop: 10,
+  center: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
-});
+}));
 
-const Home = ({ ads, getAllAdvertisements }) => {
-  useEffect(() => {
-    getAllAdvertisements();
-  }, []);
+const Home = () => {
   const classes = useStyles();
 
   const handleAddToCart = (event, adId) => {
@@ -62,63 +45,12 @@ const Home = ({ ads, getAllAdvertisements }) => {
   return (
     <div className={classes.back}>
       <MainNavbar />
-      <Paper className={classes.paper} fullWidth></Paper>
-      <Grid container>
-        {ads &&
-          ads.map((row) => {
-            return (
-              <Grid item xs className={classes.grid} spacing={4}>
-                <Card className={classes.root}>
-                  <CardActionArea>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {row.brandName + " - " + row.modelName}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        <List>
-                          <ListItem>
-                            {"Renting location: " + row.rentingLocation}
-                          </ListItem>
-                          <ListItem>
-                            {"Price per day: " + row.priceFrom}
-                          </ListItem>
-                          <ListItem>
-                            {"Fuel type: " + row.fuelTypeName}
-                          </ListItem>
-                          <ListItem>
-                            {"Gear shift: " + row.gearShiftName}
-                          </ListItem>
-                        </List>
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <AdvertisementDetails id={row.id} />
-                    <IconButton
-                      onClick={(event) => handleAddToCart(event, row.id)}
-                      color="primary"
-                      aria-label="add to shopping cart"
-                    >
-                      <AddShoppingCartIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
-      </Grid>
+      <div className={classes.center}>
+        <Search />
+        <Advertisements />
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  ads: state.advertisement.allAdvertisements,
-});
-
-export default withRouter(
-  connect(mapStateToProps, { getAllAdvertisements })(Home)
-);
+export default Home;

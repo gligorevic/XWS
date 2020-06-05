@@ -2,6 +2,7 @@ package com.example.SearchService.controller;
 
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.dto.AdvertisementDTO;
+import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,6 @@ public class AdvertisementController {
     @GetMapping
     public ResponseEntity<?> getAllAdvertisements(){
         try{
-            System.out.println("Usao u kontroler");
             return new ResponseEntity<>(advertisementService.getAllAdvertisements(), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
@@ -68,6 +68,20 @@ public class AdvertisementController {
         }catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<?> getAdvertismentsBySearchParams(@RequestBody AdvertisementDTO advertisementDTO){
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertismentsBySearchParams(advertisementDTO), HttpStatus.OK);
+        }catch(CustomException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
 
