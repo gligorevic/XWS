@@ -15,4 +15,6 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     Advertisement findAdvertisementById(Long id);
 
     List<Advertisement> findAllByIdIn(Long[] adIds);
+
+    Advertisement findAdvertisementByCarId(Long carId);
 }

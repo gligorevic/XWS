@@ -21,15 +21,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 const useStyles = makeStyles((theme) => ({
-  text: {},
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
-
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
@@ -78,25 +75,24 @@ const AddAdvertisement = ({ id }) => {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <Grid container spacing={2}>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={handleClose}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                Advertisement details
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <CssBaseline />
+        <AppBar>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Advertisement details
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Grid container spacing={2} style={{ padding: 60, paddingTop: 120 }}>
           <Grid item xs={6}>
-            <Paper style={{ padding: 50, paddingBottom: 75 }}>
+            <Paper style={{ padding: 50 }}>
               <Typography
                 variant="h4"
                 component="h2"
@@ -148,7 +144,7 @@ const AddAdvertisement = ({ id }) => {
             </Paper>
           </Grid>
           <Grid item xs={6}>
-            <Paper style={{ padding: 50, paddingBottom: 75 }}>
+            <Paper style={{ padding: 50 }}>
               <Typography
                 variant="h4"
                 component="h2"

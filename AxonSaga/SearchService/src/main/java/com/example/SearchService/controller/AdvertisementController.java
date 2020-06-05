@@ -28,21 +28,11 @@ public class AdvertisementController {
         }
     }
 
-    @GetMapping("/ad/{adId}")
-    public ResponseEntity<?> getAdvertisement(@PathVariable("adId") Long adId){
-        try{
-            return new ResponseEntity<>(advertisementService.getAdvertisementById(adId), HttpStatus.OK);
-        } catch(Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @PostMapping(path = "/ad")
     public ResponseEntity<?> getAdvertisement(@RequestBody Long[] addvertismentIds) {
         try{
             return new ResponseEntity<>(advertisementService.getAdvertisementsCart(addvertismentIds), HttpStatus.OK);
-        } catch(Exception e){
+        }  catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -50,12 +40,15 @@ public class AdvertisementController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
-    public ResponseEntity<Advertisement> addNewAdvertisement(@RequestBody AdvertisementDTO advertisementDTO){
+    public ResponseEntity<?> addNewAdvertisement(@RequestBody AdvertisementDTO advertisementDTO){
         try{
             return new ResponseEntity<>(advertisementService.addAdvertisement(advertisementDTO), HttpStatus.OK);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch(CustomException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

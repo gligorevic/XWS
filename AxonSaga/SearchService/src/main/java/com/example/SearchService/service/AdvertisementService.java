@@ -39,11 +39,24 @@ public class AdvertisementService {
     @PersistenceContext
     private EntityManager em;
 
-    public Advertisement addAdvertisement(AdvertisementDTO dto){
+    public Advertisement addAdvertisement(AdvertisementDTO dto) throws CustomException, Exception{
+        if(dto.getCityName() == null)
+            throw new Exception("City not found");
+
+        City city = cityRepository.findByName(dto.getCityName());
+
+        if(city == null)
+            throw new Exception("City not found");
+
         dto.setFreeFrom(getMidnightStartDate(dto.getFreeFrom()).getTime());
         dto.setFreeTo(getMidnightEndDate(dto.getFreeTo()).getTime());
 
         Advertisement advertisement = new Advertisement(dto);
+        advertisement.setRentingCityLocation(city);
+
+        if(advertisementRepository.findAdvertisementByCarId(dto.getCarId()) != null)
+            throw new CustomException("Advertisement already exists", HttpStatus.NOT_ACCEPTABLE);
+
         return advertisementRepository.save(advertisement);
     }
 
