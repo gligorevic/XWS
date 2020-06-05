@@ -1,5 +1,7 @@
 package com.example.RequestService.domain;
 
+import com.example.RequestService.dto.RequestDTO;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -12,10 +14,13 @@ public class Request {
 
     private PaidState paidState;
 
-    //------Need to change variable type to Collection<Advertisement> when class Advertisement is made-------
-    private Long advertisementIds;
+    private Long userSendingRequest;
 
-    public Request() {
+    private List<Long> adIds;
+    private String userEmail;
+
+    public Request(RequestDTO requestDTO) {
+        this.paidState = PaidState.PENDING;
     }
 
     public Request(PaidState paidState) {

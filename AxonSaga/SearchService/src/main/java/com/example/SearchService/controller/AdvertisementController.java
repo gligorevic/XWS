@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AdvertisementController {
@@ -22,6 +23,26 @@ public class AdvertisementController {
         try{
             System.out.println("Usao u kontroler");
             return new ResponseEntity<>(advertisementService.getAllAdvertisements(), HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/ad/{adId}")
+    public ResponseEntity<?> getAdvertisement(@PathVariable("adId") Long adId){
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisement(adId), HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path = "/ad")
+    public ResponseEntity<?> getAdvertisement(@RequestBody Long[] addvertismentIds) {
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisementsCart(addvertismentIds), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

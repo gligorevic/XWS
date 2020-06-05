@@ -397,7 +397,7 @@ const AddCar = ({ username }) => {
     state.bodyName = selectedBodyType.bodyTypeName;
     console.log(state);
     const resp = await Axios.post("/car", state).catch((error) => {
-      if (error.response.status === 403) {
+      if (error.response && error.response.status === 403) {
         setLoading(false);
         setOpen(true);
       }
