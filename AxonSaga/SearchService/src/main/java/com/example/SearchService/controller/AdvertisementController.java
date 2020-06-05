@@ -21,7 +21,6 @@ public class AdvertisementController {
     @GetMapping
     public ResponseEntity<?> getAllAdvertisements(){
         try{
-            System.out.println("Usao u kontroler");
             return new ResponseEntity<>(advertisementService.getAllAdvertisements(), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();

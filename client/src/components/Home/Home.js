@@ -7,20 +7,33 @@ import { makeStyles } from "@material-ui/core/styles";
 import Advertisements from "./Advertisements";
 import Search from "../Search/Search";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   back: {
-    background: "url(" + ficaImage + ")",
-    height: "100%",
+    backgroundImage:
+      "linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(" +
+      ficaImage +
+      ")",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    height: "100vh",
   },
-});
+  center: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+}));
 
 const Home = () => {
   const classes = useStyles();
   return (
     <div className={classes.back}>
       <MainNavbar />
-      <Search />
-      <Advertisements />
+      <div className={classes.center}>
+        <Search />
+        <Advertisements />
+      </div>
     </div>
   );
 };

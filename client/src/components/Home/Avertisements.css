@@ -1,0 +1,36 @@
+.priceToggler {
+  background-color: #ff9800 !important;
+  color: white !important;
+}
+
+.priceToggler:hover {
+  animation: showPrice 0.3s ease-in 0.1s forwards;
+}
+
+@keyframes showPrice {
+  30% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.1) translate(0px, 0);
+  }
+  70% {
+    transform: scale(1.2) translate(-3px, 0);
+  }
+  100% {
+    transform: scale(1.25) translate(-7px, 0);
+  }
+}
+
+.purePrice {
+  opacity: 0;
+  font-size: 0px;
+  width: 0%;
+}
+
+.priceToggler:hover .purePrice {
+  font-size: 18px;
+  transition: all 0.4s ease 0.2s;
+  width: 100%;
+  opacity: 1;
+}

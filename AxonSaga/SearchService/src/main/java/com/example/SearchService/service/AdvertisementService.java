@@ -3,6 +3,7 @@ package com.example.SearchService.service;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.domain.City;
 import com.example.SearchService.dto.AdvertisementDTO;
+import com.example.SearchService.dto.SimpleAdvertisementDTO;
 import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.repository.AdvertisementRepository;
 import com.example.SearchService.repository.CityRepository;
@@ -43,8 +44,8 @@ public class AdvertisementService {
         return advertisementRepository.findAdvertisementsByUserEmail(email);
     }
 
-    public List<Advertisement> getAllAdvertisements(){
-        return advertisementRepository.findAll();
+    public List<SimpleAdvertisementDTO> getAllAdvertisements(){
+        return advertisementRepository.findAll().stream().map(advertisement -> new SimpleAdvertisementDTO(advertisement)).collect(Collectors.toList());
     }
 
     public List<Advertisement> getAdvertismentsBySearchParams(AdvertisementDTO advertisementDTO) throws CustomException {

@@ -7,48 +7,62 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-
+import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import "./Avertisements.css";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 1000,
+  },
+  card: {
+    boxShadow: "0px 2px 23px 2px rgba(0,0,0,0.75)",
+  },
+}));
 
 const Advertisements = ({ ads, getAllAdvertisements }) => {
+  const classes = useStyles();
+
   useEffect(() => {
     getAllAdvertisements();
   }, []);
 
   return (
-    <Grid container>
+    <Grid
+      container
+      spacing={3}
+      justify="space-between"
+      alignItems="center"
+      className={classes.root}
+    >
       {ads &&
         ads.map((row) => {
           return (
-            <Grid item xs spacing={4}>
-              <Card>
-                <CardActionArea>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {row.brandName + " - " + row.modelName}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      <List>
-                        <ListItem>
-                          {"Renting location: " + row.rentingLocation}
-                        </ListItem>
-                        <ListItem>{"Price per day: " + row.priceFrom}</ListItem>
-                        <ListItem>{"Fuel type: " + row.fuelTypeName}</ListItem>
-                        <ListItem>
-                          {"Gear shift: " + row.gearShiftName}
-                        </ListItem>
-                      </List>
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+            <Grid item sm={12} md={4}>
+              <Card className={classes.card}>
+                <CardHeader
+                  action={
+                    <IconButton aria-label="settings" className="priceToggler">
+                      <LocalOfferIcon className="priceButton" />
+                      <span className="purePrice">{row.priceFrom}</span>
+                    </IconButton>
+                  }
+                  title={`${row.brandName} - ${row.modelName}`}
+                  subheader="September 14, 2016"
+                />
+                <CardMedia
+                  className={classes.media}
+                  image="/static/images/cards/paella.jpg"
+                  title="Paella dish"
+                />
+                <CardContent></CardContent>
                 <CardActions>
                   <Button size="small" color="primary">
                     View more

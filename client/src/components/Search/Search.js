@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import CitySearch from "./CitySearch";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Collapse from "@material-ui/core/Collapse";
@@ -17,7 +17,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: "60px auto",
     padding: "30px 30px",
-    maxWidth: 950,
+    maxWidth: 1000,
+    boxShadow: "0px 2px 23px 4px rgba(0,0,0,0.75)",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: 400,
+    },
   },
   expand: {
     transform: "rotate(0deg)",
@@ -32,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
   floatRight: {
     display: "flex",
     justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  center: {
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
   },
 }));
@@ -58,8 +67,8 @@ const Search = ({ searchAdvertisements }) => {
     console.log(cityName);
     const resp = await searchAdvertisements({
       cityName: cityName.length > 0 ? cityName : null,
-      freeFrom: new Date(selectedStartDate.getTime() + 1000 * 60 * 60 * 24),
-      freeTo: new Date(selectedEndDate.getTime() + 1000 * 60 * 60 * 24),
+      freeFrom: selectedStartDate,
+      freeTo: selectedEndDate,
     });
     if (resp.status === 400) {
       setError(true);
@@ -69,7 +78,7 @@ const Search = ({ searchAdvertisements }) => {
   return (
     <Paper className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item sm={12} lg={4}>
+        <Grid item sm={12} lg={4} className={classes.center}>
           <CitySearch
             cityName={cityName}
             setCityName={setCityName}
