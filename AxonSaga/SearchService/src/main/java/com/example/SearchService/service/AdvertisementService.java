@@ -12,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +40,9 @@ public class AdvertisementService {
     private EntityManager em;
 
     public Advertisement addAdvertisement(AdvertisementDTO dto){
+        dto.setFreeFrom(getMidnightStartDate(dto.getFreeFrom()).getTime());
+        dto.setFreeTo(getMidnightEndDate(dto.getFreeTo()).getTime());
+
         Advertisement advertisement = new Advertisement(dto);
         return advertisementRepository.save(advertisement);
     }
@@ -105,6 +112,7 @@ public class AdvertisementService {
         }
     }
 
+
     private Long getCityId(String cityName) throws CustomException{
         if(cityName != null) {
             City city = cityRepository.findByName(cityName);
@@ -114,6 +122,14 @@ public class AdvertisementService {
             return city.getId();
         }
         return null;
+    }
+  
+    public List<Advertisement> getAdvertisementsCart(Long[] adIds) {
+        return advertisementRepository.findAllByIdIn(adIds);
+    }
+
+    public Advertisement getAdvertisementById(Long id){
+        return advertisementRepository.findAdvertisementById(id);
     }
 
     private Calendar getMidnightEndDate(Date date) {

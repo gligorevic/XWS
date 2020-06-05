@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { configureStore } from "./store/index";
 import Home from "./components/Home/Home";
 import Login from "./components/Pages/Login";
+import CartPage from "./components/EndUser/Cart-Request/CartPage";
 import PrivateAdminRoute from "./routing/PrivateAdminRoute";
 import PrivateUserRoute from "./routing/PrivateUserRoute";
 import { setAuthorizationToken, setUser } from "./store/actions/auth";
@@ -42,6 +43,7 @@ function App() {
         <Switch>
           <PrivateAdminRoute exact path="/admin" component={AdminHome} />
           <PrivateUserRoute exact path="/user" component={UserHome} />
+          <PrivateUserRoute exact path="/cart" component={CartPage} />
           <PrivateAdminRoute
             exact
             path="/admin/issueCertificate"

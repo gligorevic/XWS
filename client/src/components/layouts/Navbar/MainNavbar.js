@@ -150,7 +150,14 @@ const MainNavbar = ({
                 Home
               </Button>
 
-              <Button color="inherit">MenuItem</Button>
+              <Button
+                color="inherit"
+                onClick={() =>
+                  location.pathname !== "/cart" && history.push("/cart")
+                }
+              >
+                My Cart
+              </Button>
               <Button color="inherit">MenuItem</Button>
               {!isAuthenticated ? (
                 <>

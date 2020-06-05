@@ -1,6 +1,6 @@
-package com.example.SearchService.configuration;
+package com.example.RequestService.configuration;
 
-import com.example.SearchService.security.JWTAuthenticationFilter;
+import com.example.RequestService.security.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,11 +33,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers(HttpMethod.GET, "/city/*").permitAll()
-                .antMatchers(HttpMethod.POST, "/search").permitAll()
-                .antMatchers(HttpMethod.POST, "/ad").permitAll()
-                .antMatchers(HttpMethod.GET, "/{id}").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

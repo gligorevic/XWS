@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import AppBar from "../layouts/Navbar/Navbar";
+import AppBar from "../../layouts/Navbar/NavbarCart";
 
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import List from "@material-ui/core/List";
+import Button from "@material-ui/core/Button";
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
-import CertificatesList from "../Admin/CertificatesList";
-import RevocatedCertsList from "../Admin/RevocatedCertsList";
-import TabPanel from "../layouts/TabPanel";
-import ManipulateCarInfo from "../Admin/CarInfoService/ManipulateCarInfo";
-import ManipulatePrivileges from "../Admin/UserPrivilegesManipulation/ManipulatePrivileges";
+import Axios from "axios";
 
-import Profile from "../Pages/Profile";
+import { getAdvertisementsForCart } from "../../../store/actions/advertisement";
 
 const drawerWidth = 240;
 
@@ -57,23 +57,28 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
 }));
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
-function AdminHome(props) {
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const theme = useTheme();
+const CartPage = ({ allAdvertisementsCart, getAdvertisementsForCart }) => {
+  useEffect(() => {
+    var cartList = JSON.parse(localStorage.getItem("Cart"));
+    console.log(cartList);
+    getAdvertisementsForCart(cartList);
+  }, []);
+
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const handleDrawerOpen = () => {
     setOpen(true);
+  };
+
+  const handleSubmitRequest = async (event, ad) => {
+    const resp = await Axios.post(`/request`, ad);
+
+    if (resp.status === 201) {
+      var cartList = JSON.parse(localStorage.getItem("Cart"));
+      cartList.pop(ad.id);
+      localStorage.setItem("Cart", JSON.stringify(cartList));
+    }
   };
 
   const handleDrawerClose = () => {
@@ -83,29 +88,11 @@ function AdminHome(props) {
     <div>
       <div className={classes.drawerHeader}>
         <IconButton onClick={handleDrawerClose}>
-          {theme.direction === "ltr" ? (
-            <ChevronLeftIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
+          <ChevronLeftIcon />
         </IconButton>
       </div>
       <Divider />
       <div className={classes.toolbar} />
-      <Divider />
-      <Tabs
-        orientation="vertical"
-        value={value}
-        onChange={handleChange}
-        variant="scrollable"
-        aria-label="simple tabs example"
-      >
-        <Tab label="List of certificates" {...a11yProps(0)} />
-        <Tab label="Revocated certificates" {...a11yProps(1)} />
-        <Tab label="Profile" {...a11yProps(2)} />
-        <Tab label="Manipulate privileges" {...a11yProps(3)} />
-        <Tab label="Manipulate car info" {...a11yProps(4)} />
-      </Tabs>
     </div>
   );
 
@@ -135,25 +122,46 @@ function AdminHome(props) {
           })}
         >
           <div className={classes.drawerHeader} />
-          <TabPanel value={value} index={0}>
-            {value === 0 && <CertificatesList />}
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            {value === 1 && <RevocatedCertsList />}
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            {value === 2 && <Profile />}
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            {value === 3 && <ManipulatePrivileges />}
-          </TabPanel>
-          <TabPanel value={value} index={4}>
-            {value === 4 && <ManipulateCarInfo />}
-          </TabPanel>
+          <div>
+            <List
+              component="nav"
+              aria-label="main mailbox folders"
+              style={{
+                width: 500,
+                height: 400,
+                overflowY: "scroll",
+              }}
+            >
+              {allAdvertisementsCart &&
+                allAdvertisementsCart.map((ad) => {
+                  return (
+                    <>
+                      <ListItem>
+                        <ListItemText
+                          primary={ad.brandName + " - " + ad.modelName}
+                        />
+                        <Button
+                          onClick={(event) => handleSubmitRequest(event, ad)}
+                          color="primary"
+                        >
+                          Send request
+                        </Button>
+                      </ListItem>
+                    </>
+                  );
+                })}
+            </List>
+          </div>
         </main>
       </div>
     </>
   );
-}
+};
 
-export default AdminHome;
+const mapStateToProps = (state) => ({
+  allAdvertisementsCart: state.advertisement.allAdvertisementsCart,
+});
+
+export default withRouter(
+  connect(mapStateToProps, { getAdvertisementsForCart })(CartPage)
+);

@@ -2,6 +2,7 @@ import {
   SET_USER_ADVERTISEMENTS,
   SET_RESERVATION_PERIODS,
   SET_ADVERTISEMENTS,
+  SET_ADVERTISEMENTS_CART,
 } from "../actionTypes";
 import axios from "axios";
 
@@ -20,12 +21,17 @@ export const setAllAdvertisements = (allAdvertisements) => ({
   allAdvertisements,
 });
 
+export const setAllAdvertisementsForCart = (allAdvertisementsCart) => ({
+  type: SET_ADVERTISEMENTS_CART,
+  allAdvertisementsCart,
+});
+
 export const getUserAdvertisements = () => async (dispatch, getState) => {
   try {
     const profileState = getState().profile.profile;
     if (profileState === null) {
       const email = getState().user.user.username;
-      const advertisements = await axios.get(`/search/${email}`);
+      const advertisements = await axios.get(`/search/user/${email}`);
       dispatch(setUserAdvertisements(advertisements.data));
     }
   } catch (err) {
@@ -63,6 +69,17 @@ export const searchAdvertisements = (searchParams) => async (
     const allAdvertisements = await axios.post(`/search/search`, searchParams);
     dispatch(setAllAdvertisements(allAdvertisements.data));
     return allAdvertisements;
+    } catch (err) {
+    console.log(err.response);
+    return err.response;
+  }
+};
+
+export const getAdvertisementsForCart = (idList) => async (dispatch) => {
+  try {
+    const allAdvertisementsCart = await axios.post(`/search/ad`, idList);
+    dispatch(setAllAdvertisementsForCart(allAdvertisementsCart.data));
+    return allAdvertisementsCart;
   } catch (err) {
     console.log(err.response);
     return err.response;

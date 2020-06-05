@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AdvertisementController {
@@ -28,6 +29,26 @@ public class AdvertisementController {
         }
     }
 
+    @GetMapping("/ad/{adId}")
+    public ResponseEntity<?> getAdvertisement(@PathVariable("adId") Long adId){
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisement(adId), HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path = "/ad")
+    public ResponseEntity<?> getAdvertisement(@RequestBody Long[] addvertismentIds) {
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisementsCart(addvertismentIds), HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
     public ResponseEntity<Advertisement> addNewAdvertisement(@RequestBody AdvertisementDTO advertisementDTO){
@@ -39,7 +60,7 @@ public class AdvertisementController {
         }
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/user/{email}")
     @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
     public ResponseEntity<List<Advertisement>> getAdvertisementsByUserId(@PathVariable String email){
         try{
@@ -61,6 +82,16 @@ public class AdvertisementController {
         catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAdvertisementById(@PathVariable Long id){
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisementById(id), HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
