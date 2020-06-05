@@ -60,11 +60,21 @@ public class AdvertisementController {
         }
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/user/{email}")
     @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
     public ResponseEntity<List<Advertisement>> getAdvertisementsByUserId(@PathVariable String email){
         try{
             return new ResponseEntity<>(advertisementService.getAdvertisementsByUserId(email), HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAdvertisementById(@PathVariable Long id){
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisementById(id), HttpStatus.OK);
         }catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
