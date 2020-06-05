@@ -28,20 +28,6 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
 
-  const handleAddToCart = (event, adId) => {
-    event.preventDefault();
-    let cartState = JSON.parse(localStorage.getItem("Cart")) || [];
-
-    if (cartState === []) {
-      cartState = [adId];
-      localStorage.setItem("Cart", JSON.stringify(cartState));
-    } else {
-      if (cartState.includes(adId)) return;
-      cartState = [...cartState, adId];
-      localStorage.setItem("Cart", JSON.stringify(cartState));
-    }
-  };
-
   return (
     <div className={classes.back}>
       <MainNavbar />

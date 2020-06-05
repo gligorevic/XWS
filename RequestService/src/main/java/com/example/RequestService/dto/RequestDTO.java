@@ -1,37 +1,50 @@
 package com.example.RequestService.dto;
 
 import com.example.RequestService.domain.PaidState;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
-import java.util.List;
 
 public class RequestDTO {
 
-    private PaidState paidState;
+    private Long id;
 
-    private Long userSendingRequest;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
+    private Date freeFrom;
 
-    private List<Long> adIds;
-    private String userEmail;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
+    private Date freeTo;
 
     public RequestDTO() {
     }
 
-    public RequestDTO(Long userSendingRequest, String userEmail, List<Long> adIds) {
-        this.userSendingRequest = userSendingRequest;
-        this.userEmail = userEmail;
-        this.adIds = adIds;
-
-        this.paidState = PaidState.PENDING;
+    public RequestDTO(Long id, Date freeFrom, Date freeTo) {
+        this.id = id;
+        this.freeFrom = freeFrom;
+        this.freeTo = freeTo;
     }
 
-    public PaidState getPaidState() {
-        return paidState;
+    public Long getId() {
+        return id;
     }
 
-    public void setPaidState(PaidState paidState) {
-        this.paidState = paidState;
+    public void setId(Long id) {
+        this.id = id;
     }
 
+    public Date getFreeFrom() {
+        return freeFrom;
+    }
 
+    public void setFreeFrom(Date freeFrom) {
+        this.freeFrom = freeFrom;
+    }
+
+    public Date getFreeTo() {
+        return freeTo;
+    }
+
+    public void setFreeTo(Date freeTo) {
+        this.freeTo = freeTo;
+    }
 }

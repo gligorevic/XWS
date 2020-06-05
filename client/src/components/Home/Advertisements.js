@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { getAllAdvertisements } from "../../store/actions/advertisement";
+import { increaseCartNum } from "../../store/actions/user";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -24,12 +25,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Advertisements = ({ ads, getAllAdvertisements }) => {
+const Advertisements = ({ ads, getAllAdvertisements, increaseCartNum }) => {
   const classes = useStyles();
 
   useEffect(() => {
     getAllAdvertisements();
   }, []);
+
+  const handleAddToCart = (event, adId) => {
+    event.preventDefault();
+    let cartState = JSON.parse(localStorage.getItem("Cart")) || [];
+
+    if (cartState === []) {
+      cartState = [adId];
+      localStorage.setItem("Cart", JSON.stringify(cartState));
+      increaseCartNum();
+    } else {
+      if (cartState.includes(adId)) return;
+      cartState = [...cartState, adId];
+      localStorage.setItem("Cart", JSON.stringify(cartState));
+      increaseCartNum();
+    }
+  };
 
   return (
     <Grid
@@ -62,7 +79,11 @@ const Advertisements = ({ ads, getAllAdvertisements }) => {
                 <CardContent></CardContent>
                 <CardActions>
                   <ViewDetails id={row.id} />
-                  <IconButton color="primary" aria-label="add to shopping cart">
+                  <IconButton
+                    onClick={(event) => handleAddToCart(event, row.id)}
+                    color="primary"
+                    aria-label="add to shopping cart"
+                  >
                     <AddShoppingCartIcon />
                   </IconButton>
                 </CardActions>
@@ -78,6 +99,7 @@ const mapStateToProps = (state) => ({
   ads: state.advertisement.allAdvertisements,
 });
 
-export default connect(mapStateToProps, { getAllAdvertisements })(
-  Advertisements
-);
+export default connect(mapStateToProps, {
+  getAllAdvertisements,
+  increaseCartNum,
+})(Advertisements);

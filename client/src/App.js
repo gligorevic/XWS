@@ -36,6 +36,14 @@ if (localStorage.jwtToken) {
   }
 }
 
+if (localStorage.Cart && JSON.parse(localStorage.Cart).length > 0) {
+  console.log(localStorage.Cart);
+  store.dispatch({
+    type: "SET_CART_ITEMS_NUM",
+    cartItemsNum: JSON.parse(localStorage.Cart).length,
+  });
+}
+
 function App() {
   return (
     <Provider store={store}>

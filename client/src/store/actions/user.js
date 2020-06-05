@@ -2,6 +2,7 @@ import {
   SET_ALL_USERS,
   SET_USER_BLOCKED,
   SET_ALLUSER_DELETE,
+  SET_CART_ITEMS_NUM,
 } from "../actionTypes";
 import axios from "axios";
 
@@ -39,6 +40,26 @@ export const deleteUser = (userId) => async (dispatch) => {
   try {
     await axios.delete(`/auth/user/${userId}`);
     dispatch(setAllUsersAfterDelete(userId));
+  } catch (err) {
+    console.log(err);
+    return err.response;
+  }
+};
+
+export const increaseCartNum = () => (dispatch, getState) => {
+  try {
+    const cartItemsNum = getState().user.cartItemsNum;
+    dispatch({ type: SET_CART_ITEMS_NUM, cartItemsNum: cartItemsNum + 1 });
+  } catch (err) {
+    console.log(err);
+    return err.response;
+  }
+};
+
+export const decreaseCartNum = () => (dispatch, getState) => {
+  try {
+    const cartItemsNum = getState().user.cartItemsNum;
+    dispatch({ type: SET_CART_ITEMS_NUM, cartItemsNum: cartItemsNum - 1 });
   } catch (err) {
     console.log(err);
     return err.response;
