@@ -8,11 +8,13 @@ import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.repository.AdvertisementRepository;
 import com.example.SearchService.repository.CityRepository;
 import com.example.SearchService.repository.ReservationPeriodRepository;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -26,6 +28,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdvertisementService {
+
+    @Inject
+    private transient CommandGateway commandGateway;
 
     @Autowired
     private AdvertisementRepository advertisementRepository;
