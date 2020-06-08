@@ -63,7 +63,7 @@ public class RequestService {
     }
 
     public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO){
-        List<Request> requests = requestRepository.getRequestsForCanceling(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
+        List<Request> requests = requestContainerRepository.getRequestsFromBundle(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
         if(!requests.isEmpty()) {
             for (Request r : requests) {
                 r.setPaidState(PaidState.CANCELED);
