@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
@@ -17,6 +16,9 @@ import "./Avertisements.css";
 import ViewDetails from "../Dialogs/AdvertisementDetails";
 
 const useStyles = makeStyles((theme) => ({
+  media: {
+    padding: "52%",
+  },
   root: {
     maxWidth: 1000,
   },
@@ -73,7 +75,7 @@ const Advertisements = ({ ads, getAllAdvertisements, increaseCartNum }) => {
                 />
                 <CardMedia
                   className={classes.media}
-                  image={"/search/" + row.mainImagePath}
+                  image={`/search${row.mainImagePath}`}
                   title="Paella dish"
                 />
                 <CardContent></CardContent>
