@@ -7,6 +7,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AddIcon from "@material-ui/icons/Add";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +25,8 @@ const BrandList = ({
   setSelectedBrand,
   handleClickBrand,
   handleOpenDialog,
+  handleOpenEditDialog,
+  setEditText,
 }) => {
   const classes = useStyles();
 
@@ -42,13 +47,24 @@ const BrandList = ({
       >
         {allBrands.map((brand) => {
           return (
-            <ListItem
-              button
-              selected={selectedBrand && brand.id === selectedBrand.id}
-              onClick={(event) => handleListItemClick(event, brand)}
-            >
-              <ListItemText primary={brand.brandName} />
-            </ListItem>
+            <>
+              <Grid container>
+                <Grid item md={10} className={classes.listContainer}>
+                  <ListItem
+                    button
+                    selected={selectedBrand && brand.id === selectedBrand.id}
+                    onClick={(event) => handleListItemClick(event, brand)}
+                  >
+                    <ListItemText primary={brand.brandName} />
+                  </ListItem>
+                </Grid>
+                <Grid item md={2} className={classes.listContainer}>
+                  <IconButton color="primary" aria-label="add to shopping cart">
+                    <EditIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </>
           );
         })}
       </List>

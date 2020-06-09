@@ -11,6 +11,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import Alert from "@material-ui/lab/Alert";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -51,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: -290,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -66,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: "column",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
 const CartPage = ({
@@ -78,6 +88,13 @@ const CartPage = ({
     console.log(cartList);
     getAdvertisementsForCart(cartList);
   }, []);
+
+  const [loading, setLoading] = React.useState(false);
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openFailure, setOpenFailure] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(
+    "Something went wrong"
+  );
 
   const [open, setOpen] = React.useState(false);
   const [bundle, setBundle] = React.useState([]);
@@ -92,9 +109,19 @@ const CartPage = ({
   };
 
   const handleSubmitRequest = async (event, ad) => {
-    const resp = await Axios.post(`/request`, ad);
+    event.preventDefault();
+    setLoading(true);
+    const resp = await Axios.post(`/request`, ad).catch((error) => {
+      if (error.response && error.response.status === 400) {
+        setLoading(false);
+        setOpenFailure(true);
+        setErrorMessage(error.response.data);
+      }
+    });
 
     if (resp.status === 201) {
+      setLoading(false);
+      setOpenSuccess(true);
       var cartList = JSON.parse(localStorage.getItem("Cart"));
       cartList.pop(ad.id);
       localStorage.setItem("Cart", JSON.stringify(cartList));
@@ -102,12 +129,25 @@ const CartPage = ({
   };
 
   const handleSendBundleRequest = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     bundleRequest.requestDTOS = bundle;
-    console.log(bundleRequest);
-    const resp = await Axios.post(`/request/bundle`, bundleRequest);
+    const resp = await Axios.post(`/request/bundle`, bundleRequest).catch(
+      (error) => {
+        if (error.response && error.response.status === 400) {
+          setLoading(false);
+          setOpenFailure(true);
+          setErrorMessage(error.response.data);
+        }
+      }
+    );
 
     if (resp.status === 201) {
-      console.log("dodao bundle");
+      setLoading(false);
+      setOpenSuccess(true);
+      var cartList = JSON.parse(localStorage.getItem("Cart"));
+      cartList.pop([...bundle, bundle.id]);
+      localStorage.setItem("Cart", JSON.stringify(cartList));
     }
   };
 
@@ -115,15 +155,25 @@ const CartPage = ({
     setOpen(false);
   };
 
+  const handleCloseSuccess = () => {
+    setOpenSuccess(false);
+  };
+
+  const handleCloseError = () => {
+    setOpenFailure(false);
+  };
+
   const handleAddToBundle = (e, ad) => {
     setBundle((oldState) => [...oldState, ad]);
     bundleRequest.userEmail = ad.userEmail;
-    console.log(bundle);
   };
 
   const handleRemoveFromBundle = (e, ad) => {
     setBundle((oldState) => oldState.filter((adBundle) => adBundle !== ad));
-    console.log(bundle);
+  };
+
+  const handleRemoveFromCart = (e, ad) => {
+    setBundle((oldState) => oldState.filter((adBundle) => adBundle !== ad));
   };
 
   const drawer = (
@@ -144,8 +194,6 @@ const CartPage = ({
         <CssBaseline />
         <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
         <nav className={classes.drawer} aria-label="mailbox folders">
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-
           <Drawer
             className={classes.drawer}
             variant="persistent"
@@ -165,13 +213,12 @@ const CartPage = ({
         >
           <div className={classes.drawerHeader} />
           <Grid container spacing={1}>
-            <Grid item md={6} className={classes.listContainer}>
+            <Grid item md={8} className={classes.listContainer}>
               <h2>My Cart Items</h2>
               <List
                 component="nav"
                 aria-label="main mailbox folders"
                 style={{
-                  width: 700,
                   height: 400,
                   overflowY: "scroll",
                 }}
@@ -182,7 +229,11 @@ const CartPage = ({
                       <>
                         <ListItem>
                           <Grid container spacing={1}>
-                            <Grid item md={2} className={classes.listContainer}>
+                            <Grid
+                              item
+                              width={50}
+                              className={classes.listContainer}
+                            >
                               <ListItemText
                                 primary={ad.brandName + " - " + ad.modelName}
                               />
@@ -193,12 +244,16 @@ const CartPage = ({
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                width: 7,
+                                width: 30,
                               }}
                             >
                               <Divider orientation="vertical" />
                             </Grid>
-                            <Grid item md={3} className={classes.listContainer}>
+                            <Grid
+                              item
+                              width={100}
+                              className={classes.listContainer}
+                            >
                               <ListItemText primary={ad.userEmail} />
                             </Grid>
                             <Grid
@@ -207,12 +262,16 @@ const CartPage = ({
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                width: 7,
+                                width: 30,
                               }}
                             >
                               <Divider orientation="vertical" />
                             </Grid>
-                            <Grid item md={3} className={classes.listContainer}>
+                            <Grid
+                              item
+                              width={150}
+                              className={classes.listContainer}
+                            >
                               <Button
                                 onClick={(event) =>
                                   handleSubmitRequest(event, ad)
@@ -225,7 +284,11 @@ const CartPage = ({
                               </Button>
                             </Grid>
 
-                            <Grid item md={3} className={classes.listContainer}>
+                            <Grid
+                              item
+                              width={150}
+                              className={classes.listContainer}
+                            >
                               <Button
                                 onClick={(event) =>
                                   handleAddToBundle(event, ad)
@@ -239,9 +302,31 @@ const CartPage = ({
                                 }
                                 variant="contained"
                                 size="small"
-                                color="secundary"
                               >
                                 Add to bundle
+                              </Button>
+                            </Grid>
+                            <Grid
+                              item
+                              width={100}
+                              className={classes.listContainer}
+                            >
+                              <Button
+                                onClick={(event) =>
+                                  handleRemoveFromCart(event, ad)
+                                }
+                                disabled={
+                                  bundle.length < 1
+                                    ? false
+                                    : bundle.includes(ad)
+                                    ? true
+                                    : false
+                                }
+                                variant="contained"
+                                size="small"
+                                style={{ backgroundColor: "#ffaaaa" }}
+                              >
+                                Remove
                               </Button>
                             </Grid>
                           </Grid>
@@ -251,7 +336,7 @@ const CartPage = ({
                   })}
               </List>
             </Grid>
-            <Grid item md={6} className={classes.listContainer}>
+            <Grid item md={4} className={classes.listContainer}>
               <h2>Bundle List</h2>
               <List
                 component="nav"
@@ -306,6 +391,42 @@ const CartPage = ({
           </Grid>
         </main>
       </div>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Dialog
+        open={openSuccess}
+        keepMounted
+        onClose={handleCloseSuccess}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="success">Successfully sent.</Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseSuccess} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openFailure}
+        keepMounted
+        onClose={handleCloseError}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="error">{errorMessage}</Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseError} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

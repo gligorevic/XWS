@@ -5,6 +5,11 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import Alert from "@material-ui/lab/Alert";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
@@ -25,14 +30,26 @@ const useStyles = makeStyles((theme) => ({
   card: {
     boxShadow: "0px 2px 23px 2px rgba(0,0,0,0.75)",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
-const Advertisements = ({ ads, getAllAdvertisements, increaseCartNum }) => {
+const Advertisements = ({
+  ads,
+  user,
+  getAllAdvertisements,
+  increaseCartNum,
+}) => {
   const classes = useStyles();
 
   useEffect(() => {
     getAllAdvertisements();
   }, []);
+
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openInfo, setOpenInfo] = React.useState(false);
 
   const handleAddToCart = (event, adId) => {
     event.preventDefault();
@@ -42,63 +59,117 @@ const Advertisements = ({ ads, getAllAdvertisements, increaseCartNum }) => {
       cartState = [adId];
       localStorage.setItem("Cart", JSON.stringify(cartState));
       increaseCartNum();
+      setOpenSuccess(true);
     } else {
-      if (cartState.includes(adId)) return;
+      if (cartState.includes(adId)) {
+        setOpenInfo(true);
+        return;
+      }
       cartState = [...cartState, adId];
       localStorage.setItem("Cart", JSON.stringify(cartState));
       increaseCartNum();
+      setOpenSuccess(true);
     }
   };
 
+  const handleCloseSuccess = () => {
+    setOpenSuccess(false);
+  };
+
+  const handleCloseInfo = () => {
+    setOpenInfo(false);
+  };
+
   return (
-    <Grid
-      container
-      spacing={3}
-      justify="space-between"
-      alignItems="center"
-      className={classes.root}
-    >
-      {ads &&
-        ads.map((row) => {
-          return (
-            <Grid item sm={12} md={4}>
-              <Card className={classes.card}>
-                <CardHeader
-                  action={
-                    <IconButton aria-label="settings" className="priceToggler">
-                      <LocalOfferIcon className="priceButton" />
-                      <span className="purePrice">{row.price}</span>
-                    </IconButton>
-                  }
-                  title={`${row.brandName} - ${row.modelName}`}
-                  subheader="September 14, 2016"
-                />
-                <CardMedia
-                  className={classes.media}
-                  image={`/search${row.mainImagePath}`}
-                  title="Paella dish"
-                />
-                <CardContent></CardContent>
-                <CardActions>
-                  <ViewDetails id={row.id} />
-                  <IconButton
-                    onClick={(event) => handleAddToCart(event, row.id)}
-                    color="primary"
-                    aria-label="add to shopping cart"
-                  >
-                    <AddShoppingCartIcon />
-                  </IconButton>
-                </CardActions>
-              </Card>
-            </Grid>
-          );
-        })}
-    </Grid>
+    <>
+      <Grid
+        container
+        spacing={3}
+        justify="space-between"
+        alignItems="center"
+        className={classes.root}
+      >
+        {ads &&
+          ads.map((row) => {
+            return (
+              <Grid item sm={12} md={4}>
+                <Card className={classes.card}>
+                  <CardHeader
+                    action={
+                      <IconButton
+                        aria-label="settings"
+                        className="priceToggler"
+                      >
+                        <LocalOfferIcon className="priceButton" />
+                        <span className="purePrice">{row.price}</span>
+                      </IconButton>
+                    }
+                    title={`${row.brandName} - ${row.modelName}`}
+                    subheader="September 14, 2016"
+                  />
+                  <CardMedia
+                    className={classes.media}
+                    image={`/search${row.mainImagePath}`}
+                    title="Paella dish"
+                  />
+                  <CardContent></CardContent>
+                  <CardActions>
+                    <ViewDetails id={row.id} />
+                    {user.role && user.role[0].name !== "ROLE_ADMIN" && (
+                      <IconButton
+                        onClick={(event) => handleAddToCart(event, row.id)}
+                        color="primary"
+                        aria-label="add to shopping cart"
+                      >
+                        <AddShoppingCartIcon />
+                      </IconButton>
+                    )}
+                  </CardActions>
+                </Card>
+              </Grid>
+            );
+          })}
+      </Grid>
+      <Dialog
+        open={openSuccess}
+        keepMounted
+        onClose={handleCloseSuccess}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="success">Successfully added to your cart.</Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseSuccess} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openInfo}
+        keepMounted
+        onClose={handleCloseInfo}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="info">This car is already in your cart</Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseInfo} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
 const mapStateToProps = (state) => ({
   ads: state.advertisement.allAdvertisements,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, {

@@ -5,11 +5,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AddIcon from "@material-ui/icons/Add";
-import EditIcon from "@material-ui/icons/Edit";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
 
 import { getAllBrands } from "../../../store/actions/carInfo";
 
@@ -24,6 +26,8 @@ const TypeList = ({
   allGearShiftTypes,
   allBodyTypes,
   handleClickType,
+  handleOpenEditDialog,
+  setEditText,
 }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -58,9 +62,23 @@ const TypeList = ({
           >
             {allFuelTypes.map((fuelType) => {
               return (
-                <ListItem>
-                  <ListItemText primary={fuelType.fuelTypeName} />
-                </ListItem>
+                <>
+                  <Grid container>
+                    <Grid item md={10} className={classes.listContainer}>
+                      <ListItem>
+                        <ListItemText primary={fuelType.fuelTypeName} />
+                      </ListItem>
+                    </Grid>
+                    <Grid item md={2} className={classes.listContainer}>
+                      <IconButton
+                        color="primary"
+                        aria-label="add to shopping cart"
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </>
               );
             })}
           </List>
@@ -88,9 +106,23 @@ const TypeList = ({
           >
             {allGearShiftTypes.map((gearShiftType) => {
               return (
-                <ListItem>
-                  <ListItemText primary={gearShiftType.gearShiftName} />
-                </ListItem>
+                <>
+                  <Grid container>
+                    <Grid item md={10} className={classes.listContainer}>
+                      <ListItem>
+                        <ListItemText primary={gearShiftType.gearShiftName} />
+                      </ListItem>
+                    </Grid>
+                    <Grid item md={2} className={classes.listContainer}>
+                      <IconButton
+                        color="primary"
+                        aria-label="add to shopping cart"
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </>
               );
             })}
           </List>
@@ -120,9 +152,23 @@ const TypeList = ({
           >
             {allBodyTypes.map((bodyType) => {
               return (
-                <ListItem>
-                  <ListItemText primary={bodyType.bodyTypeName} />
-                </ListItem>
+                <>
+                  <Grid container>
+                    <Grid item md={10} className={classes.listContainer}>
+                      <ListItem>
+                        <ListItemText primary={bodyType.bodyTypeName} />
+                      </ListItem>
+                    </Grid>
+                    <Grid item md={2} className={classes.listContainer}>
+                      <IconButton
+                        color="primary"
+                        aria-label="add to shopping cart"
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </>
               );
             })}
           </List>

@@ -107,6 +107,22 @@ public class ModelController {
         }
     }
 
+    @PutMapping("model/{modelId}")
+    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
+    public ResponseEntity<?> editModel(@PathVariable("modelId") Long modelId, @RequestBody String modelName){
+
+        try{
+            return new ResponseEntity<>(modelService.editModel(modelId, modelName), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @GetMapping("model")
     public ResponseEntity<?> getAllModels(){

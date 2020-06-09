@@ -33,6 +33,9 @@ public class RequestController {
             request.setAdId(requestDTO.getId());
             return new ResponseEntity<>(requestService.add(request), HttpStatus.CREATED);
 
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

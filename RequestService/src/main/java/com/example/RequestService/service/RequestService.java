@@ -10,6 +10,7 @@ import com.example.RequestService.exception.CustomException;
 import com.example.RequestService.repository.RequestContainerRepository;
 import com.example.RequestService.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -25,7 +26,7 @@ public class RequestService {
     @Autowired
     private RequestContainerRepository requestContainerRepository;
 
-    public Request add(Request request) {
+    public Request add(Request request) throws CustomException {
 
         return requestRepository.save(request);
     }
@@ -33,11 +34,15 @@ public class RequestService {
     public RequestContainer addBundle(RequestContainerDTO requestContainerDTO) throws CustomException {
 
         RequestContainer requestContainer = new RequestContainer(requestContainerDTO);
+        if(requestContainer == null)
+            throw new CustomException("Could not create bundle request", HttpStatus.BAD_REQUEST);
 
         for(RequestDTO requestDTO : requestContainerDTO.getRequestDTOS()){
             requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
             requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
             Request request = new Request(requestDTO);
+            if(request == null)
+                throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
             requestContainer.getBoundleList().add(requestRepository.save(new Request(requestDTO)));
         }
 

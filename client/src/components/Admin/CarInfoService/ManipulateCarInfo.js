@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import Alert from "@material-ui/lab/Alert";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import Button from "@material-ui/core/Button";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import BrandList from "./BrandList";
 import ModelList from "./ModelList";
@@ -10,6 +17,7 @@ import Axios from "axios";
 
 import AddNewDialog from "./AddNewDialog";
 import AddNewTypeDialog from "./AddNewTypeDialog";
+import EditingDialog from "./EditingDialog";
 
 const dialogEnum = {
   UNOPEND: -1,
@@ -33,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: "column",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
 export default function ManipulateCarInfo() {
@@ -51,6 +63,13 @@ export default function ManipulateCarInfo() {
   const [allGearShiftTypes, setAllGearShiftTypes] = useState([]);
   const [allBodyTypes, setAllBodyTypes] = useState([]);
   const [allBrands, setAllBrands] = useState([]);
+
+  const [loading, setLoading] = React.useState(false);
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openFailure, setOpenFailure] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(
+    "Something went wrong"
+  );
 
   useEffect(() => {
     (async () => {
@@ -129,13 +148,26 @@ export default function ManipulateCarInfo() {
   const handleSubmitModel = async (e) => {
     try {
       e.preventDefault();
+      setAddDialogOpened(dialogEnum.UNOPEND);
+      setLoading(true);
       const newModel = {
         modelName: newEntityData,
         brandName: selectedBrand.brandName,
       };
-      await Axios.post("/car-info/model", newModel);
-      setAllModels((oldState) => [...oldState, newModel]);
-      setAddDialogOpened(dialogEnum.UNOPEND);
+      const response = await Axios.post("/car-info/model", newModel).catch(
+        (error) => {
+          if (error.response && error.response.status === 400) {
+            setLoading(false);
+            setOpenFailure(true);
+            setErrorMessage(error.response.data);
+          }
+        }
+      );
+      if (response.status >= 200 && response.status < 300) {
+        setLoading(false);
+        setOpenSuccess(true);
+        setAllModels((oldState) => [...oldState, response.data]);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -144,13 +176,23 @@ export default function ManipulateCarInfo() {
   const handleSubmitBrand = async (e) => {
     try {
       e.preventDefault();
+      setAddDialogOpened(dialogEnum.UNOPEND);
+      setLoading(true);
       const response = await Axios.post(`/car-info/brand`, newEntityData, {
         headers: { "Content-Type": "text/plain" },
+      }).catch((error) => {
+        if (error.response && error.response.status === 400) {
+          setLoading(false);
+          setOpenFailure(true);
+          setErrorMessage(error.response.data);
+        }
       });
-      console.log(allBrands);
-      console.log(response.data);
-      setAllBrands((oldBrands) => [...oldBrands, response.data]);
-      setAddDialogOpened(dialogEnum.UNOPEND);
+
+      if (response.status >= 200 && response.status < 300) {
+        setLoading(false);
+        setOpenSuccess(true);
+        setAllBrands((oldBrands) => [...oldBrands, response.data]);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -162,6 +204,14 @@ export default function ManipulateCarInfo() {
 
   const handleChange = (e) => {
     setNewEntityData(e.target.value);
+  };
+
+  const handleCloseSuccess = () => {
+    setOpenSuccess(false);
+  };
+
+  const handleCloseError = () => {
+    setOpenFailure(false);
   };
 
   const addingDialog = () => {
@@ -205,6 +255,10 @@ export default function ManipulateCarInfo() {
             setAllGearShiftTypes={setAllGearShiftTypes}
             setAllBodyTypes={setAllBodyTypes}
             isModelSelected={selectedModel !== null}
+            setLoading={setLoading}
+            setOpenFailure={setOpenFailure}
+            setOpenSuccess={setOpenSuccess}
+            setErrorMessage={setErrorMessage}
           />
         );
     }
@@ -250,6 +304,43 @@ export default function ManipulateCarInfo() {
         </Grid>
       </Grid>
       {addDialogOpened !== dialogEnum.UNOPEND && addingDialog()}
+
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Dialog
+        open={openSuccess}
+        keepMounted
+        onClose={handleCloseSuccess}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="success">Successfully added.</Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseSuccess} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openFailure}
+        keepMounted
+        onClose={handleCloseError}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="error">{errorMessage}</Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseError} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

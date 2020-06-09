@@ -33,6 +33,22 @@ public class FuelTypeController {
         }
     }
 
+    @PutMapping("fuel-type/{fuelTypeId}")
+    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
+    public ResponseEntity<?> editFuelType(@PathVariable("fuelTypeId") Long fuelTypeId, @RequestBody String fuelTypeName){
+
+        try{
+            return new ResponseEntity<>(fuelTypeService.editFuelType(fuelTypeId, fuelTypeName), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("fuel-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getAllFuelTypes(){

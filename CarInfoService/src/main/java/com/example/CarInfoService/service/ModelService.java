@@ -34,9 +34,12 @@ public class ModelService {
 
         Model model = new Model(modelDTO.getModelName());
 
+
         Brand brand = brandRepository.findBrandByBrandName(modelDTO.getBrandName());
         if(brand == null)
-            return null;
+            throw  new CustomException("Brand doesn't exists", HttpStatus.BAD_REQUEST);
+        if(modelRepository.findModelsByBrandId(brand.getId()).contains(modelRepository.findModelByModelName(modelDTO.getModelName())))
+            throw  new CustomException("Model already exists in " + brand.getBrandName() + " brands list.", HttpStatus.BAD_REQUEST);
         model.setBrand(brand);
 
 
@@ -155,5 +158,20 @@ public class ModelService {
             throw  new CustomException("Model doesn't exists", HttpStatus.BAD_REQUEST);
 
         return modelRepository.findModelById(modelId);
+    }
+
+    public Model editModel(Long modelId, String modelName) throws CustomException {
+
+        Model model = modelRepository.findModelById(modelId);
+        if(model == null){
+            throw new CustomException("Model doesn't exists", HttpStatus.BAD_REQUEST);
+        }
+
+        if(modelRepository.findModelsByBrandId(model.getBrand().getId()).contains(modelRepository.findModelByModelName(modelName)))
+            throw  new CustomException("Model with that name already exists in " + model.getBrand().getBrandName() + " brands list.", HttpStatus.BAD_REQUEST);
+
+        model.setModelName(modelName);
+
+        return modelRepository.save(model);
     }
 }

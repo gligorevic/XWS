@@ -20,6 +20,8 @@ public interface ModelRepository extends JpaRepository<Model, Long> {
 
     Model findModelByModelName(String modelName);
 
+    List<Model> findModelsByBrandId(Long id);
+
     @Query(value = "SELECT * FROM MODEL AS m WHERE m.BRAND_ID = :brandId", nativeQuery = true)
     List<Model> findModelsByBrand(Long brandId);
 

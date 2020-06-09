@@ -17,7 +17,7 @@ public class GearShiftType {
     public GearShiftType() {
     }
 
-    public GearShiftType(String name) {
+    public GearShiftType(String gearShiftName) {
         this.gearShiftName = gearShiftName;
     }
 
