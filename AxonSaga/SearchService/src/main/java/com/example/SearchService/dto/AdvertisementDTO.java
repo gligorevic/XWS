@@ -1,6 +1,9 @@
 package com.example.SearchService.dto;
 
+import com.example.SearchService.domain.Advertisement;
+
 import java.util.Date;
+import java.util.List;
 
 public class AdvertisementDTO {
 
@@ -37,6 +40,32 @@ public class AdvertisementDTO {
     private Date freeTo;
 
     private String mainImagePath;
+
+    private List<String> images;
+
+    public AdvertisementDTO() {
+    }
+
+    public AdvertisementDTO(Advertisement advertisement, List<String> images) {
+        this.carId = advertisement.getCarId();
+        this.kmRestriction = advertisement.getKmRestriction();
+        this.price = advertisement.getPriceFrom();
+        this.brandName = advertisement.getBrandName();
+        this.modelName = advertisement.getModelName();
+        this.gearShiftName = advertisement.getGearShiftName();
+        this.fuelTypeName = advertisement.getFuelTypeName();
+        this.bodyName = advertisement.getBodyName();
+        this.kmPassed = advertisement.getKmPassed();
+        this.numberChildSeats = advertisement.getNumberChildSeats();
+        this.collisionDamage = advertisement.getCollisionDamage();
+        this.userEmail = advertisement.getUserEmail();
+        this.cityName = advertisement.getRentingCityLocation().getName();
+        this.rentingStreetLocation = advertisement.getRentingStreetLocation();
+        this.freeFrom = advertisement.getFreeFrom();
+        this.freeTo = advertisement.getFreeTo();
+        this.mainImagePath = advertisement.getMainImagePath();
+        this.images = images;
+    }
 
     public Long getCarId() {
         return carId;
@@ -172,5 +201,13 @@ public class AdvertisementDTO {
 
     public void setMainImagePath(String mainImagePath) {
         this.mainImagePath = mainImagePath;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

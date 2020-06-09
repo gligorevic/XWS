@@ -58,7 +58,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const AddAdvertisement = ({ carId, open, setOpen }) => {
   const [cityName, setCityName] = useState("");
   const [error, setError] = useState(false);
-  const [mainImg, setMainImg] = useState(null);
+  const [images, setImages] = useState(null);
 
   const [state, setState] = React.useState({
     carId: "",
@@ -105,12 +105,12 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
   }, [open]);
 
   const handleChangeImage = (e) => {
-    if (e.target.files[0]) {
-      setMainImg({
-        url: URL.createObjectURL(e.target.files[0]),
-        file: e.target.files[0],
-      });
-    }
+    setImages(
+      Array.from(e.target.files).map((file) => ({
+        url: URL.createObjectURL(file),
+        file,
+      }))
+    );
   };
 
   const handleClose = () => {
@@ -150,23 +150,30 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
   };
 
   const handleSubmit = async (e) => {
-    let fd = new FormData();
+    let formData = new FormData();
 
-    fd.append("file", mainImg.file);
+    console.log(images);
+    formData.append(
+      "advertisement",
+      new Blob(
+        [
+          JSON.stringify({
+            ...state,
+            cityName,
+            mainImagePath: `/static/images/${state.carId}/${images[0].file.name}`,
+          }),
+        ],
+        {
+          type: "application/json",
+        }
+      )
+    );
+    images.forEach((img) => formData.append("file", img.file));
 
     setLoading(true);
 
-    const resp = await Axios.post("/search", {
-      ...state,
-      cityName,
-      mainImagePath: `/static/images/${mainImg.file.name}`,
-    });
-
-    const imgResp = await Axios.post("/search/upload/image", fd, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const resp = await Axios.post("/search", formData);
+    console.log(resp);
     setLoading(false);
     if (resp.status === 200) {
       console.log("Uspesno");
@@ -358,7 +365,7 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
           <Grid item sm={12}>
             <img
               alt="Main image"
-              src={mainImg && mainImg.url}
+              src={images && images[0].url}
               style={{
                 maxHeight: 200,
                 maxWidth: 200,
@@ -370,6 +377,7 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
               className={classes.input}
               id="icon-button-file"
               type="file"
+              multiple
               onChange={handleChangeImage}
             />
           </Grid>
