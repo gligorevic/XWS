@@ -28,6 +28,9 @@ const TypeList = ({
   handleClickType,
   handleOpenEditDialog,
   setEditText,
+  setAllFuelTypes,
+  setAllBodyTypes,
+  setAllGearShiftTypes,
 }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);

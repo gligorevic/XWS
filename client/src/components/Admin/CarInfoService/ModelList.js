@@ -10,7 +10,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
-import Grid from "@material-ui/core/Grid";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -36,12 +35,14 @@ const ModelList = ({
   isSelectedBrand,
   handleClickModel,
   handleOpenDialog,
+  setAllModels,
 }) => {
   const classes = useStyles();
 
   const [editDialogOpened, setEditDialogOpened] = useState(false);
 
   const [text, setText] = useState("");
+  const [model, setModel] = useState(null);
 
   const handleListItemClick = (event, model) => {
     if (selectedModel && selectedModel.id === model.id) setSelectedModel(null);
@@ -53,6 +54,7 @@ const ModelList = ({
 
   const handleClose = (e) => {
     setEditDialogOpened(false);
+    setModel(null);
   };
 
   const handleChange = (e) => {
@@ -60,16 +62,25 @@ const ModelList = ({
   };
 
   const handleOpenEditDialog = (e, entity) => {
+    e.stopPropagation();
     setEditDialogOpened(true);
     setText(entity.modelName);
+    setModel(entity);
   };
 
-  const handleSubmitEdit = async (modelId) => {
+  const handleSubmitEdit = async () => {
     setEditDialogOpened(false);
-    const response = await Axios.put(`/model/${modelId}`, text);
+    const response = await Axios.put(`car-info/model/${model.id}`, text, {
+      headers: { "Content-Type": "text/plain" },
+    });
 
     if (response.status >= 200 && response.status < 300) {
-      console.log(response.data);
+      setAllModels((oldModleList) =>
+        oldModleList.map((modelItem) =>
+          modelItem.id === model.id ? response.data : modelItem
+        )
+      );
+      setModel(null);
     }
   };
 
@@ -83,28 +94,21 @@ const ModelList = ({
         >
           {allModels.map((model) => {
             return (
-              <>
-                <Grid container>
-                  <Grid item md={10} className={classes.listContainer}>
-                    <ListItem
-                      button
-                      selected={selectedModel && selectedModel.id === model.id}
-                      onClick={(event) => handleListItemClick(event, model)}
-                    >
-                      <ListItemText primary={model.modelName} />
-                    </ListItem>
-                  </Grid>
-                  <Grid item md={2} className={classes.listContainer}>
-                    <IconButton
-                      onClick={(e) => handleOpenEditDialog(e, model)}
-                      color="primary"
-                      aria-label="add to shopping cart"
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              </>
+              <ListItem
+                button
+                selected={selectedModel && selectedModel.id === model.id}
+                onClick={(event) => handleListItemClick(event, model)}
+              >
+                <ListItemText primary={model.modelName} />
+                <IconButton
+                  style={{ float: "right" }}
+                  onClick={(e) => handleOpenEditDialog(e, model)}
+                  color="primary"
+                  aria-label="add to shopping cart"
+                >
+                  <EditIcon />
+                </IconButton>
+              </ListItem>
             );
           })}
         </List>

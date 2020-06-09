@@ -6,10 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Alert from "@material-ui/lab/Alert";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
@@ -38,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Advertisements = ({
   ads,
-  user,
+  user: { user },
   getAllAdvertisements,
   increaseCartNum,
 }) => {
@@ -115,7 +112,7 @@ const Advertisements = ({
                   <CardContent></CardContent>
                   <CardActions>
                     <ViewDetails id={row.id} />
-                    {user.role && user.role[0].name !== "ROLE_ADMIN" && (
+                    {user.role.some((r) => r.name === "ROLE_ENDUSER") && (
                       <IconButton
                         onClick={(event) => handleAddToCart(event, row.id)}
                         color="primary"
@@ -130,39 +127,25 @@ const Advertisements = ({
             );
           })}
       </Grid>
-      <Dialog
+      <Snackbar
         open={openSuccess}
-        keepMounted
+        autoHideDuration={3000}
         onClose={handleCloseSuccess}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogContent>
-          <Alert severity="success">Successfully added to your cart.</Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseSuccess} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Alert onClose={handleCloseSuccess} severity="success">
+          Successfully added to your cart.
+        </Alert>
+      </Snackbar>
 
-      <Dialog
+      <Snackbar
         open={openInfo}
-        keepMounted
+        autoHideDuration={3000}
         onClose={handleCloseInfo}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogContent>
-          <Alert severity="info">This car is already in your cart</Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseInfo} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Alert onClose={handleCloseInfo} severity="info">
+          This car is already in your cart.
+        </Alert>
+      </Snackbar>
     </>
   );
 };

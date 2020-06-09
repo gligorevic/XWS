@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Alert from "@material-ui/lab/Alert";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Button from "@material-ui/core/Button";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import BrandList from "./BrandList";
 import ModelList from "./ModelList";
@@ -17,7 +14,6 @@ import Axios from "axios";
 
 import AddNewDialog from "./AddNewDialog";
 import AddNewTypeDialog from "./AddNewTypeDialog";
-import EditingDialog from "./EditingDialog";
 
 const dialogEnum = {
   UNOPEND: -1,
@@ -273,6 +269,7 @@ export default function ManipulateCarInfo() {
               <h2>Brands List</h2>
               <BrandList
                 allBrands={allBrands}
+                setAllBrands={setAllBrands}
                 selectedBrand={selectedBrand}
                 handleClickBrand={handleClickBrand}
                 setSelectedBrand={setSelectedBrand}
@@ -285,6 +282,7 @@ export default function ManipulateCarInfo() {
                 isSelectedBrand={selectedBrand !== null}
                 selectedModel={selectedModel}
                 allModels={allModels}
+                setAllModels={setAllModels}
                 handleClickModel={handleClickModel}
                 setSelectedModel={setSelectedModel}
                 handleOpenDialog={handleOpenDialog}
@@ -299,6 +297,9 @@ export default function ManipulateCarInfo() {
             allBodyTypes={allBodyTypes}
             allFuelTypes={allFuelTypes}
             allGearShiftTypes={allGearShiftTypes}
+            setAllFuelTypes={setAllFuelTypes}
+            setAllBodyTypes={setAllBodyTypes}
+            setAllGearShiftTypes={setAllGearShiftTypes}
             handleClickType={handleClickType}
           />
         </Grid>
@@ -308,39 +309,25 @@ export default function ManipulateCarInfo() {
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Dialog
+      <Snackbar
         open={openSuccess}
-        keepMounted
+        autoHideDuration={3000}
         onClose={handleCloseSuccess}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogContent>
-          <Alert severity="success">Successfully added.</Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseSuccess} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Alert onClose={handleCloseSuccess} severity="success">
+          Successfully added.
+        </Alert>
+      </Snackbar>
 
-      <Dialog
+      <Snackbar
         open={openFailure}
-        keepMounted
+        autoHideDuration={3000}
         onClose={handleCloseError}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogContent>
-          <Alert severity="error">{errorMessage}</Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseError} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Alert onClose={handleCloseError} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

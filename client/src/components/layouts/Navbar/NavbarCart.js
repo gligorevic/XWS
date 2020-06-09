@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppBarLogedIn = ({ open, handleDrawerOpen, logout, user }) => {
+const AppBarMyCart = ({ open, handleDrawerOpen, logout, user }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -121,4 +121,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, { logout })(AppBarLogedIn));
+export default withRouter(connect(mapStateToProps, { logout })(AppBarMyCart));

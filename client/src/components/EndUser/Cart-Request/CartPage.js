@@ -29,48 +29,9 @@ import {
   setAllAdvertisementsForCart,
 } from "../../../store/actions/advertisement";
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -290,
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-  listContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
+  paddingMain: {
+    padding: "100px 80px",
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -191,26 +152,9 @@ const CartPage = ({
   return (
     <>
       <div className={classes.root}>
-        <CssBaseline />
         <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
-        <nav className={classes.drawer} aria-label="mailbox folders">
-          <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor="left"
-            open={open}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </nav>
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: open,
-          })}
-        >
+
+        <main className={classes.paddingMain}>
           <div className={classes.drawerHeader} />
           <Grid container spacing={1}>
             <Grid item md={8} className={classes.listContainer}>
@@ -228,12 +172,8 @@ const CartPage = ({
                     return (
                       <>
                         <ListItem>
-                          <Grid container spacing={1}>
-                            <Grid
-                              item
-                              width={50}
-                              className={classes.listContainer}
-                            >
+                          <Grid container justify="space-around">
+                            <Grid item className={classes.listContainer} sm={2}>
                               <ListItemText
                                 primary={ad.brandName + " - " + ad.modelName}
                               />
@@ -244,16 +184,12 @@ const CartPage = ({
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                width: 30,
                               }}
+                              sm={1}
                             >
                               <Divider orientation="vertical" />
                             </Grid>
-                            <Grid
-                              item
-                              width={100}
-                              className={classes.listContainer}
-                            >
+                            <Grid item className={classes.listContainer} sm={2}>
                               <ListItemText primary={ad.userEmail} />
                             </Grid>
                             <Grid
@@ -262,15 +198,19 @@ const CartPage = ({
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                width: 30,
                               }}
+                              sm={1}
                             >
                               <Divider orientation="vertical" />
                             </Grid>
                             <Grid
                               item
-                              width={150}
                               className={classes.listContainer}
+                              sm={6}
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                              }}
                             >
                               <Button
                                 onClick={(event) =>
@@ -282,13 +222,7 @@ const CartPage = ({
                               >
                                 Send request
                               </Button>
-                            </Grid>
 
-                            <Grid
-                              item
-                              width={150}
-                              className={classes.listContainer}
-                            >
                               <Button
                                 onClick={(event) =>
                                   handleAddToBundle(event, ad)
@@ -305,12 +239,7 @@ const CartPage = ({
                               >
                                 Add to bundle
                               </Button>
-                            </Grid>
-                            <Grid
-                              item
-                              width={100}
-                              className={classes.listContainer}
-                            >
+
                               <Button
                                 onClick={(event) =>
                                   handleRemoveFromCart(event, ad)
