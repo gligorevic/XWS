@@ -45,6 +45,7 @@ function AddCarFullScreen({ open, setOpen, userEmail, addCar }) {
       Array.from(e.target.files).map((file) => ({
         url: URL.createObjectURL(file),
         file,
+        name: file.name,
       }))
     );
   };
@@ -72,8 +73,7 @@ function AddCarFullScreen({ open, setOpen, userEmail, addCar }) {
       )
     );
     images.forEach((img) => formData.append("file", img.file));
-
-    const res = await addCar(formData);
+    const res = await addCar(formData, images[0].name);
     console.log(res);
     if (res.status >= 200 && res.status < 300) {
       await setOpen(false);

@@ -27,7 +27,7 @@ export default function CarCard({ generateToken, getExistingToken, car }) {
       />
       <CardMedia
         className="media"
-        image="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+        image={`/img${car.mainImageUrl}`}
         title={`${car.brandName} - ${car.modelName}`}
       />
       <CardActions disableSpacing className="cardFooter">

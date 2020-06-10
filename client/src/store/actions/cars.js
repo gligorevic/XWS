@@ -32,10 +32,14 @@ export const setTokenGenerated = (id) => async (dispatch) => {
   }
 };
 
-export const addCar = (car) => async (dispatch) => {
+export const addCar = (car, imgUrl) => async (dispatch) => {
   try {
     const res = await axios.post("/car", car);
-    dispatch({ type: SET_ADDED_CARS, car: res.data });
+    const newCar = res.data;
+    dispatch({
+      type: SET_ADDED_CARS,
+      car: { ...newCar, mainImageUrl: `/static/images/${newCar.id}/${imgUrl}` },
+    });
     return res;
   } catch (err) {
     console.log(err);

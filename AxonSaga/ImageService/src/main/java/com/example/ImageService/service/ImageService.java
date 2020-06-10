@@ -23,11 +23,10 @@ public class ImageService {
 
     public void saveImages(Map<String, byte[]> images, Long carId) throws IOException {
         System.out.println("Ovoliki je " + images.size());
-        String folder = "images/" + carId.toString();
+        String folder = "images/" + carId.toString() + "/";
         List<Image> newImages = new ArrayList<>();
-
+        Files.createDirectories(Paths.get(folder));
         for (Map.Entry<String, byte[]> image : images.entrySet()) {
-            Files.createDirectories(Paths.get(folder));
             Path path = Paths.get(folder + image.getKey());
             Files.write(path, image.getValue());
             newImages.add(new Image(carId, image.getKey()));
