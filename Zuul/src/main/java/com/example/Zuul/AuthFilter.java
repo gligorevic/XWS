@@ -36,18 +36,29 @@ public class AuthFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
 
-        //Dodati logiku da vraca null kad je generisan access token
-        if(request.getHeader("Authorization") == null) {
+        if(request.getHeader("Authorization") == null || request.getHeader("Auth") != null) {
             return null;
         }
+        try {
+            String accessToken = authClient.verify(request.getHeader("Authorization"));
 
-        String accessToken = authClient.verify(request.getHeader("Authorization"));
+            System.out.println("U zuul filteru");
+            System.out.println(accessToken);
 
-        System.out.println("U zuul filteru");
-        System.out.println(accessToken);
-
-        ctx.addZuulRequestHeader("Auth", accessToken);
+            ctx.addZuulRequestHeader("Auth", accessToken);
+        } catch(Exception e) {
+            setFailedRequest(e.getMessage(), 400);
+        }
 
         return null;
+    }
+
+    private void setFailedRequest(String body, int code) {
+        RequestContext ctx = RequestContext.getCurrentContext();
+        ctx.setResponseStatusCode(code);
+        if (ctx.getResponseBody() == null) {
+            ctx.setResponseBody(body);
+            ctx.setSendZuulResponse(false);
+        }
     }
 }

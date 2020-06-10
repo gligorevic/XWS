@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class CarController {
@@ -30,9 +31,10 @@ public class CarController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
-    public ResponseEntity<?> addNewCar(@RequestBody CarDTO carDTO, @RequestHeader (name="Auth") String bearerToken){
+    public ResponseEntity<?> addNewCar(@RequestPart("car") CarDTO carDTO, @RequestPart("file") MultipartFile[] files, @RequestHeader (name="Auth") String bearerToken){
         try{
-            return new ResponseEntity<>(carService.addNewCar(carDTO, bearerToken), HttpStatus.OK);
+            System.out.println(files[0].getOriginalFilename());
+            return new ResponseEntity<>(carService.addNewCar(carDTO, files, bearerToken), HttpStatus.OK);
         } catch (CustomException e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());

@@ -1,6 +1,7 @@
 import {
   SET_CARS,
   SET_CAR_FOR_ADVERTISEMENT,
+  SET_ADDED_CARS,
   SET_TOKEN_GENERATED,
 } from "../actionTypes";
 import axios from "axios";
@@ -28,5 +29,16 @@ export const setTokenGenerated = (id) => async (dispatch) => {
     dispatch({ type: SET_TOKEN_GENERATED, id });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const addCar = (car) => async (dispatch) => {
+  try {
+    const res = await axios.post("/car", car);
+    dispatch({ type: SET_ADDED_CARS, car: res.data });
+    return res;
+  } catch (err) {
+    console.log(err);
+    return err.response;
   }
 };

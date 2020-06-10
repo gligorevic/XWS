@@ -21,6 +21,8 @@ public class CarDTO {
 
     private String userEmail;
 
+    private String mainImageUrl;
+
     private Date creationDate;
 
     public CarDTO() {
@@ -36,6 +38,7 @@ public class CarDTO {
         this.kmPassed = car.getKmPassed();
         this.userEmail = car.getUserEmail();
         this.creationDate = car.getCrationDate();
+        this.mainImageUrl = car.getMainImageUrl();
     }
 
     public String getBrandName() {
@@ -100,5 +103,21 @@ public class CarDTO {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
     }
 }

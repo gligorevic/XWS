@@ -86,3 +86,15 @@ services:
     depends_on:
       - eureka-serviceregistry
       - axon-server
+
+  image-service:
+    build: ./AxonSaga/ImageService
+    ports:
+      - "8085:8085"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - AXON_HOST=axon-server
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - axon-server
