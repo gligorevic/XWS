@@ -18,7 +18,7 @@ public class CarController {
     private CarService carService;
 
     @GetMapping("/{carId}")
-    @PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
+    //@PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
     public ResponseEntity<?> getCarById(@PathVariable("carId") Long carId){
         try{
             return new ResponseEntity<>(new CarDTO(carService.getCarById(carId)), HttpStatus.OK);
@@ -29,7 +29,7 @@ public class CarController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
+    //@PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
     public ResponseEntity<?> addNewCar(@RequestBody CarDTO carDTO, @RequestHeader (name="Auth") String bearerToken){
         try{
             System.out.println("usao");
@@ -45,7 +45,7 @@ public class CarController {
 
 
     @GetMapping("/owner/{email}")
-    @PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
+    //@PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
     public ResponseEntity<?> getCarsByOwnerEmail(@PathVariable String email){
         try{
             return new ResponseEntity<>(carService.getCars(email), HttpStatus.OK);
@@ -56,7 +56,7 @@ public class CarController {
     }
 
     @PostMapping("/locationToken")
-    @PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
+    //@PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
     public ResponseEntity<?> generateLocationToken(@RequestBody Long carId, Authentication authentication){
         try{
             String ownerUsername = (String) authentication.getPrincipal();
@@ -72,7 +72,7 @@ public class CarController {
     }
 
     @GetMapping("/locationToken/{carId}")
-    @PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
+    //@PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
     public ResponseEntity<?> getLocationToken(@PathVariable String carId, Authentication authentication){
         try{
             String ownerUsername = (String) authentication.getPrincipal();

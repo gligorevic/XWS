@@ -28,11 +28,11 @@ public class CarDTO {
 
     public CarDTO(Car car) {
         this.id = car.getId();
-        this.brandName = car.getBrandName();
-        this.modelName = car.getModelName();
-        this.gearShiftName = car.getGearShiftName();
-        this.fuelTypeName = car.getFuelTypeName();
-        this.bodyName = car.getBodyName();
+        this.brandName = car.getBrand().getBrandName();
+        this.modelName = car.getModel().getModelName();
+        this.gearShiftName = car.getGearShift().getGearShiftName();
+        this.fuelTypeName = car.getFuelType().getFuelTypeName();
+        this.bodyName = car.getBodyType().getBodyTypeName();
         this.kmPassed = car.getKmPassed();
         this.userEmail = car.getUserEmail();
         this.creationDate = car.getCrationDate();
