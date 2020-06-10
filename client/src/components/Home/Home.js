@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MainNavbar from "../layouts/Navbar/MainNavbar";
 import ficaImage from "../../images/fica.jpg";
 
@@ -28,12 +28,27 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
 
+  const twoDaysFromNow = new Date(
+    new Date().getTime() + 1000 * 60 * 60 * 24 * 2
+  );
+
+  const [selectedStartDate, setSelectedStartDate] = useState(twoDaysFromNow);
+  const [selectedEndDate, setSelectedEndDate] = useState(twoDaysFromNow);
+
   return (
     <div className={classes.back}>
       <MainNavbar />
       <div className={classes.center}>
-        <Search />
-        <Advertisements />
+        <Search
+          selectedStartDate={selectedStartDate}
+          setSelectedStartDate={setSelectedStartDate}
+          selectedEndDate={selectedEndDate}
+          setSelectedEndDate={setSelectedEndDate}
+        />
+        <Advertisements
+          selectedStartDate={selectedStartDate}
+          selectedEndDate={selectedEndDate}
+        />
       </div>
     </div>
   );

@@ -15,13 +15,12 @@ import Alert from "@material-ui/lab/Alert";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import Snackbar from "@material-ui/core/Snackbar";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import IconButton from "@material-ui/core/IconButton";
-import clsx from "clsx";
 import Axios from "axios";
 
 import {
@@ -46,8 +45,7 @@ const CartPage = ({
 }) => {
   useEffect(() => {
     var cartList = JSON.parse(localStorage.getItem("Cart"));
-    console.log(cartList);
-    getAdvertisementsForCart(cartList);
+    getAdvertisementsForCart(cartList.map((cartItem) => cartItem.id));
   }, []);
 
   const [loading, setLoading] = React.useState(false);
@@ -72,7 +70,9 @@ const CartPage = ({
   const handleSubmitRequest = async (event, ad) => {
     event.preventDefault();
     setLoading(true);
-    const resp = await Axios.post(`/request`, ad).catch((error) => {
+    var cartList = JSON.parse(localStorage.getItem("Cart"));
+    var cartItem = cartList.filter((item) => item.id === ad.id);
+    const resp = await Axios.post(`/request`, cartItem[0]).catch((error) => {
       if (error.response && error.response.status === 400) {
         setLoading(false);
         setOpenFailure(true);
@@ -80,19 +80,27 @@ const CartPage = ({
       }
     });
 
-    if (resp.status === 201) {
+    if (resp.status >= 200 && resp.status < 300) {
       setLoading(false);
       setOpenSuccess(true);
-      var cartList = JSON.parse(localStorage.getItem("Cart"));
-      cartList.pop(ad.id);
+
+      cartList.map((cartItem) => {
+        if (cartItem.id === ad.id)
+          cartList.splice(cartList.indexOf(cartItem), 1);
+      });
       localStorage.setItem("Cart", JSON.stringify(cartList));
+      getAdvertisementsForCart(cartList.map((cartItem) => cartItem.id));
     }
   };
 
   const handleSendBundleRequest = async (e) => {
     e.preventDefault();
     setLoading(true);
-    bundleRequest.requestDTOS = bundle;
+    var cartList = JSON.parse(localStorage.getItem("Cart"));
+    var bundleItems = cartList.filter((item) =>
+      bundle.map((bundleItem) => bundleItem.id).includes(item.id)
+    );
+    bundleRequest.requestDTOS = bundleItems;
     const resp = await Axios.post(`/request/bundle`, bundleRequest).catch(
       (error) => {
         if (error.response && error.response.status === 400) {
@@ -103,12 +111,19 @@ const CartPage = ({
       }
     );
 
-    if (resp.status === 201) {
+    if (resp.status >= 200 && resp.status < 300) {
       setLoading(false);
       setOpenSuccess(true);
       var cartList = JSON.parse(localStorage.getItem("Cart"));
-      cartList.pop([...bundle, bundle.id]);
+      bundle.map((bundleItem) => {
+        cartList.map((cartItem) => {
+          if (cartItem.id === bundleItem.id)
+            cartList.splice(cartList.indexOf(cartItem), 1);
+        });
+      });
+      getAdvertisementsForCart(cartList.map((cartItem) => cartItem.id));
       localStorage.setItem("Cart", JSON.stringify(cartList));
+      setBundle([]);
     }
   };
 
@@ -125,16 +140,22 @@ const CartPage = ({
   };
 
   const handleAddToBundle = (e, ad) => {
+    e.preventDefault();
     setBundle((oldState) => [...oldState, ad]);
     bundleRequest.userEmail = ad.userEmail;
   };
 
   const handleRemoveFromBundle = (e, ad) => {
+    e.preventDefault();
     setBundle((oldState) => oldState.filter((adBundle) => adBundle !== ad));
   };
 
   const handleRemoveFromCart = (e, ad) => {
-    setBundle((oldState) => oldState.filter((adBundle) => adBundle !== ad));
+    e.preventDefault();
+    var cartList = JSON.parse(localStorage.getItem("Cart"));
+    cartList.splice(cartList.indexOf(ad.id), 1);
+    localStorage.setItem("Cart", JSON.stringify(cartList));
+    getAdvertisementsForCart(cartList);
   };
 
   const drawer = (
@@ -248,8 +269,6 @@ const CartPage = ({
                                   bundle.length < 1
                                     ? false
                                     : bundle.includes(ad)
-                                    ? true
-                                    : false
                                 }
                                 variant="contained"
                                 size="small"
@@ -323,39 +342,26 @@ const CartPage = ({
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Dialog
-        open={openSuccess}
-        keepMounted
-        onClose={handleCloseSuccess}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogContent>
-          <Alert severity="success">Successfully sent.</Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseSuccess} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
 
-      <Dialog
-        open={openFailure}
-        keepMounted
-        onClose={handleCloseError}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={2000}
+        onClose={handleCloseSuccess}
       >
-        <DialogContent>
-          <Alert severity="error">{errorMessage}</Alert>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseError} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Alert onClose={handleCloseSuccess} severity="success">
+          Successfully sent.
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={openFailure}
+        autoHideDuration={3000}
+        onClose={handleCloseError}
+      >
+        <Alert onClose={handleCloseError} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

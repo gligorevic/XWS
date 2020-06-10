@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -12,6 +12,13 @@ import Tab from "@material-ui/core/Tab";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Axios from "axios";
 
 import { getAllBrands } from "../../../store/actions/carInfo";
 
@@ -26,7 +33,6 @@ const TypeList = ({
   allGearShiftTypes,
   allBodyTypes,
   handleClickType,
-  handleOpenEditDialog,
   setEditText,
   setAllFuelTypes,
   setAllBodyTypes,
@@ -34,6 +40,11 @@ const TypeList = ({
 }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [editDialogOpened, setEditDialogOpened] = useState(false);
+
+  const [text, setText] = useState("");
+  const [witchType, setWitchType] = useState("");
+  const [type, setType] = useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -41,6 +52,97 @@ const TypeList = ({
 
   const handleListItemClick = (event, type) => {
     handleClickType(event, type);
+  };
+
+  const handleClose = (e) => {
+    setEditDialogOpened(false);
+    setType(null);
+  };
+
+  const handleChangeEdit = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleOpenEditDialog = (e, witch, entity) => {
+    e.stopPropagation();
+    setEditDialogOpened(true);
+    setType(entity);
+    setWitchType(witch);
+    switch (witch) {
+      case "fuel":
+        setText(entity.fuelTypeName);
+        break;
+      case "gear":
+        setText(entity.gearShiftName);
+        break;
+      case "body":
+        setText(entity.bodyTypeName);
+        break;
+    }
+  };
+
+  const handleSubmitEdit = async (e) => {
+    try {
+      setEditDialogOpened(false);
+      switch (witchType) {
+        case "fuel":
+          const editedFuel = await Axios.put(
+            `/car-info/fuel-type/${type.id}`,
+            text,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
+          );
+          if (editedFuel.status >= 200 && editedFuel.status < 300) {
+            setAllFuelTypes((oldFuelList) =>
+              oldFuelList.map((fuelItem) =>
+                fuelItem.id === type.id ? editedFuel.data : fuelItem
+              )
+            );
+            setType(null);
+          }
+          break;
+        case "gear":
+          const editedGear = await Axios.put(
+            `/car-info/gear-shift-type/${type.id}`,
+            text,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
+          );
+          if (editedGear.status >= 200 && editedGear.status < 300) {
+            setAllGearShiftTypes((oldGearList) =>
+              oldGearList.map((gearItem) =>
+                gearItem.id === type.id ? editedGear.data : gearItem
+              )
+            );
+            setType(null);
+          }
+          break;
+        case "body":
+          const editedBody = await Axios.put(
+            `/car-info/body-type/${type.id}`,
+            text,
+            {
+              headers: { "Content-Type": "text/plain" },
+            }
+          );
+          if (editedBody.status >= 200 && editedBody.status < 300) {
+            setAllBodyTypes((oldBodyList) =>
+              oldBodyList.map((bodyItem) =>
+                bodyItem.id === type.id ? editedBody.data : bodyItem
+              )
+            );
+            setType(null);
+          }
+
+          break;
+        default:
+          break;
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -74,6 +176,10 @@ const TypeList = ({
                     </Grid>
                     <Grid item md={2} className={classes.listContainer}>
                       <IconButton
+                        style={{ float: "right" }}
+                        onClick={(e) =>
+                          handleOpenEditDialog(e, "fuel", fuelType)
+                        }
                         color="primary"
                         aria-label="add to shopping cart"
                       >
@@ -118,6 +224,10 @@ const TypeList = ({
                     </Grid>
                     <Grid item md={2} className={classes.listContainer}>
                       <IconButton
+                        style={{ float: "right" }}
+                        onClick={(e) =>
+                          handleOpenEditDialog(e, "gear", gearShiftType)
+                        }
                         color="primary"
                         aria-label="add to shopping cart"
                       >
@@ -164,8 +274,12 @@ const TypeList = ({
                     </Grid>
                     <Grid item md={2} className={classes.listContainer}>
                       <IconButton
+                        style={{ float: "right" }}
+                        onClick={(e) =>
+                          handleOpenEditDialog(e, "body", bodyType)
+                        }
                         color="primary"
-                        aria-label="add to shopping cart"
+                        aria-label="edit type"
                       >
                         <EditIcon />
                       </IconButton>
@@ -190,6 +304,37 @@ const TypeList = ({
           </List>
         </>
       )}
+      <Dialog
+        open={editDialogOpened}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>Edit type</DialogTitle>
+        <DialogContent style={{ minWidth: 550 }}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            onChange={handleChangeEdit}
+            value={text}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Disagree
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={handleSubmitEdit}
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

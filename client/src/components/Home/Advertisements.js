@@ -38,6 +38,8 @@ const Advertisements = ({
   user: { user },
   getAllAdvertisements,
   increaseCartNum,
+  selectedStartDate,
+  selectedEndDate,
 }) => {
   const classes = useStyles();
 
@@ -51,22 +53,21 @@ const Advertisements = ({
   const handleAddToCart = (event, adId) => {
     event.preventDefault();
     let cartState = JSON.parse(localStorage.getItem("Cart")) || [];
+    var cartItem = {
+      id: adId,
+      freeFrom: selectedStartDate,
+      freeTo: selectedEndDate,
+    };
 
-    if (cartState === []) {
-      cartState = [adId];
-      localStorage.setItem("Cart", JSON.stringify(cartState));
-      increaseCartNum();
-      setOpenSuccess(true);
-    } else {
-      if (cartState.includes(adId)) {
-        setOpenInfo(true);
-        return;
-      }
-      cartState = [...cartState, adId];
-      localStorage.setItem("Cart", JSON.stringify(cartState));
-      increaseCartNum();
-      setOpenSuccess(true);
+    if (cartState.filter((item) => item.id === adId).length > 0) {
+      setOpenInfo(true);
+      return;
     }
+
+    cartState = [...cartState, cartItem];
+    localStorage.setItem("Cart", JSON.stringify(cartState));
+    increaseCartNum();
+    setOpenSuccess(true);
   };
 
   const handleCloseSuccess = () => {
@@ -112,15 +113,16 @@ const Advertisements = ({
                   <CardContent></CardContent>
                   <CardActions>
                     <ViewDetails id={row.id} />
-                    {user.role.some((r) => r.name === "ROLE_ENDUSER") && (
-                      <IconButton
-                        onClick={(event) => handleAddToCart(event, row.id)}
-                        color="primary"
-                        aria-label="add to shopping cart"
-                      >
-                        <AddShoppingCartIcon />
-                      </IconButton>
-                    )}
+                    {user.role &&
+                      user.role.some((r) => r.name === "ROLE_ENDUSER") && (
+                        <IconButton
+                          onClick={(event) => handleAddToCart(event, row.id)}
+                          color="primary"
+                          aria-label="add to shopping cart"
+                        >
+                          <AddShoppingCartIcon />
+                        </IconButton>
+                      )}
                   </CardActions>
                 </Card>
               </Grid>
