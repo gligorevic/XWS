@@ -1,5 +1,7 @@
 package com.example.ImageService.controller;
 
+import com.example.ImageService.service.ImageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -11,26 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RestController
 public class ImageController {
 
-//    @PostMapping("/upload/image")
-//    public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file) {
-//        try {
-//            String folder = "images/";
-//            byte[] bytes = file.getBytes();
-//            Files.createDirectories(Paths.get(folder));
-//            Path path = Paths.get(folder + file.getOriginalFilename());
-//            Files.write(path, bytes);
-//
-//            return new ResponseEntity<>("Image created", HttpStatus.CREATED);
-//        } catch(Exception e){
-//            e.printStackTrace();
-//            return new ResponseEntity<>("FAil", HttpStatus.BAD_REQUEST);
-//        }
-//
-//    }
+    @Autowired
+    private ImageService imageService;
+
+    @GetMapping("/{carId}")
+    public List<String> getCarImagesUrl(@PathVariable("carId") Long carId) {
+        try {
+            return imageService.getAllImagesByCarId(carId);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @GetMapping("/static/images/{carId}/{filename}")
     public ResponseEntity<Resource> loadAsResource(@PathVariable("carId") Long carId, @PathVariable("filename") String filename) throws IOException {

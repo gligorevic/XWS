@@ -1,5 +1,6 @@
 package com.example.SearchService.service;
 
+import com.example.SearchService.client.ImageClient;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.domain.City;
 import com.example.SearchService.dto.AdvertisementDTO;
@@ -7,7 +8,6 @@ import com.example.SearchService.dto.SimpleAdvertisementDTO;
 import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.repository.AdvertisementRepository;
 import com.example.SearchService.repository.CityRepository;
-import com.example.SearchService.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class AdvertisementService {
     private AdvertisementRepository advertisementRepository;
 
     @Autowired
-    private ImageRepository imageRepository;
+    private ImageClient imageClient;
 
     @Autowired
     private CityRepository cityRepository;
@@ -61,7 +61,7 @@ public class AdvertisementService {
 
     public AdvertisementDTO getAdvertisementById(Long id){
         Advertisement advertisement = advertisementRepository.findAdvertisementById(id);
-        List<String> images = imageRepository.findImagesByCarId(advertisement.getCarId());
+        List<String> images = imageClient.getCarImagesUrl(advertisement.getCarId());
         return new AdvertisementDTO(advertisement, images);
     }
 }

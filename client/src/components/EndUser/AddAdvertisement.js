@@ -150,29 +150,19 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
   };
 
   const handleSubmit = async (e) => {
-    let formData = new FormData();
-
-    console.log(images);
-    formData.append(
-      "advertisement",
-      new Blob(
-        [
-          JSON.stringify({
-            ...state,
-            cityName,
-            mainImagePath: `/static/images/${state.carId}/${images[0].file.name}`,
-          }),
-        ],
-        {
-          type: "application/json",
-        }
-      )
-    );
-    images.forEach((img) => formData.append("file", img.file));
-
     setLoading(true);
 
-    const resp = await Axios.post("/search", formData);
+    const resp = await Axios.post("/car/advert/activate", {
+      carId: state.carId,
+      kmRestriction: state.kmRestriction,
+      price: state.price,
+      numberChildSeats: state.numberChildSeats,
+      collisionDamage: state.collisionDamage,
+      rentingStreetLocation: state.rentingStreetLocation,
+      freeFrom: state.freeFrom,
+      freeTo: state.freeTo,
+      cityName,
+    });
     console.log(resp);
     setLoading(false);
     if (resp.status === 200) {

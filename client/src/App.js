@@ -14,6 +14,8 @@ import PrivateUserRoute from "./routing/PrivateUserRoute";
 import { setAuthorizationToken, setUser } from "./store/actions/auth";
 import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
+import ViewCar from "./components/EndUser/Car/ViewCar";
+
 const store = configureStore();
 
 if (localStorage.jwtToken) {
@@ -52,6 +54,7 @@ function App() {
           <PrivateAdminRoute exact path="/admin" component={AdminHome} />
           <PrivateUserRoute exact path="/user" component={UserHome} />
           <PrivateUserRoute exact path="/cart" component={CartPage} />
+          <PrivateUserRoute exact path="/car/:carId" component={ViewCar} />
           <PrivateAdminRoute
             exact
             path="/admin/issueCertificate"

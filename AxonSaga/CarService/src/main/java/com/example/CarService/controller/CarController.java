@@ -1,5 +1,6 @@
 package com.example.CarService.controller;
 
+import com.example.CarService.client.ImageClient;
 import com.example.CarService.domain.Car;
 import com.example.CarService.dto.CarDTO;
 import com.example.CarService.exception.CustomException;
@@ -12,17 +13,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 public class CarController {
 
     @Autowired
     private CarService carService;
 
+    @Autowired
+    private ImageClient imageClient;
+
     @GetMapping("/{carId}")
     @PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
     public ResponseEntity<?> getCarById(@PathVariable("carId") Long carId){
         try{
-            return new ResponseEntity<>(new CarDTO(carService.getCarById(carId)), HttpStatus.OK);
+            List<String> images = imageClient.getCarImagesUrl(carId);
+            CarDTO carDTO = new CarDTO(carService.getCarById(carId), images);
+            return new ResponseEntity<>(carDTO, HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -51,38 +59,6 @@ public class CarController {
         try{
             return new ResponseEntity<>(carService.getCars(email), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/locationToken")
-    @PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
-    public ResponseEntity<?> generateLocationToken(@RequestBody Long carId, Authentication authentication){
-        try{
-            String ownerUsername = (String) authentication.getPrincipal();
-            return new ResponseEntity<>(carService.generateLocationToken(ownerUsername , carId), HttpStatus.OK);
-        }catch (CustomException e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping("/locationToken/{carId}")
-    @PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
-    public ResponseEntity<?> getLocationToken(@PathVariable String carId, Authentication authentication){
-        try{
-            String ownerUsername = (String) authentication.getPrincipal();
-            return new ResponseEntity<>(carService.getLocationToken(ownerUsername, Long.parseLong(carId)), HttpStatus.OK);
-        }catch (CustomException e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-        }
-        catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

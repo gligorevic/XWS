@@ -66,33 +66,6 @@ public class CarService {
         return cars.stream().map(car -> new SimpleCarDTO(car)).collect(Collectors.toList());
     }
 
-
-    public String generateLocationToken(String ownerUsername, Long carId) throws CustomException {
-        Car car = carRepository.getOne(carId);
-
-        if(car == null)
-            throw new CustomException("Bad request", HttpStatus.BAD_REQUEST);
-        else if(!car.getUserEmail().equals(ownerUsername))
-            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
-
-        String locationToken = jwtTokenHelper.generateLocationToken(car);
-        car.setLocationToken(locationToken);
-        carRepository.save(car);
-
-        return locationToken;
-    }
-
-    public String getLocationToken(String ownerUsername, long carId) throws CustomException {
-        Car car = carRepository.getOne(carId);
-
-        if(car == null)
-            throw new CustomException("Bad request", HttpStatus.BAD_REQUEST);
-        else if(!car.getUserEmail().equals(ownerUsername))
-            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
-
-        return car.getLocationToken();
-    }
-
     public Car getCarById(Long carId) {
         return carRepository.getOne(carId);
     }

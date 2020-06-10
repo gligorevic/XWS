@@ -9,8 +9,9 @@ import AddAdvertisement from "../AddAdvertisement";
 import AddCommentIcon from "@material-ui/icons/AddComment";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import { withRouter } from "react-router";
 
-export default function CarCard({ generateToken, getExistingToken, car }) {
+function CarCard({ generateToken, getExistingToken, car, history }) {
   const [openActiveAd, setOpenAcitveAd] = useState(-1);
 
   const handleSetOpen = (openState) => {
@@ -28,6 +29,7 @@ export default function CarCard({ generateToken, getExistingToken, car }) {
       <CardMedia
         className="media"
         image={`/img${car.mainImageUrl}`}
+        onClick={() => history.push(`/car/${car.id}`)}
         title={`${car.brandName} - ${car.modelName}`}
       />
       <CardActions disableSpacing className="cardFooter">
@@ -57,10 +59,16 @@ export default function CarCard({ generateToken, getExistingToken, car }) {
             <AddLocationIcon />
           </IconButton>
         )}
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => history.push(`/car/${car.id}`)}
+        >
           View car
         </Button>
       </CardActions>
     </Card>
   );
 }
+
+export default withRouter(CarCard);

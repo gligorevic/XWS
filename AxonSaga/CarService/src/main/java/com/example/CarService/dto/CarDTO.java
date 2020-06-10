@@ -3,6 +3,7 @@ package com.example.CarService.dto;
 import com.example.CarService.domain.Car;
 
 import java.util.Date;
+import java.util.List;
 
 public class CarDTO {
     private Long id;
@@ -25,10 +26,14 @@ public class CarDTO {
 
     private Date creationDate;
 
+    private List<String> images;
+
+    private Boolean tokenGenerated;
+
     public CarDTO() {
     }
 
-    public CarDTO(Car car) {
+    public CarDTO(Car car, List<String> images) {
         this.id = car.getId();
         this.brandName = car.getBrandName();
         this.modelName = car.getModelName();
@@ -39,6 +44,8 @@ public class CarDTO {
         this.userEmail = car.getUserEmail();
         this.creationDate = car.getCrationDate();
         this.mainImageUrl = car.getMainImageUrl();
+        this.images = images;
+        this.tokenGenerated = car.getLocationToken() != null && car.getLocationToken().length() > 0;
     }
 
     public String getBrandName() {
@@ -119,5 +126,13 @@ public class CarDTO {
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

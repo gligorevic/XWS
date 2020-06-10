@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageService {
@@ -22,7 +23,6 @@ public class ImageService {
     private ImageRepository imageRepository;
 
     public void saveImages(Map<String, byte[]> images, Long carId) throws IOException {
-        System.out.println("Ovoliki je " + images.size());
         String folder = "images/" + carId.toString() + "/";
         List<Image> newImages = new ArrayList<>();
         Files.createDirectories(Paths.get(folder));
@@ -31,8 +31,12 @@ public class ImageService {
             Files.write(path, image.getValue());
             newImages.add(new Image(carId, image.getKey()));
         }
-        System.out.println("Dodao sam sve");
+
         imageRepository.saveAll(newImages);
-        System.out.println("Sacuvao sam sve");
+    }
+
+    public List<String> getAllImagesByCarId(Long carId) {
+        List<String> images = imageRepository.findImagesByCarId(carId);
+        return images.stream().map(image -> "/static/images/" + carId + "/" + image).collect(Collectors.toList());
     }
 }
