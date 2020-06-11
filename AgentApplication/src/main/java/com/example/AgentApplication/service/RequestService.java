@@ -76,14 +76,4 @@ public class RequestService {
         return calendar;
     }
 
-    public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO){
-        List<Request> requests = requestContainerRepository.getRequestsFromBundle(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
-        if(!requests.isEmpty()) {
-            for (Request r : requests) {
-                r.setPaidState(PaidState.CANCELED);
-            }
-            requestRepository.saveAll(requests);
-        }
-        return requests;
-    }
 }

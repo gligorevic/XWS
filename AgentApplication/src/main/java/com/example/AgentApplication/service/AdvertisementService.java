@@ -59,6 +59,7 @@ public class AdvertisementService {
 
         Advertisement advertisement = new Advertisement(dto);
         advertisement.setRentingCityLocation(city);
+        advertisement.setCar(car);
 
         if(advertisementRepository.findAdvertisementByCarId(dto.getCarId()) != null)
             throw new CustomException("Advertisement already exists", HttpStatus.NOT_ACCEPTABLE);

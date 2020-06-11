@@ -46,16 +46,7 @@ public class RequestController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
-    //ovo prebaciti u reservation period controller
-    @PutMapping
-    public ResponseEntity<?> cancelRequestsReservationPeriod(@RequestBody ReservationPeriodDTO reservationPeriodDTO){
-        try{
-            return new ResponseEntity<>(requestService.cancelRequestsReservationPeriod(reservationPeriodDTO), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
+
 
 
 }
