@@ -29,6 +29,8 @@ public class Car {
 
     private String locationToken;
 
+    private String mainImageUrl;
+
     private Date crationDate;
 
     public Car(){
@@ -45,7 +47,7 @@ public class Car {
         this.locationToken = locationToken;
     }
 
-    public Car(CarDTO carDTO) {
+    public Car(CarDTO carDTO, String mainImageUrl) {
         this.brandName = carDTO.getBrandName();
         this.modelName = carDTO.getModelName();
         this.gearShiftName = carDTO.getGearShiftName();
@@ -53,6 +55,7 @@ public class Car {
         this.bodyName = carDTO.getBodyName();
         this.kmPassed = carDTO.getKmPassed();
         this.userEmail = carDTO.getUserEmail();
+        this.mainImageUrl = mainImageUrl;
     }
 
     public Long getId() {
@@ -135,8 +138,19 @@ public class Car {
         this.crationDate = crationDate;
     }
 
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
     @PrePersist
     protected void onCreate(){
-        this.crationDate= new Date();
+        this.crationDate = new Date();
     }
+
+    @PostPersist
+    protected void onCreateSetMainImageUrl() {this.mainImageUrl = "/static/images/" + this.id + "/" + this.mainImageUrl;}
 }

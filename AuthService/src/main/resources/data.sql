@@ -93,4 +93,12 @@ INSERT INTO USER_TABLE (first_name, last_name, email, password, blocked) VALUES 
 
 INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('2', '2');
 
+INSERT INTO USER_TABLE (first_name, last_name, email, password, blocked) VALUES ('Pera', 'Peric', 'pera@gmail.com', '$2a$10$feiotRqclqYZ7aJnytCDSedhWmzztzhuwyujbVfVucV4nbmMRNnwa', false);
+
+INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('3', '2');
+
+INSERT INTO USER_TABLE (first_name, last_name, email, password, blocked) VALUES ('Agent', 'Agentic', 'agent@gmail.com', '$2a$10$feiotRqclqYZ7aJnytCDSedhWmzztzhuwyujbVfVucV4nbmMRNnwa', false);
+
+INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('4', '3');
+
 

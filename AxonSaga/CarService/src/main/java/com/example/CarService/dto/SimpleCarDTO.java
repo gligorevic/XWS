@@ -10,6 +10,7 @@ public class SimpleCarDTO {
     private String modelName;
     private Boolean tokenGenerated;
     private Date creationDate;
+    private String mainImageUrl;
 
     public SimpleCarDTO() {
     }
@@ -20,6 +21,7 @@ public class SimpleCarDTO {
         this.modelName = car.getModelName();
         this.tokenGenerated = car.getLocationToken() != null && car.getLocationToken().length() > 0;
         this.creationDate = car.getCrationDate();
+        this.mainImageUrl = car.getMainImageUrl();
     }
 
     public Long getId() {
@@ -60,5 +62,13 @@ public class SimpleCarDTO {
 
     public void setTokenGenerated(Boolean tokenGenerated) {
         this.tokenGenerated = tokenGenerated;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
     }
 }

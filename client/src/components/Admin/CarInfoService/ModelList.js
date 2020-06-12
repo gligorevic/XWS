@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -8,6 +8,15 @@ import AddIcon from "@material-ui/icons/Add";
 import InfoIcon from "@material-ui/icons/Info";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Axios from "axios";
 
 import { getAllBrands } from "../../../store/actions/carInfo";
 
@@ -26,14 +35,52 @@ const ModelList = ({
   isSelectedBrand,
   handleClickModel,
   handleOpenDialog,
+  setAllModels,
 }) => {
   const classes = useStyles();
+
+  const [editDialogOpened, setEditDialogOpened] = useState(false);
+
+  const [text, setText] = useState("");
+  const [model, setModel] = useState(null);
 
   const handleListItemClick = (event, model) => {
     if (selectedModel && selectedModel.id === model.id) setSelectedModel(null);
     else {
       setSelectedModel(model);
       handleClickModel(event, model);
+    }
+  };
+
+  const handleClose = (e) => {
+    setEditDialogOpened(false);
+    setModel(null);
+  };
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleOpenEditDialog = (e, entity) => {
+    e.stopPropagation();
+    setEditDialogOpened(true);
+    setText(entity.modelName);
+    setModel(entity);
+  };
+
+  const handleSubmitEdit = async () => {
+    setEditDialogOpened(false);
+    const response = await Axios.put(`car-info/model/${model.id}`, text, {
+      headers: { "Content-Type": "text/plain" },
+    });
+
+    if (response.status >= 200 && response.status < 300) {
+      setAllModels((oldModleList) =>
+        oldModleList.map((modelItem) =>
+          modelItem.id === model.id ? response.data : modelItem
+        )
+      );
+      setModel(null);
     }
   };
 
@@ -53,6 +100,14 @@ const ModelList = ({
                 onClick={(event) => handleListItemClick(event, model)}
               >
                 <ListItemText primary={model.modelName} />
+                <IconButton
+                  style={{ float: "right" }}
+                  onClick={(e) => handleOpenEditDialog(e, model)}
+                  color="primary"
+                  aria-label="add to shopping cart"
+                >
+                  <EditIcon />
+                </IconButton>
               </ListItem>
             );
           })}
@@ -87,6 +142,38 @@ const ModelList = ({
           <ListItemText primary="Add new model" />
         </ListItem>
       </List>
+
+      <Dialog
+        open={editDialogOpened}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>Edit model</DialogTitle>
+        <DialogContent style={{ minWidth: 550 }}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            onChange={handleChange}
+            value={text}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Disagree
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={handleSubmitEdit}
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

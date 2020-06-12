@@ -1,13 +1,13 @@
-package com.example.CoreAPI;
+package com.example.ImageService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CoreApiApplication {
+public class ImageServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CoreApiApplication.class, args);
+		SpringApplication.run(ImageServiceApplication.class, args);
 	}
 
 }

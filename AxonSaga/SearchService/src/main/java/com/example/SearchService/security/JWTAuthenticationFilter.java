@@ -23,9 +23,6 @@ import static com.example.SearchService.security.SecurityConstants.TOKEN_BEARER_
 
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-//    @Value("${HEADER_BEARER_TOKEN}")
-//    private String HEADER_BEARER_TOKEN;
-
     @Autowired
     private JWTTokenHelper jwtTokenHelper;
 

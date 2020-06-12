@@ -1,6 +1,7 @@
 import {
   SET_CARS,
   SET_CAR_FOR_ADVERTISEMENT,
+  SET_ADDED_CARS,
   SET_TOKEN_GENERATED,
 } from "../actionTypes";
 import axios from "axios";
@@ -28,5 +29,20 @@ export const setTokenGenerated = (id) => async (dispatch) => {
     dispatch({ type: SET_TOKEN_GENERATED, id });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const addCar = (car, imgUrl) => async (dispatch) => {
+  try {
+    const res = await axios.post("/car", car);
+    const newCar = res.data;
+    dispatch({
+      type: SET_ADDED_CARS,
+      car: { ...newCar, mainImageUrl: `/static/images/${newCar.id}/${imgUrl}` },
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+    return err.response;
   }
 };

@@ -1,6 +1,7 @@
 package com.example.CarInfoService.service;
 
 import com.example.CarInfoService.domain.GearShiftType;
+import com.example.CarInfoService.domain.Model;
 import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.repository.GearShiftTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,16 @@ public class GearShiftTypeService {
             throw new CustomException("Gearshift type doesn't exists", HttpStatus.BAD_REQUEST);
 
         return gearShiftTypeRepository.findGearShiftTypeByGearShiftName(gearShiftTypeName);
+    }
+
+    public GearShiftType editGearShiftType(Long gearTypeId, String gearTypeName) throws CustomException {
+
+        GearShiftType gearShiftType = gearShiftTypeRepository.findGearShiftTypeById(gearTypeId);
+        if(gearShiftType == null){
+            throw new CustomException("Gearshift type doesn't exists", HttpStatus.BAD_REQUEST);
+        }
+        gearShiftType.setGearShiftName(gearTypeName);
+
+        return gearShiftTypeRepository.save(gearShiftType);
     }
 }
