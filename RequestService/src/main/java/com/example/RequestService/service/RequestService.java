@@ -26,7 +26,13 @@ public class RequestService {
     @Autowired
     private RequestContainerRepository requestContainerRepository;
 
-    public Request add(Request request) throws CustomException {
+    public Request add(RequestDTO requestDTO) throws CustomException {
+
+        Request request = new Request(requestDTO);
+        request.setAdId(requestDTO.getId());
+
+        if(request.getUserEmail().equals(request.getUserSentRequest()))
+            throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
 
         return requestRepository.save(request);
     }
@@ -36,6 +42,9 @@ public class RequestService {
         RequestContainer requestContainer = new RequestContainer(requestContainerDTO);
         if(requestContainer == null)
             throw new CustomException("Could not create bundle request", HttpStatus.BAD_REQUEST);
+
+        if(!checkBundleRequest(requestContainerDTO.getRequestDTOS()))
+            throw new CustomException("Something is wrong with this bundle request", HttpStatus.BAD_REQUEST);
 
         for(RequestDTO requestDTO : requestContainerDTO.getRequestDTOS()){
             requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
@@ -65,6 +74,27 @@ public class RequestService {
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         return calendar;
+    }
+
+    private boolean checkBundleRequest(List<RequestDTO> requestDTOS){
+
+        for(int i = 0; i < requestDTOS.size() - 2; i++){
+            RequestDTO tempRequest = requestDTOS.get(i);
+
+            for(int j = i + 1; i < requestDTOS.size() - 1; j++){
+                RequestDTO requestDTO = requestDTOS.get(j);
+
+                if(tempRequest.getId() == requestDTO.getId())
+                    return false;
+
+                if(!tempRequest.getUserEmail().equals(requestDTO.getUserEmail()))
+                    return false;
+
+                if(requestDTO.getUserSentRequest().equals(requestDTO.getUserSentRequest()))
+                    return false;
+            }
+        }
+        return true;
     }
 
     public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO){

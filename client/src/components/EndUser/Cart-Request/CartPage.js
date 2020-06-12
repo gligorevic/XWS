@@ -72,6 +72,8 @@ const CartPage = ({
     setLoading(true);
     var cartList = JSON.parse(localStorage.getItem("Cart"));
     var cartItem = cartList.filter((item) => item.id === ad.id);
+    cartItem[0]["userEmail"] = ad.userEmail;
+    cartItem[0]["userSentRequest"] = user.user.username;
     const resp = await Axios.post(`/request`, cartItem[0]).catch((error) => {
       if (error.response && error.response.status === 400) {
         setLoading(false);
@@ -80,7 +82,7 @@ const CartPage = ({
       }
     });
 
-    if (resp.status >= 200 && resp.status < 300) {
+    if (resp && resp.status >= 200 && resp.status < 300) {
       setLoading(false);
       setOpenSuccess(true);
 
@@ -97,10 +99,8 @@ const CartPage = ({
     e.preventDefault();
     setLoading(true);
     var cartList = JSON.parse(localStorage.getItem("Cart"));
-    var bundleItems = cartList.filter((item) =>
-      bundle.map((bundleItem) => bundleItem.id).includes(item.id)
-    );
-    bundleRequest.requestDTOS = bundleItems;
+
+    bundleRequest.requestDTOS = bundle;
     const resp = await Axios.post(`/request/bundle`, bundleRequest).catch(
       (error) => {
         if (error.response && error.response.status === 400) {
@@ -141,7 +141,14 @@ const CartPage = ({
 
   const handleAddToBundle = (e, ad) => {
     e.preventDefault();
-    setBundle((oldState) => [...oldState, ad]);
+    var cartList = JSON.parse(localStorage.getItem("Cart"));
+    var cartItem = cartList.filter((item) => item.id === ad.id);
+    cartItem[0]["userEmail"] = ad.userEmail;
+    cartItem[0]["userSentRequest"] = user.user.username;
+    cartItem[0]["brandName"] = ad.brandName;
+    cartItem[0]["modelName"] = ad.modelName;
+
+    setBundle((oldState) => [...oldState, cartItem[0]]);
     bundleRequest.userEmail = ad.userEmail;
   };
 
@@ -253,7 +260,8 @@ const CartPage = ({
                                     ? false
                                     : bundleRequest.userEmail !== ad.userEmail
                                     ? true
-                                    : bundle.includes(ad)
+                                    : bundle.filter((item) => item.id === ad.id)
+                                        .length > 0
                                 }
                                 variant="contained"
                                 size="small"
@@ -268,7 +276,8 @@ const CartPage = ({
                                 disabled={
                                   bundle.length < 1
                                     ? false
-                                    : bundle.includes(ad)
+                                    : bundle.filter((item) => item.id === ad.id)
+                                        .length > 0
                                 }
                                 variant="contained"
                                 size="small"
@@ -300,26 +309,21 @@ const CartPage = ({
                     return (
                       <>
                         <ListItem>
-                          <Grid container spacing={3}>
-                            <Grid item md={6} className={classes.listContainer}>
-                              <ListItemText
-                                primary={ad.brandName + " - " + ad.modelName}
-                              />
-                            </Grid>
+                          <ListItemText
+                            primary={ad.brandName + " - " + ad.modelName}
+                          />
 
-                            <Grid item md={6} className={classes.listContainer}>
-                              <Button
-                                onClick={(event) =>
-                                  handleRemoveFromBundle(event, ad)
-                                }
-                                variant="contained"
-                                size="small"
-                                color="secundary"
-                              >
-                                Remove from bundle
-                              </Button>
-                            </Grid>
-                          </Grid>
+                          <Button
+                            style={{ float: "right" }}
+                            onClick={(event) =>
+                              handleRemoveFromBundle(event, ad)
+                            }
+                            variant="contained"
+                            size="small"
+                            color="secundary"
+                          >
+                            Remove from bundle
+                          </Button>
                         </ListItem>
                       </>
                     );

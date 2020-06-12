@@ -201,7 +201,7 @@ const MainNavbar = ({
                     <AccountCircleIcon />
                     <p style={{ paddingLeft: 5 }}>{user.username}</p>
                   </div>
-                  {user.role[0].name !== "ROLE_ADMIN" && (
+                  {user.role[0].name === "ROLE_ENDUSER" && (
                     <span
                       color="inherit"
                       onClick={() =>
