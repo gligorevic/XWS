@@ -4,7 +4,8 @@ import user from "./user";
 import profile from "./profile";
 import cars from "./cars";
 import advertisement from "./advertisement";
-import carInfo from "./carInfo"
+import carInfo from "./carInfo";
+import request from "./request";
 
 const appReducer = combineReducers({
   certificates,
@@ -12,7 +13,8 @@ const appReducer = combineReducers({
   profile,
   cars,
   advertisement,
-  carInfo
+  carInfo,
+  request,
 });
 
 const rootReducer = (state, action) => {

@@ -13,6 +13,7 @@
         <module>PriceListService</module>
         <module>CarService</module>
 	    <module>SearchService</module>
+        <module>ImageService</module>
         <module>Core-API</module>
     </modules>
 

@@ -131,7 +131,7 @@ const Advertisements = ({
       </Grid>
       <Snackbar
         open={openSuccess}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
         onClose={handleCloseSuccess}
       >
         <Alert onClose={handleCloseSuccess} severity="success">
@@ -141,7 +141,7 @@ const Advertisements = ({
 
       <Snackbar
         open={openInfo}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
         onClose={handleCloseInfo}
       >
         <Alert onClose={handleCloseInfo} severity="info">

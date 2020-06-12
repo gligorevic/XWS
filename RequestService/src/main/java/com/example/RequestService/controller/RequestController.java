@@ -11,10 +11,7 @@ import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.Map;
@@ -25,10 +22,37 @@ public class RequestController {
     @Autowired
     private RequestService requestService;
 
+    @GetMapping("/ad/{adId}")
+    public ResponseEntity<?> getAllRequestsForAd(@PathVariable("adId") String adId){
+        try{
+            return new ResponseEntity<>(requestService.getAllRequestsForAd(Long.parseLong(adId)), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/info/{username}")
+    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username){
+        try{
+            return new ResponseEntity<>(requestService.getAllRequestsInfo(username), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO){
         try{
-
 
             return new ResponseEntity<>(requestService.add(requestDTO), HttpStatus.CREATED);
 
