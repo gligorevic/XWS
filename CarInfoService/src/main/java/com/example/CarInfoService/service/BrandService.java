@@ -1,6 +1,7 @@
 package com.example.CarInfoService.service;
 
 import com.example.CarInfoService.domain.Brand;
+import com.example.CarInfoService.domain.Model;
 import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,17 @@ public class BrandService {
             throw  new CustomException("Brand doesn't exists", HttpStatus.BAD_REQUEST);
 
         return brandRepository.findBrandByBrandName(brandName);
+    }
+
+    public Brand editBrand(Long brandId, String brandName) throws CustomException {
+
+        Brand brand = brandRepository.findBrandById(brandId);
+        if(brand == null){
+            throw new CustomException("Brand doesn't exists", HttpStatus.BAD_REQUEST);
+        }
+
+        brand.setBrandName(brandName);
+
+        return brandRepository.save(brand);
     }
 }

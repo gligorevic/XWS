@@ -1,5 +1,6 @@
 package com.example.CarInfoService.service;
 
+import com.example.CarInfoService.domain.BodyType;
 import com.example.CarInfoService.domain.FuelType;
 import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.repository.FuelTypeRepository;
@@ -31,5 +32,16 @@ public class FuelTypeService {
             throw new CustomException("Fuel type doesn't exists", HttpStatus.BAD_REQUEST);
 
         return fuelTypeRepository.findFuelTypeByFuelTypeName(fuelTypeName);
+    }
+
+    public FuelType editFuelType(Long fuelTypeId, String fuelTypeName) throws CustomException{
+
+        FuelType fuelType = fuelTypeRepository.findFuelTypeById(fuelTypeId);
+        if(fuelType == null){
+            throw new CustomException("Fuel type doesn't exists", HttpStatus.BAD_REQUEST);
+        }
+        fuelType.setFuelTypeName(fuelTypeName);
+
+        return fuelTypeRepository.save(fuelType);
     }
 }

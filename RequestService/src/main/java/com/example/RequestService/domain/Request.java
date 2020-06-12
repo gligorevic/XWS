@@ -23,6 +23,9 @@ public class Request {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date endDate;
 
+    private String userEmail;
+    private String userSentRequest;
+
     public Request() {
     }
 
@@ -31,6 +34,8 @@ public class Request {
         this.startDate = requestDTO.getFreeFrom();
         this.endDate = requestDTO.getFreeTo();
         this.paidState = PaidState.PENDING;
+        this.userEmail = requestDTO.getUserEmail();
+        this.userSentRequest = requestDTO.getUserSentRequest();
     }
 
     public Request(PaidState paidState) {
@@ -61,4 +66,35 @@ public class Request {
         this.adId = adId;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserSentRequest() {
+        return userSentRequest;
+    }
+
+    public void setUserSentRequest(String userSentRequest) {
+        this.userSentRequest = userSentRequest;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 }

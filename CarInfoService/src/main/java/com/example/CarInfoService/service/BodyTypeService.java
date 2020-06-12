@@ -1,6 +1,7 @@
 package com.example.CarInfoService.service;
 
 import com.example.CarInfoService.domain.BodyType;
+import com.example.CarInfoService.domain.GearShiftType;
 import com.example.CarInfoService.exception.CustomException;
 import com.example.CarInfoService.repository.BodyTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,14 @@ public class BodyTypeService {
 
     }
 
+    public BodyType editBodyType(Long bodyTypeId, String bodyTypeName) throws CustomException {
+
+        BodyType bodyType = bodyTypeRepository.findBodyTypeById(bodyTypeId);
+        if(bodyType == null){
+            throw new CustomException("Body type doesn't exists", HttpStatus.BAD_REQUEST);
+        }
+        bodyType.setBodyTypeName(bodyTypeName);
+
+        return bodyTypeRepository.save(bodyType);
+    }
 }

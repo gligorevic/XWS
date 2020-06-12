@@ -34,6 +34,22 @@ public class BodyTypeController {
         }
     }
 
+    @PutMapping("body-type/{bodyTypeId}")
+    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
+    public ResponseEntity<?> editGearShiftType(@PathVariable("bodyTypeId") Long bodyTypeId, @RequestBody String bodyTypeName){
+
+        try{
+            return new ResponseEntity<>(bodyTypeService.editBodyType(bodyTypeId, bodyTypeName), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("body-type")
     @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getAllBodyTypes(){

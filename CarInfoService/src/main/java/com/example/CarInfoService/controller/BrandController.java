@@ -35,6 +35,22 @@ public class BrandController {
         }
     }
 
+    @PutMapping("brand/{brandId}")
+    @PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
+    public ResponseEntity<?> editBrand(@PathVariable("brandId") Long brandId, @RequestBody String brandName){
+
+        try{
+            return new ResponseEntity<>(brandService.editBrand(brandId, brandName), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("brand")
     public ResponseEntity<?> getAllBrands(){
         try{

@@ -45,17 +45,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = ({ searchAdvertisements }) => {
+const Search = ({
+  searchAdvertisements,
+  selectedStartDate,
+  setSelectedStartDate,
+  selectedEndDate,
+  setSelectedEndDate,
+}) => {
   const classes = useStyles();
-  const twoDaysFromNow = new Date(
-    new Date().getTime() + 1000 * 60 * 60 * 24 * 2
-  );
 
   const [error, setError] = useState(false);
 
   const [cityName, setCityName] = useState("");
-  const [selectedStartDate, setSelectedStartDate] = useState(twoDaysFromNow);
-  const [selectedEndDate, setSelectedEndDate] = useState(twoDaysFromNow);
 
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
 

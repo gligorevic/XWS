@@ -29,9 +29,11 @@ public class RequestController {
     public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO){
         try{
 
-            Request request = new Request(requestDTO);
-            request.setAdId(requestDTO.getId());
-            return new ResponseEntity<>(requestService.add(request), HttpStatus.CREATED);
+
+            return new ResponseEntity<>(requestService.add(requestDTO), HttpStatus.CREATED);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 
         }catch (Exception e){
             e.printStackTrace();

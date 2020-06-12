@@ -9,11 +9,10 @@ public class RequestDTO {
 
     private Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date freeFrom;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date freeTo;
+    private String userEmail;
+    private String userSentRequest;
 
     public RequestDTO() {
     }
@@ -22,6 +21,14 @@ public class RequestDTO {
         this.id = id;
         this.freeFrom = freeFrom;
         this.freeTo = freeTo;
+    }
+
+    public RequestDTO(Long id, Date freeFrom, Date freeTo, String userEmail, String userSentRequest) {
+        this.id = id;
+        this.freeFrom = freeFrom;
+        this.freeTo = freeTo;
+        this.userEmail = userEmail;
+        this.userSentRequest = userSentRequest;
     }
 
     public Long getId() {
@@ -46,5 +53,21 @@ public class RequestDTO {
 
     public void setFreeTo(Date freeTo) {
         this.freeTo = freeTo;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserSentRequest() {
+        return userSentRequest;
+    }
+
+    public void setUserSentRequest(String userSentRequest) {
+        this.userSentRequest = userSentRequest;
     }
 }
