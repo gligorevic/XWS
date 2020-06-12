@@ -1,10 +1,10 @@
 package com.example.AgentApplication.service;
 
-import com.example.AgentApplication.domain.Car;
+import com.example.AgentApplication.domain.*;
 import com.example.AgentApplication.dto.CarDTO;
 import com.example.AgentApplication.dto.SimpleCarDTO;
 import com.example.AgentApplication.exception.CustomException;
-import com.example.AgentApplication.repository.CarRepository;
+import com.example.AgentApplication.repository.*;
 import com.example.AgentApplication.security.JWTTokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,17 +22,55 @@ public class CarService {
     @Autowired
     private JWTTokenHelper jwtTokenHelper;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private ModelRepository modelRepository;
+
+    @Autowired
+    private GearShiftTypeRepository gearShiftTypeRepository;
+
+    @Autowired
+    private FuelTypeRepository fuelTypeRepository;
+
+    @Autowired
+    private BodyTypeRepository bodyTypeRepository;
+
     public Car addNewCar(CarDTO carDTO, String bearerToken) throws CustomException {
         String jwt =jwtTokenHelper.getJWTFromBearerToken(bearerToken);
         List<String> roles = jwtTokenHelper.getRoleFromAccesToken(jwt);
         String userEmail = jwtTokenHelper.getUserEmailFromAccesToken(jwt);
 
-        if(roles.indexOf("ROLE_AGENT") != -1 && carRepository.findCarsByUserEmail(carDTO.getUserEmail()).size() >= 3){
-            throw new CustomException("User already has 3 cars.", HttpStatus.NOT_ACCEPTABLE);
-        }
         carDTO.setUserEmail(userEmail);
+        Car car = new Car(carDTO);
+        Brand brand = brandRepository.findBrandByBrandName(carDTO.getBrandName());
+        if(brand == null)
+            throw new CustomException("Brand doesn't exist.", HttpStatus.BAD_REQUEST);
 
-        return carRepository.save(new Car(carDTO));
+        Model model = modelRepository.findModelByModelName(carDTO.getModelName());
+        if(model == null || !modelRepository.findModelsByBrand(brand.getId()).contains(model) )
+            throw new CustomException("Error with car model entry." , HttpStatus.BAD_REQUEST);
+
+        GearShiftType gearShiftType = gearShiftTypeRepository.findGearShiftTypeByGearShiftName(carDTO.getGearShiftName());
+        if(gearShiftType == null || !model.getGearShiftTypes().contains(gearShiftType))
+            throw new CustomException("Error with gear shift type entry.", HttpStatus.BAD_REQUEST);
+
+        FuelType fuelType = fuelTypeRepository.findFuelTypeByFuelTypeName(carDTO.getFuelTypeName());
+        if(fuelType  == null || !model.getFuelTypes().contains(fuelType))
+            throw new CustomException("Error with fuel type entry.", HttpStatus.BAD_REQUEST);
+
+        BodyType bodyType = bodyTypeRepository.findBodyTypeByBodyTypeName(carDTO.getBodyName());
+        if(bodyType == null || !model.getBodyTypes().contains(bodyType))
+            throw new CustomException("Error with body type entry.", HttpStatus.BAD_REQUEST);
+
+        car.setBrand(brand);
+        car.setModel(model);
+        car.setGearShift(gearShiftType);
+        car.setFuelType(fuelType);
+        car.setBodyType(bodyType);
+
+        return carRepository.save(car);
     }
 
     public List<SimpleCarDTO> getCars(String email){

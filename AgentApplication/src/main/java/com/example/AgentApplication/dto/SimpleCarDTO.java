@@ -16,8 +16,8 @@ public class SimpleCarDTO {
 
     public SimpleCarDTO(Car car) {
         this.id = car.getId();
-        this.brandName = car.getBrandName();
-        this.modelName = car.getModelName();
+        this.brandName = car.getBrand().getBrandName();
+        this.modelName = car.getModel().getModelName();
         this.tokenGenerated = car.getLocationToken() != null && car.getLocationToken().length() > 0;
         this.creationDate = car.getCrationDate();
     }

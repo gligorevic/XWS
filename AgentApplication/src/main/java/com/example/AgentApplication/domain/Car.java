@@ -12,15 +12,20 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String brandName;
+    @ManyToOne
+    private Brand brand;
 
-    private String modelName;
+    @ManyToOne
+    private Model model;
 
-    private String gearShiftName;
+    @ManyToOne
+    private GearShiftType gearShift;
 
-    private String fuelTypeName;
+    @ManyToOne
+    private FuelType fuelType;
 
-    private String bodyName;
+    @ManyToOne
+    private BodyType bodyType;
 
     private Integer kmPassed;
 
@@ -28,28 +33,18 @@ public class Car {
 
     private String locationToken;
 
-    private Date crationDate;
+    private Date creationDate;
 
     public Car(){
     }
 
-    public Car(String brandName, String modelName, String gearShiftName, String fuelTypeName, String bodyName, Integer kmPassed, String userAgentId, String locationToken) {
-        this.brandName = brandName;
-        this.modelName = modelName;
-        this.gearShiftName = gearShiftName;
-        this.fuelTypeName = fuelTypeName;
-        this.bodyName = bodyName;
+    public Car( Integer kmPassed, String userAgentId, String locationToken) {
         this.kmPassed = kmPassed;
         this.userEmail = userAgentId;
         this.locationToken = locationToken;
     }
 
     public Car(CarDTO carDTO) {
-        this.brandName = carDTO.getBrandName();
-        this.modelName = carDTO.getModelName();
-        this.gearShiftName = carDTO.getGearShiftName();
-        this.fuelTypeName = carDTO.getFuelTypeName();
-        this.bodyName = carDTO.getBodyName();
         this.kmPassed = carDTO.getKmPassed();
         this.userEmail = carDTO.getUserEmail();
     }
@@ -62,44 +57,44 @@ public class Car {
         this.id = id;
     }
 
-    public String getBrandName() {
-        return brandName;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
-    public String getModelName() {
-        return modelName;
+    public Model getModel() {
+        return model;
     }
 
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
-    public String getGearShiftName() {
-        return gearShiftName;
+    public GearShiftType getGearShift() {
+        return gearShift;
     }
 
-    public void setGearShiftName(String gearShiftName) {
-        this.gearShiftName = gearShiftName;
+    public void setGearShift(GearShiftType gearShift) {
+        this.gearShift = gearShift;
     }
 
-    public String getFuelTypeName() {
-        return fuelTypeName;
+    public FuelType getFuelType() {
+        return fuelType;
     }
 
-    public void setFuelTypeName(String fuelTypeName) {
-        this.fuelTypeName = fuelTypeName;
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
     }
 
-    public String getBodyName() {
-        return bodyName;
+    public BodyType getBodyType() {
+        return bodyType;
     }
 
-    public void setBodyName(String bodyName) {
-        this.bodyName = bodyName;
+    public void setBodyType(BodyType bodyType) {
+        this.bodyType = bodyType;
     }
 
     public Integer getKmPassed() {
@@ -127,15 +122,15 @@ public class Car {
     }
 
     public Date getCrationDate() {
-        return crationDate;
+        return creationDate;
     }
 
     public void setCrationDate(Date crationDate) {
-        this.crationDate = crationDate;
+        this.creationDate = crationDate;
     }
 
     @PrePersist
     protected void onCreate(){
-        this.crationDate= new Date();
+        this.creationDate= new Date();
     }
 }

@@ -16,9 +16,9 @@ public class SimpleAdvertisementDTO {
     public SimpleAdvertisementDTO(Advertisement advertisement) {
         this.id = advertisement.getId();
         this.price = advertisement.getPriceFrom();
-        this.brandName = advertisement.getBrandName();
+        this.brandName = advertisement.getCar().getBrand().getBrandName();
         this.cityName = advertisement.getRentingCityLocation().getName();
-        this.modelName = advertisement.getModelName();
+        this.modelName = advertisement.getCar().getModel().getModelName();
         this.mainImagePath = advertisement.getMainImagePath();
     }
 

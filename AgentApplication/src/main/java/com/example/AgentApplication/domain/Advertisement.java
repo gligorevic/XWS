@@ -22,18 +22,6 @@ public class Advertisement {
 
     private Integer priceTo;
 
-    private String brandName;
-
-    private String modelName;
-
-    private String gearShiftName;
-
-    private String fuelTypeName;
-
-    private String bodyName;
-
-    private Integer kmPassed;
-
     private Integer numberChildSeats;
 
     private Boolean collisionDamage;
@@ -61,12 +49,6 @@ public class Advertisement {
         this.kmRestriction = advertisementDTO.getKmRestriction();
         this.priceFrom= advertisementDTO.getPrice();
         this.priceTo = advertisementDTO.getPrice();
-        this.brandName = advertisementDTO.getBrandName();
-        this.modelName = advertisementDTO.getModelName();
-        this.gearShiftName = advertisementDTO.getGearShiftName();
-        this.fuelTypeName = advertisementDTO.getFuelTypeName();
-        this.bodyName =advertisementDTO.getBodyName();
-        this.kmPassed = advertisementDTO.getKmPassed();
         this.numberChildSeats = advertisementDTO.getNumberChildSeats();
         this.collisionDamage = advertisementDTO.getCollisionDamage();
         this.userEmail = advertisementDTO.getUserEmail();
@@ -85,7 +67,7 @@ public class Advertisement {
         this.id = id;
     }
 
-    public Car getCarId() {
+    public Car getCar() {
         return car;
     }
 
@@ -115,54 +97,6 @@ public class Advertisement {
 
     public void setPriceTo(Integer priceTo) {
         this.priceTo = priceTo;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-
-    public String getModelName() {
-        return modelName;
-    }
-
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
-    }
-
-    public String getGearShiftName() {
-        return gearShiftName;
-    }
-
-    public void setGearShiftName(String gearShiftName) {
-        this.gearShiftName = gearShiftName;
-    }
-
-    public String getFuelTypeName() {
-        return fuelTypeName;
-    }
-
-    public void setFuelTypeName(String fuelTypeName) {
-        this.fuelTypeName = fuelTypeName;
-    }
-
-    public String getBodyName() {
-        return bodyName;
-    }
-
-    public void setBodyName(String bodyName) {
-        this.bodyName = bodyName;
-    }
-
-    public Integer getKmPassed() {
-        return kmPassed;
-    }
-
-    public void setKmPassed(Integer kmPassed) {
-        this.kmPassed = kmPassed;
     }
 
     public Integer getNumberChildSeats() {

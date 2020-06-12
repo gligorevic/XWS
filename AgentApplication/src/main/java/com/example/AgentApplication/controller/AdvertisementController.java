@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("search")
 public class AdvertisementController {
 
     @Autowired
@@ -39,7 +40,7 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
+    //@PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
     public ResponseEntity<?> addNewAdvertisement(@RequestBody AdvertisementDTO advertisementDTO){
         try{
             return new ResponseEntity<>(advertisementService.addAdvertisement(advertisementDTO), HttpStatus.OK);
@@ -53,7 +54,7 @@ public class AdvertisementController {
     }
 
     @GetMapping("/user/{email}")
-    @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
+    //@PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
     public ResponseEntity<List<Advertisement>> getAdvertisementsByUserId(@PathVariable String email){
         try{
             return new ResponseEntity<>(advertisementService.getAdvertisementsByUserId(email), HttpStatus.OK);
