@@ -1,0 +1,46 @@
+div.imageContainer {
+  margin: 1%;
+  float: left;
+  width: 23%;
+  cursor: pointer;
+}
+
+div.imageContainer img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  opacity: 0.9;
+}
+
+div.imageContainer:hover img {
+  border: 1px solid #777;
+  transition: all 0.2s ease;
+  opacity: 0.95;
+}
+
+@media only screen and (max-width: 1360px) {
+  div.imageContainer {
+    margin: 1.6666%;
+    float: left;
+    width: 30%;
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  div.imageContainer {
+    margin: 1%;
+    float: left;
+    width: 46%;
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  div.imageContainer {
+    margin: 1%;
+    float: left;
+    width: 99%;
+    cursor: pointer;
+  }
+}

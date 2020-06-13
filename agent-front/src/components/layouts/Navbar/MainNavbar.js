@@ -22,9 +22,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../../store/actions/auth";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
@@ -151,7 +148,9 @@ const MainNavbar = ({ history, location }) => {
                 Home
               </Button>
 
-              <Button color="inherit">MenuItem</Button>
+              <Button color="inherit" onClick={() => history.push("/agent")}>
+                Profile
+              </Button>
             </>
           )}
         </Toolbar>
