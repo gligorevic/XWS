@@ -5,7 +5,7 @@ import cadillacImage from "../images/cadillac.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Advertisements from "./Advertisements";
-/*import Search from "../Search/Search";*/
+import Search from "../Search/Search";
 
 const useStyles = makeStyles((theme) => ({
   back: {
@@ -39,6 +39,12 @@ const Home = () => {
     <div className={classes.back}>
       <MainNavbar />
       <div className={classes.center}>
+        <Search
+          selectedStartDate={selectedStartDate}
+          setSelectedStartDate={setSelectedStartDate}
+          selectedEndDate={selectedEndDate}
+          setSelectedEndDate={setSelectedEndDate}
+        />
         <Advertisements
           selectedStartDate={selectedStartDate}
           selectedEndDate={selectedEndDate}

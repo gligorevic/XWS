@@ -106,35 +106,39 @@ const AddAdvertisement = ({ id }) => {
                     <ListItem>
                       <ListItemText primary="Brand" />
                       <Typography variant="subtitle1">
-                        {ad.brandName}
+                        {ad.car.brand.brandName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Model" />
                       <Typography variant="subtitle1">
-                        {ad.modelName}
+                        {ad.car.model.modelName}
                       </Typography>
                     </ListItem>
                     <Divider />
                     <ListItem>
                       <ListItemText primary="Gear shift" />
                       <Typography variant="subtitle1">
-                        {ad.gearShiftName}
+                        {ad.car.gearShift.gearShiftName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Fuel type" />
                       <Typography variant="subtitle1">
-                        {ad.fuelTypeName}
+                        {ad.car.fuelType.fuelTypeName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Body" />
-                      <Typography variant="subtitle1">{ad.bodyName}</Typography>
+                      <Typography variant="subtitle1">
+                        {ad.car.bodyType.bodyTypeName}
+                      </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Km passed" />
-                      <Typography variant="subtitle1">{ad.kmPassed}</Typography>
+                      <Typography variant="subtitle1">
+                        {ad.car.kmPassed}
+                      </Typography>
                     </ListItem>
 
                     <Divider />

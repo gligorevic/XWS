@@ -99,10 +99,16 @@ const Advertisements = ({
                         className="priceToggler"
                       >
                         <LocalOfferIcon className="priceButton" />
-                        <span className="purePrice">{row.price}</span>
+                        <span className="purePrice">
+                          {row.price ? row.price : row.priceFrom}
+                        </span>
                       </IconButton>
                     }
-                    title={`${row.brandName} - ${row.modelName}`}
+                    title={`${
+                      row.brandName ? row.brandName : row.car.brand.brandName
+                    } - ${
+                      row.modelName ? row.modelName : row.car.model.modelName
+                    }`}
                     subheader="September 14, 2016"
                   />
                   <CardMedia
