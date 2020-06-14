@@ -34,7 +34,7 @@ export const addCar = (car, imgUrl) => async (dispatch) => {
     const newCar = res.data;
     dispatch({
       type: SET_ADDED_CARS,
-      car: { ...newCar, mainImageUrl: `/static/images/${newCar.id}/${imgUrl}` },
+      car: { ...newCar, mainImageUrl: `/images/${newCar.id}/${imgUrl}` },
     });
     return res;
   } catch (err) {

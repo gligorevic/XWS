@@ -19,7 +19,7 @@ public class SimpleAdvertisementDTO {
         this.brandName = advertisement.getCar().getBrand().getBrandName();
         this.cityName = advertisement.getRentingCityLocation().getName();
         this.modelName = advertisement.getCar().getModel().getModelName();
-        this.mainImagePath = advertisement.getMainImagePath();
+        this.mainImagePath = advertisement.getCar().getMainImageUrl();
     }
 
     public Long getId() {

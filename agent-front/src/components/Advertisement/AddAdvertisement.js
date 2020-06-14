@@ -58,7 +58,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const AddAdvertisement = ({ carId, open, setOpen }) => {
   const [cityName, setCityName] = useState("");
   const [error, setError] = useState(false);
-  const [images, setImages] = useState(null);
 
   const [state, setState] = React.useState({
     carId: "",
@@ -68,12 +67,11 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
     fuelTypeName: "",
     bodyName: "",
     kmPassed: "",
-    userEmail: "",
     kmRestriction: "",
     price: "",
     numberChildSeats: "",
     collisionDamage: false,
-    rentingLocation: "",
+    rentingStreetLocation: "",
     freeFrom: new Date(),
     freeTo: new Date(),
   });
@@ -92,7 +90,6 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
         fuelTypeName: car.fuelTypeName,
         bodyName: car.bodyName,
         kmPassed: car.kmPassed,
-        userEmail: car.userEmail,
         kmRestriction: "",
         price: "",
         numberChildSeats: "",
@@ -103,15 +100,6 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
       });
     })();
   }, [open]);
-
-  const handleChangeImage = (e) => {
-    setImages(
-      Array.from(e.target.files).map((file) => ({
-        url: URL.createObjectURL(file),
-        file,
-      }))
-    );
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -152,7 +140,7 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
   const handleSubmit = async (e) => {
     setLoading(true);
 
-    const resp = await Axios.post("/car/advert/activate", {
+    const resp = await Axios.post("/search", {
       carId: state.carId,
       kmRestriction: state.kmRestriction,
       price: state.price,
@@ -180,8 +168,8 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar>
-          <Toolbar>
+        <AppBar color="secondary">
+          <Toolbar color="secondary">
             <IconButton
               edge="start"
               color="inherit"
@@ -294,9 +282,9 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
               <TextField
                 className={classes.text}
                 fullWidth
-                name="rentingLocation"
+                name="rentingStreetLocation"
                 onChange={handleChangeTextField}
-                value={state.rentingLocation}
+                value={state.rentingStreetLocation}
                 required
                 label="Renting location"
               />
@@ -351,25 +339,6 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
                 Add
               </Button>
             </Paper>
-          </Grid>
-          <Grid item sm={12}>
-            <img
-              alt="Main image"
-              src={images && images[0].url}
-              style={{
-                maxHeight: 200,
-                maxWidth: 200,
-              }}
-            />
-
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="icon-button-file"
-              type="file"
-              multiple
-              onChange={handleChangeImage}
-            />
           </Grid>
           <Backdrop className={classes.backdrop} open={loading}>
             <CircularProgress color="inherit" />

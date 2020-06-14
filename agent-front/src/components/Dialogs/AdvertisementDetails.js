@@ -21,6 +21,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
+import Gallery from "../Car/Gallery";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -75,8 +76,8 @@ const AddAdvertisement = ({ id }) => {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar>
-          <Toolbar>
+        <AppBar color="secondary">
+          <Toolbar color="secondary">
             <IconButton
               edge="start"
               color="inherit"
@@ -91,6 +92,14 @@ const AddAdvertisement = ({ id }) => {
           </Toolbar>
         </AppBar>
         <Grid container spacing={2} style={{ padding: 60, paddingTop: 120 }}>
+          {" "}
+          {ad && (
+            <Gallery
+              images={ad.carDTO.images.map((img) => ({
+                source: img,
+              }))}
+            />
+          )}
           <Grid item xs={6}>
             <Paper style={{ padding: 50 }}>
               <Typography
@@ -106,38 +115,38 @@ const AddAdvertisement = ({ id }) => {
                     <ListItem>
                       <ListItemText primary="Brand" />
                       <Typography variant="subtitle1">
-                        {ad.car.brand.brandName}
+                        {ad.carDTO.brandName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Model" />
                       <Typography variant="subtitle1">
-                        {ad.car.model.modelName}
+                        {ad.carDTO.modelName}
                       </Typography>
                     </ListItem>
                     <Divider />
                     <ListItem>
                       <ListItemText primary="Gear shift" />
                       <Typography variant="subtitle1">
-                        {ad.car.gearShift.gearShiftName}
+                        {ad.carDTO.gearShiftName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Fuel type" />
                       <Typography variant="subtitle1">
-                        {ad.car.fuelType.fuelTypeName}
+                        {ad.carDTO.fuelTypeName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Body" />
                       <Typography variant="subtitle1">
-                        {ad.car.bodyType.bodyTypeName}
+                        {ad.carDTO.bodyName}
                       </Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Km passed" />
                       <Typography variant="subtitle1">
-                        {ad.car.kmPassed}
+                        {ad.carDTO.kmPassed}
                       </Typography>
                     </ListItem>
 
@@ -162,8 +171,7 @@ const AddAdvertisement = ({ id }) => {
                     <ListItem>
                       <ListItemText primary="Renting location" />
                       <Typography variant="subtitle1">
-                        {ad.rentingCityLocation.name},{" "}
-                        {ad.rentingStreetLocation}
+                        {ad.rentingCityLocation}, {ad.rentingStreetLocation}
                       </Typography>
                     </ListItem>
                     <ListItem>
@@ -175,9 +183,7 @@ const AddAdvertisement = ({ id }) => {
                     <Divider />
                     <ListItem>
                       <ListItemText primary="Price per day" />
-                      <Typography variant="subtitle1">
-                        {ad.priceFrom}
-                      </Typography>
+                      <Typography variant="subtitle1">{ad.price}</Typography>
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Number of children seats" />
@@ -194,7 +200,7 @@ const AddAdvertisement = ({ id }) => {
                     <ListItem>
                       <ListItemText primary="Agent/User email" />
                       <Typography variant="subtitle1">
-                        {ad.userEmail}
+                        agent@gmail.com
                       </Typography>
                     </ListItem>
 

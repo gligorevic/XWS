@@ -22,7 +22,7 @@ public class AdvertisementController {
     @GetMapping
     public ResponseEntity<?> getAllAdvertisements(){
         try{
-            return new ResponseEntity<>(advertisementService.getAllAdvertisements(), HttpStatus.OK);
+            return new ResponseEntity<>(advertisementService.getSimpleAdvertisements(), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -50,17 +50,6 @@ public class AdvertisementController {
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping("/user/{email}")
-    //@PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
-    public ResponseEntity<List<Advertisement>> getAdvertisementsByUserId(@PathVariable String email){
-        try{
-            return new ResponseEntity<>(advertisementService.getAdvertisementsByUserId(email), HttpStatus.OK);
-        }catch(Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 

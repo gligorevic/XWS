@@ -30,7 +30,11 @@ function CarCard({ generateToken, getExistingToken, car, history }) {
       />
       <CardMedia
         className="media"
-        image={`${car.mainImageUrl}`}
+        image={
+          car.brandName
+            ? `/images/${car.id}/${car.mainImageUrl}`
+            : `${car.mainImageUrl}`
+        }
         onClick={() => history.push(`/car/${car.id}`)}
         title={`${car.brandName ? car.brandName : car.brand.brandName} - ${
           car.modelName ? car.modelName : car.model.modelName

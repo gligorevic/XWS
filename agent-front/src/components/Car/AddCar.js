@@ -84,8 +84,8 @@ function AddCarFullScreen({ open, setOpen, userEmail, addCar }) {
   return (
     <>
       <Dialog fullScreen open={open} onClose={() => setOpen(false)}>
-        <AppBar>
-          <Toolbar>
+        <AppBar color="secondary">
+          <Toolbar color="secondary">
             <IconButton
               edge="start"
               color="inherit"
@@ -94,7 +94,7 @@ function AddCarFullScreen({ open, setOpen, userEmail, addCar }) {
             >
               <CloseIcon />
             </IconButton>
-            <Typography variant="h6">Add advertisement</Typography>
+            <Typography variant="h6">Add car</Typography>
           </Toolbar>
         </AppBar>
         <Grid

@@ -4,6 +4,7 @@ import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.domain.Car;
 import com.example.AgentApplication.domain.City;
 import com.example.AgentApplication.dto.AdvertisementDTO;
+import com.example.AgentApplication.dto.CarDTO;
 import com.example.AgentApplication.dto.SimpleAdvertisementDTO;
 import com.example.AgentApplication.exception.CustomException;
 import com.example.AgentApplication.repository.AdvertisementRepository;
@@ -37,6 +38,9 @@ public class AdvertisementService {
     @Autowired
     private CarRepository carRepository;
 
+    @Autowired
+    private ImageService imageService;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -67,11 +71,11 @@ public class AdvertisementService {
         return advertisementRepository.save(advertisement);
     }
 
-    public List<Advertisement> getAdvertisementsByUserId(String email){
-        return advertisementRepository.findAdvertisementsByUserEmail(email);
+    public List<Advertisement> getAdvertisements(){
+        return advertisementRepository.findAll();
     }
 
-    public List<SimpleAdvertisementDTO> getAllAdvertisements(){
+    public List<SimpleAdvertisementDTO> getSimpleAdvertisements(){
         return advertisementRepository.findAll().stream().map(advertisement -> new SimpleAdvertisementDTO(advertisement)).collect(Collectors.toList());
     }
 
@@ -148,8 +152,12 @@ public class AdvertisementService {
         return advertisementRepository.findAllByIdIn(adIds);
     }
 
-    public Advertisement getAdvertisementById(Long id){
-        return advertisementRepository.findAdvertisementById(id);
+    public AdvertisementDTO getAdvertisementById(Long id){
+        Advertisement advertisement = advertisementRepository.findAdvertisementById(id);
+        Car car = carRepository.findCarById(advertisement.getCar().getId());
+        List<String> images = imageService.getAllImagesByCarId(advertisement.getCar().getId());
+        AdvertisementDTO advertisementDTO = new AdvertisementDTO(advertisementRepository.findAdvertisementById(id), new CarDTO(car, images));
+        return advertisementDTO;
     }
 
     private Calendar getMidnightEndDate(Date date) {

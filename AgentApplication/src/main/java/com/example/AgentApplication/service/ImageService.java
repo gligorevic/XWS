@@ -36,6 +36,6 @@ public class ImageService {
 
     public List<String> getAllImagesByCarId(Long carId) {
         List<String> images = imageRepository.findImagesByCarId(carId);
-        return images.stream().map(image -> "/static/images/" + carId + "/" + image).collect(Collectors.toList());
+        return images.stream().map(image -> "/images/" + carId + "/" + image).collect(Collectors.toList());
     }
 }

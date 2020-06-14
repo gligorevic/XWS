@@ -21,7 +21,7 @@ public class SimpleCarDTO {
         this.modelName = car.getModel().getModelName();
         this.tokenGenerated = car.getLocationToken() != null && car.getLocationToken().length() > 0;
         this.creationDate = car.getCrationDate();
-        this.mainImageUrl = "/static/images/" + car.getId() + "/" + car.getMainImageUrl();
+        this.mainImageUrl = car.getMainImageUrl();
     }
 
     public Long getId() {
