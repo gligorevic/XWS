@@ -2,6 +2,7 @@ package com.example.AgentApplication.domain;
 
 
 import com.example.AgentApplication.dto.ReportDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -17,6 +18,7 @@ public class Report {
     private Integer km;
 
     @OneToOne
+    @JsonIgnore
     private Request request;
 
     public Report(){

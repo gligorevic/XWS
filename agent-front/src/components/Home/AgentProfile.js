@@ -13,6 +13,7 @@ import clsx from "clsx";
 import TabPanel from "../layouts/TabPanel";
 import CarPage from "../Car/CarPage";
 import ListAdvertisements from "../Advertisement/ListAdvertisements";
+import ListPassedRequests from "../Report/ListPassedRequests";
 
 const drawerWidth = 240;
 
@@ -93,6 +94,7 @@ function AgentProfile(props) {
       >
         <Tab label="Cars" {...a11yProps(0)} />
         <Tab label="Advertisements" {...a11yProps(1)} />
+        <Tab label="Reports" {...a11yProps(2)} />
       </Tabs>
     </div>
   );
@@ -128,6 +130,9 @@ function AgentProfile(props) {
           </TabPanel>
           <TabPanel value={value} index={1}>
             {value === 1 && <ListAdvertisements />}
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            {value === 2 && <ListPassedRequests />}
           </TabPanel>
         </main>
       </div>
