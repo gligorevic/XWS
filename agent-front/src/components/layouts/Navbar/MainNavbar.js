@@ -24,6 +24,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { logout } from "../../../store/actions/auth";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const drawerWidth = 240;
 
@@ -98,7 +101,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainNavbar = ({ history, location }) => {
+const MainNavbar = ({
+  history,
+  location,
+  logout,
+
+  user: { isAuthenticated, user, cartItemsNum },
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const tablet = useMediaQuery(theme.breakpoints.up("sm"));
@@ -148,9 +157,87 @@ const MainNavbar = ({ history, location }) => {
                 Home
               </Button>
 
-              <Button color="inherit" onClick={() => history.push("/agent")}>
-                Profile
-              </Button>
+              {!isAuthenticated ? (
+                <>
+                  <Button
+                    color="inherit"
+                    onClick={() =>
+                      location.pathname !== "/login" && history.push("/login")
+                    }
+                  >
+                    Login
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    color="inherit"
+                    onClick={() => {
+                      switch (user.role.length > 0 && user.role[0].name) {
+                        case "ROLE_AGENT":
+                          history.push("/agent");
+                          break;
+                      }
+                    }}
+                  >
+                    Profile
+                  </Button>
+                  <div className={classes.username}>
+                    <AccountCircleIcon />
+                    <p style={{ paddingLeft: 5 }}>{user.username}</p>
+                  </div>
+                  {user.role[0].name === "ROLE_ENDUSER" && (
+                    <span
+                      color="inherit"
+                      onClick={() =>
+                        location.pathname !== "/cart" && history.push("/cart")
+                      }
+                      style={{
+                        position: "relative",
+                        display: "inline-block",
+                        width: 30,
+                        height: 30,
+                        margin: "0px 10px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: -8,
+                          right: -8,
+                          fontSize: 14,
+                          borderRadius: 50,
+                          background: "#ff9800dd",
+                          width: 19,
+                          zIndex: 3,
+                          textAlign: "center",
+                          color: "white",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {cartItemsNum}
+                      </span>
+                      <ShoppingCartIcon
+                        style={{
+                          position: "absolute",
+                          fontSize: 30,
+                        }}
+                      />
+                    </span>
+                  )}
+                  <Button
+                    color="inherit"
+                    onClick={() => {
+                      logout();
+                      history.push("/");
+                    }}
+                  >
+                    <ExitToAppIcon />
+                    Logout
+                  </Button>
+                </>
+              )}
             </>
           )}
         </Toolbar>
@@ -205,7 +292,9 @@ const MainNavbar = ({ history, location }) => {
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    user: state.user,
+  };
 }
 
-export default withRouter(connect(mapStateToProps, {})(MainNavbar));
+export default withRouter(connect(mapStateToProps, { logout })(MainNavbar));
