@@ -15,7 +15,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import "./Avertisements.css";
-import ViewDetails from "../Dialogs/AdvertisementDetails";
+import Button from "@material-ui/core/Button";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -40,6 +41,7 @@ const Advertisements = ({
   increaseCartNum,
   selectedStartDate,
   selectedEndDate,
+  history,
 }) => {
   const classes = useStyles();
 
@@ -118,7 +120,13 @@ const Advertisements = ({
                   />
                   <CardContent></CardContent>
                   <CardActions>
-                    <ViewDetails id={row.id} />
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={() => history.push(`/ad/${row.id}`)}
+                    >
+                      View details
+                    </Button>
                     {user.role &&
                       user.role.some((r) => r.name === "ROLE_ENDUSER") && (
                         <IconButton

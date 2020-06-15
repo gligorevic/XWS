@@ -60,6 +60,7 @@ public class ReservationPeriodService {
 
         //odbijanje obicnih zahteva
         List<Request> requests = requestRepository.getRequestsForCanceling(dto.getStartDate(), dto.getEndDate(), dto.getAdvertisementId());
+        System.out.println(requests.size());
         if(!requests.isEmpty()) {
             for (Request r : requests) {
                 r.setPaidState(PaidState.CANCELED);

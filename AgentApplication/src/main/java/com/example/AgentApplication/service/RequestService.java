@@ -76,4 +76,8 @@ public class RequestService {
         return calendar;
     }
 
+    public List<Request> getPassedRequests(){
+        return requestRepository.getRequestsPassedAndPaid(new Date());
+    }
+
 }

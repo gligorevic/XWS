@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Advertisements from "./Advertisements";
 import Search from "../Search/Search";
+import { withRouter } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   back: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = () => {
+const Home = ({ history }) => {
   const classes = useStyles();
 
   const twoDaysFromNow = new Date(
@@ -48,10 +49,11 @@ const Home = () => {
         <Advertisements
           selectedStartDate={selectedStartDate}
           selectedEndDate={selectedEndDate}
+          history={history}
         />
       </div>
     </div>
   );
 };
 
-export default Home;
+export default withRouter(Home);

@@ -22,9 +22,7 @@ export const setAllAdvertisementsForCart = (allAdvertisementsCart) => ({
 
 export const getReservationPeriods = (id) => async (dispatch, getState) => {
   try {
-    const reservationPeriods = await axios.get(
-      `/search/reservationPeriod/${id}`
-    );
+    const reservationPeriods = await axios.get(`/reservationPeriod/${id}`);
     dispatch(setReservationPeriods(reservationPeriods.data));
   } catch (err) {
     console.log(err);

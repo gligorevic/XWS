@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
 import AgentProfile from "./components/Home/AgentProfile";
 import ViewCar from "./components/Car/ViewCar";
-
+import AdDetails from "./components/Advertisement/AdDetails";
 const store = configureStore();
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/agent" component={AgentProfile} />
           <Route exact path="/car/:carId" component={ViewCar} />
+          <Route exact path="/ad/:adId" component={AdDetails} />
         </Switch>
       </Router>
     </Provider>

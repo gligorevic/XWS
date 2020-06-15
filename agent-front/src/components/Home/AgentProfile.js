@@ -12,6 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
 import TabPanel from "../layouts/TabPanel";
 import CarPage from "../Car/CarPage";
+import ListAdvertisements from "../Advertisement/ListAdvertisements";
 
 const drawerWidth = 240;
 
@@ -91,6 +92,7 @@ function AgentProfile(props) {
         aria-label="simple tabs example"
       >
         <Tab label="Cars" {...a11yProps(0)} />
+        <Tab label="Advertisements" {...a11yProps(1)} />
       </Tabs>
     </div>
   );
@@ -123,6 +125,9 @@ function AgentProfile(props) {
           <div className={classes.drawerHeader} />
           <TabPanel value={value} index={0}>
             {value === 0 && <CarPage />}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {value === 1 && <ListAdvertisements />}
           </TabPanel>
         </main>
       </div>
