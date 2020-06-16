@@ -2,6 +2,7 @@ package com.example.AgentApplication.controller;
 
 import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.dto.AdvertisementDTO;
+import com.example.AgentApplication.dto.SearchDTO;
 import com.example.AgentApplication.exception.CustomException;
 import com.example.AgentApplication.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,9 @@ public class AdvertisementController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<?> getAdvertismentsBySearchParams(@RequestBody AdvertisementDTO advertisementDTO){
+    public ResponseEntity<?> getAdvertismentsBySearchParams(@RequestBody SearchDTO searchDTO){
         try{
-            return new ResponseEntity<>(advertisementService.getAdvertismentsBySearchParams(advertisementDTO), HttpStatus.OK);
+            return new ResponseEntity<>(advertisementService.getAdvertismentsBySearchParams(searchDTO), HttpStatus.OK);
         }catch(CustomException e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -17,6 +17,8 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import "./Avertisements.css";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
+import CommentsDialog from "../Comment/CommentsDialog";
+import Rating from "@material-ui/lab/Rating";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -127,6 +129,14 @@ const Advertisements = ({
                     >
                       View details
                     </Button>
+                    <CommentsDialog id={row.id} />
+                    <Rating
+                      name="size-small"
+                      defaultValue={row.averageGrade}
+                      size="small"
+                      readOnly
+                      precision={0.25}
+                    />
                     {user.role &&
                       user.role.some((r) => r.name === "ROLE_ENDUSER") && (
                         <IconButton

@@ -9,6 +9,7 @@ public class SimpleAdvertisementDTO {
     private String modelName;
     private String cityName;
     private String mainImagePath;
+    private Double averageGrade;
 
     public SimpleAdvertisementDTO() {
     }
@@ -68,5 +69,13 @@ public class SimpleAdvertisementDTO {
 
     public void setMainImagePath(String mainImagePath) {
         this.mainImagePath = mainImagePath;
+    }
+
+    public Double getAverageGrade() {
+        return averageGrade;
+    }
+
+    public void setAverageGrade(Double averageGrade) {
+        this.averageGrade = averageGrade;
     }
 }

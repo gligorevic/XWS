@@ -4,6 +4,7 @@ import user from "./user";
 import cars from "./cars";
 import request from "./request";
 import report from "./report";
+import comment from "./comment";
 
 const appReducer = combineReducers({
   advertisement,
@@ -11,6 +12,7 @@ const appReducer = combineReducers({
   cars,
   request,
   report,
+  comment,
 });
 
 const rootReducer = (state, action) => {

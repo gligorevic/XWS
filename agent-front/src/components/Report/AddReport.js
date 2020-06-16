@@ -83,6 +83,7 @@ const ResponsiveDialog = ({ id }) => {
     if (resp && resp.status >= 200 && resp.status < 300) {
       setLoading(false);
       setState({
+        ...state,
         km: "",
         text: "",
       });
