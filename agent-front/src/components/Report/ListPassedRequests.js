@@ -17,6 +17,8 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import ViewReport from "./ViewReport";
 import AddReport from "./AddReport";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,6 +127,8 @@ const ListPassedRequests = ({ getPassedRequests, requests, history }) => {
   return (
     <>
       <div className={classes.root}>
+        <Typography variant="h5">Reports</Typography>
+        <Divider style={{ marginBottom: 40 }} />
         {requests && (
           <Paper className={classes.paper}>
             <div className={classes.tableWrapper}>

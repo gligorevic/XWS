@@ -14,6 +14,7 @@ import TabPanel from "../layouts/TabPanel";
 import CarPage from "../Car/CarPage";
 import ListAdvertisements from "../Advertisement/ListAdvertisements";
 import ListPassedRequests from "../Report/ListPassedRequests";
+import StatisticTab from "../Statistic/StatisticTab";
 
 const drawerWidth = 240;
 
@@ -95,6 +96,7 @@ function AgentProfile(props) {
         <Tab label="Cars" {...a11yProps(0)} />
         <Tab label="Advertisements" {...a11yProps(1)} />
         <Tab label="Reports" {...a11yProps(2)} />
+        <Tab label="Statistic" {...a11yProps(3)} />
       </Tabs>
     </div>
   );
@@ -133,6 +135,9 @@ function AgentProfile(props) {
           </TabPanel>
           <TabPanel value={value} index={2}>
             {value === 2 && <ListPassedRequests />}
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            {value === 3 && <StatisticTab />}
           </TabPanel>
         </main>
       </div>

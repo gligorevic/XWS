@@ -10,13 +10,13 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getAllAdvertisements } from "../../store/actions/advertisement";
-import { Button } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import AddResPeriodDialog from "../ReservationPeriod/AddResPeriodDialog";
 import ViewResPeriodsDialog from "../ReservationPeriod/ViewResPeriodsDialog";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,6 +125,8 @@ const ListAdvertisements = ({ getAllAdvertisements, ads, history }) => {
   return (
     <>
       <div className={classes.root}>
+        <Typography variant="h5">My advertisements</Typography>
+        <Divider style={{ marginBottom: 40 }} />
         {ads && (
           <Paper className={classes.paper}>
             <div className={classes.tableWrapper}>
