@@ -12,6 +12,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
+import AcceptDialog from "./AcceptDialog";
+import DeclineDialog from "./DeclineDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,17 +47,23 @@ function ManipulateRequests({ match, history }) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("name");
   const [page, setPage] = React.useState(0);
+  const [request, setRequest] = React.useState(null);
+  var isReserved = null;
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
   const [requests, setRequests] = useState();
 
+  const [openAcceptDialog, setOpenAcceptDialog] = React.useState(false);
+  const [openDeclineDialog, setOpenDeclineDialog] = React.useState(false);
+
+  const [requestsInBundle, setRequestsInBundle] = React.useState(null);
+
   useEffect(() => {
     (async () => {
       try {
         const res = await Axios.get(`/request/ad/${match.params.adId}`);
-        console.log(res);
         setRequests(res.data);
       } catch (e) {
         console.log(e);
@@ -92,6 +102,32 @@ function ManipulateRequests({ match, history }) {
     const isDesc = orderBy === property && order === "desc";
     setOrder(isDesc ? "asc" : "desc");
     setOrderBy(property);
+  };
+
+  const handleAccept = async (e, request) => {
+    setRequest(request);
+    if (request.inBundle === true) {
+      const res = await Axios.get(`/request/bundle/${request.id}`);
+      setRequestsInBundle(res.data);
+      setOpenAcceptDialog(true);
+    } else {
+      request.paidState = "RESERVED";
+      setRequest(request);
+      const response = await Axios.put(`/request/${request.id}`, request);
+    }
+  };
+
+  const handleDecline = async (e, request) => {
+    setRequest(request);
+    if (request.inBundle === true) {
+      const res = await Axios.get(`/request/bundle/${request.id}`);
+      setRequestsInBundle(res.data);
+      setOpenDeclineDialog(true);
+    } else {
+      request.paidState = "CANCELED";
+      setRequest(request);
+      const response = await Axios.put(`/request/${request.id}`, request);
+    }
   };
 
   return (
@@ -139,6 +175,7 @@ function ManipulateRequests({ match, history }) {
                       STATUS
                     </TableSortLabel>
                   </TableCell>
+                  <TableCell align="left">In Bundle</TableCell>
                   <TableCell></TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -164,23 +201,68 @@ function ManipulateRequests({ match, history }) {
                             <TableCell align="left">{row.endDate}</TableCell>
 
                             <TableCell align="left">{row.paidState}</TableCell>
-                            <TableCell align="left">
-                              <Button
-                                size="medium"
-                                color="primary"
-                                variant="contained"
-                              >
-                                Accept
-                              </Button>
+                            <TableCell align="center">
+                              <Checkbox checked={row.inBundle} disabled />
                             </TableCell>
                             <TableCell align="left">
-                              <Button
-                                size="medium"
-                                variant="contained"
-                                style={{ backgroundColor: "#d66" }}
-                              >
-                                Decline
-                              </Button>
+                              {row.paidState === "RESERVED" && (
+                                <>
+                                  <Button
+                                    size="medium"
+                                    variant="contained"
+                                    style={{
+                                      backgroundColor: "#3a3",
+                                      opacity: "0.5",
+                                    }}
+                                  >
+                                    {(isReserved = row.paidState)}
+                                  </Button>
+                                </>
+                              )}
+                              {(row.paidState === "CANCELED" ||
+                                (row.paidState === "PENDING" &&
+                                  isReserved)) && (
+                                <Button
+                                  color="primary"
+                                  variant="contained"
+                                  disabled
+                                  size="medium"
+                                >
+                                  Accept
+                                </Button>
+                              )}
+                              {row.paidState === "PENDING" && !isReserved && (
+                                <Button
+                                  onClick={(e) => handleAccept(e, row)}
+                                  size="medium"
+                                  color="primary"
+                                  variant="contained"
+                                >
+                                  Accept
+                                </Button>
+                              )}
+                            </TableCell>
+                            <TableCell align="left">
+                              {row.paidState !== "PENDING" && (
+                                <Button
+                                  disabled
+                                  size="medium"
+                                  variant="contained"
+                                  style={{ backgroundColor: "#d66" }}
+                                >
+                                  Decline
+                                </Button>
+                              )}
+                              {row.paidState === "PENDING" && (
+                                <Button
+                                  onClick={(e) => handleDecline(e, row)}
+                                  size="medium"
+                                  variant="contained"
+                                  style={{ backgroundColor: "#d66" }}
+                                >
+                                  Decline
+                                </Button>
+                              )}
                             </TableCell>
                           </TableRow>
                         </>
@@ -223,7 +305,20 @@ function ManipulateRequests({ match, history }) {
           />
         </Paper>
       )}
-      <div className={classes.container}></div>
+      <AcceptDialog
+        openAcceptDialog={openAcceptDialog}
+        setOpenAcceptDialog={setOpenAcceptDialog}
+        request={request}
+        setRequest={setRequest}
+        requestsInBundle={requestsInBundle}
+      ></AcceptDialog>
+      <DeclineDialog
+        openDeclineDialog={openDeclineDialog}
+        setOpenDeclineDialog={setOpenDeclineDialog}
+        request={request}
+        setRequest={setRequest}
+        requestsInBundle={requestsInBundle}
+      ></DeclineDialog>
     </div>
   );
 }

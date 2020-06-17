@@ -1,6 +1,8 @@
 package com.example.RequestService.repository;
 
+import com.example.RequestService.domain.PaidState;
 import com.example.RequestService.domain.Request;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +20,11 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     List<Request> findAllByUserEmail(String userEmail);
 
     List<Request> findAllByAdId(Long id);
+
+    @Query("SELECT r FROM Request r WHERE r.paidState=3")
+    List<Request> findAllPending();
+
+    @Query("SELECT r FROM Request r WHERE r.paidState=2")
+    List<Request> findAllReserved();
     
 }

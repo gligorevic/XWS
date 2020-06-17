@@ -1,6 +1,5 @@
-package com.example.SearchService.dto;
+package com.example.RequestService.dto;
 
-import com.example.SearchService.domain.Advertisement;
 
 import java.util.Date;
 import java.util.List;
@@ -45,49 +44,6 @@ public class AdvertisementDTO {
     private List<String> images;
 
     public AdvertisementDTO() {
-    }
-
-    public AdvertisementDTO(Advertisement advertisement, List<String> images) {
-        this.id = advertisement.getId();
-        this.carId = advertisement.getCarId();
-        this.kmRestriction = advertisement.getKmRestriction();
-        this.price = advertisement.getPriceFrom();
-        this.brandName = advertisement.getBrandName();
-        this.modelName = advertisement.getModelName();
-        this.gearShiftName = advertisement.getGearShiftName();
-        this.fuelTypeName = advertisement.getFuelTypeName();
-        this.bodyName = advertisement.getBodyName();
-        this.kmPassed = advertisement.getKmPassed();
-        this.numberChildSeats = advertisement.getNumberChildSeats();
-        this.collisionDamage = advertisement.getCollisionDamage();
-        this.userEmail = advertisement.getUserEmail();
-        this.cityName = advertisement.getRentingCityLocation().getName();
-        this.rentingStreetLocation = advertisement.getRentingStreetLocation();
-        this.freeFrom = advertisement.getFreeFrom();
-        this.freeTo = advertisement.getFreeTo();
-        this.mainImagePath = advertisement.getMainImagePath();
-        this.images = images;
-    }
-
-    public AdvertisementDTO(Advertisement advertisement) {
-        this.id = advertisement.getId();
-        this.carId = advertisement.getCarId();
-        this.kmRestriction = advertisement.getKmRestriction();
-        this.price = advertisement.getPriceFrom();
-        this.brandName = advertisement.getBrandName();
-        this.modelName = advertisement.getModelName();
-        this.gearShiftName = advertisement.getGearShiftName();
-        this.fuelTypeName = advertisement.getFuelTypeName();
-        this.bodyName = advertisement.getBodyName();
-        this.kmPassed = advertisement.getKmPassed();
-        this.numberChildSeats = advertisement.getNumberChildSeats();
-        this.collisionDamage = advertisement.getCollisionDamage();
-        this.userEmail = advertisement.getUserEmail();
-        this.cityName = advertisement.getRentingCityLocation().getName();
-        this.rentingStreetLocation = advertisement.getRentingStreetLocation();
-        this.freeFrom = advertisement.getFreeFrom();
-        this.freeTo = advertisement.getFreeTo();
-        this.mainImagePath = advertisement.getMainImagePath();
     }
 
     public Long getId() {

@@ -8,19 +8,20 @@ import java.util.Date;
 public class RequestDTO {
 
     private Long id;
-
     private Date freeFrom;
     private Date freeTo;
     private String userEmail;
     private String userSentRequest;
+    private boolean inBundle;
 
     public RequestDTO() {
     }
 
-    public RequestDTO(Long id, Date freeFrom, Date freeTo) {
+    public RequestDTO(Long id, Date freeFrom, Date freeTo, boolean inBundle) {
         this.id = id;
         this.freeFrom = freeFrom;
         this.freeTo = freeTo;
+        this.inBundle = inBundle;
     }
 
     public RequestDTO(Long id, Date freeFrom, Date freeTo, String userEmail, String userSentRequest) {
@@ -69,5 +70,13 @@ public class RequestDTO {
 
     public void setUserSentRequest(String userSentRequest) {
         this.userSentRequest = userSentRequest;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
     }
 }
