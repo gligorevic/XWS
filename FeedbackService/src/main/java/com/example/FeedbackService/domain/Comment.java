@@ -29,6 +29,10 @@ public class Comment {
 
 
     public Comment(CommentDTO commentDTO){
+        this.text = commentDTO.getText();
+        this.commentStatus = CommentStatus.PENDING;
+        this.requestId = commentDTO.getRequestId();
+        this.username = commentDTO.getUsername();
     }
 
     public CommentStatus getCommentStatus() {

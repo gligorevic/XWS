@@ -21,10 +21,6 @@ public class GradeService {
     @Autowired
     private GradeRepository gradeRepository;
 
-    public GradeService(GradeRepository gradeRepository) {
-        this.gradeRepository = gradeRepository;
-    }
-
 
     public Grade getGradeForRequest(Long requestId) throws CustomException {
 
@@ -36,8 +32,7 @@ public class GradeService {
         return grade;
     }
 
-        public Grade add(GradeDTO gradeDTO) throws CustomException{
-
+    public Grade add(GradeDTO gradeDTO) throws CustomException{
         Grade grade = new Grade(gradeDTO);
         if(grade == null)
             throw new CustomException("Couldn't create grade", HttpStatus.BAD_REQUEST);

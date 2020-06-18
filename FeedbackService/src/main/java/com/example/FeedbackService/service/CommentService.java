@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,30 +20,26 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
 
-            // read
-        public List<Comment> getAllCommentsForRequest(Long requestId) throws CustomException {
+    public List<Comment> getAllCommentsForRequest(Long requestId) throws CustomException {
 
         List<Comment> commentList = commentRepository.findAllByRequestId(requestId);
-        if(commentList.isEmpty() || commentList == null){
+        if(commentList == null){
             throw new CustomException("No comments for this request", HttpStatus.BAD_REQUEST);
         }
 
+        if(commentList.isEmpty())
+            return new ArrayList<>();
+
         return commentList;
     }
-                // create
 
     public Comment add(CommentDTO commentDTO) throws CustomException{
 
         Comment comment = new Comment(commentDTO);
-        comment.setRequestId(commentDTO.getRequestId());
-        comment.setText(commentDTO.getText());
-        comment.setCommentStatus(CommentStatus.PENDING);
-        comment.setUsername(commentDTO.getUsername());
-
+        if(comment == null){
+            throw new CustomException("Couldn't create comment", HttpStatus.BAD_REQUEST);
+        }
         return commentRepository.save(comment);
     }
 

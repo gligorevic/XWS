@@ -28,10 +28,9 @@ public class CommentController {
                 e.printStackTrace();
                 return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
-
-
     }
 
+    //!NAPOMENA! Na frontu u gradeDTO.username staviti username iz tog request-a za koji se dodaje grade!!!
     @PostMapping
     public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO, Authentication authentication){
         try{
@@ -47,7 +46,7 @@ public class CommentController {
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
 
-        }
+    }
 
        @PutMapping("/{commentId}")
        public ResponseEntity<?> changeCommentStatus(@RequestBody CommentStatusDTO commentStatusDTO,
