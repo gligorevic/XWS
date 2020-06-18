@@ -31,3 +31,5 @@ export const SET_CART_ITEMS_NUM = "SET_CART_ITEMS_NUM";
 export const SET_ADDED_CARS = "SET_ADDED_CARS";
 
 export const SET_ALL_REQUESTS = "SET_ALL_REQUESTS";
+
+export const SET_ALL_COMMENT = "SET_ALL_COMMENT";
