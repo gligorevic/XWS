@@ -12,9 +12,6 @@ import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Alert from "@material-ui/lab/Alert";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
 import Snackbar from "@material-ui/core/Snackbar";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -111,7 +108,7 @@ const CartPage = ({
       }
     );
 
-    if (resp.status >= 200 && resp.status < 300) {
+    if (resp && resp.status >= 200 && resp.status < 300) {
       setLoading(false);
       setOpenSuccess(true);
       var cartList = JSON.parse(localStorage.getItem("Cart"));
@@ -359,7 +356,7 @@ const CartPage = ({
 
       <Snackbar
         open={openFailure}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
         onClose={handleCloseError}
       >
         <Alert onClose={handleCloseError} severity="error">

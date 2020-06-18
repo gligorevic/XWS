@@ -27,6 +27,8 @@ public class Comment {
     public Comment(){
     }
 
+
+
     public long getId() {
         return id;
     }

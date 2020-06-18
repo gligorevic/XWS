@@ -12,15 +12,15 @@ services:
       - 8024:8024
       - 8124:8124
 
-  request:
-    build: ./RequestService
-    ports:
-      - "8086:8086"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
+#  request:
+#    build: ./RequestService
+#    ports:
+#      - "8086:8086"
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
 
   auth:
     build: ./AuthService
@@ -75,17 +75,17 @@ services:
       - eureka-serviceregistry
       - axon-server
 
-  search-service:
-    build: ./AxonSaga/SearchService
-    ports:
-      - "8084:8084"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - AXON_HOST=axon-server
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      - axon-server
+#  search-service:
+#    build: ./AxonSaga/SearchService
+#    ports:
+#      - "8084:8084"
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#      - AXON_HOST=axon-server
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
+#      - axon-server
 
   image-service:
     build: ./AxonSaga/ImageService

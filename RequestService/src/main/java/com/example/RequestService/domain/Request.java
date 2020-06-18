@@ -23,6 +23,11 @@ public class Request {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date endDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
+    private Date dateTimeCreated;
+
+    private boolean inBundle;
+
     private String userEmail;
     private String userSentRequest;
 
@@ -36,6 +41,7 @@ public class Request {
         this.paidState = PaidState.PENDING;
         this.userEmail = requestDTO.getUserEmail();
         this.userSentRequest = requestDTO.getUserSentRequest();
+        this.inBundle = requestDTO.isInBundle();
     }
 
     public Request(PaidState paidState) {
@@ -96,5 +102,21 @@ public class Request {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
+    }
+
+    public Date getDateTimeCreated() {
+        return dateTimeCreated;
+    }
+
+    public void setDateTimeCreated(Date dateTimeCreated) {
+        this.dateTimeCreated = dateTimeCreated;
     }
 }

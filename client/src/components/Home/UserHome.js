@@ -17,6 +17,7 @@ import AddCar from "../EndUser/AddCar";
 import ListMyCars from "../EndUser/ListMyCars";
 import ListMyAdvertisements from "../EndUser/ListMyAdvertisements";
 import CarPage from "../EndUser/Car/CarPage";
+import RequestsPage from "../EndUser/Request/RequestsPage";
 
 const drawerWidth = 240;
 
@@ -101,6 +102,7 @@ function UserHome(props) {
         <Tab label="My cars" {...a11yProps(3)} />
         <Tab label="My advertisements" {...a11yProps(4)} />
         <Tab label="Cars" {...a11yProps(5)} />
+        <Tab label="Requests" {...a11yProps(6)} />
       </Tabs>
     </div>
   );
@@ -148,6 +150,9 @@ function UserHome(props) {
           </TabPanel>
           <TabPanel value={value} index={5}>
             {value === 5 && <CarPage />}
+          </TabPanel>
+          <TabPanel value={value} index={6}>
+            {value === 6 && <RequestsPage />}
           </TabPanel>
         </main>
       </div>

@@ -28,7 +28,7 @@ const Profile = ({ profile, getProfile }) => {
     (async () => {
       const res = await getProfile();
       console.log(res);
-      if (res.status === 403) setBlockedProfileView(true);
+      if (res && res.status === 403) setBlockedProfileView(true);
     })();
   }, []);
 
