@@ -7,7 +7,7 @@ import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({}));
 
-function CommentReply({ requestId }) {
+function CommentReply({ requestId, setOpen }) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
@@ -23,11 +23,13 @@ function CommentReply({ requestId }) {
 
   const handleSubmit = async (e) => {
     const resp = await Axios.post("/comment", state);
-    if (resp.status == 200) {
+    if (resp.status == 201) {
+      console.log("uslo");
       setState({
         ...state,
         text: "",
       });
+      setOpen(false);
     }
   };
 

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CommentCard = ({ comment, user }) => {
+const CommentCard = ({ comment, user, setOpen }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -61,7 +61,7 @@ const CommentCard = ({ comment, user }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <CommentReply requestId={comment.requestId} />
+          <CommentReply requestId={comment.requestId} setOpen={setOpen} />
         </CardContent>
       </Collapse>
     </Card>

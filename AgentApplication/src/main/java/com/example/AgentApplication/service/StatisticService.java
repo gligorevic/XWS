@@ -44,13 +44,13 @@ public class StatisticService {
                 numberOfCars++;
             }
         }
-        HashMap<Date, Integer> requestsPerDay = new HashMap<>();
+        HashMap<Integer, Integer> requestsPerDay = new HashMap<>();
         for(int i = 0; i <=6; i++){
             Calendar calendar = setStartDate(i);
             Date start = calendar.getTime();
             calendar = setEndDate(i);
             Date end = calendar.getTime();
-            requestsPerDay.put(end, requestRepository.getRequestsByBetweenDates(start, end).size());
+            requestsPerDay.put(-i, requestRepository.getRequestsByBetweenDates(start, end).size());
         }
 
         return new Statistic(sum/numberOfCars, list, requestsPerDay);
