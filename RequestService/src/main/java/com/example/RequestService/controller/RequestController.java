@@ -1,8 +1,6 @@
 package com.example.RequestService.controller;
 
-import com.example.RequestService.domain.PaidState;
 import com.example.RequestService.domain.Request;
-import com.example.RequestService.domain.RequestContainer;
 import com.example.RequestService.dto.RequestContainerDTO;
 import com.example.RequestService.dto.RequestDTO;
 import com.example.RequestService.dto.RequestStatusDTO;
@@ -10,15 +8,12 @@ import com.example.RequestService.dto.ReservationPeriodDTO;
 import com.example.RequestService.exception.CustomException;
 import com.example.RequestService.service.RequestService;
 import org.springframework.security.core.Authentication;
-import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class RequestController {

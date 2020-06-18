@@ -1,5 +1,7 @@
 package com.example.FeedbackService.domain;
 
+import com.example.FeedbackService.dto.CommentDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +16,7 @@ public class Comment {
     private String text;
     private CommentStatus commentStatus;
     private Long requestId;
-    private Long userId; // dao komentar
+    private String username; // dao komentar
 
 
 
@@ -24,23 +26,7 @@ public class Comment {
     }
 
 
-    public Comment(){
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
+    public Comment(CommentDTO commentDTO){
     }
 
     public CommentStatus getCommentStatus() {
@@ -50,4 +36,37 @@ public class Comment {
     public void setCommentStatus(CommentStatus commentStatus) {
         this.commentStatus = commentStatus;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Long getRequestId() {
+        return requestId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setRequestId(Long requestId) {
+        this.requestId = requestId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }
