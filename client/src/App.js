@@ -16,6 +16,7 @@ import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
 import ViewCar from "./components/EndUser/Car/ViewCar";
 import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests";
+import MessagesBoard from "./components/EndUser/Chat/MessagesBoard";
 
 const store = configureStore();
 
@@ -52,6 +53,7 @@ function App() {
     <Provider store={store}>
       <Router className="App">
         <Switch>
+          <Route exact path="/chat" component={MessagesBoard} />
           <PrivateAdminRoute exact path="/admin" component={AdminHome} />
           <PrivateUserRoute exact path="/user" component={UserHome} />
           <PrivateUserRoute exact path="/cart" component={CartPage} />
