@@ -6,7 +6,7 @@ public class CommentDTO {
 
     private Long id;
     private String text;
-    private String commentStatus;
+    private CommentStatus commentStatus;
     private Long requestId;
     private String username; // dao komentar
 

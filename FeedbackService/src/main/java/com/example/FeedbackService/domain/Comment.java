@@ -12,13 +12,15 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String text;
     private CommentStatus commentStatus;
     private Long requestId;
     private String username; // dao komentar
 
 
+    public Comment() {
+    }
 
     public Comment(String text, CommentStatus commentStatus) {
         this.text = text;
@@ -33,12 +35,9 @@ public class Comment {
         return commentStatus;
     }
 
+
     public void setCommentStatus(CommentStatus commentStatus) {
         this.commentStatus = commentStatus;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getText() {
@@ -53,10 +52,6 @@ public class Comment {
         return username;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setText(String text) {
         this.text = text;
     }
@@ -69,4 +64,11 @@ public class Comment {
         this.username = username;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

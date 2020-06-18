@@ -12,8 +12,6 @@ import java.util.List;
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
     List<Advertisement> findAll();
 
-    List<Advertisement> findAdvertisementsByUserEmail(String userEmail);
-
     Advertisement findAdvertisementById(Long id);
 
     List<Advertisement> findAllByIdIn(Long[] adIds);

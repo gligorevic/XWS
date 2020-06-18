@@ -64,7 +64,7 @@ public class RequestService {
             if(request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
             request.setDateTimeCreated(now);
-            requestContainer.getBoundleList().add(requestRepository.save(new Request(requestDTO)));
+            requestContainer.getBoundleList().add(requestRepository.save(request));
         }
 
         return requestContainerRepository.save(requestContainer);

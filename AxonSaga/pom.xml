@@ -15,6 +15,7 @@
 	    <module>SearchService</module>
         <module>ImageService</module>
         <module>Core-API</module>
+        <module>ImageService</module>
     </modules>
 
 </project>

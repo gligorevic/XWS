@@ -1,0 +1,36 @@
+import {
+  SET_RESERVATION_PERIODS,
+  SET_ADVERTISEMENTS,
+  SET_ADVERTISEMENTS_CART,
+} from "../actionTypes";
+
+const DEFAULT_STATE = {
+  reservationPeriods: [],
+  allAdvertisements: [],
+  allAdvertisementsCart: [],
+};
+
+export default (state = DEFAULT_STATE, action) => {
+  switch (action.type) {
+    case SET_RESERVATION_PERIODS: {
+      return {
+        ...state,
+        reservationPeriods: action.reservationPeriods,
+      };
+    }
+    case SET_ADVERTISEMENTS: {
+      return {
+        ...state,
+        allAdvertisements: action.allAdvertisements,
+      };
+    }
+    case SET_ADVERTISEMENTS_CART: {
+      return {
+        ...state,
+        allAdvertisementsCart: action.allAdvertisementsCart,
+      };
+    }
+    default:
+      return state;
+  }
+};

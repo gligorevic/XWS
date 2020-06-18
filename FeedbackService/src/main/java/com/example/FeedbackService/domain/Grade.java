@@ -17,6 +17,8 @@ public class Grade {
     private Long requestId;
     private String username; // dao ocenu
 
+    public Grade() {
+    }
 
     public Grade(int grade, Long requestId, String username ) {
         this.grade = grade;

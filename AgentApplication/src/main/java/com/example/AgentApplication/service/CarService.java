@@ -9,8 +9,12 @@ import com.example.AgentApplication.security.JWTTokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,13 +41,12 @@ public class CarService {
     @Autowired
     private BodyTypeRepository bodyTypeRepository;
 
-    public Car addNewCar(CarDTO carDTO, String bearerToken) throws CustomException {
-        String jwt =jwtTokenHelper.getJWTFromBearerToken(bearerToken);
-        List<String> roles = jwtTokenHelper.getRoleFromAccesToken(jwt);
-        String userEmail = jwtTokenHelper.getUserEmailFromAccesToken(jwt);
+    @Autowired
+    private ImageService imageService;
 
-        carDTO.setUserEmail(userEmail);
-        Car car = new Car(carDTO);
+    public Car addNewCar(CarDTO carDTO, MultipartFile[] files) throws CustomException, IOException {
+        carDTO.setUserEmail("email");
+        Car car = new Car(carDTO, files[0].getOriginalFilename());
         Brand brand = brandRepository.findBrandByBrandName(carDTO.getBrandName());
         if(brand == null)
             throw new CustomException("Brand doesn't exist.", HttpStatus.BAD_REQUEST);
@@ -70,24 +73,35 @@ public class CarService {
         car.setFuelType(fuelType);
         car.setBodyType(bodyType);
 
-        return carRepository.save(car);
+        Car newCar = carRepository.save(car);
+
+        Map<String, byte[]> imagesMap = generateImagesMap(files);
+        imageService.saveImages(imagesMap, newCar.getId());
+
+        return newCar;
     }
 
-    public List<SimpleCarDTO> getCars(String email){
-        List<Car> cars = carRepository.findCarsByUserEmail(email);
+    private Map<String, byte[]> generateImagesMap(MultipartFile[] files) throws IOException {
+        Map<String, byte[]> imagesMap = new HashMap<>();
+        for(int i = 0; i < files.length; i++) {
+            imagesMap.put(files[i].getOriginalFilename(), files[i].getBytes());
+        }
+        return imagesMap;
+    }
+
+    public List<SimpleCarDTO> getCars(){
+        List<Car> cars = carRepository.findAll();
         if(cars == null)
             return null;
         return cars.stream().map(car -> new SimpleCarDTO(car)).collect(Collectors.toList());
     }
 
 
-    public String generateLocationToken(String ownerUsername, Long carId) throws CustomException {
+    public String generateLocationToken(Long carId) throws CustomException {
         Car car = carRepository.getOne(carId);
 
         if(car == null)
             throw new CustomException("Bad request", HttpStatus.BAD_REQUEST);
-        else if(!car.getUserEmail().equals(ownerUsername))
-            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
 
         String locationToken = jwtTokenHelper.generateLocationToken(car);
         car.setLocationToken(locationToken);
@@ -96,13 +110,11 @@ public class CarService {
         return locationToken;
     }
 
-    public String getLocationToken(String ownerUsername, long carId) throws CustomException {
+    public String getLocationToken(long carId) throws CustomException {
         Car car = carRepository.getOne(carId);
 
         if(car == null)
             throw new CustomException("Bad request", HttpStatus.BAD_REQUEST);
-        else if(!car.getUserEmail().equals(ownerUsername))
-            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
 
         return car.getLocationToken();
     }

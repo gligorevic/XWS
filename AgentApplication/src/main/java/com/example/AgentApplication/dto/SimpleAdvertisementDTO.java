@@ -9,6 +9,7 @@ public class SimpleAdvertisementDTO {
     private String modelName;
     private String cityName;
     private String mainImagePath;
+    private Double averageGrade;
 
     public SimpleAdvertisementDTO() {
     }
@@ -19,7 +20,7 @@ public class SimpleAdvertisementDTO {
         this.brandName = advertisement.getCar().getBrand().getBrandName();
         this.cityName = advertisement.getRentingCityLocation().getName();
         this.modelName = advertisement.getCar().getModel().getModelName();
-        this.mainImagePath = advertisement.getMainImagePath();
+        this.mainImagePath = advertisement.getCar().getMainImageUrl();
     }
 
     public Long getId() {
@@ -68,5 +69,13 @@ public class SimpleAdvertisementDTO {
 
     public void setMainImagePath(String mainImagePath) {
         this.mainImagePath = mainImagePath;
+    }
+
+    public Double getAverageGrade() {
+        return averageGrade;
+    }
+
+    public void setAverageGrade(Double averageGrade) {
+        this.averageGrade = averageGrade;
     }
 }

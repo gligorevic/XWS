@@ -26,10 +26,6 @@ public class Advertisement {
 
     private Boolean collisionDamage;
 
-    private String userEmail;
-
-    private String mainImagePath;
-
     @ManyToOne
     private City rentingCityLocation;
 
@@ -51,11 +47,9 @@ public class Advertisement {
         this.priceTo = advertisementDTO.getPrice();
         this.numberChildSeats = advertisementDTO.getNumberChildSeats();
         this.collisionDamage = advertisementDTO.getCollisionDamage();
-        this.userEmail = advertisementDTO.getUserEmail();
         this.rentingStreetLocation = advertisementDTO.getRentingStreetLocation();
         this.freeFrom = advertisementDTO.getFreeFrom();
         this.freeTo = advertisementDTO.getFreeTo();
-        this.mainImagePath = advertisementDTO.getMainImagePath();
     }
 
 
@@ -115,14 +109,6 @@ public class Advertisement {
         this.collisionDamage = collisionDamage;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public String getRentingStreetLocation() {
         return rentingStreetLocation;
     }
@@ -155,11 +141,4 @@ public class Advertisement {
         this.freeTo = freeTo;
     }
 
-    public String getMainImagePath() {
-        return mainImagePath;
-    }
-
-    public void setMainImagePath(String mainImagePath) {
-        this.mainImagePath = mainImagePath;
-    }
 }
