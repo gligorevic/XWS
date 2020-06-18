@@ -3,13 +3,13 @@ package com.example.AgentApplication.service;
 import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.domain.Car;
 import com.example.AgentApplication.domain.City;
+import com.example.AgentApplication.domain.Grade;
 import com.example.AgentApplication.dto.AdvertisementDTO;
+import com.example.AgentApplication.dto.CarDTO;
+import com.example.AgentApplication.dto.SearchDTO;
 import com.example.AgentApplication.dto.SimpleAdvertisementDTO;
 import com.example.AgentApplication.exception.CustomException;
-import com.example.AgentApplication.repository.AdvertisementRepository;
-import com.example.AgentApplication.repository.CarRepository;
-import com.example.AgentApplication.repository.CityRepository;
-import com.example.AgentApplication.repository.ReservationPeriodRepository;
+import com.example.AgentApplication.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,12 @@ public class AdvertisementService {
 
     @Autowired
     private CarRepository carRepository;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private GradeRepository gradeRepository;
 
     @PersistenceContext
     private EntityManager em;
@@ -67,49 +74,71 @@ public class AdvertisementService {
         return advertisementRepository.save(advertisement);
     }
 
-    public List<Advertisement> getAdvertisementsByUserId(String email){
-        return advertisementRepository.findAdvertisementsByUserEmail(email);
+    public List<Advertisement> getAdvertisements(){
+        return advertisementRepository.findAll();
     }
 
-    public List<SimpleAdvertisementDTO> getAllAdvertisements(){
-        return advertisementRepository.findAll().stream().map(advertisement -> new SimpleAdvertisementDTO(advertisement)).collect(Collectors.toList());
+    public List<SimpleAdvertisementDTO> getSimpleAdvertisements(){
+        List<SimpleAdvertisementDTO> advertisements = advertisementRepository.findAll().stream().map(advertisement -> new SimpleAdvertisementDTO(advertisement)).collect(Collectors.toList());
+        advertisements.stream().forEach(ad -> {
+            calculateGrade(ad);
+        });
+        return advertisements;
+    }
+    private void calculateGrade(SimpleAdvertisementDTO ad){
+        List<Integer> list = gradeRepository.getGradesForAdvertisement(ad.getId());
+        Double average = 0.0;
+        if(!list.isEmpty())
+            average = (double) list.stream().mapToInt(Integer::intValue).sum() / (double) list.size();
+
+        ad.setAverageGrade(average);
     }
 
-    public List<Advertisement> getAdvertismentsBySearchParams(AdvertisementDTO advertisementDTO) throws CustomException {
-        Query searchQuery = createQueryAndFillParameters( advertisementDTO);
+    public List<SimpleAdvertisementDTO> getAdvertismentsBySearchParams(SearchDTO searchDTO) throws CustomException {
+        Query searchQuery = createQueryAndFillParameters( searchDTO);
 
         List<Advertisement> advertisements = searchQuery.getResultList();
 
-        Calendar midnightStartDate = getMidnightStartDate(advertisementDTO.getFreeFrom());
-        Calendar midnightEndDate = getMidnightEndDate(advertisementDTO.getFreeTo());
+        Calendar midnightStartDate = getMidnightStartDate(searchDTO.getFreeFrom());
+        Calendar midnightEndDate = getMidnightEndDate(searchDTO.getFreeTo());
 
         List<Long> unavailableAdvertisements = reservationPeriodRepository.getAllReservationPeriodsBetweenDates(midnightStartDate.getTime(), midnightEndDate.getTime());
 
         if(unavailableAdvertisements.size() > 0) {
-            return advertisements.stream().filter(advertisement -> !unavailableAdvertisements.contains(advertisement.getId())).collect(Collectors.toList());
+            return convertToSimpleDTO(advertisements.stream().filter(advertisement -> !unavailableAdvertisements.contains(advertisement.getId())).collect(Collectors.toList()));
         } else {
-            return advertisements;
+            return convertToSimpleDTO(advertisements);
         }
     }
 
-    private Query createQueryAndFillParameters( AdvertisementDTO advertisementDTO) throws CustomException {
-        String sqlStatement = createSearchSqlStatement(advertisementDTO);
+    private List<SimpleAdvertisementDTO> convertToSimpleDTO(List<Advertisement> advertisements){
+        List<SimpleAdvertisementDTO> list = new ArrayList<>();
+        advertisements.stream().forEach(advertisement -> {
+            SimpleAdvertisementDTO ad = new SimpleAdvertisementDTO(advertisement);
+            calculateGrade(ad);
+            list.add(ad);
+        });
+        return list;
+    }
+
+    private Query createQueryAndFillParameters( SearchDTO searchDTO) throws CustomException {
+        String sqlStatement = createSearchSqlStatement(searchDTO);
 
         Query searchQuery = em.createNativeQuery(sqlStatement, Advertisement.class);
 
-        Long cityId = getCityId(advertisementDTO.getCityName());
+        Long cityId = getCityId(searchDTO.getCityName());
 
         if(cityId != null)
             searchQuery.setParameter("cityId", cityId);
-        if(advertisementDTO.getFreeFrom() != null)
-            searchQuery.setParameter("freeFrom", advertisementDTO.getFreeFrom());
-        if(advertisementDTO.getFreeTo() != null)
-            searchQuery.setParameter("freeTo", advertisementDTO.getFreeTo());
+        if(searchDTO.getFreeFrom() != null)
+            searchQuery.setParameter("freeFrom", searchDTO.getFreeFrom());
+        if(searchDTO.getFreeTo() != null)
+            searchQuery.setParameter("freeTo", searchDTO.getFreeTo());
 
         return searchQuery;
     }
 
-    private String createSearchSqlStatement(AdvertisementDTO advertisementDTO) {
+    private String createSearchSqlStatement(SearchDTO advertisementDTO) {
         String startQuery = "SELECT * FROM ADVERTISEMENT AS AD WHERE";
         String sqlQuery = "SELECT * FROM ADVERTISEMENT AS AD WHERE";
 
@@ -148,8 +177,12 @@ public class AdvertisementService {
         return advertisementRepository.findAllByIdIn(adIds);
     }
 
-    public Advertisement getAdvertisementById(Long id){
-        return advertisementRepository.findAdvertisementById(id);
+    public AdvertisementDTO getAdvertisementById(Long id){
+        Advertisement advertisement = advertisementRepository.findAdvertisementById(id);
+        Car car = carRepository.findCarById(advertisement.getCar().getId());
+        List<String> images = imageService.getAllImagesByCarId(advertisement.getCar().getId());
+        AdvertisementDTO advertisementDTO = new AdvertisementDTO(advertisementRepository.findAdvertisementById(id), new CarDTO(car, images));
+        return advertisementDTO;
     }
 
     private Calendar getMidnightEndDate(Date date) {

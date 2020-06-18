@@ -9,13 +9,15 @@
         <module name="PriceListService" />
         <module name="Core-API" />
         <module name="CarService" />
+        <module name="ImageService" />
         <module name="SearchService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AxonSaga" target="1.5" />
       <module name="CarService" target="1.8" />
-      <module name="Core-API" target="1.5" />
+      <module name="Core-API" target="1.8" />
+      <module name="ImageService" target="1.8" />
       <module name="PriceListService" target="1.8" />
       <module name="SearchService" target="1.8" />
     </bytecodeTargetLevel>
@@ -23,6 +25,8 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="CarService" options="-parameters" />
+      <module name="Core-API" options="-parameters" />
+      <module name="ImageService" options="-parameters" />
       <module name="PriceListService" options="-parameters" />
       <module name="SearchService" options="-parameters" />
     </option>

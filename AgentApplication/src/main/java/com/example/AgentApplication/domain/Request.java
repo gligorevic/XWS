@@ -19,11 +19,14 @@ public class Request {
     @ManyToOne
     private Advertisement advertisement;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date startDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date endDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
+    private Date creationDate;
 
     public Request() {
     }
@@ -76,5 +79,14 @@ public class Request {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @PrePersist
+    protected void onCreate(){
+        this.creationDate= new Date();
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
     }
 }

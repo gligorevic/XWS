@@ -3,6 +3,7 @@ package com.example.AgentApplication.dto;
 import com.example.AgentApplication.domain.Car;
 
 import java.util.Date;
+import java.util.List;
 
 public class CarDTO {
     private Long id;
@@ -23,10 +24,12 @@ public class CarDTO {
 
     private Date creationDate;
 
+    private List<String> images;
+
     public CarDTO() {
     }
 
-    public CarDTO(Car car) {
+    public CarDTO(Car car, List<String> images) {
         this.id = car.getId();
         this.brandName = car.getBrand().getBrandName();
         this.modelName = car.getModel().getModelName();
@@ -36,6 +39,7 @@ public class CarDTO {
         this.kmPassed = car.getKmPassed();
         this.userEmail = car.getUserEmail();
         this.creationDate = car.getCrationDate();
+        this.images = images;
     }
 
     public String getBrandName() {
@@ -100,5 +104,13 @@ public class CarDTO {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

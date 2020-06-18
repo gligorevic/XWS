@@ -1,10 +1,14 @@
 package com.example.AgentApplication.dto;
 
+import com.example.AgentApplication.domain.Advertisement;
+
 import java.util.Date;
 
 public class AdvertisementDTO {
 
     private Long carId;
+
+    private CarDTO carDTO;
 
     private Integer kmRestriction;
 
@@ -14,17 +18,30 @@ public class AdvertisementDTO {
 
     private Boolean collisionDamage;
 
-    private String userEmail;
-
     private String cityName;
 
     private String rentingStreetLocation;
+
+    private String rentingCityLocation;
 
     private Date freeFrom;
 
     private Date freeTo;
 
-    private String mainImagePath;
+
+    public AdvertisementDTO(Advertisement advertisement, CarDTO carDTO){
+        this.carId = advertisement.getCar().getId();
+        this.cityName = advertisement.getRentingCityLocation().getName();
+        this.collisionDamage = advertisement.getCollisionDamage();
+        this.freeFrom = advertisement.getFreeFrom();
+        this.freeTo = advertisement.getFreeTo();
+        this.kmRestriction = advertisement.getKmRestriction();
+        this.numberChildSeats = advertisement.getNumberChildSeats();
+        this.price = advertisement.getPriceFrom();
+        this.rentingStreetLocation = advertisement.getRentingStreetLocation();
+        this.carDTO = carDTO;
+        this.rentingCityLocation = advertisement.getRentingCityLocation().getName();
+    }
 
     public Long getCarId() {
         return carId;
@@ -66,14 +83,6 @@ public class AdvertisementDTO {
         this.collisionDamage = collisionDamage;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public Date getFreeFrom() {
         return freeFrom;
     }
@@ -106,11 +115,19 @@ public class AdvertisementDTO {
         this.rentingStreetLocation = rentingStreetLocation;
     }
 
-    public String getMainImagePath() {
-        return mainImagePath;
+    public CarDTO getCarDTO() {
+        return carDTO;
     }
 
-    public void setMainImagePath(String mainImagePath) {
-        this.mainImagePath = mainImagePath;
+    public void setCarDTO(CarDTO carDTO) {
+        this.carDTO = carDTO;
+    }
+
+    public String getRentingCityLocation() {
+        return rentingCityLocation;
+    }
+
+    public void setRentingCityLocation(String rentingCityLocation) {
+        this.rentingCityLocation = rentingCityLocation;
     }
 }

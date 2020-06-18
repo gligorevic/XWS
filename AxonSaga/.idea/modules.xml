@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AxonSaga.iml" filepath="$PROJECT_DIR$/AxonSaga.iml" />
       <module fileurl="file://$PROJECT_DIR$/CarService/CarService.iml" filepath="$PROJECT_DIR$/CarService/CarService.iml" />
       <module fileurl="file://$PROJECT_DIR$/Core-API/Core-API.iml" filepath="$PROJECT_DIR$/Core-API/Core-API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ImageService/ImageService.iml" filepath="$PROJECT_DIR$/ImageService/ImageService.iml" />
       <module fileurl="file://$PROJECT_DIR$/PriceListService/PriceListService.iml" filepath="$PROJECT_DIR$/PriceListService/PriceListService.iml" />
       <module fileurl="file://$PROJECT_DIR$/SearchService/SearchService.iml" filepath="$PROJECT_DIR$/SearchService/SearchService.iml" />
     </modules>
