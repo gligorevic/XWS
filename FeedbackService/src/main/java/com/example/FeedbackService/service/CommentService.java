@@ -70,4 +70,9 @@ public class CommentService {
 
 
     }
+
+    public List<Comment> getAllCommentsForAdmin() throws CustomException{
+
+        return commentRepository.findAllPending();
+    }
 }
