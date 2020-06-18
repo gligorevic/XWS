@@ -1,5 +1,6 @@
 package com.example.AgentApplication.domain;
 
+import com.example.AgentApplication.dto.CommentDTO;
 import com.example.AgentApplication.enumeration.CommentStatus;
 
 import javax.persistence.*;
@@ -24,6 +25,10 @@ public class Comment {
 
 
     public Comment(){
+    }
+
+    public Comment(CommentDTO commentDTO){
+        this.text = commentDTO.getText();
     }
 
     public Long getId() {

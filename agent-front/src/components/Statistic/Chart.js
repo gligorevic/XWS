@@ -28,7 +28,7 @@ export default function Chart({ statistic }) {
   return (
     <React.Fragment>
       <Typography component="h2" variant="h6" color="secondary" gutterBottom>
-        Cars statistic
+        Number of requests
       </Typography>
       <ResponsiveContainer>
         <LineChart

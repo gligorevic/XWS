@@ -12,10 +12,17 @@ public class CommentDTO {
 
     private Date creationDate;
 
+    private Long requestId;
+
+    public CommentDTO(){
+        
+    }
+
     public CommentDTO(Comment comment){
         this.creationDate = comment.getCrationDate();
         this.text = comment.getText();
         this.userEmail = comment.getUser().getEmail();
+        this.requestId = comment.getRequest().getId();
     }
 
     public String getText() {
@@ -40,5 +47,13 @@ public class CommentDTO {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Long requestId) {
+        this.requestId = requestId;
     }
 }
