@@ -135,7 +135,7 @@ const Login = ({ authUser, user, history }) => {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              color="secondary"
               disabled={state.password === "" || state.email === ""}
               className={classes.submit}
             >

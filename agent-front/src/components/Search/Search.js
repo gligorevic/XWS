@@ -115,7 +115,7 @@ const Search = ({
           </Collapse>
         </Grid>
         <Grid item sm={12} className={classes.floatRight}>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="secondary" onClick={handleSubmit}>
             Search
           </Button>
         </Grid>

@@ -4,10 +4,7 @@ import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.domain.Car;
 import com.example.AgentApplication.domain.City;
 import com.example.AgentApplication.domain.Grade;
-import com.example.AgentApplication.dto.AdvertisementDTO;
-import com.example.AgentApplication.dto.CarDTO;
-import com.example.AgentApplication.dto.SearchDTO;
-import com.example.AgentApplication.dto.SimpleAdvertisementDTO;
+import com.example.AgentApplication.dto.*;
 import com.example.AgentApplication.exception.CustomException;
 import com.example.AgentApplication.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +44,7 @@ public class AdvertisementService {
     @PersistenceContext
     private EntityManager em;
 
-    public Advertisement addAdvertisement(AdvertisementDTO dto) throws CustomException, Exception{
+    public Advertisement addAdvertisement(AdvertisementPostDTO dto) throws CustomException, Exception{
         if(dto.getCityName() == null)
             throw new Exception("City not found");
 
