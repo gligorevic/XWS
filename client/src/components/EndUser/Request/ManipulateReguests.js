@@ -53,7 +53,7 @@ function ManipulateRequests({ match, history }) {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-  const [requests, setRequests] = useState();
+  const [requests, setRequests] = useState([]);
 
   const [openAcceptDialog, setOpenAcceptDialog] = React.useState(false);
   const [openDeclineDialog, setOpenDeclineDialog] = React.useState(false);
@@ -64,6 +64,7 @@ function ManipulateRequests({ match, history }) {
     (async () => {
       try {
         const res = await Axios.get(`/request/ad/${match.params.adId}`);
+        console.log(res.data);
         setRequests(res.data);
       } catch (e) {
         console.log(e);
@@ -77,6 +78,7 @@ function ManipulateRequests({ match, history }) {
   };
 
   const sort = (requests) => {
+    console.log(requests);
     return requests.sort((a, b) => {
       if (orderBy === "userSentRequest") {
         return order === "asc"

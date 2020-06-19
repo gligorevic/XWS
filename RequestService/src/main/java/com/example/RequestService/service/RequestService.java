@@ -34,11 +34,9 @@ public class RequestService {
 
     public Request add(RequestDTO requestDTO) throws CustomException {
 
-        Date now = new Date();
         requestDTO.setInBundle(false);
         Request request = new Request(requestDTO);
         request.setAdId(requestDTO.getId());
-        request.setDateTimeCreated(now);
 
         if(request.getUserEmail().equals(request.getUserSentRequest()))
             throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
@@ -49,21 +47,23 @@ public class RequestService {
     public RequestContainer addBundle(RequestContainerDTO requestContainerDTO) throws CustomException {
 
         RequestContainer requestContainer = new RequestContainer(requestContainerDTO);
+
         if(requestContainer == null)
             throw new CustomException("Could not create bundle request", HttpStatus.BAD_REQUEST);
 
         if(!checkBundleRequest(requestContainerDTO.getRequestDTOS()))
             throw new CustomException("Something is wrong with this bundle request", HttpStatus.BAD_REQUEST);
 
-        Date now = new Date();
+        requestContainerRepository.save(requestContainer);
         for(RequestDTO requestDTO : requestContainerDTO.getRequestDTOS()){
             requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
             requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
             requestDTO.setInBundle(true);
             Request request = new Request(requestDTO);
+            request.setRequestContainer(requestContainer);
             if(request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
-            request.setDateTimeCreated(now);
+
             requestContainer.getBoundleList().add(requestRepository.save(request));
         }
 
@@ -112,9 +112,10 @@ public class RequestService {
         return requests;
     }
 
-    public List<RequestInfoDTO> getAllRequestsInfo(String username, String auth) throws CustomException {
-        Map<Long, RequestInfoDTO> requestAdvertMap = new HashMap<>();
+    public List<RequestInfoDTO> getAllRequestsInfoByReciverUsername(String username, String auth) throws CustomException {
         List<Request> requestList = requestRepository.findAllByUserEmail(username);
+
+        Map<Long, RequestInfoDTO> requestAdvertMap = new HashMap<>();
 
         for(Request request : requestList) {
             Long key = request.getAdId();
@@ -122,7 +123,7 @@ public class RequestService {
                 RequestInfoDTO value = requestAdvertMap.get(key);
                 requestAdvertMap.replace(key, value.append(request.getPaidState()));
             } else {
-                requestAdvertMap.put(request.getId(), new RequestInfoDTO(request.getAdId(),request.getPaidState()));
+                requestAdvertMap.put(key, new RequestInfoDTO(request.getAdId(),request.getPaidState()));
             }
         }
 
@@ -144,7 +145,6 @@ public class RequestService {
                     requestAdvertMap.replace(a.getId(), value);
                 }
             }
-
         }
         return new ArrayList<>(requestAdvertMap.values());
     }
@@ -170,7 +170,7 @@ public class RequestService {
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
         }
 
-        if(checkRequest(request.getDateTimeCreated(), 24))
+        if(checkRequest(request.getCrationDate(), 24))
             request.setPaidState(PaidState.RESERVED);
         else{
             request.setPaidState(PaidState.CANCELED);
@@ -250,7 +250,7 @@ public class RequestService {
 
         if(!pendingRequests.isEmpty()){
             for(Request request : pendingRequests){
-                if(!checkRequest(request.getDateTimeCreated(), 24)){
+                if(!checkRequest(request.getCrationDate(), 24)){
                     System.out.println("Cleaned: " + request.getId());
                     request.setPaidState(PaidState.CANCELED);
                     requestRepository.save(request);
@@ -260,7 +260,7 @@ public class RequestService {
 
         if(!reservedRequests.isEmpty()){
             for(Request request : reservedRequests){
-                if(!checkRequest(request.getDateTimeCreated(), 12)){
+                if(!checkRequest(request.getCrationDate(), 12)){
                     System.out.println("Cleaned: " + request.getId());
                     request.setPaidState(PaidState.CANCELED);
                     requestRepository.save(request);
