@@ -1,5 +1,6 @@
 package com.example.CarService.service;
 
+import com.baeldung.springsoap.gen.GetCarRequest;
 import com.example.CarService.domain.Car;
 import com.example.CarService.dto.CarDTO;
 import com.example.CarService.dto.SimpleCarDTO;
@@ -72,5 +73,28 @@ public class CarService {
 
     public void deleteCarById(Long carId) {
         carRepository.deleteById(carId);
+    }
+
+    public Long addNewCarByAgent(GetCarRequest request){
+        Car car = new Car();
+        car.setBodyName(request.getCar().getBodyName());
+        car.setBrandName(request.getCar().getBrandName());
+        car.setFuelTypeName(request.getCar().getFuelTypeName());
+        car.setGearShiftName(request.getCar().getGearShiftName());
+        car.setModelName(request.getCar().getModelName());
+        car.setKmPassed(request.getCar().getKmPassed());
+        car.setUserEmail(request.getCar().getUserEmail());
+        car.setMainImageUrl(request.getCar().getMainImageUrl());
+        Map<String, byte[]> imagesMap = new HashMap<>();
+        request.getCar().getMapImages().stream().forEach(map -> {
+            imagesMap.put(map.getKey(), map.getValue());
+        });
+        Car newCar = carRepository.save(car);
+        commandGateway.send(new CreateCarCommand(newCar.getId(), imagesMap));
+        if(newCar == null){
+            return null;
+        }else{
+            return newCar.getId();
+        }
     }
 }

@@ -1,5 +1,9 @@
 package com.example.AgentApplication.service;
 
+import com.baeldung.soap.ws.client.generated.CarsPort;
+import com.baeldung.soap.ws.client.generated.CarsPortService;
+import com.baeldung.soap.ws.client.generated.GetCarRequest;
+import com.baeldung.soap.ws.client.generated.GetCarResponse;
 import com.example.AgentApplication.domain.*;
 import com.example.AgentApplication.dto.CarDTO;
 import com.example.AgentApplication.dto.SimpleCarDTO;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,9 +78,35 @@ public class CarService {
         car.setFuelType(fuelType);
         car.setBodyType(bodyType);
 
-        Car newCar = carRepository.save(car);
-
         Map<String, byte[]> imagesMap = generateImagesMap(files);
+
+
+        //soap
+        CarsPortService service = new CarsPortService();
+        CarsPort carsPort = service.getCarsPortSoap11();
+        GetCarRequest getCarRequest = new GetCarRequest();
+        com.baeldung.soap.ws.client.generated.Car car1 = new com.baeldung.soap.ws.client.generated.Car();
+        car1.setBodyName(bodyType.getBodyTypeName());
+        car1.setBrandName(brand.getBrandName());
+        car1.setFuelTypeName(fuelType.getFuelTypeName());
+        car1.setGearShiftName(gearShiftType.getGearShiftName());
+        car1.setModelName(model.getModelName());
+        car1.setKmPassed(car.getKmPassed());
+        car1.setUserEmail("agent@gmail.com");
+        car1.setMainImageUrl(car.getMainImageUrl());
+        imagesMap.keySet().stream().forEach(key -> {
+            com.baeldung.soap.ws.client.generated.Map map = new com.baeldung.soap.ws.client.generated.Map();
+            map.setKey(key);
+            map.setValue(imagesMap.get(key));
+            car1.getMapImages().add(map);
+        });
+
+        getCarRequest.setCar(car1);
+        GetCarResponse getCarResponse = carsPort.getCar(getCarRequest);
+        System.out.println(getCarResponse.getId());
+        car.setRemoteId(getCarResponse.getId());
+
+        Car newCar = carRepository.save(car);
         imageService.saveImages(imagesMap, newCar.getId());
 
         return newCar;

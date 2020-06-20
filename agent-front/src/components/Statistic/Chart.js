@@ -27,7 +27,7 @@ export default function Chart({ statistic }) {
 
   const data = [
     Object.entries(statistic.requestsPerDay).map((row) =>
-      createData(format(getDate(row[0]), "dd MM yyyy"), row[1])
+      createData(format(getDate(row[0]), "dd/MM/yyyy"), row[1])
     ),
   ];
 

@@ -37,6 +37,9 @@ public class Car {
 
     private String mainImageUrl;
 
+    private Long remoteId;
+
+
     public Car(){
     }
 
@@ -147,5 +150,13 @@ public class Car {
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }
