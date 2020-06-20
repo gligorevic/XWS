@@ -21,14 +21,14 @@ public class CommentController {
 
     @GetMapping("/comment/{reqId}")
     public ResponseEntity<?> getAllCommentsForRequest(@PathVariable("reqId") String reqId){
-            try {
-                return new ResponseEntity<>(commentService.getAllCommentsForRequest(Long.parseLong(reqId)), HttpStatus.OK);
-            }catch(CustomException e){
-                return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-            } catch (Exception e){
-                e.printStackTrace();
-                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-            }
+        try {
+            return new ResponseEntity<>(commentService.getAllCommentsForRequest(Long.parseLong(reqId)), HttpStatus.OK);
+        }catch(CustomException e){
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/comment")
@@ -68,24 +68,24 @@ public class CommentController {
                         @PathVariable("commentId") Long commentId, Authentication authentication) {
            try {
 
-               Comment comment = commentService.getCommentById(commentId);
+            Comment comment = commentService.getCommentById(commentId);
 
-               switch (commentStatusDTO.getCommentStatus()) {
-                   case ACCEPTED:
-                       return new ResponseEntity<>(commentService.acceptComment(comment), HttpStatus.OK);
-                   case REJECTED:
-                       return new ResponseEntity<>(commentService.cancelComment(comment), HttpStatus.OK);
-                   default:
-                       return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
-               }
-           }catch (CustomException e) {
-               return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-           }
-
-           catch (Exception e) {
-               e.printStackTrace();
-               return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-
-           }
+            switch (commentStatusDTO.getCommentStatus()) {
+                case ACCEPTED:
+                    return new ResponseEntity<>(commentService.acceptComment(comment), HttpStatus.OK);
+                case REJECTED:
+                    return new ResponseEntity<>(commentService.cancelComment(comment), HttpStatus.OK);
+                default:
+                    return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
+            }
+        }catch (CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
+
+        catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
 }
