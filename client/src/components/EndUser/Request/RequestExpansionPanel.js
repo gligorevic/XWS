@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -43,6 +43,28 @@ const RequestExpansionPanel = ({ title, color, requests }) => {
     return retData;
   };
 
+  function getColor() {
+    return (
+      "hsl(" +
+      360 * Math.random() +
+      "," +
+      (25 + 70 * Math.random()) +
+      "%," +
+      (85 + 10 * Math.random()) +
+      "%)"
+    );
+  }
+
+  const [colorSelected, setColorSelected] = useState("#ffffff");
+
+  const colorChanger = () => {
+    setColorSelected(getColor());
+  };
+
+  useEffect(() => {
+    setInterval(colorChanger, 4000);
+  }, []);
+
   const createRequest = (r) => (
     <Grid item md={6}>
       <Paper
@@ -53,8 +75,13 @@ const RequestExpansionPanel = ({ title, color, requests }) => {
           position: "relative",
           padding: "22px",
           background:
-            hoveredId != -1 && hoveredId != r.id ? "#00000013" : "#ffffff",
-          transition: "background 0.33s ease",
+            hoveredId != -1 && hoveredId != r.id
+              ? "#00000013"
+              : hoveredId === r.id
+              ? colorSelected
+              : "#ffffff",
+          transition:
+            "background " + (hoveredId === r.id ? "2s" : "0.33s") + " ease",
         }}
         className="CreatedRequests-request"
         onMouseEnter={() => setHoveredId(r.id)}
@@ -68,7 +95,14 @@ const RequestExpansionPanel = ({ title, color, requests }) => {
         </span>
         <span>{r.userEmail}</span>
         <span>
-          <RequestActions visibility={r.id == hoveredId} />
+          <RequestActions
+            visibility={r.id == hoveredId}
+            chatName={
+              r.id + " " + r.brandName + " " + r.modelName + " " + r.userEmail
+            }
+            roomId={"" + r.id}
+            sendTo={r.userEmail}
+          />
         </span>
       </Paper>
     </Grid>
@@ -101,6 +135,13 @@ const RequestExpansionPanel = ({ title, color, requests }) => {
             </span>
             <RequestActions
               visibility={"*" + requests[0].containerId == hoveredId}
+              chatName={
+                "Bundle " +
+                requests[0].containerId +
+                " " +
+                requests[0].userEmail
+              }
+              roomId={"b" + requests[0].containerId}
             />
           </div>
           {requests.map((r) => (

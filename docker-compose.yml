@@ -63,6 +63,16 @@ services:
       - eureka-serviceregistry
       - auth
 
+#  chat:
+#    build: ./NodeJSChat
+#    ports:
+#      - "3200:3200"
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
+
   car-service:
     build: ./AxonSaga/CarService
     ports:
@@ -99,12 +109,3 @@ services:
       - eureka-serviceregistry
       - axon-server
 
-  chat-service:
-    build: ./ChatService
-    ports:
-      - "8095:8095"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry

@@ -1,18 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Switch from "@material-ui/core/Switch";
 import SpeedDial from "@material-ui/lab/SpeedDial";
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
-import SaveIcon from "@material-ui/icons/Save";
-import PrintIcon from "@material-ui/icons/Print";
-import ShareIcon from "@material-ui/icons/Share";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import GradeIcon from "@material-ui/icons/Grade";
+import CancelIcon from "@material-ui/icons/Cancel";
+import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import ChatIcon from "@material-ui/icons/Chat";
+import { connect } from "react-redux";
+import { setOpenChatBoxes } from "../../../store/actions/chat";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 const useStyles = makeStyles((theme) => ({
   positionAps: {
@@ -24,14 +21,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const actions = [
-  { icon: <FileCopyIcon />, name: "Copy" },
-  { icon: <SaveIcon />, name: "Save" },
-  { icon: <PrintIcon />, name: "Print" },
-  { icon: <ShareIcon />, name: "Share" },
-  { icon: <FavoriteIcon />, name: "Like" },
+  { icon: <QuestionAnswerIcon />, name: "Chat" },
+  { icon: <ChatIcon />, name: "Comment" },
+  { icon: <GradeIcon />, name: "Rate" },
+  { icon: <MonetizationOnIcon />, name: "Pay" },
+  { icon: <CancelIcon />, name: "Cancel" },
 ];
 
-export default function SpeedDials({ visibility }) {
+function RequestActions({
+  visibility,
+  chatName,
+  roomId,
+  openChatBoxes,
+  setOpenChatBoxes,
+  sendTo,
+}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -41,6 +45,20 @@ export default function SpeedDials({ visibility }) {
 
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  const handleAction = (name) => {
+    switch (name) {
+      case "Chat":
+        if (!openChatBoxes.some((o) => o.chatName === chatName))
+          setOpenChatBoxes([
+            ...openChatBoxes,
+            { chatName, roomId, sendTo, unreadedMessages: 0, messages: [] },
+          ]);
+        break;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -61,9 +79,17 @@ export default function SpeedDials({ visibility }) {
           key={action.name}
           icon={action.icon}
           tooltipTitle={action.name}
-          onClick={handleClose}
+          onClick={() => handleAction(action.name)}
         />
       ))}
     </SpeedDial>
   );
 }
+
+const mapStateToProps = (state) => ({
+  openChatBoxes: state.chat.openChatBoxes,
+});
+
+export default connect(mapStateToProps, {
+  setOpenChatBoxes,
+})(RequestActions);

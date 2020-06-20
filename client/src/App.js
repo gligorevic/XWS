@@ -16,8 +16,8 @@ import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
 import ViewCar from "./components/EndUser/Car/ViewCar";
 import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests";
-import MessagesBoard from "./components/EndUser/Chat/MessagesBoard";
 import CreatedRequests from "./components/EndUser/Request/CreatedRequests";
+import OpenChatBoxes from "./components/EndUser/Chat/OpenChatBoxes";
 
 const store = configureStore();
 
@@ -76,6 +76,7 @@ function App() {
           />
           <Route path="/*" component={Home} />
         </Switch>
+        <OpenChatBoxes />
       </Router>
     </Provider>
   );
