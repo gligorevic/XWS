@@ -2,24 +2,20 @@ package com.example.FeedbackService.dto;
 
 import com.example.FeedbackService.domain.CommentStatus;
 
+import java.util.Date;
+
 public class CommentDTO {
 
-    private Long id;
     private String text;
     private Long requestId;
     private String username; // dao komentar
 
     public CommentDTO(){}
 
-    public CommentDTO(Long id, String text, Long requestId, String username) {
-        this.id = id;
+    public CommentDTO(String text, Long requestId, String username) {
         this.text = text;
         this.requestId = requestId;
         this.username = username;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getText() {
@@ -34,10 +30,6 @@ public class CommentDTO {
         return username;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setText(String text) {
         this.text = text;
     }
@@ -49,4 +41,5 @@ public class CommentDTO {
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

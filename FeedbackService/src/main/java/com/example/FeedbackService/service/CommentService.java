@@ -36,10 +36,21 @@ public class CommentService {
 
     public Comment add(CommentDTO commentDTO) throws CustomException{
 
+        List<Comment> comments = commentRepository.findAllByRequestId(commentDTO.getRequestId());
+        if(comments.size() > 0){
+            for(Comment comment : comments){
+                if(comment.getUsername().equals(commentDTO.getUsername()))
+                    throw new CustomException("You have already submitted a comment", HttpStatus.BAD_REQUEST);
+            }
+        }
         Comment comment = new Comment(commentDTO);
         if(comment == null){
             throw new CustomException("Couldn't create comment", HttpStatus.BAD_REQUEST);
         }
+
+        Date now = new Date();
+        comment.setCreationDate(now);
+
         return commentRepository.save(comment);
     }
 

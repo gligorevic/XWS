@@ -2,7 +2,6 @@ package com.example.FeedbackService.dto;
 
 public class GradeDTO {
 
-    private Long id;
     private int grade;
     private Long requestId;
     private String username; // dao ocenu
@@ -10,19 +9,10 @@ public class GradeDTO {
     public GradeDTO() {
     }
 
-    public GradeDTO(Long id, int grade, Long requestId, String username) {
-        this.id = id;
+    public GradeDTO(int grade, Long requestId, String username) {
         this.grade = grade;
         this.requestId = requestId;
         this.username = username;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public int getGrade() {

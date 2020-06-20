@@ -1,11 +1,13 @@
 package com.example.FeedbackService.domain;
 
 import com.example.FeedbackService.dto.CommentDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Comment {
@@ -17,6 +19,9 @@ public class Comment {
     private CommentStatus commentStatus;
     private Long requestId;
     private String username; // dao komentar
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
+    private Date creationDate;
 
 
     public Comment() {
@@ -74,5 +79,13 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

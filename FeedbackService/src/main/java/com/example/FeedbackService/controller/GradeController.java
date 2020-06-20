@@ -29,7 +29,6 @@ public class GradeController {
         }
     }
 
-    //!NAPOMENA! Na frontu u gradeDTO.username staviti username iz tog request-a za koji se dodaje grade!!!
     @PostMapping("/grade")
     public ResponseEntity<?> addGrade(@RequestBody GradeDTO gradeDTO, Authentication authentication){
         try{
