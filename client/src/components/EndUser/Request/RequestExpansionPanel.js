@@ -7,8 +7,10 @@ import Grid from "@material-ui/core/Grid";
 import RequestActions from "./RequestActions";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
+import GradeDialog from "../../Dialogs/Grade/GradeDialog";
+import CommentDialog from "../../Dialogs/Comment/CommentDialog";
 
-const RequestExpansionPanel = ({ title, color, requests }) => {
+const RequestExpansionPanel = ({ title, color, requests, user }) => {
   const [hoveredId, setHoveredId] = useState(-1);
 
   const getDateCreated = (req) => {
@@ -56,6 +58,7 @@ const RequestExpansionPanel = ({ title, color, requests }) => {
   }
 
   const [colorSelected, setColorSelected] = useState("#ffffff");
+  const [openedDialog, setOpenedDialog] = useState(-1);
 
   const colorChanger = () => {
     setColorSelected(getColor());
@@ -102,6 +105,7 @@ const RequestExpansionPanel = ({ title, color, requests }) => {
             }
             roomId={"" + r.id}
             sendTo={r.userEmail}
+            setOpenedDialog={setOpenedDialog}
           />
         </span>
       </Paper>
@@ -179,22 +183,40 @@ const RequestExpansionPanel = ({ title, color, requests }) => {
   };
 
   return (
-    <ExpansionPanel>
-      <ExpansionPanelSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-label="Expand"
-        aria-controls="additional-actions3-content"
-        id="additional-actions3-header"
-        style={{ color: color, fontWeight: 500, fontSize: 18 }}
-      >
-        {title}
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
-        <Grid container spacing={3}>
-          {getRequests()}
-        </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+    <>
+      <ExpansionPanel>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-label="Expand"
+          aria-controls="additional-actions3-content"
+          id="additional-actions3-header"
+          style={{ color: color, fontWeight: 500, fontSize: 18 }}
+        >
+          {title}
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Grid container spacing={3}>
+            {getRequests()}
+          </Grid>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      {openedDialog !== -1 && !openedDialog.startsWith("c") && (
+        <GradeDialog
+          user={user}
+          open={openedDialog !== -1}
+          setOpen={setOpenedDialog}
+          request={requests.find((r) => r.id == openedDialog)}
+        ></GradeDialog>
+      )}
+      {openedDialog !== -1 && openedDialog.startsWith("c") && (
+        <CommentDialog
+          user={user}
+          open={openedDialog !== -1}
+          setOpen={setOpenedDialog}
+          request={requests.find((r) => r.id == openedDialog.slice(1))}
+        ></CommentDialog>
+      )}
+    </>
   );
 };
 

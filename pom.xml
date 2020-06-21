@@ -12,7 +12,6 @@
         <module>AuthService</module>
         <module>AxonSaga</module>
         <module>CarInfoService</module>
-        <module>ChatService</module>
         <module>Eureka</module>
         <module>pki</module>
         <module>FeedbackService</module>

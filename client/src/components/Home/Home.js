@@ -13,9 +13,10 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(" +
       ficaImage +
       ")",
+    backgroundAttachment: "fixed",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    height: "100vh",
+    height: "100%",
   },
   center: {
     display: "flex",

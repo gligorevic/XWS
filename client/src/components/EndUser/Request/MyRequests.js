@@ -89,6 +89,7 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
 
     if (gradeResp && gradeResp.status >= 200 && gradeResp.status < 300) {
       setRequest(row);
+
       grade["grade"] = gradeResp.data.grade;
       grade["requestId"] = gradeResp.data.requestId;
       grade["username"] = row.userSentRequest;
@@ -217,8 +218,8 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
       ></CommentDialog>
 
       <GradeDialog
-        openGradeDialog={openGradeDialog}
-        setOpenGradeDialog={setOpenGradeDialog}
+        open={openGradeDialog}
+        setOpen={setOpenGradeDialog}
         request={request}
         grade={grade}
         setGrade={setGrade}

@@ -118,7 +118,6 @@ public class RequestController {
         }
     }
 
-
     @PutMapping("/{requestId}")
     public ResponseEntity<?> changeRequestStatus(@RequestBody RequestStatusDTO requestStatusDTO, @PathVariable("requestId") Long requestId, Authentication authentication){
         try{
@@ -135,7 +134,7 @@ public class RequestController {
                 case CANCELED:
                     return new ResponseEntity<>(requestService.declineRequest(requestId), HttpStatus.OK);
 //                case PAID:
-//
+//                    return new ResponseEntity<>(requestService.payRequest(requestId), HttpStatus.OK);
 //                    break;
                 default:
                     throw new Exception("Paid state not found");

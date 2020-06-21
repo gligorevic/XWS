@@ -162,6 +162,12 @@ public class RequestService {
         return requestList;
     }
 
+    public RequestDTO getRequestById(Long id){
+        Request request =  requestRepository.getOne(id);
+
+        return new RequestDTO(request);
+    }
+
     public Request acceptRequest(Long requestId) throws CustomException{
 
         Request request = requestRepository.getOne(requestId);
@@ -281,4 +287,6 @@ public class RequestService {
             return false;
         }
     }
+
+
 }

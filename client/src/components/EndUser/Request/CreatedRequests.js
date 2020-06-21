@@ -20,21 +20,29 @@ function CreatedRequests({ getCreatedRequests, user, createdRequests }) {
       <h2 style={{ marginBottom: 5 }}>My created requests</h2>
       <Divider style={{ marginBottom: 15 }} />
       <Paper>
-        <RequestExpansionPanel title="PAID" color="#2196f3" requests={[]} />
+        <RequestExpansionPanel
+          title="PAID"
+          color="#2196f3"
+          requests={createdRequests.filter((r) => r.paidState === "PAID")}
+          user={user}
+        />
         <RequestExpansionPanel
           title="RESERVED"
           color="#4caf50"
           requests={createdRequests.filter((r) => r.paidState === "RESERVED")}
+          user={user}
         />
         <RequestExpansionPanel
           title="PENDING"
           color="#ff9800"
           requests={createdRequests.filter((r) => r.paidState === "PENDING")}
+          user={user}
         />
         <RequestExpansionPanel
           title="CANCELED"
           color="#f44336"
           requests={createdRequests.filter((r) => r.paidState === "CANCELED")}
+          user={user}
         />
       </Paper>
     </div>

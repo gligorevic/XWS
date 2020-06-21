@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Axios from "axios";
-import Alert from "@material-ui/lab/Alert";
-import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyles = makeStyles((theme) => ({}));
 
-function CommentReply({ requestId, user, setOpenCommentDialog }) {
+function CommentReply({
+  requestId,
+  user,
+  setOpen,
+  setOpenFailure,
+  setErrorMessage,
+  setOpenSuccess,
+}) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
@@ -17,12 +21,6 @@ function CommentReply({ requestId, user, setOpenCommentDialog }) {
     requestId: requestId,
     username: user,
   });
-
-  const [openSuccess, setOpenSuccess] = React.useState(false);
-  const [openFailure, setOpenFailure] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState(
-    "Something went wrong"
-  );
 
   const handleChangeTextField = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -32,7 +30,7 @@ function CommentReply({ requestId, user, setOpenCommentDialog }) {
     e.preventDefault();
     const resp = await Axios.post("/feedback/comment", state).catch((error) => {
       if (error.response && error.response.status === 400) {
-        setOpenCommentDialog(false);
+        setOpen(-1);
         setOpenFailure(true);
         setErrorMessage(error.response.data);
       }
@@ -43,17 +41,9 @@ function CommentReply({ requestId, user, setOpenCommentDialog }) {
         ...state,
         text: "",
       });
-      setOpenCommentDialog(false);
+      setOpen(-1);
       setOpenSuccess(true);
     }
-  };
-
-  const handleCloseSuccess = () => {
-    setOpenSuccess(false);
-  };
-
-  const handleCloseError = () => {
-    setOpenFailure(false);
   };
 
   return (
@@ -77,27 +67,8 @@ function CommentReply({ requestId, user, setOpenCommentDialog }) {
       >
         Send
       </Button>
-      <Snackbar
-        open={openSuccess}
-        autoHideDuration={2000}
-        onClose={handleCloseSuccess}
-      >
-        <Alert onClose={handleCloseSuccess} severity="success">
-          Comment sent successfully.
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        open={openFailure}
-        autoHideDuration={2000}
-        onClose={handleCloseError}
-      >
-        <Alert onClose={handleCloseError} severity="error">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
 
-export default withRouter(CommentReply);
+export default CommentReply;

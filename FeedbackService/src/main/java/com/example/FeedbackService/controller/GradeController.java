@@ -18,7 +18,6 @@ public class GradeController {
 
     @GetMapping("/grade/{reqId}")
     public ResponseEntity<?> getGradeForRequest(@PathVariable("reqId") String reqId) {
-
         try {
             return new ResponseEntity<>(gradeService.getGradeForRequest(Long.parseLong(reqId)), HttpStatus.OK);
         } catch (CustomException e) {
@@ -30,13 +29,13 @@ public class GradeController {
     }
 
     @PostMapping("/grade")
-    public ResponseEntity<?> addGrade(@RequestBody GradeDTO gradeDTO, Authentication authentication){
+    public ResponseEntity<?> addGrade(@RequestBody GradeDTO gradeDTO, Authentication authentication, @RequestHeader("Auth") String auth){
         try{
             String userEmail = (String) authentication.getPrincipal();
             if(!userEmail.equals(gradeDTO.getUsername())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            return new ResponseEntity<>(gradeService.add(gradeDTO), HttpStatus.CREATED);
+            return new ResponseEntity<>(gradeService.add(gradeDTO, auth), HttpStatus.CREATED);
         } catch (CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch(Exception e){
