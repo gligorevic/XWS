@@ -4,16 +4,13 @@ import com.example.RequestService.client.AdvertisementClient;
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.dto.AdvertisementDTO;
 import com.example.RequestService.dto.RequestDTO;
-import com.example.RequestService.dto.RequestInfoDTO;
 import com.example.RequestService.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -49,5 +46,11 @@ public class UserRequestService {
         }
 
         return requestDTOs;
+    }
+
+
+    public List<Request> getAllPaid(String email) {
+
+        return requestRepository.findAllPaid(email);
     }
 }

@@ -28,5 +28,10 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     @Query("SELECT r FROM Request r WHERE r.paidState=2")
     List<Request> findAllReserved();
+
+    @Query("SELECT r FROM Request r WHERE r.paidState=1 AND r.userSentRequest = :userEmail")
+    List<Request> findAllPaid(@Param("userEmail") String userEmail);
+
+
     
 }

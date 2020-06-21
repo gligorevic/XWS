@@ -30,4 +30,20 @@ public class UserRequestController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/{email}/paid")
+    public ResponseEntity<?> getAllPaid(@PathVariable("email") String email, Authentication authentication){
+        try{
+            String userEmail = (String)authentication.getPrincipal();
+            if(!email.equals(userEmail))
+                throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(userRequestService.getAllPaid(email), HttpStatus.OK);
+
+        } catch(CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

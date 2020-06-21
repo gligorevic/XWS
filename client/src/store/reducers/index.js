@@ -7,6 +7,8 @@ import advertisement from "./advertisement";
 import carInfo from "./carInfo";
 import request from "./request";
 import chat from "./chat";
+import comment from "./comment";
+
 
 const appReducer = combineReducers({
   certificates,
@@ -17,6 +19,7 @@ const appReducer = combineReducers({
   carInfo,
   request,
   chat,
+  comment,
 });
 
 const rootReducer = (state, action) => {

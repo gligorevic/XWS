@@ -63,7 +63,6 @@ public class RequestService {
             request.setRequestContainer(requestContainer);
             if(request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
-
             requestContainer.getBoundleList().add(requestRepository.save(request));
         }
 

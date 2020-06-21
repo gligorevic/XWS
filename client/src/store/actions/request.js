@@ -1,10 +1,22 @@
-import { SET_ALL_REQUESTS, SET_CREATED_REQUESTS } from "../actionTypes";
+import {
+  SET_ALL_REQUESTS,
+  SET_CREATED_REQUESTS,
+  SET_ALL_PAID_REQUESTS,
+} from "../actionTypes";
+
 import axios from "axios";
 
 export const setAllRequests = (allRequests) => ({
   type: SET_ALL_REQUESTS,
   allRequests,
 });
+
+
+export const setAllPaidRequests = (allPaidRequests) => ({
+  type: SET_ALL_PAID_REQUESTS,
+  allPaidRequests,
+});
+
 
 export const setCreatedRequests = (createdRequests) => ({
   type: SET_CREATED_REQUESTS,
@@ -33,3 +45,15 @@ export const getCreatedRequests = (username) => async (dispatch) => {
     console.log(err);
   }
 };
+
+
+export const getAllPaid = (username) => async (dispatch) => {
+  try {
+    var allRequests = await axios.get(`/request/user/${username}/paid`);
+    dispatch(setAllPaidRequests(allRequests.data));
+  } catch (err) {
+    console.log(err.response);
+    return err.response;
+  }
+};
+

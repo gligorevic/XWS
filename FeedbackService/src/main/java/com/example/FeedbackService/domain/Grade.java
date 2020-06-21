@@ -1,5 +1,7 @@
 package com.example.FeedbackService.domain;
 
+import com.example.FeedbackService.dto.GradeDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,16 +15,21 @@ public class Grade {
     private Long id;
     private int grade;
     private Long requestId;
-    private Long endUserId; // dao ocenu
-
-
-    public Grade(int grade, Long requestId, Long endUserId ) {
-        this.grade = grade;
-        this.requestId = requestId;
-        this.endUserId = endUserId;
-    }
+    private String username; // dao ocenu
 
     public Grade() {
+    }
+
+    public Grade(int grade, Long requestId, String username ) {
+        this.grade = grade;
+        this.requestId = requestId;
+        this.username = username;
+    }
+
+    public Grade(GradeDTO gradeDTO) {
+        this.grade = gradeDTO.getGrade();
+        this.requestId = gradeDTO.getRequestId();
+        this.username = gradeDTO.getUsername();
     }
 
     public Long getId() {
@@ -49,11 +56,11 @@ public class Grade {
         this.requestId = requestId;
     }
 
-    public Long getEndUserId() {
-        return endUserId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEndUserId(Long endUserId) {
-        this.endUserId = endUserId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
