@@ -35,6 +35,7 @@ function RequestActions({
   openChatBoxes,
   setOpenChatBoxes,
   sendTo,
+  setOpenedDialog,
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -55,6 +56,12 @@ function RequestActions({
             ...openChatBoxes,
             { chatName, roomId, sendTo, unreadedMessages: 0, messages: [] },
           ]);
+        break;
+      case "Rate":
+        setOpenedDialog(roomId);
+        break;
+      case "Comment":
+        setOpenedDialog("c" + roomId);
         break;
     }
 

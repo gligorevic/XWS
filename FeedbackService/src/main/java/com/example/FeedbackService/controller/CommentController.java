@@ -20,52 +20,52 @@ public class CommentController {
 
 
     @GetMapping("/comment/{reqId}")
-    public ResponseEntity<?> getAllCommentsForRequest(@PathVariable("reqId") String reqId){
+    public ResponseEntity<?> getAllCommentsForRequest(@PathVariable("reqId") String reqId) {
         try {
             return new ResponseEntity<>(commentService.getAllCommentsForRequest(Long.parseLong(reqId)), HttpStatus.OK);
-        }catch(CustomException e){
+        } catch (CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/comment")
     @PreAuthorize("hasAuthority('RENT_COMMENT_APPROVING')")
-    public ResponseEntity<?> getAllCommentsForAdmin(){
+    public ResponseEntity<?> getAllCommentsForAdmin() {
         try {
             return new ResponseEntity<>(commentService.getAllCommentsForAdmin(), HttpStatus.OK);
-        }catch(CustomException e){
+        } catch (CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/comment")
-    public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO, Authentication authentication){
-        try{
+    public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO, Authentication authentication) {
+        try {
             String userEmail = (String) authentication.getPrincipal();
-            if(!userEmail.equals(commentDTO.getUsername())) {
+            if (!userEmail.equals(commentDTO.getUsername())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
             return new ResponseEntity<>(commentService.add(commentDTO), HttpStatus.CREATED);
         } catch (CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
     }
 
-       @PutMapping("/comment/{commentId}")
-       @PreAuthorize("hasAuthority('RENT_COMMENT_APPROVING')")
-       public ResponseEntity<?> changeCommentStatus(@RequestBody CommentStatusDTO commentStatusDTO,
-                        @PathVariable("commentId") Long commentId, Authentication authentication) {
-           try {
+    @PutMapping("/comment/{commentId}")
+    @PreAuthorize("hasAuthority('RENT_COMMENT_APPROVING')")
+    public ResponseEntity<?> changeCommentStatus(@RequestBody CommentStatusDTO commentStatusDTO,
+                                                 @PathVariable("commentId") Long commentId, Authentication authentication) {
+        try {
 
             Comment comment = commentService.getCommentById(commentId);
 
@@ -77,11 +77,9 @@ public class CommentController {
                 default:
                     return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
             }
-        }catch (CustomException e) {
+        } catch (CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 

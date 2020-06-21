@@ -22,14 +22,14 @@ public class GradeService {
     private GradeRepository gradeRepository;
 
 
-    public Grade getGradeForRequest(Long requestId) throws CustomException {
+    public int getGradeForRequest(Long requestId) throws CustomException {
 
         Grade grade = gradeRepository.findByRequestId(requestId);
         if(grade == null){
-            throw new CustomException("No grade for this request", HttpStatus.BAD_REQUEST);
+            return 0;
         }
 
-        return grade;
+        return grade.getGrade();
     }
 
     public Grade add(GradeDTO gradeDTO) throws CustomException{

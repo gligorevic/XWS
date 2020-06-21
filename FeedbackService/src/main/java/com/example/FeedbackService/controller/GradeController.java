@@ -18,7 +18,6 @@ public class GradeController {
 
     @GetMapping("/grade/{reqId}")
     public ResponseEntity<?> getGradeForRequest(@PathVariable("reqId") String reqId) {
-
         try {
             return new ResponseEntity<>(gradeService.getGradeForRequest(Long.parseLong(reqId)), HttpStatus.OK);
         } catch (CustomException e) {

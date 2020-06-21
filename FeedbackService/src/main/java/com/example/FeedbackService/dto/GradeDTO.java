@@ -4,7 +4,7 @@ public class GradeDTO {
 
     private int grade;
     private Long requestId;
-    private String username; // dao ocenu
+    private String username;
 
     public GradeDTO() {
     }
