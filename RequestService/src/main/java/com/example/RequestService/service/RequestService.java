@@ -38,7 +38,7 @@ public class RequestService {
         requestDTO.setInBundle(false);
         Request request = new Request(requestDTO);
         request.setAdId(requestDTO.getId());
-        request.setDateTimeCreated(now);
+        request.setCrationDate(now);
 
         if(request.getUserEmail().equals(request.getUserSentRequest()))
             throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
@@ -63,7 +63,7 @@ public class RequestService {
             Request request = new Request(requestDTO);
             if(request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
-            request.setDateTimeCreated(now);
+            request.setCrationDate(now);
             requestContainer.getBoundleList().add(requestRepository.save(request));
         }
 
@@ -170,7 +170,7 @@ public class RequestService {
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
         }
 
-        if(checkRequest(request.getDateTimeCreated(), 24))
+        if(checkRequest(request.getCrationDate(), 24))
             request.setPaidState(PaidState.RESERVED);
         else{
             request.setPaidState(PaidState.CANCELED);
@@ -250,7 +250,7 @@ public class RequestService {
 
         if(!pendingRequests.isEmpty()){
             for(Request request : pendingRequests){
-                if(!checkRequest(request.getDateTimeCreated(), 24)){
+                if(!checkRequest(request.getCrationDate(), 24)){
                     System.out.println("Cleaned: " + request.getId());
                     request.setPaidState(PaidState.CANCELED);
                     requestRepository.save(request);
@@ -260,7 +260,7 @@ public class RequestService {
 
         if(!reservedRequests.isEmpty()){
             for(Request request : reservedRequests){
-                if(!checkRequest(request.getDateTimeCreated(), 12)){
+                if(!checkRequest(request.getCrationDate(), 12)){
                     System.out.println("Cleaned: " + request.getId());
                     request.setPaidState(PaidState.CANCELED);
                     requestRepository.save(request);

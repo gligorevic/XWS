@@ -16,6 +16,7 @@ import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
 import ViewCar from "./components/EndUser/Car/ViewCar";
 import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests";
+import MyRequests from "./components/EndUser/Request/MyRequests";
 
 const store = configureStore();
 
@@ -56,6 +57,7 @@ function App() {
           <PrivateUserRoute exact path="/user" component={UserHome} />
           <PrivateUserRoute exact path="/cart" component={CartPage} />
           <PrivateUserRoute exact path="/car/:carId" component={ViewCar} />
+          <PrivateUserRoute exact path="/my-requests" component={MyRequests} />
           <PrivateUserRoute
             exact
             path="/request/ad/:adId"

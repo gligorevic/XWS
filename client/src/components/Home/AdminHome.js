@@ -16,6 +16,7 @@ import RevocatedCertsList from "../Admin/RevocatedCertsList";
 import TabPanel from "../layouts/TabPanel";
 import ManipulateCarInfo from "../Admin/CarInfoService/ManipulateCarInfo";
 import ManipulatePrivileges from "../Admin/UserPrivilegesManipulation/ManipulatePrivileges";
+import CommentRequestsList from "../Admin/CommentManipulation/CommentRequestsList";
 
 import Profile from "../Pages/Profile";
 
@@ -105,6 +106,7 @@ function AdminHome(props) {
         <Tab label="Profile" {...a11yProps(2)} />
         <Tab label="Manipulate privileges" {...a11yProps(3)} />
         <Tab label="Manipulate car info" {...a11yProps(4)} />
+        <Tab label="Comment requests" {...a11yProps(5)} />
       </Tabs>
     </div>
   );
@@ -149,6 +151,9 @@ function AdminHome(props) {
           </TabPanel>
           <TabPanel value={value} index={4}>
             {value === 4 && <ManipulateCarInfo />}
+          </TabPanel>
+          <TabPanel value={value} index={5}>
+            {value === 5 && <CommentRequestsList />}
           </TabPanel>
         </main>
       </div>
