@@ -16,6 +16,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import AcceptDialog from "./AcceptDialog";
 import DeclineDialog from "./DeclineDialog";
+import CommentDialog from "../../Dialogs/Comment/CommentDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ManipulateRequests({ match, history }) {
+function ManipulateRequests({ match, history, user }) {
   const classes = useStyles();
 
   const [order, setOrder] = React.useState("asc");
@@ -49,6 +50,7 @@ function ManipulateRequests({ match, history }) {
   const [page, setPage] = React.useState(0);
   const [request, setRequest] = React.useState(null);
   var isReserved = null;
+  var isPaid = null;
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -57,6 +59,7 @@ function ManipulateRequests({ match, history }) {
 
   const [openAcceptDialog, setOpenAcceptDialog] = React.useState(false);
   const [openDeclineDialog, setOpenDeclineDialog] = React.useState(false);
+  const [openedCommentDialog, setOpenedCommentDialog] = useState(-1);
 
   const [requestsInBundle, setRequestsInBundle] = React.useState(null);
 
@@ -64,7 +67,6 @@ function ManipulateRequests({ match, history }) {
     (async () => {
       try {
         const res = await Axios.get(`/request/ad/${match.params.adId}`);
-        console.log(res.data);
         setRequests(res.data);
       } catch (e) {
         console.log(e);
@@ -77,8 +79,14 @@ function ManipulateRequests({ match, history }) {
     setPage(0);
   };
 
+  const handleOpenCommentDialog = (event, row) => {
+    setRequest(row);
+    setOpenedCommentDialog(row.id);
+    console.log(row);
+    console.log(openedCommentDialog);
+  };
+
   const sort = (requests) => {
-    console.log(requests);
     return requests.sort((a, b) => {
       if (orderBy === "userSentRequest") {
         return order === "asc"
@@ -223,7 +231,7 @@ function ManipulateRequests({ match, history }) {
                               )}
                               {(row.paidState === "CANCELED" ||
                                 (row.paidState === "PENDING" &&
-                                  isReserved)) && (
+                                  (isReserved || isPaid))) && (
                                 <Button
                                   color="primary"
                                   variant="contained"
@@ -233,28 +241,55 @@ function ManipulateRequests({ match, history }) {
                                   Accept
                                 </Button>
                               )}
-                              {row.paidState === "PENDING" && !isReserved && (
+                              {row.paidState === "PENDING" &&
+                                !isReserved &&
+                                !isPaid && (
+                                  <Button
+                                    onClick={(e) => handleAccept(e, row)}
+                                    size="medium"
+                                    color="primary"
+                                    variant="contained"
+                                  >
+                                    Accept
+                                  </Button>
+                                )}
+                              {row.paidState === "PAID" && (
                                 <Button
-                                  onClick={(e) => handleAccept(e, row)}
                                   size="medium"
-                                  color="primary"
+                                  style={{
+                                    backgroundColor: "#03a9f4",
+                                    opacity: 0.6,
+                                  }}
                                   variant="contained"
                                 >
-                                  Accept
+                                  {(isPaid = row.paidState)}
                                 </Button>
                               )}
                             </TableCell>
                             <TableCell align="left">
-                              {row.paidState !== "PENDING" && (
-                                <Button
-                                  disabled
-                                  size="medium"
-                                  variant="contained"
-                                  style={{ backgroundColor: "#d66" }}
-                                >
-                                  Decline
-                                </Button>
-                              )}
+                              {row.paidState !== "PENDING" &&
+                                row.paidState !== "PAID" && (
+                                  <Button
+                                    disabled
+                                    size="medium"
+                                    variant="contained"
+                                    style={{ backgroundColor: "#d66" }}
+                                  >
+                                    Decline
+                                  </Button>
+                                )}
+                              {row.paidState !== "PENDING" &&
+                                row.paidState === "PAID" && (
+                                  <Button
+                                    onClick={(e) =>
+                                      handleOpenCommentDialog(e, row)
+                                    }
+                                    size="medium"
+                                    variant="contained"
+                                  >
+                                    Comment
+                                  </Button>
+                                )}
                               {row.paidState === "PENDING" && (
                                 <Button
                                   onClick={(e) => handleDecline(e, row)}
@@ -321,6 +356,13 @@ function ManipulateRequests({ match, history }) {
         setRequest={setRequest}
         requestsInBundle={requestsInBundle}
       ></DeclineDialog>
+      {openedCommentDialog !== -1 && (
+        <CommentDialog
+          open={openedCommentDialog !== -1}
+          setOpen={setOpenedCommentDialog}
+          request={requests.find((r) => r.id == openedCommentDialog)}
+        ></CommentDialog>
+      )}
     </div>
   );
 }

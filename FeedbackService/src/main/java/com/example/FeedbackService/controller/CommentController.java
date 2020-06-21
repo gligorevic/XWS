@@ -20,9 +20,9 @@ public class CommentController {
 
 
     @GetMapping("/comment/{reqId}")
-    public ResponseEntity<?> getAllCommentsForRequest(@PathVariable("reqId") String reqId) {
+    public ResponseEntity<?> getAllCommentsForRequest(@PathVariable("reqId") String reqId, Authentication authentication, @RequestHeader("Auth") String auth) {
         try {
-            return new ResponseEntity<>(commentService.getAllCommentsForRequest(Long.parseLong(reqId)), HttpStatus.OK);
+            return new ResponseEntity<>(commentService.getAllCommentsForRequest(Long.parseLong(reqId), authentication, auth), HttpStatus.OK);
         } catch (CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
@@ -45,13 +45,13 @@ public class CommentController {
     }
 
     @PostMapping("/comment")
-    public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO, Authentication authentication) {
+    public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO, Authentication authentication, @RequestHeader("Auth") String auth) {
         try {
             String userEmail = (String) authentication.getPrincipal();
             if (!userEmail.equals(commentDTO.getUsername())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            return new ResponseEntity<>(commentService.add(commentDTO), HttpStatus.CREATED);
+            return new ResponseEntity<>(commentService.add(commentDTO, auth), HttpStatus.CREATED);
         } catch (CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {

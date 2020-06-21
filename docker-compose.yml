@@ -12,15 +12,15 @@ services:
       - 8024:8024
       - 8124:8124
 
-  request:
-    build: ./RequestService
-    ports:
-      - "8086:8086"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
+#  request:
+#    build: ./RequestService
+#    ports:
+#      - "8086:8086"
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
 
   auth:
     build: ./AuthService
@@ -63,15 +63,15 @@ services:
       - eureka-serviceregistry
       - auth
 
-#  chat:
-#    build: ./NodeJSChat
-#    ports:
-#      - "3200:3200"
-#    environment:
-#      - REGISTRY_HOST=eureka-serviceregistry
-#    tty: true
-#    depends_on:
-#      - eureka-serviceregistry
+  chat:
+    build: ./NodeJSChat
+    ports:
+      - "3200:3200"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
 
   car-service:
     build: ./AxonSaga/CarService

@@ -99,7 +99,9 @@ const CommentDialog = ({ request, open, setOpen, user }) => {
 
           {comments.length == 1 &&
             user &&
-            user.role.some((r) => r.name === "ROLE_AGENT") &&
+            user.role.some(
+              (r) => r.name === "ROLE_ENDUSER" || r.name === "ROLE_AGENT"
+            ) &&
             user.username === request.userEmail && (
               <Typography
                 variant="h6"

@@ -16,6 +16,8 @@ const GradeDialog = ({ request, open, setOpen, user }) => {
     false
   );
 
+  console.log(user);
+  console.log(request);
   useEffect(() => {
     (async () => {
       try {

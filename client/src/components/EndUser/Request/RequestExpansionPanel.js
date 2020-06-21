@@ -205,7 +205,7 @@ const RequestExpansionPanel = ({ title, color, requests, user }) => {
           user={user}
           open={openedDialog !== -1}
           setOpen={setOpenedDialog}
-          request={requests.find((r) => r.id === openedDialog)}
+          request={requests.find((r) => r.id == openedDialog)}
         ></GradeDialog>
       )}
       {openedDialog !== -1 && openedDialog.startsWith("c") && (
