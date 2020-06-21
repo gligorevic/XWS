@@ -11,9 +11,9 @@ public class Statistic {
 
     private List<CarStatisticDTO> cars;
 
-    private HashMap<Date, Integer> requestsPerDay;
+    private HashMap<Integer, Integer> requestsPerDay;
 
-    public Statistic(Double averageGradeCars, List<CarStatisticDTO> cars, HashMap<Date, Integer> requestsPerDay){
+    public Statistic(Double averageGradeCars, List<CarStatisticDTO> cars, HashMap<Integer, Integer> requestsPerDay){
         this.averageGradeCars = averageGradeCars;
         this.cars = cars;
         this.requestsPerDay = requestsPerDay;
@@ -35,11 +35,11 @@ public class Statistic {
         this.cars = cars;
     }
 
-    public HashMap<Date, Integer> getRequestsPerDay() {
+    public HashMap<Integer, Integer> getRequestsPerDay() {
         return requestsPerDay;
     }
 
-    public void setRequestsPerDay(HashMap<Date, Integer> requestsPerDay) {
+    public void setRequestsPerDay(HashMap<Integer, Integer> requestsPerDay) {
         this.requestsPerDay = requestsPerDay;
     }
 }

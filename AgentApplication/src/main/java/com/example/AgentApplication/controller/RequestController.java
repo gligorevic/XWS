@@ -57,5 +57,15 @@ public class RequestController {
         }
     }
 
+    @GetMapping("/reserved")
+    public ResponseEntity<?> getReservedRequests(){
+        try{
+            return new ResponseEntity<>(requestService.getReservedRequests(), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

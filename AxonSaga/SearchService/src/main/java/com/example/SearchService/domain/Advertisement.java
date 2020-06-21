@@ -76,6 +76,26 @@ public class Advertisement {
         this.mainImagePath = advertisementDTO.getMainImagePath();
     }
 
+    public Advertisement(com.baeldung.springsoap.gen.Advertisement advertisement){
+        this.carId = advertisement.getCarId();
+        this.kmRestriction = advertisement.getKmRestriction();
+        this.priceFrom = advertisement.getPriceFrom();
+        this.priceTo = advertisement.getPriceTo();
+        this.brandName = advertisement.getBrandName();
+        this.modelName = advertisement.getModelName();
+        this.gearShiftName = advertisement.getGearShiftName();
+        this.fuelTypeName = advertisement.getFuelTypeName();
+        this.bodyName = advertisement.getBodyName();
+        this.kmPassed = advertisement.getKmPassed();
+        this.numberChildSeats = advertisement.getNumberChildSeats();
+        this.collisionDamage = advertisement.isCollisionDamage();
+        this.userEmail = advertisement.getUserEmail();
+        this.rentingStreetLocation = advertisement.getRentingStreetLocation();
+        this.freeFrom = advertisement.getFreeFrom().toGregorianCalendar().getTime();
+        this.freeTo = advertisement.getFreeTo().toGregorianCalendar().getTime();
+        this.mainImagePath = advertisement.getMainImagePath();
+    }
+
 
     public Long getId() {
         return id;

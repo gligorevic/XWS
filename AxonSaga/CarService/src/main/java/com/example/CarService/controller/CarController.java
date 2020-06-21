@@ -1,5 +1,7 @@
 package com.example.CarService.controller;
 
+import com.baeldung.springsoap.gen.GetCarRequest;
+import com.baeldung.springsoap.gen.GetCarResponse;
 import com.example.CarService.client.ImageClient;
 import com.example.CarService.domain.Car;
 import com.example.CarService.dto.CarDTO;
@@ -12,11 +14,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
 
+@Endpoint
 @RestController
 public class CarController {
+
+    private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
 
     @Autowired
     private CarService carService;
@@ -61,6 +70,19 @@ public class CarController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCarRequest")
+    @ResponsePayload
+    public GetCarResponse addCarFromAgentApp(@RequestPayload GetCarRequest request) {
+        try{
+            GetCarResponse response = new GetCarResponse();
+            response.setId(carService.addNewCarByAgent(request));
+
+            return response;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

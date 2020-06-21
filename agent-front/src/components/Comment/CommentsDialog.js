@@ -71,7 +71,7 @@ const ResponsiveDialog = ({
                 comments.map((row) => {
                   return (
                     <ListItem key={row.id} button>
-                      <CommentCard comment={row} />
+                      <CommentCard comment={row} setOpen={setOpen} />
                     </ListItem>
                   );
                 })}

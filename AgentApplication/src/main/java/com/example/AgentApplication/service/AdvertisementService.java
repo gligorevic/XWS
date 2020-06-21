@@ -1,13 +1,11 @@
 package com.example.AgentApplication.service;
 
+import com.baeldung.soap.ws.client.generated.*;
 import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.domain.Car;
 import com.example.AgentApplication.domain.City;
 import com.example.AgentApplication.domain.Grade;
-import com.example.AgentApplication.dto.AdvertisementDTO;
-import com.example.AgentApplication.dto.CarDTO;
-import com.example.AgentApplication.dto.SearchDTO;
-import com.example.AgentApplication.dto.SimpleAdvertisementDTO;
+import com.example.AgentApplication.dto.*;
 import com.example.AgentApplication.exception.CustomException;
 import com.example.AgentApplication.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +15,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +44,7 @@ public class AdvertisementService {
     @PersistenceContext
     private EntityManager em;
 
-    public Advertisement addAdvertisement(AdvertisementDTO dto) throws CustomException, Exception{
+    public Advertisement addAdvertisement(AdvertisementPostDTO dto) throws CustomException, Exception{
         if(dto.getCityName() == null)
             throw new Exception("City not found");
 
@@ -70,6 +67,16 @@ public class AdvertisementService {
 
         if(advertisementRepository.findAdvertisementByCarId(dto.getCarId()) != null)
             throw new CustomException("Advertisement already exists", HttpStatus.NOT_ACCEPTABLE);
+
+        //soap
+        AdvertisementPortService service = new AdvertisementPortService();
+        AdvertisementPort advertisementPort = service.getAdvertisementPortSoap11();
+        GetAdvertisementRequest getAdvertisementRequest = new GetAdvertisementRequest();
+        com.baeldung.soap.ws.client.generated.Advertisement advertisement1 = new com.baeldung.soap.ws.client.generated.Advertisement(car,advertisement);
+        getAdvertisementRequest.setAdvertisement(advertisement1);
+
+        GetAdvertisementResponse getAdvertisementResponse = advertisementPort.getAdvertisement(getAdvertisementRequest);
+        advertisement.setRemoteId(getAdvertisementResponse.getId());
 
         return advertisementRepository.save(advertisement);
     }

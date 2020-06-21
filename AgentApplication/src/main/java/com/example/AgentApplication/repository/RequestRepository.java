@@ -22,4 +22,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     @Query("SELECT DISTINCT r FROM Request  r WHERE (r.creationDate BETWEEN :startDate AND :endDate)")
     List<Request> getRequestsByBetweenDates(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    @Query("SELECT DISTINCT r FROM Request r WHERE r.paidState =2")
+    List<Request> getReservedRequests();
 }

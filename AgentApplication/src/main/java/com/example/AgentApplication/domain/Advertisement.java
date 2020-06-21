@@ -1,6 +1,7 @@
 package com.example.AgentApplication.domain;
 
 import com.example.AgentApplication.dto.AdvertisementDTO;
+import com.example.AgentApplication.dto.AdvertisementPostDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -37,6 +38,8 @@ public class Advertisement {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date freeTo;
 
+    private Long remoteId;
+
     public Advertisement() {
 
     }
@@ -50,6 +53,17 @@ public class Advertisement {
         this.rentingStreetLocation = advertisementDTO.getRentingStreetLocation();
         this.freeFrom = advertisementDTO.getFreeFrom();
         this.freeTo = advertisementDTO.getFreeTo();
+    }
+
+    public Advertisement(AdvertisementPostDTO advertisementPostDTO) {
+        this.kmRestriction = advertisementPostDTO.getKmRestriction();
+        this.priceFrom= advertisementPostDTO.getPrice();
+        this.priceTo = advertisementPostDTO.getPrice();
+        this.numberChildSeats = advertisementPostDTO.getNumberChildSeats();
+        this.collisionDamage = advertisementPostDTO.getCollisionDamage();
+        this.rentingStreetLocation = advertisementPostDTO.getRentingStreetLocation();
+        this.freeFrom = advertisementPostDTO.getFreeFrom();
+        this.freeTo = advertisementPostDTO.getFreeTo();
     }
 
 
@@ -141,4 +155,11 @@ public class Advertisement {
         this.freeTo = freeTo;
     }
 
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
+    }
 }

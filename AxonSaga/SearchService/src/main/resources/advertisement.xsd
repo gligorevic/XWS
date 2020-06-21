@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getAdvertisementRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="advertisement" type="tns:advertisement"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAdvertisementResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="advertisement">
+        <xs:sequence>
+            <xs:element name="carId" type="xs:long"/>
+            <xs:element name="kmRestriction" type="xs:int"/>
+            <xs:element name="priceFrom" type="xs:int"/>
+            <xs:element name="priceTo" type="xs:int"/>
+            <xs:element name="brandName" type="xs:string"/>
+            <xs:element name="modelName" type="xs:string"/>
+            <xs:element name="gearShiftName" type="xs:string"/>
+            <xs:element name="fuelTypeName" type="xs:string"/>
+            <xs:element name="bodyName" type="xs:string"/>
+            <xs:element name="kmPassed" type="xs:int"/>
+            <xs:element name="numberChildSeats" type="xs:int"/>
+            <xs:element name="collisionDamage" type="xs:boolean"/>
+            <xs:element name="userEmail" type="xs:string"/>
+            <xs:element name="mainImagePath" type="xs:string" />
+            <xs:element name="rentingCityLocation" type="xs:string" />
+            <xs:element name="rentingStreetLocation" type="xs:string" />
+            <xs:element name="freeFrom" type="xs:date" />
+            <xs:element name="freeTo" type="xs:date" />
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

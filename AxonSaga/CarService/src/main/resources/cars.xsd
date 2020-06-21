@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getCarRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="car" type="tns:car"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCarResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="car">
+        <xs:sequence>
+            <xs:element name="brandName" type="xs:string"/>
+            <xs:element name="modelName" type="xs:string"/>
+            <xs:element name="gearShiftName" type="xs:string"/>
+            <xs:element name="fuelTypeName" type="xs:string"/>
+            <xs:element name="bodyName" type="xs:string"/>
+            <xs:element name="kmPassed" type="xs:int"/>
+            <xs:element name="locationToken" type="xs:string"/>
+            <xs:element name="userEmail" type="xs:string"/>
+            <xs:element name="mainImageUrl" type="xs:string" />
+            <xs:element name="mapImages" minOccurs="0" maxOccurs="unbounded" type="tns:map"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="map">
+        <xs:sequence>
+            <xs:element name="key" minOccurs="0" type="xs:string"/>
+            <xs:element name="value" minOccurs="0" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

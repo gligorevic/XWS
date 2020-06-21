@@ -80,4 +80,6 @@ public class RequestService {
         return requestRepository.getRequestsPassedAndPaid(new Date());
     }
 
+    public List<Request> getReservedRequests() { return  requestRepository.getReservedRequests();}
+
 }

@@ -2,6 +2,7 @@ package com.example.AgentApplication.controller;
 
 import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.dto.AdvertisementDTO;
+import com.example.AgentApplication.dto.AdvertisementPostDTO;
 import com.example.AgentApplication.dto.SearchDTO;
 import com.example.AgentApplication.exception.CustomException;
 import com.example.AgentApplication.service.AdvertisementService;
@@ -42,9 +43,9 @@ public class AdvertisementController {
 
     @PostMapping
     //@PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
-    public ResponseEntity<?> addNewAdvertisement(@RequestBody AdvertisementDTO advertisementDTO){
+    public ResponseEntity<?> addNewAdvertisement(@RequestBody AdvertisementPostDTO advertisementPostDTO){
         try{
-            return new ResponseEntity<>(advertisementService.addAdvertisement(advertisementDTO), HttpStatus.OK);
+            return new ResponseEntity<>(advertisementService.addAdvertisement(advertisementPostDTO), HttpStatus.OK);
         } catch(CustomException e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());

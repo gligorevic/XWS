@@ -12,6 +12,7 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Collapse from "@material-ui/core/Collapse";
 import CommentReply from "./CommentReply";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CommentCard({ comment }) {
+const CommentCard = ({ comment, user, setOpen }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -45,24 +46,30 @@ function CommentCard({ comment }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing className="cardFooter">
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        {user.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        )}
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <CommentReply requestId={comment.requestId} />
+          <CommentReply requestId={comment.requestId} setOpen={setOpen} />
         </CardContent>
       </Collapse>
     </Card>
   );
-}
+};
 
-export default withRouter(CommentCard);
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+});
+
+export default connect(mapStateToProps, {})(CommentCard);

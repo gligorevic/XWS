@@ -18,10 +18,16 @@ export default function Chart({ statistic }) {
   function createData(time, amount) {
     return { time, amount };
   }
+  function getDate(i) {
+    var date = new Date();
+    date.setDate(date.getDate() + parseInt(i, 10));
+    console.log(date);
+    return date;
+  }
 
   const data = [
     Object.entries(statistic.requestsPerDay).map((row) =>
-      createData(format(new Date(row[0]), "dd MMM yyyy"), row[1])
+      createData(format(getDate(row[0]), "dd/MM/yyyy"), row[1])
     ),
   ];
 

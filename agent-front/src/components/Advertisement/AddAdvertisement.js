@@ -131,10 +131,14 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
   };
   const [loading, setLoading] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
 
   const handleCloseSuccess = () => {
     setOpenSuccess(false);
     setOpen(false);
+  };
+  const handleCloseError = () => {
+    setOpenError(false);
   };
 
   const handleSubmit = async (e) => {
@@ -150,11 +154,16 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
       freeFrom: state.freeFrom,
       freeTo: state.freeTo,
       cityName,
+    }).catch((error) => {
+      setLoading(false);
+      if (error.response.status == 406) {
+        setOpenError(true);
+        console.log(openError);
+      }
     });
-    console.log(resp);
-    setLoading(false);
-    if (resp.status === 200) {
-      console.log("Uspesno");
+
+    if (resp && resp.status === 200) {
+      setLoading(false);
       setOpen(false);
       setOpenSuccess(true);
     }
@@ -360,6 +369,25 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseSuccess} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openError}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseError}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogContent>
+          <Alert severity="error">
+            Advertisement for this car already exists.
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseError} color="primary">
             Ok
           </Button>
         </DialogActions>
