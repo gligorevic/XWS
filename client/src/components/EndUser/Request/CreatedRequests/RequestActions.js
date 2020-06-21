@@ -8,7 +8,10 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ChatIcon from "@material-ui/icons/Chat";
 import { connect } from "react-redux";
-import { setOpenChatBoxes } from "../../../store/actions/chat";
+import {
+  setOpenChatBoxes,
+  initializeNewChatBox,
+} from "../../../../store/actions/chat";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +36,7 @@ function RequestActions({
   chatName,
   roomId,
   openChatBoxes,
-  setOpenChatBoxes,
+  initializeNewChatBox,
   sendTo,
   setOpenedDialog,
 }) {
@@ -52,10 +55,13 @@ function RequestActions({
     switch (name) {
       case "Chat":
         if (!openChatBoxes.some((o) => o.chatName === chatName))
-          setOpenChatBoxes([
-            ...openChatBoxes,
-            { chatName, roomId, sendTo, unreadedMessages: 0, messages: [] },
-          ]);
+          initializeNewChatBox({
+            chatName,
+            roomId,
+            sendTo,
+            unreadedMessages: 0,
+            messages: [],
+          });
         break;
       case "Rate":
         setOpenedDialog(roomId);
@@ -98,5 +104,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  setOpenChatBoxes,
+  initializeNewChatBox,
 })(RequestActions);

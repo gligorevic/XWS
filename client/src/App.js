@@ -17,10 +17,9 @@ import Registration from "./components/Pages/Registration";
 import ViewCar from "./components/EndUser/Car/ViewCar";
 import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests";
 
-import CreatedRequests from "./components/EndUser/Request/CreatedRequests";
+import CreatedRequests from "./components/EndUser/Request/CreatedRequests/CreatedRequests";
 import OpenChatBoxes from "./components/EndUser/Chat/OpenChatBoxes";
 import MyRequests from "./components/EndUser/Request/MyRequests";
-
 
 const store = configureStore();
 

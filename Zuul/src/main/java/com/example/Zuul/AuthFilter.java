@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Set;
 
 @Component
 public class AuthFilter extends ZuulFilter {
@@ -33,11 +32,8 @@ public class AuthFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        System.out.println("Usao sam u zularu");
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-
-        System.out.println("Uzeo sam kontekst haaa");
 
         if(request.getHeader("Authorization") == null || request.getHeader("Auth") != null) {
             return null;
@@ -50,13 +46,9 @@ public class AuthFilter extends ZuulFilter {
 
             ctx.addZuulRequestHeader("Auth", accessToken);
         } catch(Exception e) {
-
-            System.out.println("Upadoh u catch");
-
             e.printStackTrace();
             setFailedRequest(e.getMessage(), 400);
         }
-        System.out.println("Prosao sam filter");
 
         return null;
     }

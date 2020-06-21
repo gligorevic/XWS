@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import { getCreatedRequests } from "../../../store/actions/request";
+import { getCreatedRequests } from "../../../../store/actions/request";
 import "./CreatedRequests.css";
 import RequestExpansionPanel from "./RequestExpansionPanel";
 
