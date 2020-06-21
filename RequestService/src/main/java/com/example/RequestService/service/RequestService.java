@@ -290,16 +290,16 @@ public class RequestService {
 
 
     public Request payRequest(Long requestId, String userEmail) throws CustomException{
-        Request request = requestRepository.getOne(requestId);
+        Request request = requestRepository.findById(requestId).get();
         if(request == null || !request.getUserSentRequest().equals(userEmail))
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+        request.setPaidState(PaidState.PAID);
+        requestRepository.save(request);
+
         List<Request> requests = requestRepository.findAllPendingByAdIdExceptOne(request.getAdId(), requestId);
         for(Request r : requests) {
             r.setPaidState(PaidState.CANCELED);
         }
-
-        request.setPaidState(PaidState.PAID);
-        requests.add(request);
 
         requestRepository.saveAll(requests);
 
