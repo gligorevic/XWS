@@ -1,0 +1,15 @@
+.chat-input {
+  position: absolute;
+  bottom: 3;
+  left: 3;
+}
+
+.input-wrapper {
+  display: flex;
+}
+
+.input-wrapper input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+}

@@ -35,7 +35,7 @@ public class MessageService {
         message.setRequest(request);
 
         User sentBy = userRepository.getOne(messageDTO.getSentBy());
-        if(request == null)
+        if(sentBy == null)
             throw new CustomException("User who sent message doesn't exist.", HttpStatus.BAD_REQUEST);
         message.setSentBy(sentBy);
 
@@ -50,4 +50,9 @@ public class MessageService {
     public List<Message> getMessagesByReciever(String email){
         return messageRepository.getMessagesByReciever(email);
     }
+
+    public List<Message> getMessagesByRequest(Long id){
+        return messageRepository.getMessagesByRequest(id);
+    }
+
 }
