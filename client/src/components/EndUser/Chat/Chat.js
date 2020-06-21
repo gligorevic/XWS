@@ -21,7 +21,6 @@ function Chat({
   closeChat,
   chatName,
   sendTo,
-  appendMessageToRoom,
   messages,
   socket,
   unreads,
@@ -57,7 +56,7 @@ function Chat({
           text: message,
           roomId: roomId,
           recieverEmail: sendTo,
-          sender: user.username,
+          senderEmail: user.username,
         },
         () => setMessage("")
       );
@@ -138,20 +137,26 @@ function Chat({
             <div
               style={{
                 margin: 4,
-                alignSelf: m.user === user.username ? "flex-end" : "flex-start",
+                alignSelf:
+                  m.senderEmail === user.username ? "flex-end" : "flex-start",
                 maxWidth: "70%",
                 borderRadius: 15,
-                borderBottomRightRadius: m.user === user.username ? 0 : 15,
-                borderBottomLeftRadius: m.user !== user.username ? 0 : 15,
-                background: m.user === user.username ? "#1976d2" : "#e0e0e0",
-                color: m.user === user.username ? "#ffffff" : "#000000dd",
+                borderBottomRightRadius:
+                  m.senderEmail === user.username ? 0 : 15,
+                borderBottomLeftRadius:
+                  m.senderEmail !== user.username ? 0 : 15,
+                background:
+                  m.senderEmail === user.username ? "#1976d2" : "#e0e0e0",
+                color:
+                  m.senderEmail === user.username ? "#ffffff" : "#000000dd",
                 padding: "3px 6px",
                 whiteSpace: "pre-wrap",
                 wordWrap: "break-word",
               }}
               key={i}
             >
-              <Tooltip title={`${m.user} at ${getDateCreated(m.date)}`}>
+              {console.log(m)}
+              <Tooltip title={`${m.senderEmail} at ${getDateCreated(m.date)}`}>
                 <span>{m.text}</span>
               </Tooltip>
             </div>

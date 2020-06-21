@@ -9,39 +9,39 @@ import {
 } from "../../../store/actions/chat";
 import io from "socket.io-client";
 
-let socket;
+let socket = null;
 function OpenChatBoxes({
   addOpenChatBox,
   setOpenChatBoxes,
   openChatBoxes,
-  user,
+  user: { user, isAuthenticated },
   appendMessageToRoom,
   resetUnreads,
 }) {
+  const [currUser, setCurUser] = useState();
   useEffect(() => {
-    socket = io("http://localhost:3200/");
+    if (!isAuthenticated && socket != null) {
+      socket.emit("leaveChat", { name: currUser });
+    } else {
+      setCurUser(user.username);
+      socket = io("http://localhost:3200/");
 
-    socket.emit("joinToChat", { name: user.username }, (error) => {
-      console.log("joining rooms");
-      if (error) {
-        alert(error);
-      }
-    });
-
-    socket.on("joinToRoom", (room) => {
-      addOpenChatBox({
-        roomId: room.room,
-        chatName: room.chatName,
-        sendTo: room.name,
-        unreadedMessages: 0,
-        messages: [],
+      socket.emit("joinToChat", { name: user.username }, (error) => {
+        console.log("joining rooms");
+        if (error) {
+          alert(error);
+        }
       });
-    });
 
-    socket.on("message", (message) => {
-      appendMessageToRoom(message, message.roomId);
-    });
-  }, []);
+      socket.on("joinToRoom", (room) => {
+        addOpenChatBox(room);
+      });
+
+      socket.on("message", (message) => {
+        appendMessageToRoom(message, message.roomId);
+      });
+    }
+  }, [isAuthenticated]);
 
   const [exposedChats, setExposedChats] = useState([]);
 
@@ -91,7 +91,7 @@ function OpenChatBoxes({
 
 const mapStateToProps = (state) => ({
   openChatBoxes: state.chat.openChatBoxes,
-  user: state.user.user,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, {
