@@ -75,9 +75,14 @@ public class CarController {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCarRequest")
     @ResponsePayload
     public GetCarResponse addCarFromAgentApp(@RequestPayload GetCarRequest request) {
-        GetCarResponse response = new GetCarResponse();
-        response.setId(carService.addNewCarByAgent(request));
+        try{
+            GetCarResponse response = new GetCarResponse();
+            response.setId(carService.addNewCarByAgent(request));
 
-        return response;
+            return response;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

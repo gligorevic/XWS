@@ -30,35 +30,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetCarRequest }
+     * Create an instance of {@link GetAdvertisementRequest }
      * 
      */
-    public GetCarRequest createGetCarRequest() {
-        return new GetCarRequest();
+    public GetAdvertisementRequest createGetAdvertisementRequest() {
+        return new GetAdvertisementRequest();
     }
 
     /**
-     * Create an instance of {@link Car }
+     * Create an instance of {@link Advertisement }
      * 
      */
-    public Car createCar() {
-        return new Car();
+    public Advertisement createAdvertisement() {
+        return new Advertisement();
     }
 
     /**
-     * Create an instance of {@link GetCarResponse }
+     * Create an instance of {@link GetAdvertisementResponse }
      * 
      */
-    public GetCarResponse createGetCarResponse() {
-        return new GetCarResponse();
-    }
-
-    /**
-     * Create an instance of {@link Map }
-     * 
-     */
-    public Map createMap() {
-        return new Map();
+    public GetAdvertisementResponse createGetAdvertisementResponse() {
+        return new GetAdvertisementResponse();
     }
 
 }

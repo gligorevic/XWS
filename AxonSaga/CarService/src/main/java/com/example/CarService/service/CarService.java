@@ -76,15 +76,7 @@ public class CarService {
     }
 
     public Long addNewCarByAgent(GetCarRequest request){
-        Car car = new Car();
-        car.setBodyName(request.getCar().getBodyName());
-        car.setBrandName(request.getCar().getBrandName());
-        car.setFuelTypeName(request.getCar().getFuelTypeName());
-        car.setGearShiftName(request.getCar().getGearShiftName());
-        car.setModelName(request.getCar().getModelName());
-        car.setKmPassed(request.getCar().getKmPassed());
-        car.setUserEmail(request.getCar().getUserEmail());
-        car.setMainImageUrl(request.getCar().getMainImageUrl());
+        Car car = new Car(request.getCar());
         Map<String, byte[]> imagesMap = new HashMap<>();
         request.getCar().getMapImages().stream().forEach(map -> {
             imagesMap.put(map.getKey(), map.getValue());

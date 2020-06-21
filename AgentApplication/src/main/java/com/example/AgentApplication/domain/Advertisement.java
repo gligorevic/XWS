@@ -38,6 +38,8 @@ public class Advertisement {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date freeTo;
 
+    private Long remoteId;
+
     public Advertisement() {
 
     }
@@ -153,4 +155,11 @@ public class Advertisement {
         this.freeTo = freeTo;
     }
 
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
+    }
 }

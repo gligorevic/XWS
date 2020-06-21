@@ -1,5 +1,6 @@
 package com.example.SearchService.service;
 
+import com.baeldung.springsoap.gen.GetAdvertisementRequest;
 import com.example.SearchService.client.ImageClient;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.domain.City;
@@ -63,5 +64,18 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementRepository.findAdvertisementById(id);
         List<String> images = imageClient.getCarImagesUrl(advertisement.getCarId());
         return new AdvertisementDTO(advertisement, images);
+    }
+
+    public Long addNewAdvertisementByAgent(GetAdvertisementRequest request) {
+        Advertisement advertisement = new Advertisement(request.getAdvertisement());
+        advertisement.setRentingCityLocation(cityRepository.findByName(request.getAdvertisement().getRentingCityLocation()));
+
+        Advertisement newAdvertisement = advertisementRepository.save(advertisement);
+        if (newAdvertisement == null) {
+            return null;
+        } else {
+            return newAdvertisement.getId();
+        }
+
     }
 }

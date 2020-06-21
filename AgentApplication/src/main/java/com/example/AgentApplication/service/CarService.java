@@ -85,25 +85,15 @@ public class CarService {
         CarsPortService service = new CarsPortService();
         CarsPort carsPort = service.getCarsPortSoap11();
         GetCarRequest getCarRequest = new GetCarRequest();
-        com.baeldung.soap.ws.client.generated.Car car1 = new com.baeldung.soap.ws.client.generated.Car();
-        car1.setBodyName(bodyType.getBodyTypeName());
-        car1.setBrandName(brand.getBrandName());
-        car1.setFuelTypeName(fuelType.getFuelTypeName());
-        car1.setGearShiftName(gearShiftType.getGearShiftName());
-        car1.setModelName(model.getModelName());
-        car1.setKmPassed(car.getKmPassed());
-        car1.setUserEmail("agent@gmail.com");
-        car1.setMainImageUrl(car.getMainImageUrl());
+        com.baeldung.soap.ws.client.generated.Car car1 = new com.baeldung.soap.ws.client.generated.Car(car);
         imagesMap.keySet().stream().forEach(key -> {
             com.baeldung.soap.ws.client.generated.Map map = new com.baeldung.soap.ws.client.generated.Map();
             map.setKey(key);
             map.setValue(imagesMap.get(key));
             car1.getMapImages().add(map);
         });
-
         getCarRequest.setCar(car1);
         GetCarResponse getCarResponse = carsPort.getCar(getCarRequest);
-        System.out.println(getCarResponse.getId());
         car.setRemoteId(getCarResponse.getId());
 
         Car newCar = carRepository.save(car);

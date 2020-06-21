@@ -71,6 +71,22 @@ public class Car {
     protected String mainImageUrl;
     protected List<Map> mapImages;
 
+    public Car(){
+
+    }
+
+    public Car(com.example.AgentApplication.domain.Car car) {
+        this.brandName = car.getBrand().getBrandName();
+        this.modelName = car.getModel().getModelName();
+        this.gearShiftName = car.getGearShift().getGearShiftName();
+        this.fuelTypeName = car.getFuelType().getFuelTypeName();
+        this.bodyName = car.getBodyType().getBodyTypeName();
+        this.kmPassed = car.getKmPassed();
+        this.locationToken = car.getLocationToken();
+        this.userEmail = "agent@gmail.com";
+        this.mainImageUrl = car.getMainImageUrl();
+    }
+
     /**
      * Gets the value of the brandName property.
      * 

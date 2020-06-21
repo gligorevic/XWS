@@ -58,6 +58,18 @@ public class Car {
         this.mainImageUrl = mainImageUrl;
     }
 
+    public Car(com.baeldung.springsoap.gen.Car car){
+        this.brandName = car.getBrandName();
+        this.modelName = car.getModelName();
+        this.bodyName = car.getBodyName();
+        this.gearShiftName = car.getGearShiftName();
+        this.fuelTypeName = car.getFuelTypeName();
+        this.kmPassed = car.getKmPassed();
+        this.locationToken = car.getLocationToken();
+        this.userEmail = car.getUserEmail();
+        this.mainImageUrl = car.getMainImageUrl();
+    }
+
     public Long getId() {
         return id;
     }
