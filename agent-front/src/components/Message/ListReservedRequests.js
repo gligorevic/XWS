@@ -11,13 +11,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getReservedRequests } from "../../store/actions/request";
 import { Button } from "@material-ui/core";
-import Backdrop from "@material-ui/core/Backdrop";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-
+import clsx from "clsx";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -28,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750,
+    minWidth: 600,
   },
   tableWrapper: {
     overflowX: "auto",
@@ -57,14 +51,27 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
+  paper: {
+    padding: theme.spacing(1),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
+  },
+  fixedHeight: {
+    height: 420,
+  },
 }));
 
-const ListReservedRequests = ({ getReservedRequests, requests, history }) => {
+const ListReservedRequests = ({
+  getReservedRequests,
+  requests,
+  history,
+  setSelecetedRequestId,
+}) => {
   useEffect(() => {
     getReservedRequests();
   }, []);
   const classes = useStyles();
-  const [loading, setLoading] = React.useState(false);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("name");
   const [page, setPage] = React.useState(0);
@@ -122,13 +129,17 @@ const ListReservedRequests = ({ getReservedRequests, requests, history }) => {
     setOrderBy(property);
   };
 
+  const handleClick = (e, id) => {
+    setSelecetedRequestId(id);
+  };
+
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   return (
     <>
       <div className={classes.root}>
-        <Typography variant="h5">Reports</Typography>
-        <Divider style={{ marginBottom: 40 }} />
         {requests && (
-          <Paper className={classes.paper}>
+          <>
             <div className={classes.tableWrapper}>
               <Table
                 className={classes.table}
@@ -190,7 +201,7 @@ const ListReservedRequests = ({ getReservedRequests, requests, history }) => {
                         return (
                           <>
                             <TableRow
-                              hover
+                              Button
                               role="checkbox"
                               tabIndex={-1}
                               key={row.id}
@@ -209,7 +220,17 @@ const ListReservedRequests = ({ getReservedRequests, requests, history }) => {
                                   row.advertisement.car.model.modelName}
                               </TableCell>
 
-                              <TableCell align="right"></TableCell>
+                              <TableCell align="right">
+                                <Button
+                                  variant="outlined"
+                                  color="primary"
+                                  onClick={(e) => {
+                                    handleClick(e, row.id);
+                                  }}
+                                >
+                                  View messages
+                                </Button>
+                              </TableCell>
                               <TableCell align="right"></TableCell>
                             </TableRow>
                           </>
@@ -253,11 +274,8 @@ const ListReservedRequests = ({ getReservedRequests, requests, history }) => {
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
             />
-          </Paper>
+          </>
         )}
-        <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
       </div>
     </>
   );

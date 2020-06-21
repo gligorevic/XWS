@@ -28,6 +28,9 @@ public class Request {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date creationDate;
 
+    @ManyToOne
+    private User userSentRequest;
+
     public Request() {
     }
 
@@ -88,5 +91,13 @@ public class Request {
 
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public User getUserSentRequest() {
+        return userSentRequest;
+    }
+
+    public void setUserSentRequest(User userSentRequest) {
+        this.userSentRequest = userSentRequest;
     }
 }

@@ -13,4 +13,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query("SELECT DISTINCT m FROM Message m WHERE m.reciever.email = :email")
     List<Message> getMessagesByReciever(@Param("email") String email);
+
+    @Query("SELECT DISTINCT m FROM Message m WHERE m.request.id =:id")
+    List<Message> getMessagesByRequest(@Param("id") Long id);
 }

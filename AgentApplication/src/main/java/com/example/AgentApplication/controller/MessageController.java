@@ -36,4 +36,13 @@ public class MessageController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/request/{id}")
+    public ResponseEntity<?> getMessagesByRequest(@PathVariable Long id){
+        try{
+            return new ResponseEntity<>(messageService.getMessagesByRequest(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
