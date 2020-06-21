@@ -1,0 +1,28 @@
+.chatBox {
+  cursor: pointer;
+  transition: all 0.3 ease;
+}
+
+.chatBox:hover {
+  background: #f1f1f1;
+}
+
+.chat-input {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  height: 35px;
+  width: 100%;
+}
+
+.input-wrapper {
+  height: 100%;
+  display: flex;
+  margin-left: 4px;
+}
+
+.chat-input input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}

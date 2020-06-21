@@ -60,7 +60,7 @@ public class RequestController {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
 
-            return new ResponseEntity<>(requestService.getAllRequestsInfo(username, auth), HttpStatus.OK);
+            return new ResponseEntity<>(requestService.getAllRequestsInfoByReciverUsername(username, auth), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());

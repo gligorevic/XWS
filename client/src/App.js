@@ -16,7 +16,11 @@ import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
 import ViewCar from "./components/EndUser/Car/ViewCar";
 import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests";
+
+import CreatedRequests from "./components/EndUser/Request/CreatedRequests";
+import OpenChatBoxes from "./components/EndUser/Chat/OpenChatBoxes";
 import MyRequests from "./components/EndUser/Request/MyRequests";
+
 
 const store = configureStore();
 
@@ -41,7 +45,6 @@ if (localStorage.jwtToken) {
 }
 
 if (localStorage.Cart && JSON.parse(localStorage.Cart).length > 0) {
-  console.log(localStorage.Cart);
   store.dispatch({
     type: "SET_CART_ITEMS_NUM",
     cartItemsNum: JSON.parse(localStorage.Cart).length,
@@ -53,6 +56,7 @@ function App() {
     <Provider store={store}>
       <Router className="App">
         <Switch>
+          <Route exact path="/chat" component={CreatedRequests} />
           <PrivateAdminRoute exact path="/admin" component={AdminHome} />
           <PrivateUserRoute exact path="/user" component={UserHome} />
           <PrivateUserRoute exact path="/cart" component={CartPage} />
@@ -76,6 +80,7 @@ function App() {
           />
           <Route path="/*" component={Home} />
         </Switch>
+        <OpenChatBoxes />
       </Router>
     </Provider>
   );

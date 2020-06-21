@@ -1,0 +1,10 @@
+.reqActions {
+  position: "absolute";
+  right: 10;
+  bottom: 3;
+  z-index: 10;
+}
+
+.CreatedRequests-request:hover .CreatedRequests-root {
+  background: #00000013;
+}

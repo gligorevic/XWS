@@ -50,22 +50,24 @@ public class UserService {
     public String verifyUser(String bearerToken) throws CustomException {
         String jwt = tokenHelper.getJWTFromBearerToken(bearerToken);
 
-        tokenHelper.validate(jwt);
+        if(StringUtils.hasText(jwt) && tokenHelper.validate(jwt)) {
 
-        List<Long> rolesIdFromJWT = tokenHelper.getRolesIdFromJWT(jwt);
+            List<Long> rolesIdFromJWT = tokenHelper.getRolesIdFromJWT(jwt);
 
-        List<Privilege> privilegesBoundWithRoles =  privilegeRepository.findByRolesIn(rolesIdFromJWT);
-        User user = userRepository.findByEmail(tokenHelper.getUserUsernameFromJWT(jwt));
+            List<Privilege> privilegesBoundWithRoles =  privilegeRepository.findByRolesIn(rolesIdFromJWT);
+            User user = userRepository.findByEmail(tokenHelper.getUserUsernameFromJWT(jwt));
 
-        List<Long> blockedPrivileges = user.getBlockedPrivileges().stream().map(p -> p.getId()).collect(Collectors.toList());
+            List<Long> blockedPrivileges = user.getBlockedPrivileges().stream().map(p -> p.getId()).collect(Collectors.toList());
 
-        List<Privilege> privileges = privilegesBoundWithRoles.stream()
-                .filter(e -> !blockedPrivileges.contains(e.getId()))
-                .collect(Collectors.toList());
+            List<Privilege> privileges = privilegesBoundWithRoles.stream()
+                    .filter(e -> !blockedPrivileges.contains(e.getId()))
+                    .collect(Collectors.toList());
 
-        String accessToken = tokenHelper.generateAccessToken(privileges, jwt);
+            String accessToken = tokenHelper.generateAccessToken(privileges, jwt);
+            return accessToken;
+        }
 
-        return accessToken;
+        return "";
     }
 
     public String login(LoginRequestDTO loginRequestDTO) {

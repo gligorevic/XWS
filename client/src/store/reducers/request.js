@@ -4,6 +4,7 @@ import {
   SET_ALL_PAID_REQUESTS,
 } from "../actionTypes";
 
+
 const DEFAULT_STATE = {
   allRequests: [],
   createdRequests: [],
@@ -27,7 +28,6 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         allPaidRequests: action.allPaidRequests,
       };
-
     default:
       return state;
   }

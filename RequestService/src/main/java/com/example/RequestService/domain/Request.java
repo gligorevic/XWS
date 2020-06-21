@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Request {
@@ -131,5 +132,10 @@ public class Request {
 
     public void setRequestContainer(RequestContainer requestContainer) {
         this.requestContainer = requestContainer;
+    }
+
+    @PrePersist
+    protected void onCreate(){
+        this.crationDate = new Date();
     }
 }

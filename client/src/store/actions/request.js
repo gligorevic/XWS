@@ -3,6 +3,7 @@ import {
   SET_CREATED_REQUESTS,
   SET_ALL_PAID_REQUESTS,
 } from "../actionTypes";
+
 import axios from "axios";
 
 export const setAllRequests = (allRequests) => ({
@@ -10,10 +11,12 @@ export const setAllRequests = (allRequests) => ({
   allRequests,
 });
 
+
 export const setAllPaidRequests = (allPaidRequests) => ({
   type: SET_ALL_PAID_REQUESTS,
   allPaidRequests,
 });
+
 
 export const setCreatedRequests = (createdRequests) => ({
   type: SET_CREATED_REQUESTS,
@@ -22,7 +25,7 @@ export const setCreatedRequests = (createdRequests) => ({
 
 export const getAllRequests = (username) => async (dispatch) => {
   try {
-    var allRequests = await axios.get(`/request/info/${username}`);
+    const allRequests = await axios.get(`/request/info/${username}`);
     dispatch(setAllRequests(allRequests.data));
   } catch (err) {
     console.log(err.response);
@@ -43,6 +46,7 @@ export const getCreatedRequests = (username) => async (dispatch) => {
   }
 };
 
+
 export const getAllPaid = (username) => async (dispatch) => {
   try {
     var allRequests = await axios.get(`/request/user/${username}/paid`);
@@ -52,3 +56,4 @@ export const getAllPaid = (username) => async (dispatch) => {
     return err.response;
   }
 };
+
