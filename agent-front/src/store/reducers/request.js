@@ -1,7 +1,8 @@
-import { SET_PASSED_REQUESTS } from "../actionTypes";
+import { SET_PASSED_REQUESTS, SET_RESERVED_REQUESTS } from "../actionTypes";
 
 const DEFAULT_STATE = {
   passedRequests: [],
+  reservedRequests: [],
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -10,6 +11,12 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         passedRequests: action.passedRequests,
+      };
+    }
+    case SET_RESERVED_REQUESTS: {
+      return {
+        ...state,
+        reservedRequests: action.reservedRequests,
       };
     }
     default:

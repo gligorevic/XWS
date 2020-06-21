@@ -15,6 +15,7 @@ import CarPage from "../Car/CarPage";
 import ListAdvertisements from "../Advertisement/ListAdvertisements";
 import ListPassedRequests from "../Report/ListPassedRequests";
 import StatisticTab from "../Statistic/StatisticTab";
+import ListReservedRequests from "../Message/ListReservedRequests";
 
 const drawerWidth = 240;
 
@@ -97,6 +98,7 @@ function AgentProfile(props) {
         <Tab label="Advertisements" {...a11yProps(1)} />
         <Tab label="Reports" {...a11yProps(2)} />
         <Tab label="Statistic" {...a11yProps(3)} />
+        <Tab label="Reserved requests" {...a11yProps(4)} />
       </Tabs>
     </div>
   );
@@ -138,6 +140,9 @@ function AgentProfile(props) {
           </TabPanel>
           <TabPanel value={value} index={3}>
             {value === 3 && <StatisticTab />}
+          </TabPanel>
+          <TabPanel value={value} index={4}>
+            {value === 4 && <ListReservedRequests />}
           </TabPanel>
         </main>
       </div>
