@@ -8,20 +8,26 @@ const {
   addUser,
   removeUser,
   getUserByRoomIdAndUsername,
-  getUserByRecieverEmail,
+  removeAllUsersByName,
 } = require("./helpers/users");
+const cors = require("cors");
 
 const server = http.createServer(app);
 const io = socketio(server);
+const { addMessage } = require("./handlers/messages");
+
+app.use(cors());
+app.use(express.json());
 
 app.get("/hello", (req, res) => {
   res.json("I am user-service");
 });
 
+app.use("/message", require("./routes/messages"));
+
 io.on("connect", (socket) => {
   socket.on("joinToChat", ({ name }, callback) => {
     try {
-      const users = getUserByRecieverEmail(name);
       socket.join(name);
       callback();
     } catch (err) {
@@ -38,7 +44,7 @@ io.on("connect", (socket) => {
         recieverEmail,
         chatName,
       });
-      console.log(user);
+
       if (error) return callback(error);
 
       socket.join(user.room);
@@ -49,22 +55,38 @@ io.on("connect", (socket) => {
     }
   });
 
-  socket.on("sendMessage", (message, callback) => {
+  socket.on("sendMessage", async (message, callback) => {
     try {
-      const user = getUserByRoomIdAndUsername(message.roomId, message.sender);
-      io.to(message.recieverEmail).emit("joinToRoom", user);
-      console.log("joinToRoom " + message.recieverEmail);
-      console.log("emmiting to room " + message.roomId);
-      setTimeout(() => {
+      await addMessage(message);
+      const user = getUserByRoomIdAndUsername(
+        message.roomId,
+        message.senderEmail
+      );
+
+      const reciever = getUserByRoomIdAndUsername(
+        message.roomId,
+        message.recieverEmail
+      );
+
+      if (reciever === undefined) {
         io.to(message.roomId).emit("message", {
-          user: user.name,
+          senderEmail: user.name,
+          recieverEmail: message.recieverEmail,
+          text: message.text,
+          date: Date(Date.now()),
+          roomId: message.roomId,
+        });
+        io.to(message.recieverEmail).emit("joinToRoom", user);
+      } else
+        io.to(message.roomId).emit("message", {
+          senderEmail: user.name,
+          recieverEmail: message.recieverEmail,
           text: message.text,
           date: Date(Date.now()),
           roomId: message.roomId,
         });
 
-        callback();
-      }, 100);
+      callback();
     } catch (err) {
       console.log(err);
     }
@@ -72,7 +94,17 @@ io.on("connect", (socket) => {
 
   socket.on("disconnectUser", (userInfo) => {
     try {
-      console.log("User deleted" + removeUser(userInfo));
+      console.log(userInfo);
+      removeUser(userInfo);
+    } catch (e) {
+      console.log(e);
+    }
+  });
+
+  socket.on("leaveChat", ({ name }) => {
+    try {
+      removeAllUsersByName(name);
+      socket.disconnect();
     } catch (e) {
       console.log(e);
     }
@@ -83,4 +115,4 @@ server.listen(PORT, () => {
   console.log("user-service on 3000");
 });
 
-// eurekaHelper.registerWithEureka("chat", PORT);
+eurekaHelper.registerWithEureka("chat", PORT);

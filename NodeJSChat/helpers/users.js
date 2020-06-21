@@ -1,4 +1,4 @@
-const users = [];
+let users = [];
 
 const addUser = ({ id, name, room, recieverEmail, chatName }) => {
   name = name.trim().toLowerCase();
@@ -11,7 +11,6 @@ const addUser = ({ id, name, room, recieverEmail, chatName }) => {
   if (!name || !room) return { error: "Username and room are required." };
 
   const user = { id, name, room, recieverEmail, chatName };
-
   if (existingUser) return { user };
 
   users.push(user);
@@ -23,25 +22,25 @@ const removeUser = ({ roomId, username }) => {
   const index = users.findIndex(
     (user) => user.room === roomId && user.name === username
   );
-  console.log("Index za brisku" + index);
+  console.log(users[index]);
   if (index !== -1) return users.splice(index, 1)[0];
 };
 
 const getUserByRoomIdAndUsername = (room, name) => {
-  console.log(users);
   return users.find((user) => user.room === room && user.name === name);
-};
-
-const getUserByRecieverEmail = (recieverEmail) => {
-  return users.filter((u) => u.recieverEmail === recieverEmail);
 };
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
+const removeAllUsersByName = (name) => {
+  users = users.filter((user) => user.name !== name);
+};
+
 module.exports = {
   addUser,
   removeUser,
+  removeAllUsersByName,
   getUsersInRoom,
-  getUserByRecieverEmail,
+
   getUserByRoomIdAndUsername,
 };

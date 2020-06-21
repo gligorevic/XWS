@@ -1,4 +1,5 @@
 import { SET_OPEN_CHATBOXES } from "../actionTypes";
+import axios from "axios";
 
 export const setChatBoxes = (openChatBoxes) => ({
   type: SET_OPEN_CHATBOXES,
@@ -9,7 +10,18 @@ export const setOpenChatBoxes = (chatBoxes) => (dispatch) => {
   dispatch(setChatBoxes(chatBoxes));
 };
 
-export const addOpenChatBox = (chatBox) => (dispatch, getState) => {
+export const addOpenChatBox = (room) => async (dispatch, getState) => {
+  const messagesRes = await axios.post("/chat/message/", {
+    roomId: room.room,
+  });
+  console.log(messagesRes);
+  const chatBox = {
+    roomId: room.room,
+    chatName: room.chatName,
+    sendTo: room.name,
+    unreadedMessages: 0,
+    messages: messagesRes.data,
+  };
   const openChatBoxes = getState().chat.openChatBoxes;
   console.log(openChatBoxes);
   console.log(chatBox);
@@ -18,6 +30,21 @@ export const addOpenChatBox = (chatBox) => (dispatch, getState) => {
     openChatBoxes.every((ocb) => ocb.roomId !== chatBox.roomId)
   )
     dispatch(setChatBoxes([...openChatBoxes, chatBox]));
+};
+
+export const initializeNewChatBox = (newChatBox) => async (
+  dispatch,
+  getState
+) => {
+  const openChatBoxes = getState().chat.openChatBoxes;
+
+  if (!openChatBoxes.find((ocb) => ocb.roomId === newChatBox.roomId)) {
+    const messagesRes = await axios.post("/chat/message/", {
+      roomId: newChatBox.roomId,
+    });
+    newChatBox.messages = messagesRes.data;
+    dispatch(setChatBoxes([...openChatBoxes, newChatBox]));
+  }
 };
 
 export const appendMessageToRoom = (message) => (dispatch, getState) => {
