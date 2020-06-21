@@ -12,6 +12,7 @@ import {
   setOpenChatBoxes,
   initializeNewChatBox,
 } from "../../../../store/actions/chat";
+import { payRequest } from "../../../../store/actions/request";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,14 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const actions = [
-  { icon: <QuestionAnswerIcon />, name: "Chat" },
-  { icon: <ChatIcon />, name: "Comment" },
-  { icon: <GradeIcon />, name: "Rate" },
-  { icon: <MonetizationOnIcon />, name: "Pay" },
-  { icon: <CancelIcon />, name: "Cancel" },
-];
-
 function RequestActions({
   visibility,
   chatName,
@@ -39,7 +32,26 @@ function RequestActions({
   initializeNewChatBox,
   sendTo,
   setOpenedDialog,
+  payRequest,
+  show,
 }) {
+  const actions = [
+    {
+      icon: (
+        <QuestionAnswerIcon
+          style={{
+            display: show.indexOf("Chat") !== -1 ? "inline-block" : "none",
+          }}
+        />
+      ),
+      name: "Chat",
+    },
+    { icon: <ChatIcon />, name: "Comment" },
+    { icon: <GradeIcon />, name: "Rate" },
+    { icon: <MonetizationOnIcon />, name: "Pay" },
+    { icon: <CancelIcon />, name: "Cancel" },
+  ];
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -68,6 +80,9 @@ function RequestActions({
         break;
       case "Comment":
         setOpenedDialog("c" + roomId);
+        break;
+      case "Pay":
+        payRequest(roomId);
         break;
     }
 
@@ -105,4 +120,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   initializeNewChatBox,
+  payRequest,
 })(RequestActions);

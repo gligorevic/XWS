@@ -9,7 +9,7 @@ import CommentDialog from "../../../Dialogs/Comment/CommentDialog";
 import SingleRequest from "./SingleRequest";
 import BundleRequest from "./BundleRequest";
 
-const RequestExpansionPanel = ({ title, color, requests, user }) => {
+const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
   const [hoveredId, setHoveredId] = useState(-1);
 
   const getRequests = () => {
@@ -67,6 +67,7 @@ const RequestExpansionPanel = ({ title, color, requests, user }) => {
       hoveredId={hoveredId}
       setHoveredId={setHoveredId}
       setOpenedDialog={setOpenedDialog}
+      show={show}
     />
   );
 
@@ -76,6 +77,7 @@ const RequestExpansionPanel = ({ title, color, requests, user }) => {
       requests={requests}
       hoveredId={hoveredId}
       setHoveredId={setHoveredId}
+      show={show}
     />
   );
 

@@ -289,4 +289,48 @@ public class RequestService {
     }
 
 
+    public Request payRequest(Long requestId, String userEmail) throws CustomException{
+        Request request = requestRepository.getOne(requestId);
+        if(request == null || !request.getUserSentRequest().equals(userEmail))
+            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+        List<Request> requests = requestRepository.findAllPendingByAdIdExceptOne(request.getAdId(), requestId);
+        for(Request r : requests) {
+            r.setPaidState(PaidState.CANCELED);
+        }
+
+        request.setPaidState(PaidState.PAID);
+        requests.add(request);
+
+        requestRepository.saveAll(requests);
+
+        return request;
+    }
+
+
+    public RequestContainer payBundleRequest(Long bundleId, String userEmail) throws CustomException{
+        RequestContainer requestContainer = requestContainerRepository.getOne(bundleId);
+
+        if(requestContainer == null || !requestContainer.getUserSentRequest().equals(userEmail))
+            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+
+        List<Request> requestsToBePayed = requestContainer.getBoundleList();
+
+        List<Request> paidRequests = requestsToBePayed.stream().map(request -> {request.setPaidState(PaidState.PAID); return  request;}).collect(Collectors.toList());
+        requestContainer.setBoundleList(paidRequests);
+
+        requestContainerRepository.save(requestContainer);
+
+        List<Long> bundleAdIds = requestsToBePayed.stream().map(request -> request.getAdId()).collect(Collectors.toList());
+        List<Long> requestToBeExcluded = requestsToBePayed.stream().map(request -> request.getId()).collect(Collectors.toList());
+
+        List<Request> requests = requestRepository.findAllByAllAdIds(bundleAdIds, requestToBeExcluded);
+
+        for(Request r : requests) {
+            r.setPaidState(PaidState.CANCELED);
+        }
+
+        requestRepository.saveAll(requests);
+
+        return requestContainer;
+    }
 }

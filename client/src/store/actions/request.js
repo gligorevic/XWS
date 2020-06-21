@@ -11,12 +11,10 @@ export const setAllRequests = (allRequests) => ({
   allRequests,
 });
 
-
 export const setAllPaidRequests = (allPaidRequests) => ({
   type: SET_ALL_PAID_REQUESTS,
   allPaidRequests,
 });
-
 
 export const setCreatedRequests = (createdRequests) => ({
   type: SET_CREATED_REQUESTS,
@@ -46,7 +44,6 @@ export const getCreatedRequests = (username) => async (dispatch) => {
   }
 };
 
-
 export const getAllPaid = (username) => async (dispatch) => {
   try {
     var allRequests = await axios.get(`/request/user/${username}/paid`);
@@ -57,3 +54,16 @@ export const getAllPaid = (username) => async (dispatch) => {
   }
 };
 
+export const payRequest = (roomId) => async (dispatch) => {
+  try {
+    if (roomId.startsWith("b")) {
+      const res = await axios.put(`/request/bundle/${roomId.slice(1)}/pay`, {});
+      console.log(res);
+    } else {
+      const res = await axios.put(`/request/${roomId}/pay`, {});
+      console.log(res);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

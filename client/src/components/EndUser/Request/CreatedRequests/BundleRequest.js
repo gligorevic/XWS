@@ -13,6 +13,7 @@ export default function BundleRequest({
   hoveredId,
   setHoveredId,
   colorSelected,
+  show,
 }) {
   const getDateCreated = (req) => {
     const date = new Date(req.creationDate);
@@ -51,6 +52,7 @@ export default function BundleRequest({
             {getDateCreated(requests[0])}
           </span>
           <RequestActions
+            show={show}
             visibility={"*" + requests[0].containerId == hoveredId}
             chatName={
               "Bundle " + requests[0].containerId + " " + requests[0].userEmail

@@ -25,24 +25,28 @@ function CreatedRequests({ getCreatedRequests, user, createdRequests }) {
           color="#2196f3"
           requests={createdRequests.filter((r) => r.paidState === "PAID")}
           user={user}
+          show={["Comment", "Rate"]}
         />
         <RequestExpansionPanel
           title="RESERVED"
           color="#4caf50"
           requests={createdRequests.filter((r) => r.paidState === "RESERVED")}
           user={user}
+          show={["Chat", "Pay", "Cancel"]}
         />
         <RequestExpansionPanel
           title="PENDING"
           color="#ff9800"
           requests={createdRequests.filter((r) => r.paidState === "PENDING")}
           user={user}
+          show={["Cancel"]}
         />
         <RequestExpansionPanel
           title="CANCELED"
           color="#f44336"
           requests={createdRequests.filter((r) => r.paidState === "CANCELED")}
           user={user}
+          show={[]}
         />
       </Paper>
     </div>

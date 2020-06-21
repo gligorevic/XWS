@@ -3,6 +3,7 @@ package com.example.RequestService.domain;
 import com.example.RequestService.dto.RequestDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class Request {
     private Date crationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private RequestContainer requestContainer;
 
     private boolean inBundle;

@@ -118,6 +118,35 @@ public class RequestController {
         }
     }
 
+    @PutMapping("/bundle/{bundleId}/pay")
+    public ResponseEntity<?> PayBundleRequest(@PathVariable("bundleId") Long bundleId, Authentication authentication){
+        try{
+            String userEmail = (String)authentication.getPrincipal();
+            return new ResponseEntity<>(requestService.payBundleRequest(bundleId, userEmail), HttpStatus.OK);
+        }catch (CustomException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{requestId}/pay")
+    public ResponseEntity<?> PayRequest(@PathVariable("requestId") Long requestId, Authentication authentication){
+        try{
+            String userEmail = (String)authentication.getPrincipal();
+
+            return new ResponseEntity<>(requestService.payRequest(requestId, userEmail), HttpStatus.OK);
+        }catch (CustomException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PutMapping("/{requestId}")
     public ResponseEntity<?> changeRequestStatus(@RequestBody RequestStatusDTO requestStatusDTO, @PathVariable("requestId") Long requestId, Authentication authentication){
         try{

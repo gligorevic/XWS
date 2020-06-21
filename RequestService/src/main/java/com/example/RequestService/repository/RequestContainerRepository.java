@@ -2,6 +2,7 @@ package com.example.RequestService.repository;
 
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.domain.RequestContainer;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +19,5 @@ public interface RequestContainerRepository extends JpaRepository<RequestContain
 
     @Query("SELECT DISTINCT r.boundleList FROM RequestContainer r LEFT JOIN r.boundleList boundle WHERE boundle.id =:requestId")
     List<Request> getRequestsInBundle(@Param("requestId") Long requestId);
+
 }

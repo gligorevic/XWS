@@ -9,6 +9,7 @@ export default function SingleRequest({
   setHoveredId,
   setOpenedDialog,
   colorSelected,
+  show,
 }) {
   const getDateCreated = (req) => {
     const date = new Date(req.creationDate);
@@ -63,6 +64,7 @@ export default function SingleRequest({
             roomId={"" + request.id}
             sendTo={request.userEmail}
             setOpenedDialog={setOpenedDialog}
+            show={show}
           />
         </span>
       </Paper>

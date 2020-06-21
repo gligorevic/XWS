@@ -3,6 +3,7 @@ package com.example.RequestService.domain;
 import com.example.RequestService.dto.RequestContainerDTO;
 import com.example.RequestService.dto.RequestDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class RequestContainer {
     private String userSentRequest;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Request> boundleList;
 
     public RequestContainer() {

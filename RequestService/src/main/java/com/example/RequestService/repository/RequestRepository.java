@@ -23,8 +23,14 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findAllByAdId(Long id);
 
+    @Query("SELECT r FROM Request r WHERE r.adId IN ?1 AND r.id NOT IN ?2")
+    List<Request> findAllByAllAdIds(@Param("adIds")List<Long> adIds, @Param("requestToBeExcluded")List<Long> requestToBeExcluded);
+
     @Query("SELECT r FROM Request r WHERE r.paidState=3")
     List<Request> findAllPending();
+
+    @Query("SELECT r FROM Request r WHERE r.paidState=3 AND r.adId = ?1 AND NOT(r.id = ?2)")
+    List<Request> findAllPendingByAdIdExceptOne(@Param("adId") Long adId, @Param("reqToExclude") Long reqToExclude);
 
     @Query("SELECT r FROM Request r WHERE r.paidState=2")
     List<Request> findAllReserved();
