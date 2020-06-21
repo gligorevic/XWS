@@ -308,7 +308,7 @@ public class RequestService {
 
 
     public RequestContainer payBundleRequest(Long bundleId, String userEmail) throws CustomException{
-        RequestContainer requestContainer = requestContainerRepository.getOne(bundleId);
+        RequestContainer requestContainer = requestContainerRepository.findById(bundleId).get();
 
         if(requestContainer == null || !requestContainer.getUserSentRequest().equals(userEmail))
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
