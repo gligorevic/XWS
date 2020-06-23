@@ -37,13 +37,7 @@ function RequestActions({
 }) {
   const actions = [
     {
-      icon: (
-        <QuestionAnswerIcon
-          style={{
-            display: show.indexOf("Chat") !== -1 ? "inline-block" : "none",
-          }}
-        />
-      ),
+      icon: <QuestionAnswerIcon />,
       name: "Chat",
     },
     { icon: <ChatIcon />, name: "Comment" },

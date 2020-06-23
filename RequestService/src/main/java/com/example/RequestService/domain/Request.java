@@ -30,7 +30,7 @@ public class Request {
     private Date crationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private RequestContainer requestContainer;
 
     private boolean inBundle;

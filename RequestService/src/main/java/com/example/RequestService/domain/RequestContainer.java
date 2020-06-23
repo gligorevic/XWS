@@ -20,7 +20,7 @@ public class RequestContainer {
     private String userSentRequest;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private List<Request> boundleList;
 
     public RequestContainer() {
