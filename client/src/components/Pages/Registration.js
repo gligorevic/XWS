@@ -76,6 +76,7 @@ const SignUp = ({ registrate, user, history }) => {
   }, []);
 
   const handleChange = (e) => {
+    console.log(checkPasswordFormat());
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
@@ -93,6 +94,11 @@ const SignUp = ({ registrate, user, history }) => {
     setSubmitedEmail(state.email);
     setLoading(false);
   };
+
+  const checkPasswordFormat = () =>
+    !state.password.match(
+      /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,25}$/
+    );
 
   return (
     <>
@@ -172,20 +178,15 @@ const SignUp = ({ registrate, user, history }) => {
                   id="password"
                   onChange={handleChange}
                   value={state.password}
-                  error={
-                    state.password.length > 0 &&
-                    state.password.match(
-                      /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,25}$/
-                    ) === null
-                  }
+                  error={state.password.length > 0 && checkPasswordFormat()}
                   helperText={
-                    state.password.length < 6 && state.password.length > 0
-                      ? "Password must have at least 6 characters."
-                      : state.password.length > 6 &&
-                        state.password.match(
-                          /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,25}$/
-                        ) === null &&
-                        "Password must have one number, one upper-case letter and one lower-case letter."
+                    state.password.length > 0 && state.password.length < 10
+                      ? "Password must have at least 10 characters."
+                      : state.password.length > 0 && state.password.length <= 25
+                      ? checkPasswordFormat() &&
+                        "Password must have one number, one upper-case letter and one lower-case letter and one special char."
+                      : state.password.length > 0 &&
+                        "Password max length is 25 characters."
                   }
                 />
               </Grid>
@@ -256,13 +257,10 @@ const SignUp = ({ registrate, user, history }) => {
                 state.email.length < 5 ||
                 state.firstName.length < 2 ||
                 state.lastName.length < 2 ||
-                state.password.length < 6 ||
                 state.password !== state.passwordRepeated ||
                 state.email.match(/^\S+@\S+\.\S+$/) === null ||
                 state.email === submitedEmail ||
-                state.password.match(
-                  /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,25}$/
-                ) === null
+                checkPasswordFormat()
               }
             >
               Sign Up
