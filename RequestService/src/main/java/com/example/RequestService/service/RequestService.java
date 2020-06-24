@@ -219,7 +219,7 @@ public class RequestService {
 
         List<Request> requests = requestContainerRepository.getRequestsInBundle(requestId);
 
-        if(requests.isEmpty() || requests == null){
+        if(requests.isEmpty()){
             throw new CustomException("This request is not in any bundle", HttpStatus.BAD_REQUEST);
         }
         List<RequestBundleDTO> requestBundleDTOS = new ArrayList<>();

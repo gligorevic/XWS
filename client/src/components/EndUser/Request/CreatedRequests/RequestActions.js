@@ -24,6 +24,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const actions = [
+  { icon: <QuestionAnswerIcon />, name: "Chat" },
+  { icon: <ChatIcon />, name: "Comment" },
+  { icon: <GradeIcon />, name: "Rate" },
+  { icon: <MonetizationOnIcon />, name: "Pay" },
+  { icon: <CancelIcon />, name: "Cancel" },
+];
+
 function RequestActions({
   visibility,
   chatName,
@@ -35,17 +43,6 @@ function RequestActions({
   payRequest,
   show,
 }) {
-  const actions = [
-    {
-      icon: <QuestionAnswerIcon />,
-      name: "Chat",
-    },
-    { icon: <ChatIcon />, name: "Comment" },
-    { icon: <GradeIcon />, name: "Rate" },
-    { icon: <MonetizationOnIcon />, name: "Pay" },
-    { icon: <CancelIcon />, name: "Cancel" },
-  ];
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 

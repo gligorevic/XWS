@@ -22,15 +22,17 @@ services:
 #    depends_on:
 #      - eureka-serviceregistry
 
-  auth:
-    build: ./AuthService
-    ports:
-      - "8080:8080"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
+#  auth:
+#    build: ./AuthService
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - ./log:/log
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
 
 #  car-info:
 #    build: ./CarInfoService
@@ -42,17 +44,17 @@ services:
 #    depends_on:
 #      - eureka-serviceregistry
   
-  pki-service:
-    build: ./pki
-    ports:
-      - "8082:8082"
-    volumes:
-      - ./download-certificates:/root
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
+#  pki-service:
+#    build: ./pki
+#    ports:
+#      - "8082:8082"
+#    volumes:
+#      - ./download-certificates:/root
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
 
   zuul:
     build: ./Zuul
@@ -63,7 +65,7 @@ services:
     tty: true
     depends_on:
       - eureka-serviceregistry
-      - auth
+#      - auth
 
 #  mongo:
 #    container_name: mongo

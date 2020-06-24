@@ -1,5 +1,6 @@
 package com.example.AuthService.service;
 
+import com.example.AuthService.controller.UserController;
 import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.domain.Role;
 import com.example.AuthService.domain.User;
@@ -10,6 +11,8 @@ import com.example.AuthService.repository.PrivilegeRepository;
 import com.example.AuthService.repository.RoleRepository;
 import com.example.AuthService.repository.UserRepository;
 import com.example.AuthService.security.JWTTokenHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,6 +49,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     public String verifyUser(String bearerToken) throws CustomException {
         String jwt = tokenHelper.getJWTFromBearerToken(bearerToken);
@@ -55,15 +59,17 @@ public class UserService {
             List<Long> rolesIdFromJWT = tokenHelper.getRolesIdFromJWT(jwt);
 
             List<Privilege> privilegesBoundWithRoles =  privilegeRepository.findByRolesIn(rolesIdFromJWT);
-            User user = userRepository.findByEmail(tokenHelper.getUserUsernameFromJWT(jwt));
+            String username = tokenHelper.getUserUsernameFromJWT(jwt);
+            User user = userRepository.findByEmail(username);
 
             List<Long> blockedPrivileges = user.getBlockedPrivileges().stream().map(p -> p.getId()).collect(Collectors.toList());
 
             List<Privilege> privileges = privilegesBoundWithRoles.stream()
                     .filter(e -> !blockedPrivileges.contains(e.getId()))
                     .collect(Collectors.toList());
-
+            log.info("User {} verified", bCryptPasswordEncoder.encode(username));
             String accessToken = tokenHelper.generateAccessToken(privileges, jwt);
+            log.info("AccessToken generated for user {}", bCryptPasswordEncoder.encode(username));
             return accessToken;
         }
 
@@ -101,13 +107,12 @@ public class UserService {
         User newUser = new User(userDTO);
         List<Role> roleList = new ArrayList<>();
         roleList.add(role);
-
         newUser.setRoles(roleList);
         newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-
         userRepository.save(newUser);
-
         userDTO.setPassword(null);
+
+        log.info("User successully registrated with email {}", (bCryptPasswordEncoder.encode(userDTO.getEmail())));
 
         return userDTO;
     }
@@ -116,11 +121,17 @@ public class UserService {
         User userFromAuth = (User)authentication.getPrincipal();
 
         if(!userFromAuth.getEmail().equals(email)) {
-            throw new Exception("Unauthorized");
+            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
         User user = userRepository.findByEmail(email);
+        if(user == null) {
+            log.error("User {} not found", bCryptPasswordEncoder.encode(email));
+            throw new CustomException("User not found", HttpStatus.BAD_REQUEST);
+        }
         user.getRoles();
         user.getBlockedPrivileges();
+
+        log.info("User {} found.", bCryptPasswordEncoder.encode(user.getEmail()));
 
         return user;
     }

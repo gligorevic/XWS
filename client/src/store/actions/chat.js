@@ -19,7 +19,7 @@ export const addOpenChatBox = (room) => async (dispatch, getState) => {
     roomId: room.room,
     chatName: room.chatName,
     sendTo: room.name,
-    unreadedMessages: 0,
+    unreadedMessages: 1,
     messages: messagesRes.data,
   };
   const openChatBoxes = getState().chat.openChatBoxes;

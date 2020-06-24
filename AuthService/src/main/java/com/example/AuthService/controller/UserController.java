@@ -1,22 +1,21 @@
 package com.example.AuthService.controller;
 
 import com.example.AuthService.constants.Format;
-import com.example.AuthService.domain.User;
 import com.example.AuthService.dto.LoginRequestDTO;
 import com.example.AuthService.dto.UserDTO;
 import com.example.AuthService.exception.CustomException;
 import com.example.AuthService.service.AdminService;
 import com.example.AuthService.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.regex.Pattern;
-
 import static com.example.AuthService.security.SecurityConstants.TOKEN_BEARER_PREFIX;
 
 @RestController
@@ -28,20 +27,27 @@ public class UserController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
             hasEmailAndPassword(loginRequestDTO);
-            return new ResponseEntity<>(userService.login(loginRequestDTO), HttpStatus.OK);
+            String jwt = userService.login(loginRequestDTO);
+            log.info("Successfull auth {}", bCryptPasswordEncoder.encode(loginRequestDTO.getUsername()));
+            return new ResponseEntity<>(jwt, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Fail auth {}. {}.", bCryptPasswordEncoder.encode(loginRequestDTO.getUsername()), e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     private void hasEmailAndPassword(LoginRequestDTO loginRequestDTO) throws CustomException {
         if (StringUtils.isEmpty(loginRequestDTO.getUsername()) || StringUtils.isEmpty(loginRequestDTO.getPassword())) {
-            throw new CustomException("Fields must not be empty.", HttpStatus.NOT_ACCEPTABLE);
+            throw new CustomException("Username or password not provided.", HttpStatus.NOT_ACCEPTABLE);
         } else if (!Format.email.matcher(loginRequestDTO.getUsername()).matches()) {
             throw new CustomException("Improper email format.", HttpStatus.NOT_ACCEPTABLE);
         }
@@ -53,7 +59,7 @@ public class UserController {
             String accessBearerToken = TOKEN_BEARER_PREFIX + userService.verifyUser(bearerToken);
             return new ResponseEntity<>(accessBearerToken, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("AccessToken generation failed.");
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -64,7 +70,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -73,13 +79,13 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
         try {
             hasAllRegistrationData(userDTO);
-            return new ResponseEntity<UserDTO>(userService.register(userDTO), HttpStatus.CREATED);
+            return new ResponseEntity<>(userService.register(userDTO), HttpStatus.CREATED);
         } catch (CustomException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            log.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -103,8 +109,11 @@ public class UserController {
         try {
             hasEmail(email);
             return new ResponseEntity<>(userService.getUser(email, authentication), HttpStatus.OK);
+        } catch (CustomException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -117,11 +126,11 @@ public class UserController {
 
     @DeleteMapping("/user/{userId}")
     @PreAuthorize("hasAuthority('USER_DELETING')")
-    public ResponseEntity<?> logicalDeleteUser(@PathVariable String userId) {
+    public ResponseEntity<?> logicalDeleteUser(@PathVariable String userId, Authentication authentication) {
         try {
-            return new ResponseEntity<>(adminService.logicalDeleteUser(Long.parseLong(userId)), HttpStatus.OK);
+            return new ResponseEntity<>(adminService.logicalDeleteUser(Long.parseLong(userId), authentication), HttpStatus.OK);
         } catch (CustomException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
     }
