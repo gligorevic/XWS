@@ -32,7 +32,7 @@ public class AdminController {
     }
 
     private void hasNecessaryFields(@RequestBody CertificateDTO certificateDTO) throws CustomException {
-        if (certificateDTO.getCommonName().equals("") || certificateDTO.getCity().equals("") || certificateDTO.getCountry().equals("") || certificateDTO.getCountryOfState().equals("") || certificateDTO.getMail().equals("") || certificateDTO.getNotBefore() == null || certificateDTO.getNotAfter() == null || certificateDTO.getKeyUsages().length == 0 || certificateDTO.getIssuer().equals("") || certificateDTO.getOrganization().equals("")) {
+        if (StringUtils.isEmpty(certificateDTO.getCommonName()) || StringUtils.isEmpty(certificateDTO.getCity()) || StringUtils.isEmpty(certificateDTO.getCountry()) || StringUtils.isEmpty(certificateDTO.getCountryOfState()) || StringUtils.isEmpty(certificateDTO.getMail()) || certificateDTO.getNotBefore() == null || certificateDTO.getNotAfter() == null || certificateDTO.getKeyUsages().length == 0 || StringUtils.isEmpty(certificateDTO.getOrganization())) {
             throw new CustomException("Fields must not be empty.", HttpStatus.NOT_ACCEPTABLE);
         } else if (!Constants.emailFormat.matcher(certificateDTO.getMail()).matches()) {
             throw new CustomException("Improper email format.", HttpStatus.NOT_ACCEPTABLE);
