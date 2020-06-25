@@ -95,3 +95,28 @@
 2020-06-24 23:04:19,458 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$Fnvfb0oTSnYZv9/.4fHIue.pA/NC1msEzFPMUnxIcGctyu.nfGkZi
 2020-06-24 23:04:22,373 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$HUpM0bsrCNbUe2/2yEsgHesDOOcdMban8Nm57sKUbFNsEgJWtDAYC verified
 2020-06-24 23:04:22,482 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$DrfXxiFYjzdZLuB.NeV3k.XIIv9pgGIQG3fTIBWd5wBVFidQyYaTO
+2020-06-25 15:32:27,948 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-25 15:32:34,029 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 7.168 seconds (JVM running for 8.16)
+2020-06-25 17:53:22,122 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-25 17:53:26,806 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplication in 5.719 seconds (JVM running for 6.484)
+2020-06-25 17:56:43,940 INFO  com.example.AuthService.controller.UserController [http-nio-8080-exec-1] Successfull auth $2a$10$3sjaoSPHadkOO.DV6NZGDO5fN43bO2oKa68S1o/Cl7A5fHvrHdbVW
+2020-06-25 17:56:44,293 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$gJ4YlnPzauvY.6ft63Qk7uQ7ObN9NKl5mzYsJGi5EvOdCsL8dQiOC verified
+2020-06-25 17:56:44,381 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] AccessToken generated for user $2a$10$L6VLBakhzwosNutLJmSN8eU4bnnEeOy3T.VzL1LkDhqyAfIpyOEPK
+2020-06-25 17:56:55,719 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$0qwv2Qj4o63Xw367385PS.vEyMcVk0xCe6VWuOQivR8Vik1P0Uo8y verified
+2020-06-25 17:56:55,800 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$ROQeB4cn2.BzDIxtQDJNbOyMkFI9ahZ3D2HJRX4nsv3U6VoXL9qaq
+2020-06-25 17:57:18,101 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$xist47Ll0XtB4VBav0sB1usGWE2mb5/ZNXJOJasbHclxLRCNf/XFC verified
+2020-06-25 17:57:18,183 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$hW0SVO5ijXTHW1ZX6qkB3.P7ZH1NoEzcfjl.ju5gAEg.mE7ujAVtG
+2020-06-25 18:03:56,092 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-25 18:04:01,611 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 6.532 seconds (JVM running for 7.511)
+2020-06-25 16:12:59,988 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-25 16:13:17,810 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplication in 24.03 seconds (JVM running for 26.699)
+2020-06-25 16:20:51,228 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] User $2a$10$KMjJRj8mAF/WfhVcC469MuGec99u0scbOYwQX9ikB5RxnMdlDgyoW verified
+2020-06-25 16:20:51,312 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] AccessToken generated for user $2a$10$xZAKuK36LVIRHUFappkNRu8bH5E8IFwcsIiT5aFSHIFt6ahvdOouK
+2020-06-25 16:22:59,590 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$4UHlgMPpPeXhLnx/FciY.exULmBdR2KEF8RL1v3Qc8Jm67mb5p8TG verified
+2020-06-25 16:22:59,663 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$fmeGaKTs0zNbz9V7ITBDIelCF6xiMoal8q56ItkckAq628Y7Ruuxu
+2020-06-25 16:23:25,824 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$0Ofnyn3OyZr6d2Kfqb9sIOsqh1a.wQ0Kb3acvVRNQRQEzNaStv0Va verified
+2020-06-25 16:23:25,896 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$JGo72xzUYbxGpFAeAea4POcijSCHsHanuOuoDX28vTzYCbG1SwNDW
+2020-06-25 19:36:00,278 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-25 19:36:07,126 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 8.28 seconds (JVM running for 9.947)
+2020-06-25 17:40:08,222 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-25 17:40:35,297 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplication in 32.126 seconds (JVM running for 34.338)
