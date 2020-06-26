@@ -1,9 +1,11 @@
 package com.example.AuthService.service;
 
+import com.example.AuthService.constants.Format;
 import com.example.AuthService.controller.UserController;
 import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.domain.Role;
 import com.example.AuthService.domain.User;
+import com.example.AuthService.dto.ChangePasswordDTO;
 import com.example.AuthService.dto.LoginRequestDTO;
 import com.example.AuthService.dto.UserDTO;
 import com.example.AuthService.exception.CustomException;
@@ -20,9 +22,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -76,15 +80,15 @@ public class UserService {
         return "";
     }
 
-    public String login(LoginRequestDTO loginRequestDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequestDTO.getUsername(),
-                        loginRequestDTO.getPassword()
-                )
-        );
+    public String login(LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(),
+                loginRequestDTO.getPassword());
+        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = authenticationManager.authenticate(auth);
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
         String jwt = TOKEN_BEARER_PREFIX +  tokenHelper.generate(authentication);
 
         return jwt;
@@ -140,5 +144,14 @@ public class UserService {
         List<UserDTO> allUsers = userRepository.findByEmailIsNotNull().stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
 
         return allUsers;
+    }
+
+    public void changePassword(ChangePasswordDTO newPasswordData) throws CustomException {
+        if(!Format.password.matcher(newPasswordData.getNewPassword()).matches()) throw new CustomException("Weak password", HttpStatus.NOT_ACCEPTABLE);
+        User user = userRepository.findByEmail(newPasswordData.getUsername());
+        if(user == null) throw new CustomException("Bad username", HttpStatus.BAD_REQUEST);
+        if(!bCryptPasswordEncoder.matches(newPasswordData.getOldPassword(), user.getPassword())) throw new CustomException("Password not match", HttpStatus.BAD_REQUEST);
+        user.setPassword(bCryptPasswordEncoder.encode(newPasswordData.getNewPassword()));
+        userRepository.save(user);
     }
 }
