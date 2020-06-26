@@ -88,3 +88,5 @@
 2020-06-26 02:27:20,103 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplication in 13.059 seconds (JVM running for 14.471)
 2020-06-26 02:30:17,359 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-06-26 02:30:26,537 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplication in 12.77 seconds (JVM running for 14.156)
+2020-06-26 02:32:34,710 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-26 02:32:43,221 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplication in 12.043 seconds (JVM running for 13.133)

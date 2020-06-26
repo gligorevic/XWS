@@ -12,29 +12,29 @@ services:
   #      - 8024:8024
   #      - 8124:8124
 
-  # request:
-  #   build: ./RequestService
-  #   ports:
-  #     - "8086:8086"
-  #   volumes:
-  #     - ./RequestService/logs:/logs
-  #   environment:
-  #     - REGISTRY_HOST=eureka-serviceregistry
-  #   tty: true
-  #   depends_on:
-  #     - eureka-serviceregistry
+  request:
+    build: ./RequestService
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./RequestService/logs:/logs
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
 
-  # auth:
-  #   build: ./AuthService
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./AuthService/logs:/logs
-  #   environment:
-  #     - REGISTRY_HOST=eureka-serviceregistry
-  #   tty: true
-  #   depends_on:
-  #     - eureka-serviceregistry
+  auth:
+    build: ./AuthService
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./AuthService/logs:/logs
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
 
   #  car-info:
   #    build: ./CarInfoService
@@ -70,25 +70,25 @@ services:
     tty: true
     depends_on:
       - eureka-serviceregistry
-      # - auth
-#  mongo:
-#    container_name: mongo
-#    image: mongo
-#    ports:
-#      - "27017:27017"
-#
-#  chat:
-#    build: ./NodeJSChat
-#    ports:
-#      - "3200:3200"
-#    environment:
-#      - REGISTRY_HOST=eureka-serviceregistry
-#      - DATABASE_URL=mongodb://mongo:27017/messages-service
-#    tty: true
-#    depends_on:
-#      - eureka-serviceregistry
-#      - mongo
+      - auth
 
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  chat:
+    build: ./NodeJSChat
+    ports:
+      - "3200:3200"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - DATABASE_URL=mongodb://mongo:27017/messages-service
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - mongo
 #  car-service:
 #    build: ./AxonSaga/CarService
 #    ports:
