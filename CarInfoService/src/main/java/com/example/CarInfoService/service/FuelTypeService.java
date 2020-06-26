@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FuelTypeService {
@@ -43,5 +44,14 @@ public class FuelTypeService {
         fuelType.setFuelTypeName(fuelTypeName);
 
         return fuelTypeRepository.save(fuelType);
+    }
+
+    public FuelType getFuelTypeById(Long fuelTypeId) throws CustomException{
+
+        Optional<FuelType> fuelType = fuelTypeRepository.findById(fuelTypeId);
+        if(fuelType == null)
+            throw new CustomException("Fuel type with that id doesn't exists", HttpStatus.BAD_REQUEST);
+
+        return fuelType.get();
     }
 }

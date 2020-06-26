@@ -2,6 +2,7 @@ package com.example.server.configuration;
 
 import com.example.server.certificates.CertificateGenerator;
 import com.example.server.certificates.Constants;
+import com.example.server.controller.AdminController;
 import com.example.server.data.IssuerData;
 import com.example.server.data.SubjectData;
 import com.example.server.enumeration.KeyUsages;
@@ -9,6 +10,8 @@ import com.example.server.service.KeyStoreService;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x500.style.IETFUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -34,13 +37,15 @@ public class AppRunner implements ApplicationRunner {
         Security.addProvider(new BouncyCastleProvider());
     }
 
+    public static final Logger log = LoggerFactory.getLogger(AppRunner.class);
+
     @Override
     public void run(ApplicationArguments args) {
 
         File f = new File(Constants.keystoreFilePathRoot);
 
         if(!f.exists()) {
-            System.out.println("Ne postoji keystore");
+            log.warn("Initial keystore doesn't exist... Initializing a new one");
             KeyStore keyStore = keyStoreService.getKeyStore(null, Constants.password);
             KeyStore keyStoreCA = keyStoreService.getKeyStore(null, Constants.password);
             KeyStore keyStoreEnd = keyStoreService.getKeyStore(null, Constants.password);
@@ -76,7 +81,7 @@ public class AppRunner implements ApplicationRunner {
             }
 
         } else {
-            System.out.println("Postoji");
+            log.info("Initial keystore exist...");
 
             try {
                 KeyStore keyStore = keyStoreService.getKeyStore(Constants.keystoreFilePathRoot, Constants.password);
@@ -101,7 +106,7 @@ public class AppRunner implements ApplicationRunner {
                 }
 
             } catch (Exception e) {
-                System.out.println("Eror se dogodio");
+                log.error("Something is wrong in AppRunner. {}.", e.getMessage());
                 e.printStackTrace();
             }
 

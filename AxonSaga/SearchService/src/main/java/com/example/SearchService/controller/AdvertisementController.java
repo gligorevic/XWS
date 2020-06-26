@@ -6,10 +6,14 @@ import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.dto.AdvertisementDTO;
 import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.service.AdvertisementService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -27,6 +31,11 @@ public class AdvertisementController {
     @Autowired
     private AdvertisementService advertisementService;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public static final Logger log = LoggerFactory.getLogger(AdvertisementController.class);
+
     @GetMapping
     public ResponseEntity<?> getAllAdvertisements(){
         try{
@@ -39,14 +48,17 @@ public class AdvertisementController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
-    public ResponseEntity<?> addAdvertisement(@RequestBody AdvertisementDTO advertisementDTO){
+    public ResponseEntity<?> addAdvertisement(@RequestBody AdvertisementDTO advertisementDTO, Authentication authentication){
+        String userEmail = (String) authentication.getPrincipal();
         try{
-            return new ResponseEntity<>(advertisementService.addAdvertisement(advertisementDTO), HttpStatus.OK);
+            Advertisement advertisement = advertisementService.addAdvertisement(advertisementDTO);
+            log.info("Successful added advertisement {} by user {}", bCryptPasswordEncoder.encode(advertisement.getId().toString()), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(advertisement, HttpStatus.OK);
         } catch(CustomException e){
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e){
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

@@ -15,7 +15,7 @@ public class CertificateDTO {
 
    private String city;
 
-   private String countyOfState;
+   private String countryOfState;
 
    private String country;
 
@@ -33,12 +33,12 @@ public class CertificateDTO {
 
    }
 
-   public CertificateDTO(String commonName, String organization, String organizationalUnit, String city, String countyOfState, String country, String mail, String issuer, Date notBefore, Date notAfter) {
+   public CertificateDTO(String commonName, String organization, String organizationalUnit, String city, String countryOfState, String country, String mail, String issuer, Date notBefore, Date notAfter) {
       this.commonName = commonName;
       this.organization = organization;
       this.organizationalUnit = organizationalUnit;
       this.city = city;
-      this.countyOfState = countyOfState;
+      this.countryOfState = countryOfState;
       this.country = country;
       this.mail = mail;
       this.issuer = issuer;
@@ -74,8 +74,8 @@ public class CertificateDTO {
       this.city = city;
    }
 
-   public void setCountyOfState(String countyOfState) {
-      this.countyOfState = countyOfState;
+   public void setCountryOfState(String countryOfState) {
+      this.countryOfState = countryOfState;
    }
 
    public void setCountry(String country) {
@@ -110,8 +110,8 @@ public class CertificateDTO {
       return city;
    }
 
-   public String getCountyOfState() {
-      return countyOfState;
+   public String getCountryOfState() {
+      return countryOfState;
    }
 
    public String getCountry() {

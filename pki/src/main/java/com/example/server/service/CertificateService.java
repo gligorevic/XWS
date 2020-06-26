@@ -23,7 +23,6 @@ public class CertificateService {
             CertificateModel certificateModel = new CertificateModel();
             certificateModel.setSerialNumber(certificate.getSerialNumber().toString());
             certificateModel.setRevokeReason(reason);
-
             certificateRepository.save(certificateModel);
 
             return certificateModel;

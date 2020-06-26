@@ -20,10 +20,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -160,52 +163,28 @@ public class AdminService {
         return null;
     }
 
-    public CertificateExchangeDTO downloadCertificate(CertificateExchangeDTO certificateExchangeDTO){
-        try{
-            System.out.println(certificateExchangeDTO.getName());
+    public CertificateExchangeDTO downloadCertificate(CertificateExchangeDTO certificateExchangeDTO) throws IOException, CertificateEncodingException {
             Certificate certificate = keyStoreService.readCertificate(certificateExchangeDTO.getSerialNumber() + "*" + certificateExchangeDTO.getName());
-            String path = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
+            String path = System.getProperty("user.home") + File.separator;
 
             FileOutputStream os = new FileOutputStream(path + certificateExchangeDTO.getName() + ".cer");
+
             os.write(Base64.encodeBase64(certificate.getEncoded(), true));
             os.close();
             return certificateExchangeDTO;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return null;
     }
 
-    public CertificateExchangeDTO revokeCertificate(CertificateExchangeDTO certificateExchangeDTO, String reason) {
-        try{
+    public CertificateExchangeDTO revokeCertificate(CertificateExchangeDTO certificateExchangeDTO) {
             Certificate certificate = keyStoreService.readCertificate( certificateExchangeDTO.getSerialNumber() + "*" + certificateExchangeDTO.getName());
-            X509Certificate x509Certificate = (X509Certificate) certificate;
-            CertificateModel certificateModel = certificateService.revokeCertificate(x509Certificate, reason);
+            certificateService.revokeCertificate((X509Certificate) certificate, certificateExchangeDTO.getReason());
 
-            if(certificateModel != null){
-                return certificateExchangeDTO;
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return null;
+            return certificateExchangeDTO;
     }
 
-    public CertificateExchangeDTO checkValidity(CertificateExchangeDTO certificateExchangeDTO){
-        try{
-            System.out.println(certificateExchangeDTO.getName());
-            Certificate certificate = keyStoreService.readCertificate(certificateExchangeDTO.getSerialNumber() + "*" + certificateExchangeDTO.getName());
+    public boolean checkValidity(CertificateExchangeDTO certificateExchangeDTO) throws KeyStoreException {
             KeyStore ks = keyStoreService.getKeyStoreBySerialNumber(String.valueOf(certificateExchangeDTO.getSerialNumber()));
-            if(keyStoreService.validateChain(ks.getCertificateChain(certificateExchangeDTO.getSerialNumber() + "*" + certificateExchangeDTO.getName()))){
-                return certificateExchangeDTO;
-            }
-            return certificateExchangeDTO;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return null;
+            Certificate[] certificateChain = ks.getCertificateChain(certificateExchangeDTO.getSerialNumber() + "*" + certificateExchangeDTO.getName());
+            return keyStoreService.validateChain(certificateChain);
     }
 
 }

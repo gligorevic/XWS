@@ -44,7 +44,7 @@ export default function CertificateSelect({
 
   useEffect(() => {
     (async () => {
-      const resp = await axios.put(`/api/admin/getAllIssuerCerts`, usages);
+      const resp = await axios.put(`/api/admin/issuerCerts`, usages);
       setIssuerCerts(resp.data);
     })();
   }, []);

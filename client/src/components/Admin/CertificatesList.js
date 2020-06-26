@@ -134,10 +134,10 @@ const CertificatesList = ({ getAllCertificates, certificates, history }) => {
   };
 
   const handleRevoke = async () => {
-    const resp = await Axios.put(
-      `/api/admin/revokeCertificate/${revokeReason}`,
-      certificateToRevoke
-    );
+    const resp = await Axios.put(`/api/admin/revokeCertificate`, {
+      ...certificateToRevoke,
+      reason: revokeReason,
+    });
     if (resp.status === 200) {
       setOpenDialog(false);
       getAllCertificates();
@@ -145,12 +145,16 @@ const CertificatesList = ({ getAllCertificates, certificates, history }) => {
   };
 
   const handleChecking = async (e, row) => {
-    setLoading(true);
-    const resp = await Axios.put(`/api/admin/check`, row);
-    setLoading(false);
-    if (resp.status === 200) {
-      setOpenValid(true);
-    } else if (resp.status === 409) {
+    try {
+      setLoading(true);
+      const resp = await Axios.post(`/api/admin/validity`, row);
+      setLoading(false);
+      if (resp.data === true) {
+        setOpenValid(true);
+      } else {
+        setOpenNotValid(true);
+      }
+    } catch (error) {
       setOpenNotValid(true);
     }
   };

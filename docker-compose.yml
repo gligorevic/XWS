@@ -6,16 +6,18 @@ services:
       - "8761:8761"
     tty: true
 
-  axon-server:
-    image: axoniq/axonserver:4.3.2
-    ports:
-      - 8024:8024
-      - 8124:8124
+  #  axon-server:
+  #    image: axoniq/axonserver:4.3.2
+  #    ports:
+  #      - 8024:8024
+  #      - 8124:8124
 
   request:
     build: ./RequestService
     ports:
       - "8086:8086"
+    volumes:
+      - ./RequestService/logs:/logs
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
     tty: true
@@ -26,31 +28,38 @@ services:
     build: ./AuthService
     ports:
       - "8080:8080"
+    volumes:
+      - ./AuthService/logs:/logs
     environment:
       - REGISTRY_HOST=eureka-serviceregistry
     tty: true
     depends_on:
       - eureka-serviceregistry
 
-  car-info:
-    build: ./CarInfoService
-    ports:
-      - "8087:8087"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-  
-  pki-service:
-    build: ./pki
-    ports:
-      - "8082:8082"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
+  #  car-info:
+  #    build: ./CarInfoService
+  #    ports:
+  #      - "8087:8087"
+  #    volumes:
+  #      - ./CarInfoService/logs:/logs
+  #    environment:
+  #      - REGISTRY_HOST=eureka-serviceregistry
+  #    tty: true
+  #    depends_on:
+  #      - eureka-serviceregistry
+
+  # pki-service:
+  #   build: ./pki
+  #   ports:
+  #     - "8082:8082"
+  #   volumes:
+  #     - ./download-certificates:/root
+  #     - ./pki/logs:/logs
+  #   environment:
+  #     - REGISTRY_HOST=eureka-serviceregistry
+  #   tty: true
+  #   depends_on:
+  #     - eureka-serviceregistry
 
   zuul:
     build: ./Zuul
@@ -80,39 +89,42 @@ services:
     depends_on:
       - eureka-serviceregistry
       - mongo
+#  car-service:
+#    build: ./AxonSaga/CarService
+#    ports:
+#      - "8090:8090"
+#    volumes:
+#      - ./AxonSaga/CarService/logs:/logs
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#      - AXON_HOST=axon-server
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
+#      - axon-server
+#
+#  search-service:
+#    build: ./AxonSaga/SearchService
+#    ports:
+#      - "8084:8084"
+#    volumes:
+#      - ./AxonSaga/SearchService/logs:/logs
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#      - AXON_HOST=axon-server
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
+#      - axon-server
 
-  car-service:
-    build: ./AxonSaga/CarService
-    ports:
-      - "8090:8090"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - AXON_HOST=axon-server
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      - axon-server
-
-  search-service:
-    build: ./AxonSaga/SearchService
-    ports:
-      - "8084:8084"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - AXON_HOST=axon-server
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      - axon-server
-
-  image-service:
-    build: ./AxonSaga/ImageService
-    ports:
-      - "8085:8085"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - AXON_HOST=axon-server
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      - axon-server
+#  image-service:
+#    build: ./AxonSaga/ImageService
+#    ports:
+#      - "8085:8085"
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#      - AXON_HOST=axon-server
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
+#      - axon-server

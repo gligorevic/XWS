@@ -28,7 +28,7 @@ export const getAllKeyUsages = () => async (dispatch, getState) => {
       state.certificates.keyUsages.length > 0
     ) {
     } else {
-      const keyUsages = await axios.get("/api/admin/getAllKeyUsages");
+      const keyUsages = await axios.get("/api/admin/keyUsages");
       dispatch(setKeyUsages(keyUsages.data));
     }
   } catch (err) {
@@ -38,7 +38,7 @@ export const getAllKeyUsages = () => async (dispatch, getState) => {
 
 export const getAllCertificates = () => async (dispatch) => {
   try {
-    const allCertificates = await axios.get("/api/admin/getAllCerts");
+    const allCertificates = await axios.get("/api/admin/certs");
     dispatch(setAllCertificates(allCertificates.data));
   } catch (err) {
     console.log(err);
@@ -47,9 +47,7 @@ export const getAllCertificates = () => async (dispatch) => {
 
 export const getAllRevocatedCerts = () => async (dispatch) => {
   try {
-    const allRevocatedCerts = await axios.get(
-      "/api/admin/getAllRevocatedCerts"
-    );
+    const allRevocatedCerts = await axios.get("/api/admin/revocatedCerts");
     dispatch(setAllRevocatedCerts(allRevocatedCerts.data));
   } catch (err) {
     console.log(err);
