@@ -34,15 +34,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String jwt = getJWTFromRequest(httpServletRequest);
-
-        System.out.println("U filteru sam http");
-        System.out.println(jwt);
 
         try {
             if(StringUtils.hasText(jwt) && jwtTokenHelper.validate(jwt)) {
@@ -66,6 +61,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } catch (CustomException e) {
             e.printStackTrace();
             httpServletResponse.sendError(e.getHttpStatus().value(), e.getMessage());
+        } catch (RuntimeException e) {
+            httpServletResponse.sendError(404, e.getMessage());
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);

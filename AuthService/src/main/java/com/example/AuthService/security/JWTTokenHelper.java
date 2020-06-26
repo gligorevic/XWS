@@ -11,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 import java.util.*;
 
 import static com.example.AuthService.security.SecurityConstants.*;
