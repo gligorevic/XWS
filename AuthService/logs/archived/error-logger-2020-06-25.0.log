@@ -1,0 +1,5 @@
+2020-06-24 20:38:11,226 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-3] Bad credentials $2a$10$wGgSUrwbxE3A1Whb772xqOX/Oa4LlW.YCIt65g4mc0fYKQiO5kwa2
+2020-06-24 22:13:40,665 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-4] Fail auth $2a$10$D1ZtLla/aGCyUD56AaAGp.Y0Rfd2JwkYEZWl3vRDu3x/1whcAVJmi
+2020-06-24 22:13:51,432 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-5] Fail auth $2a$10$G6C6CmeTzy3DT9nlMOZ0VOlLAsv2nddZy53oU7QShNB7Har713C1K
+2020-06-25 22:46:39,072 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-4] $2a$10$nGO/IhbZI5Nc1nVpfiFgBOKCpNW4yqgE/1t5uc4j0daF.ePnlE.uu tried to change $2a$10$p7C.e6W.qPQVbFg3HKf65./btmfgKYhWupxxnn1Ipam6Pf6pSEO2S password.
+2020-06-25 22:52:57,859 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-4] Fail auth $2a$10$RrNtLgHDDZdkpzxU0M4Ep.IeL0MOSx0RM2mvKqcaAtZwInrO.2LtO. Bad credentials.

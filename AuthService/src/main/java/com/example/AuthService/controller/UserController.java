@@ -1,6 +1,8 @@
 package com.example.AuthService.controller;
 
 import com.example.AuthService.constants.Format;
+import com.example.AuthService.domain.User;
+import com.example.AuthService.dto.ChangePasswordDTO;
 import com.example.AuthService.dto.LoginRequestDTO;
 import com.example.AuthService.dto.UserDTO;
 import com.example.AuthService.exception.CustomException;
@@ -16,6 +18,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
 import static com.example.AuthService.security.SecurityConstants.TOKEN_BEARER_PREFIX;
 
 @RestController
@@ -33,10 +38,10 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request) {
         try {
             hasEmailAndPassword(loginRequestDTO);
-            String jwt = userService.login(loginRequestDTO);
+            String jwt = userService.login(loginRequestDTO, request);
             log.info("Successfull auth {}", bCryptPasswordEncoder.encode(loginRequestDTO.getUsername()));
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         } catch (Exception e) {
@@ -132,6 +137,23 @@ public class UserController {
         } catch (CustomException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        }
+    }
+
+    @PutMapping("/password/change")
+    @PreAuthorize("hasAuthority('PASSWORD_CHANGEING')")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO newPasswordData, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        try {
+            if(!user.getEmail().equals(newPasswordData.getUsername())) throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+            userService.changePassword(newPasswordData);
+            log.info("{} successfully changed password.", user.getEmail());
+            return new ResponseEntity<>("Password successfully changed", HttpStatus.OK);
+        } catch (CustomException e) {
+            log.error("{} tried to change {} password.", bCryptPasswordEncoder.encode(user.getEmail()), bCryptPasswordEncoder.encode(newPasswordData.getUsername()));
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

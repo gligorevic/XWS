@@ -16,7 +16,6 @@ const server = http.createServer(app);
 const io = socketio(server);
 const { addMessage } = require("./handlers/messages");
 
-app.use(cors());
 app.use(express.json());
 
 app.get("/hello", (req, res) => {

@@ -37,27 +37,27 @@ public class RequestController {
             log.info("Successful request fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requests, HttpStatus.OK);
         } catch (CustomException e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/bundle/{requestId}")
     @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
-    public ResponseEntity<?> getAllRequestsInBundle(@PathVariable("requestId") String requestId, @RequestHeader("Auth") String auth,  Authentication authentication) {
+    public ResponseEntity<?> getAllRequestsInBundle(@PathVariable("requestId") String requestId, @RequestHeader("Auth") String auth, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             List<RequestBundleDTO> requestBundles = requestService.getAllRequestsInBundle(Long.parseLong(requestId), auth);
             log.info("Successful bundle request fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestBundles, HttpStatus.OK);
         } catch (CustomException e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -70,14 +70,14 @@ public class RequestController {
             if (!userEmail.equals(username)) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            List<RequestInfoDTO> requestInfos =  requestService.getAllRequestsInfoByReciverUsername(username, auth);
+            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username, auth);
             log.info("Successful request info fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestInfos, HttpStatus.OK);
         } catch (CustomException e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -94,10 +94,10 @@ public class RequestController {
             log.info("Successfully created request by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(request, HttpStatus.CREATED);
         } catch (CustomException e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -114,57 +114,67 @@ public class RequestController {
             log.info("Successfully created bundle request by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestContainer, HttpStatus.CREATED);
         } catch (CustomException e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            log.error("{}. Acction initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping
-    public ResponseEntity<?> cancelRequestsReservationPeriod(@RequestBody ReservationPeriodDTO reservationPeriodDTO) {
+    @PreAuthorize("hasAuthority('AGENT_PAID_REQUEST_CREATING')")
+    public ResponseEntity<?> cancelRequestsReservationPeriod(@RequestBody ReservationPeriodDTO reservationPeriodDTO, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
         try {
-            return new ResponseEntity<>(requestService.cancelRequestsReservationPeriod(reservationPeriodDTO), HttpStatus.OK);
+            List<Request> requests = requestService.cancelRequestsReservationPeriod(reservationPeriodDTO);
+            log.info("Requests canceled after adding reservation period by user {}", bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(requests, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/bundle/{bundleId}/pay")
+    @PreAuthorize("hasAuthority('RENT_PAYING')")
     public ResponseEntity<?> PayBundleRequest(@PathVariable("bundleId") Long bundleId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
         try {
-            String userEmail = (String) authentication.getPrincipal();
-            return new ResponseEntity<>(requestService.payBundleRequest(bundleId, userEmail), HttpStatus.OK);
+            RequestContainer requestContainer = requestService.payBundleRequest(bundleId, userEmail);
+            log.info("User {} paid bundle request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(requestContainer.getId().toString()));
+            return new ResponseEntity<>(requestContainer, HttpStatus.OK);
         } catch (CustomException e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/{requestId}/pay")
+    @PreAuthorize("hasAuthority('RENT_PAYING')")
     public ResponseEntity<?> PayRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
         try {
-            String userEmail = (String) authentication.getPrincipal();
-
-            return new ResponseEntity<>(requestService.payRequest(requestId, userEmail), HttpStatus.OK);
+            Request request = requestService.payRequest(requestId, userEmail);
+            log.info("User {} paid bundle request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
+            return new ResponseEntity<>(request, HttpStatus.OK);
         } catch (CustomException e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/{requestId}")
+    @PreAuthorize("hasAuthority('REQUEST_ACCEPTING')")
     public ResponseEntity<?> changeRequestStatus(@RequestBody RequestStatusDTO requestStatusDTO, @PathVariable("requestId") Long requestId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
         try {
-            String userEmail = (String) authentication.getPrincipal();
             if (!userEmail.equals(requestStatusDTO.getUserEmail())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
@@ -173,29 +183,32 @@ public class RequestController {
 
             switch (requestStatusDTO.getPaidState()) {
                 case RESERVED:
-                    return new ResponseEntity<>(requestService.acceptRequest(requestId), HttpStatus.OK);
+                    Request acceptedRequest = requestService.acceptRequest(requestId);
+                    log.info("User {} accepted request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
+                    return new ResponseEntity<>(acceptedRequest, HttpStatus.OK);
                 case CANCELED:
-                    return new ResponseEntity<>(requestService.declineRequest(requestId), HttpStatus.OK);
-//                case PAID:
-//                    return new ResponseEntity<>(requestService.payRequest(requestId), HttpStatus.OK);
-//                    break;
+                    Request canceledRequest = requestService.acceptRequest(requestId);
+                    log.info("User {} canceled request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(canceledRequest.getId().toString()));
+                    return new ResponseEntity<>(canceledRequest, HttpStatus.OK);
                 default:
+                    log.error("Paid state not found for request {}. Acction initiated by {}.", bCryptPasswordEncoder.encode(requestId.toString()), bCryptPasswordEncoder.encode(userEmail));
                     throw new Exception("Paid state not found");
 
             }
         } catch (CustomException e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("bundle/{requestId}")
+    @PreAuthorize("hasAuthority('REQUEST_ACCEPTING')")
     public ResponseEntity<?> changeBundleStatus(@RequestBody RequestStatusDTO requestStatusDTO, @PathVariable("requestId") Long requestId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
         try {
-            String userEmail = (String) authentication.getPrincipal();
             if (!userEmail.equals(requestStatusDTO.getUserEmail())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
@@ -209,18 +222,18 @@ public class RequestController {
                 switch (requestStatusDTO.getPaidState()) {
                     case RESERVED:
                         for (Request request : requests) {
-                            requestService.acceptRequest(request.getId());
+                            Request acceptedRequest = requestService.acceptRequest(requestId);
+                            log.info("User {} accepted request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
                         }
                         return new ResponseEntity<>(requests, HttpStatus.OK);
                     case CANCELED:
                         for (Request request : requests) {
-                            requestService.declineRequest(request.getId());
+                            Request acceptedRequest = requestService.declineRequest(request.getId());
+                            log.info("User {} canceled request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
                         }
                         return new ResponseEntity<>(requests, HttpStatus.OK);
-//                case PAID:
-//
-//                    break;
                     default:
+                        log.error("Paid state not found for bundle request {}. Acction initiated by {}.", bCryptPasswordEncoder.encode(requestId.toString()), bCryptPasswordEncoder.encode(userEmail));
                         throw new Exception("Paid state not found");
 
                 }
@@ -228,10 +241,12 @@ public class RequestController {
             return new ResponseEntity<>("Something is wrong with bundle list", HttpStatus.BAD_REQUEST);
 
         } catch (CustomException e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

@@ -34,13 +34,19 @@ public class BrandService {
         return brandRepository.findBrandByBrandName(brandName);
     }
 
+    public Brand getBrandById(Long brandId) throws CustomException {
+        if(brandRepository.findById(brandId) == null)
+            throw  new CustomException("Brand doesn't exists", HttpStatus.BAD_REQUEST);
+
+        return brandRepository.findById(brandId).get();
+    }
+
     public Brand editBrand(Long brandId, String brandName) throws CustomException {
 
         Brand brand = brandRepository.findBrandById(brandId);
         if(brand == null){
             throw new CustomException("Brand doesn't exists", HttpStatus.BAD_REQUEST);
         }
-
         brand.setBrandName(brandName);
 
         return brandRepository.save(brand);

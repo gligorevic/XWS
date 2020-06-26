@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GearShiftTypeService {
@@ -47,5 +48,15 @@ public class GearShiftTypeService {
         gearShiftType.setGearShiftName(gearTypeName);
 
         return gearShiftTypeRepository.save(gearShiftType);
+    }
+
+    public GearShiftType getGearShiftTypeById(Long gearTypeId) throws CustomException{
+        Optional<GearShiftType> gearShiftType = gearShiftTypeRepository.findById(gearTypeId);
+        if(gearShiftType == null)
+            throw new CustomException("Gearshift type with that id doesn't exists", HttpStatus.BAD_REQUEST);
+
+        return gearShiftType.get();
+
+
     }
 }
