@@ -7,6 +7,7 @@ import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.repository.ReservationPeriodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -65,6 +66,16 @@ public class SearchService {
             searchQuery.setParameter("bodyName", advertisementDTO.getBodyName());
         if (advertisementDTO.getKmPassed() != null)
             searchQuery.setParameter("kmPassed", advertisementDTO.getKmPassed());
+        if (advertisementDTO.getKmRestriction() != null)
+            searchQuery.setParameter("kmRestriction", advertisementDTO.getKmRestriction());
+        if (advertisementDTO.getCollisionDamage() != null && advertisementDTO.getCollisionDamage())
+            searchQuery.setParameter("collisionDamage", advertisementDTO.getCollisionDamage());
+        if (advertisementDTO.getNumberChildSeats() != null)
+            searchQuery.setParameter("childSeatsNum", advertisementDTO.getNumberChildSeats());
+        if (advertisementDTO.getPrice() != null)
+            searchQuery.setParameter("priceFrom", advertisementDTO.getPrice());
+        if (advertisementDTO.getPriceTo() != null)
+            searchQuery.setParameter("priceTo", advertisementDTO.getPriceTo());
 
         return searchQuery;
     }
@@ -91,6 +102,16 @@ public class SearchService {
             sqlQueryBuilder.append(" AD.BODY_NAME LIKE :bodyName AND");
         if (advertisementDTO.getKmPassed() != null)
             sqlQueryBuilder.append(" AD.KM_PASSED <= :kmPassed AND");
+        if (advertisementDTO.getKmRestriction() != null)
+            sqlQueryBuilder.append(" AD.KM_RESTRICTION >= :kmRestriction AND");
+        if (advertisementDTO.getCollisionDamage() != null && advertisementDTO.getCollisionDamage())
+            sqlQueryBuilder.append(" AD.COLLISION_DAMAGE = :collisionDamage AND");
+        if (advertisementDTO.getNumberChildSeats() != null)
+            sqlQueryBuilder.append(" AD.NUMBER_CHILD_SEATS >= :childSeatsNum AND");
+        if (advertisementDTO.getPrice() != null)
+            sqlQueryBuilder.append(" AD.PRICE_FROM >= :priceFrom AND");
+        if (advertisementDTO.getPriceTo() != null)
+            sqlQueryBuilder.append(" AD.PRICE_TO <= :priceTo AND");
 
 
         String sqlQuery = sqlQueryBuilder.toString();

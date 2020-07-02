@@ -2,6 +2,14 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import AddCarSelect from "../EndUser/Car/AddCarSelect";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
+
+function valuetext(value) {
+  return `${value}€`;
+}
 
 export default function AdvancedSearch({
   brand,
@@ -16,6 +24,14 @@ export default function AdvancedSearch({
   setBody,
   kmPassed,
   setKmPassed,
+  childSeatsNum,
+  setChildSeatsNum,
+  collisionDamage,
+  setCollisionDamage,
+  kmRestriction,
+  setKmRestriction,
+  price,
+  setPrice,
 }) {
   return (
     <div>
@@ -80,6 +96,62 @@ export default function AdvancedSearch({
               shrink: true,
             }}
             onChange={(e) => setKmPassed(e.target.value)}
+          />
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <TextField
+            label="Km to pass"
+            type="number"
+            style={{ margin: "10px 8%" }}
+            value={kmRestriction}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => setKmRestriction(e.target.value)}
+          />
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <TextField
+            label="Number of child seats"
+            type="number"
+            style={{ margin: "10px 8%" }}
+            value={childSeatsNum}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(e) => setChildSeatsNum(e.target.value)}
+          />
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={collisionDamage}
+                onChange={(e) => setCollisionDamage(e.target.checked)}
+                color="primary"
+              />
+            }
+            label="Collision Damage"
+          />
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <Typography
+            id="range-slider"
+            gutterBottom
+            style={{ textAlign: "center" }}
+          >
+            Price per day
+          </Typography>
+          <Slider
+            style={{ opacity: 0.9 }}
+            value={price}
+            onChange={(e, newVal) => setPrice(newVal)}
+            valueLabelDisplay="auto"
+            aria-labelledby="range-slider"
+            max={150}
+            valueLabelDisplay="on"
+            getAriaValueText={valuetext}
+            valueLabelFormat={valuetext}
           />
         </Grid>
       </Grid>

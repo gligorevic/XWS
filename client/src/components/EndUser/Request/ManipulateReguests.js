@@ -123,7 +123,7 @@ function ManipulateRequests({ match, history, user }) {
     } else {
       request.paidState = "RESERVED";
       setRequest(request);
-      const response = await Axios.put(`/request/${request.id}`, request);
+      await Axios.put(`/request/${request.id}`, request);
     }
   };
 
@@ -136,9 +136,18 @@ function ManipulateRequests({ match, history, user }) {
     } else {
       request.paidState = "CANCELED";
       setRequest(request);
-      const response = await Axios.put(`/request/${request.id}`, request);
+      await Axios.put(`/request/${request.id}`, request);
     }
   };
+
+  const checkIfOverlaping = (row) =>
+    requests.some(
+      (r) =>
+        r.paidState === "RESERVED" &&
+        ((r.startDate <= row.startDate && r.endDate > row.startDate) ||
+          (r.startDate <= row.endDate && r.endDate >= row.endDate) ||
+          (r.startDate > row.startDate && r.endDate < row.endDate))
+    );
 
   return (
     <div>
@@ -231,7 +240,8 @@ function ManipulateRequests({ match, history, user }) {
                               )}
                               {(row.paidState === "CANCELED" ||
                                 (row.paidState === "PENDING" &&
-                                  (isReserved || isPaid))) && (
+                                  checkIfOverlaping(row)) ||
+                                isPaid) && (
                                 <Button
                                   color="primary"
                                   variant="contained"
@@ -242,7 +252,7 @@ function ManipulateRequests({ match, history, user }) {
                                 </Button>
                               )}
                               {row.paidState === "PENDING" &&
-                                !isReserved &&
+                                !checkIfOverlaping(row) &&
                                 !isPaid && (
                                   <Button
                                     onClick={(e) => handleAccept(e, row)}

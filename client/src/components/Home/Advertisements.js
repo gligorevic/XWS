@@ -18,6 +18,9 @@ import "./Avertisements.css";
 import ViewDetails from "../Dialogs/AdvertisementDetails";
 import InfoIcon from "@material-ui/icons/Info";
 import { Paper } from "@material-ui/core";
+import LocationCityIcon from "@material-ui/icons/LocationCity";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -51,6 +54,7 @@ const Advertisements = ({
 
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openInfo, setOpenInfo] = React.useState(false);
+  const [sortBy, setSortBy] = React.useState("");
 
   const handleAddToCart = (event, adId) => {
     event.preventDefault();
@@ -89,6 +93,22 @@ const Advertisements = ({
         alignItems="center"
         className={classes.root}
       >
+        <Grid item xs={12}>
+          <Select
+            native
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            inputProps={{
+              name: "Sort by",
+              id: "age-native-simple",
+            }}
+          >
+            <MenuItem aria-label="Default" value="" />
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </Grid>
         {ads && ads.length > 0 ? (
           ads.map((row) => {
             return (
@@ -100,12 +120,32 @@ const Advertisements = ({
                         aria-label="settings"
                         className="priceToggler"
                       >
-                        <LocalOfferIcon className="priceButton" />
-                        <span className="purePrice">{row.price}</span>
+                        <LocalOfferIcon className="disapearOnHover" />
+                        <span className="purePrice">
+                          <span className="jump">{row.price} €</span>
+                          <sub>
+                            <span style={{ fontSize: 19, margin: "0px 2px" }}>
+                              /
+                            </span>
+                            day
+                          </sub>
+                        </span>
                       </IconButton>
                     }
                     title={`${row.brandName} - ${row.modelName}`}
-                    subheader="September 14, 2016"
+                    subheader={
+                      <span
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          margin: "5px 0",
+                        }}
+                      >
+                        <LocationCityIcon style={{ marginRight: 6 }} />{" "}
+                        {row.cityName}
+                      </span>
+                    }
                   />
                   <CardMedia
                     className={classes.media}
@@ -113,7 +153,13 @@ const Advertisements = ({
                     title="Paella dish"
                   />
                   <CardContent></CardContent>
-                  <CardActions>
+                  <CardActions
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
                     <ViewDetails id={row.id} />
                     {user.role &&
                       user.role.some((r) => r.name === "ROLE_ENDUSER") && (

@@ -3,7 +3,6 @@ import Paper from "@material-ui/core/Paper";
 import CitySearch from "./CitySearch";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Collapse from "@material-ui/core/Collapse";
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
@@ -66,6 +65,10 @@ const Search = ({
   const [fuelType, setFuelType] = useState();
   const [body, setBody] = useState();
   const [kmPassed, setKmPassed] = useState();
+  const [childSeatsNum, setChildSeatsNum] = useState();
+  const [collisionDamage, setCollisionDamage] = useState();
+  const [kmRestriction, setKmRestriction] = useState();
+  const [price, setPrice] = React.useState([0, 150]);
 
   const handleExpandClick = (e) => {
     setAdvancedSearchOpen(!advancedSearchOpen);
@@ -82,6 +85,11 @@ const Search = ({
       freeFrom: selectedStartDate,
       freeTo: selectedEndDate,
       kmPassed,
+      numberChildSeats: childSeatsNum,
+      collisionDamage,
+      kmRestriction,
+      price: price[0],
+      priceTo: price[1],
     });
     if (resp.status === 400) {
       setError(true);
@@ -142,6 +150,14 @@ const Search = ({
               setBody={setBody}
               kmPassed={kmPassed}
               setKmPassed={setKmPassed}
+              childSeatsNum={childSeatsNum}
+              setChildSeatsNum={setChildSeatsNum}
+              collisionDamage={collisionDamage}
+              setCollisionDamage={setCollisionDamage}
+              kmRestriction={kmRestriction}
+              setKmRestriction={setKmRestriction}
+              price={price}
+              setPrice={setPrice}
             />
           </Collapse>
         </Grid>

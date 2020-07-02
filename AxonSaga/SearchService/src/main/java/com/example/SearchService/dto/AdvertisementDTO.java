@@ -14,6 +14,8 @@ public class AdvertisementDTO {
 
     private Integer price;
 
+    private Integer priceTo;
+
     private String brandName;
 
     private String modelName;
@@ -52,6 +54,7 @@ public class AdvertisementDTO {
         this.carId = advertisement.getCarId();
         this.kmRestriction = advertisement.getKmRestriction();
         this.price = advertisement.getPriceFrom();
+        this.priceTo = advertisement.getPriceTo();
         this.brandName = advertisement.getBrandName();
         this.modelName = advertisement.getModelName();
         this.gearShiftName = advertisement.getGearShiftName();
@@ -74,6 +77,7 @@ public class AdvertisementDTO {
         this.carId = advertisement.getCarId();
         this.kmRestriction = advertisement.getKmRestriction();
         this.price = advertisement.getPriceFrom();
+        this.priceTo = advertisement.getPriceTo();
         this.brandName = advertisement.getBrandName();
         this.modelName = advertisement.getModelName();
         this.gearShiftName = advertisement.getGearShiftName();
@@ -240,5 +244,13 @@ public class AdvertisementDTO {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public Integer getPriceTo() {
+        return priceTo;
+    }
+
+    public void setPriceTo(Integer priceTo) {
+        this.priceTo = priceTo;
     }
 }

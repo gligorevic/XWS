@@ -58,7 +58,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const AddAdvertisement = ({ carId, open, setOpen }) => {
   const [cityName, setCityName] = useState("");
   const [error, setError] = useState(false);
-  const [images, setImages] = useState(null);
 
   const [state, setState] = React.useState({
     carId: "",
@@ -73,7 +72,7 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
     price: "",
     numberChildSeats: "",
     collisionDamage: false,
-    rentingLocation: "",
+    rentingStreetLocation: "",
     freeFrom: new Date(),
     freeTo: new Date(),
   });
@@ -103,15 +102,6 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
       });
     })();
   }, [open]);
-
-  const handleChangeImage = (e) => {
-    setImages(
-      Array.from(e.target.files).map((file) => ({
-        url: URL.createObjectURL(file),
-        file,
-      }))
-    );
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -294,9 +284,9 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
               <TextField
                 className={classes.text}
                 fullWidth
-                name="rentingLocation"
+                name="rentingStreetLocation"
                 onChange={handleChangeTextField}
-                value={state.rentingLocation}
+                value={state.rentingStreetLocation}
                 required
                 label="Renting location"
               />
@@ -351,25 +341,6 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
                 Add
               </Button>
             </Paper>
-          </Grid>
-          <Grid item sm={12}>
-            <img
-              alt="Main image"
-              src={images && images[0].url}
-              style={{
-                maxHeight: 200,
-                maxWidth: 200,
-              }}
-            />
-
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="icon-button-file"
-              type="file"
-              multiple
-              onChange={handleChangeImage}
-            />
           </Grid>
           <Backdrop className={classes.backdrop} open={loading}>
             <CircularProgress color="inherit" />
