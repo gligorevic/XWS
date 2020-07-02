@@ -1,2 +1,136 @@
-2020-06-26 12:11:19,427 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-06-26 12:11:55,115 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 43.299 seconds (JVM running for 46.963)
+2020-07-02 17:02:16,045 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:02:21,858 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 6.88 seconds (JVM running for 7.8)
+2020-07-02 17:11:55,075 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:12:01,260 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 7.486 seconds (JVM running for 8.531)
+2020-07-02 17:35:08,117 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:35:13,015 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.906 seconds (JVM running for 6.67)
+2020-07-02 17:35:58,733 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$8d7BV1WfJ13yfIZnXoNIYueAcAQ/EUpguFKmUvj6NdpY1Joc/NNjm
+2020-07-02 17:43:17,733 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:43:22,330 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.575 seconds (JVM running for 6.289)
+2020-07-02 17:44:36,524 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$Vq.ZSd00b0NfcMooyH5PBOXdHSmMrqsu9vP7HFBH7uPXM/6BOERJC
+2020-07-02 17:45:48,536 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:45:53,187 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.649 seconds (JVM running for 6.359)
+2020-07-02 17:46:19,636 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$c0uGjjvs1IwDyrziFfSPs.e9Es40QtDLB7G4fvIsQnXCR5LW5QRGu
+2020-07-02 17:47:07,970 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:47:13,204 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 6.337 seconds (JVM running for 7.689)
+2020-07-02 17:47:37,743 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$hrBcOkho4h2JuyodHYYWkOWuD.1MmX4HQT1O/49PPEsNjXuS7IwDa
+2020-07-02 17:52:27,777 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:52:32,929 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 6.248 seconds (JVM running for 7.12)
+2020-07-02 17:53:42,692 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:53:49,532 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 17:53:55,114 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 6.736 seconds (JVM running for 7.835)
+2020-07-02 17:54:29,690 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$o3tr0IeWwQ/JIcwRezKFduLZujU4REOSA4oPgMaVoGdOfjiO/Nzfe
+2020-07-02 18:44:07,071 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 18:44:11,730 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.654 seconds (JVM running for 6.408)
+2020-07-02 18:45:00,880 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$bM585Umb7GRPAfHeYE2Tp.7oQFlT0xETqYrXKjs.xj6hyp0.CMWtO
+2020-07-02 18:47:00,689 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 18:47:05,853 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 6.271 seconds (JVM running for 7.173)
+2020-07-02 18:47:55,933 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$uC7OgfQ8rrvmTiJ4lru.6uCWZnJeJg3LZ0k7UVj.xUec1xeEBpZ9S
+2020-07-02 18:48:43,549 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$axO4lNarq6/Gw.7ySlE7UeqxRLwt7reowTWSbunkUi8BEEIlAo02m
+2020-07-02 19:01:48,458 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successfully created request by user $2a$10$sdPFMV58c9qF9KTPMcwMRe6DsQu.41F2F.9A/1sZBWFlm.Vsig2B6
+2020-07-02 19:03:37,329 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:03:41,982 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.688 seconds (JVM running for 6.408)
+2020-07-02 19:03:51,625 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$RyaykX6RluIPh/fhNx/bsePNfJsg3KlbNLOx1CQvEAIP1RQ53bZxa
+2020-07-02 19:06:17,856 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$0xvUyfIwQ/apHCEGBFvzZOEgE2epIJNL2y8JrNK3jX/b/V2EGsgfW
+2020-07-02 19:06:43,949 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-6] Successful request info fetching by user $2a$10$pDKDo9z1bdF3QbMGuBQhWOVqTEGD0bksyyKt3KA0How7EXUVgNnqC
+2020-07-02 19:06:59,262 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] Successful request info fetching by user $2a$10$gDT6ybmkeAtXcnpOpSNjruxtUfUgKysHno15jU5C4PNy0ldw/xlBy
+2020-07-02 19:07:01,250 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-10] Successful request fetching by user $2a$10$DHT93t2sLVHonSczbtJ36Oh5ke6.hetmCfKfzasPjqq76DvkRDR7K
+2020-07-02 19:07:03,587 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-8] User $2a$10$BCwo1O0KljR8bJ.Ad/q6teFwQBQ1bKuFpKc/lVf/4TXLs9xC4NcmG accepted request $2a$10$siuzeBugJKyNPKeoXQwgnuOQMzVY6wj6Ev.s88WhkcaxDFU/rPicG
+2020-07-02 19:07:05,743 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] User $2a$10$KoxocWfxMewX5pP3/FzW2uYXPpZhGn4EuRISCwTkWbarwsp9kFK3m accepted request $2a$10$tggh/kTZ1StyIV9wBWlPheIlUg/P86QtTb9ptdFPaPBafmxLBoTLW
+2020-07-02 19:07:10,666 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successful request fetching by user $2a$10$5q93z/0BBedS8hpreW0ikO3WJUBWCrHNBdkt5fdYU.qBdKx2Td8Ga
+2020-07-02 19:08:23,384 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] Successful request fetching by user $2a$10$6TTtpyID/PrxOhDvuA3kG.KucL5rmep6wa/208N3LA6kG7u94zOrG
+2020-07-02 19:08:39,483 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request fetching by user $2a$10$0qLG2DEsn3NrjwKTHQRIpei3nHnUxfa0kMogQHugT27LGsDclzMp.
+2020-07-02 19:09:47,933 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:09:52,655 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.717 seconds (JVM running for 6.561)
+2020-07-02 19:16:45,229 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$/k6B.duHGM3f7nI83hlin.5jf5YnMIbrK/g23nYqWtdD19PkObMXW
+2020-07-02 19:17:00,287 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$j8IEHr0t0Ua31WO3ufypqucfBDDOgflttpGCHeh2wCWAEb.4zTbCe
+2020-07-02 19:17:14,745 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successfully created request by user $2a$10$6mGGfiFN.kCwiwyGnpxhD.7Pfm4hd0vF5lNBrQnTM2eqsSZRict2O
+2020-07-02 19:17:28,150 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request info fetching by user $2a$10$2M292pyOUh5fcIcYxbcuKOAoPUtV64KBAvwEUJZmnbnDz8owrQOPW
+2020-07-02 19:17:29,690 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successful request fetching by user $2a$10$2vAAXDIjgYAo1w2G7dcbKufcBK4z6lVeIQ.B99apIC4YStVHINlFi
+2020-07-02 19:18:39,747 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] Successful request fetching by user $2a$10$TQP5srIZeuzqre/OtF8Xhe1ztusU..Tyi4Eor68g9R4hu2Z27QJ4q
+2020-07-02 19:18:48,511 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-8] Successful request fetching by user $2a$10$y4vDvW.n8mca/qiLoEugNOUo750gIM010AduJPijrmSKDiz38RNtG
+2020-07-02 19:19:26,088 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] Successful request fetching by user $2a$10$yozphHrCGZWiRjFA27y.L.xswFs11k4hFP/ze9LKLBWHtyh0BnLbi
+2020-07-02 19:19:27,942 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-10] User $2a$10$Yprrthq9SJMbNcW955KNA.bZaMyC3oiB7mpphF9jQEoJSYgKYLibm accepted request $2a$10$IBBRhGLkD4M3SJWr6USd4uaL3gbt2WuvtKbbSjQ63YS365Qy4rzmS
+2020-07-02 19:19:36,890 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successful request fetching by user $2a$10$LJwxB.48RyPBpYgkHmbulO8IhOuIKIynSYXzjNGpXEYMoR6ZfQbyi
+2020-07-02 19:19:46,506 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successful request fetching by user $2a$10$vQ9iKffKe1PeN5WemCcs8eqmJAQsW9foM9/Kqm/Wf8Uu2B.RfgJ6C
+2020-07-02 19:19:50,512 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successful request fetching by user $2a$10$PfROPjjPRY/3rPUmWaGNqeNKl5zVqKjzzjXT9lMGBll1XGrL.HYDO
+2020-07-02 19:20:29,165 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request fetching by user $2a$10$dEM.TbW8FiCC32qcQ2BaiuciS28S0vjWkh5Ys1SGxqTyrrTMdZ.n2
+2020-07-02 19:21:10,415 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successful request fetching by user $2a$10$ZGHadHv0G0HQtD6OOAk4WewJH8iXw/XtIVgWKiRUMYwUC62RzcTMq
+2020-07-02 19:21:25,634 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-6] Successful request fetching by user $2a$10$T73PdCs7Hgwwhy4x9lak3.W5ji4DjU0hE/NsWPdXbxjUUwkguLd52
+2020-07-02 19:22:06,220 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] Successful request fetching by user $2a$10$I8zQYbmwXG31qdv9iGoa8uwWLHtlOKqfIoa3YjKgQwJFb/YVPbBLu
+2020-07-02 19:22:16,099 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-8] Successful request fetching by user $2a$10$DwgCukp3VMQaqnMby5iFWO4v8uG2CnFwH6s.c1Lb6.XoCjyla6vYW
+2020-07-02 19:22:33,860 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] Successful request fetching by user $2a$10$W6xP3OKnFBW/x7csMC4VXO2euoSZM9tqsjQ8h8M6SpKv5cdUROrYC
+2020-07-02 19:22:39,032 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-10] Successful request fetching by user $2a$10$eYXwA2OAI1WHtr5tsjoaWefXd.gJFa98GWCQ9xJ2v8/5xyuKrUKbu
+2020-07-02 19:22:54,035 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] User $2a$10$uWDY03KWRE43LEoTLUOZhOVEI.LvqvMuUFfZQNtYWX.Bnua5sTTkm canceled request $2a$10$xck3tLSAwF0j/2k90FQVo.69AGLZSV5jKOvioY11p/wl9JaqZgrWe
+2020-07-02 19:23:42,496 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successful request fetching by user $2a$10$f5khrJcXCm93RLPU3.cJWui43E4IWG/wILvWL.rwjQHZqpoc7HWwy
+2020-07-02 19:23:48,607 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] User $2a$10$5RWQU/UV7RTMh26PtMwldOoaN/xgx0OO3IzVSE4t8fyXETStCbZwG canceled request $2a$10$jWAR/RAI02hFvt5SjoHrgexoQOQOZGWpuxZ4a4L1WtRYl3FvRGfSq
+2020-07-02 19:23:52,703 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request fetching by user $2a$10$YZ1SkmU2sphb.y4sqGXOYOoJYBkBjLx.Nv5M71wq7RYHv0ykaa6ky
+2020-07-02 19:25:18,400 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request info fetching by user $2a$10$uQAlSaso50KDglwLfaRZBe.P2b8m5fu7RvI2uszpWRilHQbuOn8qC
+2020-07-02 19:25:19,764 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-8] Successful request fetching by user $2a$10$mUF2m4TuR0hlKcT5dT885.SOAHID3Xgw9ZMi/RpiIk6Fub85Fzj5K
+2020-07-02 19:25:23,309 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] User $2a$10$/K/KiaUc5i7ytJozuVHlbOgba2d03Yc24n4AbdpvfLbMQvhvvAvsy accepted request $2a$10$/WlqbOwR5U/4cXakjZF1pet6M7wVjDyc8MhCA.gFpgW49RAl4jn/W
+2020-07-02 19:25:33,182 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] User $2a$10$bYKZM2QoJQk2NE6T5kF4mu3qWh.SCrkk0kGDzEM.PR0tLFuE1p2yK canceled request $2a$10$/vbRmnXwBpSqRZg.MjuEHOUy0j/kwfXQeFROo8qZiCO0rvnQEf1k6
+2020-07-02 19:26:39,301 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successful request fetching by user $2a$10$o6IOx7NtWCm1ijBd6JOMM.rRsY5VUcAGp6CSgdcpQZu9qmhfRg7mO
+2020-07-02 19:27:23,009 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request fetching by user $2a$10$yZ76em3Xjxwh6vU/frfgPeZmzkHlaGXcO.cNQi4F0zXECpZg4SS8a
+2020-07-02 19:27:26,782 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] User $2a$10$xslWjhpQWt0Y.ydTkvOQm.L7Ngzo4BCIiYAHkSiJL4ksAXbiDeL2q canceled request $2a$10$f4UkG7B6ow3Vjr0edIzZV.YCxCDSW6NXUI/VP7mo/KwAGELbbpd1S
+2020-07-02 19:28:49,082 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:28:54,007 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.92 seconds (JVM running for 6.695)
+2020-07-02 19:29:34,112 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successfully created request by user $2a$10$jrijB6uQ0kwqf/vldcyrbe/b3Aode36NefScZyFpee3rp7IJWpzUW
+2020-07-02 19:29:47,864 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successfully created request by user $2a$10$4E8Sp0MYBrKh16pimZEa6O/LP28tS2s4IqcAiktuO/mQqXz/FqBXO
+2020-07-02 19:29:56,005 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-10] Successfully created request by user $2a$10$suj0uzpsFPDwu7TJhw/nc.0ls/fUEpcr/s7uhcddiJ/BBwQ6tVgpS
+2020-07-02 19:30:07,095 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$Ddgy8.HSWOfCISMVGfrOK.27vbWVp9h47NS0SV1MYJYAi.YiAKFxC
+2020-07-02 19:34:44,884 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] Successfully created request by user $2a$10$1kNyYeRFd8TAz4SwSZQfT.XcBoqP658mpm7MJVs3oiBBsF5DieNce
+2020-07-02 19:34:58,496 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:35:03,186 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.705 seconds (JVM running for 6.443)
+2020-07-02 19:35:24,843 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$cIsD0/rx5qRU3RQWJAoZE.LDJhxp1aGVPBY9I.g8CI9bH.3AZ6wzG
+2020-07-02 19:35:38,815 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$g.WiXs3JmzNTArdccqs7Veo33kUikmZaH5/AJkCETqG1/6tpVgukK
+2020-07-02 19:37:17,367 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:37:22,041 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.67 seconds (JVM running for 6.39)
+2020-07-02 19:37:47,950 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$z/EdnFF2OcnN4X/kY0bKS.G2zjaxsf1tuDscHia1lbqcue2H7Kin6
+2020-07-02 19:37:57,509 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$sL2T4TsvcmaA3nqVnI/Uluv/BUJxd.g5gHP6AgP0ZXVLZsqCGIQOG
+2020-07-02 19:38:41,065 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:38:45,653 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.572 seconds (JVM running for 6.264)
+2020-07-02 19:39:04,475 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$XYEedgw7WySzxYUyWsmey.C78wsNQu9tPKGzY3Z3xUpPa/PBZU3oe
+2020-07-02 19:39:44,585 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:39:49,242 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.669 seconds (JVM running for 6.396)
+2020-07-02 19:40:15,195 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:40:19,791 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.588 seconds (JVM running for 6.33)
+2020-07-02 19:40:36,749 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$9aVF/uOVEGsGHB3nPOmZ6O6HqglPk5/cch8C6Vvai9uMrveijPW36
+2020-07-02 19:43:34,877 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:43:39,497 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.601 seconds (JVM running for 6.339)
+2020-07-02 19:44:05,842 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$QnQKpGpqQYN1vjztolJbEeoP3wM8fwtkzIiSOQOjneQozmiQ9er8S
+2020-07-02 19:44:14,414 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$mc6cfgKsga0xHVRk7jU6O.r3KzwSCRo9wHaMYe3iRMkSOXism3ZjC
+2020-07-02 19:44:24,654 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successfully created request by user $2a$10$iyG2zc8sHF/SVfzL1gIVuejw.pQ5x2VgAy2TuTq5Uyxj/WlexQpfO
+2020-07-02 19:46:20,840 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:46:25,504 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.67 seconds (JVM running for 6.43)
+2020-07-02 19:46:41,000 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$rHqFm0jwBidOOB93CY9WP.W7XmmmfQBjh/8./r.VSPGFVJRzaYTxW
+2020-07-02 19:46:50,927 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$CISwBLHrOLsJv3auDY.KGOdGbi0GZEs/BZUa2ficHyB4lX24tLZi6
+2020-07-02 19:47:08,108 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successfully created request by user $2a$10$PzQIj6GFEEWqChYytLYhoOYFGZVfDd3tlVd8Hlr0ScI.EJZEHRDNG
+2020-07-02 19:47:52,775 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successfully created request by user $2a$10$Q7SHZOjJ6npGY8HsEBmGXetVa4uQ6DthG8cb8fEEK5btE0hIuZmF6
+2020-07-02 19:48:01,290 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successfully created request by user $2a$10$HiwcSmDxQyHxXYFpJ0hL2ud31oPNSPaChBYZiGqfJGJxAC8AwggoS
+2020-07-02 19:48:18,430 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-6] Successfully created request by user $2a$10$Mxu9IElqtnFry5i3h2R8aOIs13kCQeiJhIZhRGmU/M5ppT.g4TYxa
+2020-07-02 19:49:54,643 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$SMdD1.vv9CnSs3rE90ow3OKnX6i4xvzooevwN85oOC25FQLhF.66K
+2020-07-02 19:59:40,331 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 19:59:45,034 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.715 seconds (JVM running for 6.448)
+2020-07-02 20:22:21,787 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$7WNsDPhdnxVzan79tvbW5.4dt3boUQKvOqQ2q8TvQsR25eBMDqW6G
+2020-07-02 21:14:05,501 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 21:14:10,237 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.79 seconds (JVM running for 6.516)
+2020-07-02 21:14:22,794 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$xZrj/b6OyjwkIGdT2Q9HwuWTn2L4fVBtVUF2VkwZ/GiIeX5loaq1q
+2020-07-02 21:17:32,716 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-02 21:17:37,424 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 5.719 seconds (JVM running for 6.449)
+2020-07-02 21:17:54,668 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$KYggtLBpnHdOhiB.00xfQ.tTKjhMfqV/PhhLeMJ1YFS.W0ZtZ/P3O
+2020-07-02 21:32:03,095 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successfully created request by user $2a$10$ecvFiaz8Aup2TS.0ZR/STewGbI00Ht2VMXARta2i7.zsQ5NuB113C
+2020-07-02 21:32:16,902 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successful request info fetching by user $2a$10$jA4GjqZ10oL8QYYfslfYGOvXqInSYHCFIlGBaimVBA3ufDE/1mtn.
+2020-07-02 21:32:18,457 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successful request fetching by user $2a$10$LQB5jBk/C5oun1gQwy4D2OmJraH6O1VUMiAcVr0eFuKp.mbxNyQx6
+2020-07-02 21:32:20,974 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] User $2a$10$Qe.cU4K45.JsUq0d.80bQOuR0dZx0z2RdLdckFSDRHzOuNMKZUND6 accepted request $2a$10$X0TBd9bxsHZvcLTlOFVOPO3aNusHbHK6IGGFLuFlh0ESKwq3wvY5W
+2020-07-02 21:32:23,582 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] Successful request fetching by user $2a$10$rdG0P9xzGdhH75E.bfuJDeT7nz6qOfwi4JLfD71YsDQn75O6Yy6Sm
+2020-07-02 21:32:25,882 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] User $2a$10$6UN5fMAPzcYmtjQjrH2nM.arnvayzxJ.oYOt749cT.Vqkblfodic2 accepted request $2a$10$S6EcHD3nm0h9UobgTYEtn.RoFLwn6QY246EkK2/7mPlAoS13pkV9i
+2020-07-02 21:33:27,063 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-10] Successful request info fetching by user $2a$10$XUFtagBKg8fF9WKwfmjqbORro2Fq..M9ks5y/HV6xoa5vvdmiLFPW
+2020-07-02 21:33:28,998 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-8] Successful request fetching by user $2a$10$mHYivJ6co/dKaQ2qeXxJGea/l1prHaRlCnMhmeVchwYanYNBAMdVC
+2020-07-02 21:34:22,910 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successfully created request by user $2a$10$CTMH7u.uqaEvtgjO4eC5husf/ngrzS3eSQ4Lpg4TKB7zn6PMtTBkS
+2020-07-02 21:34:37,231 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successful request info fetching by user $2a$10$E74AyDI04rXBdfKU3Om.5u3PIIXrM9zIMh0lAf6yaZzNQ6z96w8Zi
+2020-07-02 21:34:38,917 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request fetching by user $2a$10$mdGjb1VuL7KG/YXV/PpYyerq3F8Z7Pvu5RbjY1CFbvuvXkqfVTRW.
+2020-07-02 21:34:40,795 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] User $2a$10$QCcgbAp1SIOmIBZBL6JumekoK2I47wgseEVIZHcLd48U87S8wu8Cq canceled request $2a$10$Xusvfa85a7xY/yUH6NDYaePEbW61OdVCbtO7V1GCzb.tOSJsjHIdK
+2020-07-02 21:34:42,069 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] Successful request fetching by user $2a$10$RVgrwfXpZkhdhW1P9TUV3eSn.WdUmsJekYbEV6.Gq3QRjxpLxNVJe
+2020-07-02 21:50:28,727 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request info fetching by user $2a$10$Pl/HCc0Lw0H7xotn/fHJreG2S9Kqc.ty/IXsEDFrDH8bJnTCK9NsS
+2020-07-02 21:50:40,421 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] Successful request info fetching by user $2a$10$4jP/jfrbF6y/eLwsjBs3kuczqU1NR65OHXONw148MfMem9h5zsFo.
+2020-07-02 21:50:41,737 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] Successful request fetching by user $2a$10$W9A8nKcPkH1HMZxpnxXZq.wqsFqEI.3gAuw7d//gNzv9IucmdKaRq

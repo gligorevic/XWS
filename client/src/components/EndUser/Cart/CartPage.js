@@ -41,7 +41,7 @@ const CartPage = ({
   user,
 }) => {
   useEffect(() => {
-    var cartList = JSON.parse(localStorage.getItem("Cart"));
+    var cartList = JSON.parse(localStorage.getItem("Cart")) || [];
     getAdvertisementsForCart(cartList.map((cartItem) => cartItem.id));
   }, []);
 
@@ -177,7 +177,7 @@ const CartPage = ({
   return (
     <>
       <div className={classes.root}>
-        <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
+        <AppBar open={open} handleDrawerOpen={handleDrawerOpen}></AppBar>
 
         <main className={classes.paddingMain}>
           <div className={classes.drawerHeader} />
@@ -356,7 +356,7 @@ const CartPage = ({
 
       <Snackbar
         open={openFailure}
-        autoHideDuration={2000}
+        autoHideDuration={3500}
         onClose={handleCloseError}
       >
         <Alert onClose={handleCloseError} severity="error">

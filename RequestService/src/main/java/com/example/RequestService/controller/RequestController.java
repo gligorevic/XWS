@@ -187,7 +187,7 @@ public class RequestController {
                     log.info("User {} accepted request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
                     return new ResponseEntity<>(acceptedRequest, HttpStatus.OK);
                 case CANCELED:
-                    Request canceledRequest = requestService.acceptRequest(requestId);
+                    Request canceledRequest = requestService.declineRequest(requestId);
                     log.info("User {} canceled request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(canceledRequest.getId().toString()));
                     return new ResponseEntity<>(canceledRequest, HttpStatus.OK);
                 default:
