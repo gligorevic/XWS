@@ -16,6 +16,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import "./Avertisements.css";
 import ViewDetails from "../Dialogs/AdvertisementDetails";
+import InfoIcon from "@material-ui/icons/Info";
+import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -87,7 +89,7 @@ const Advertisements = ({
         alignItems="center"
         className={classes.root}
       >
-        {ads &&
+        {ads && ads.length > 0 ? (
           ads.map((row) => {
             return (
               <Grid item sm={12} md={4}>
@@ -127,7 +129,24 @@ const Advertisements = ({
                 </Card>
               </Grid>
             );
-          })}
+          })
+        ) : (
+          <Paper
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              padding: 50,
+              fontSize: 22,
+              fontWeight: 500,
+              color: "#616161",
+            }}
+          >
+            <InfoIcon style={{ fontSize: 35, marginRight: 6 }} />
+            <p>No advertisements for given params.</p>
+          </Paper>
+        )}
       </Grid>
       <Snackbar
         open={openSuccess}

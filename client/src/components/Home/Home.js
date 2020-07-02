@@ -6,23 +6,26 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Advertisements from "./Advertisements";
 import Search from "../Search/Search";
+import Footer from "../layouts/Footer";
 
 const useStyles = makeStyles((theme) => ({
   back: {
     backgroundImage:
-      "linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(" +
+      "linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)), url(" +
       ficaImage +
       ")",
     backgroundAttachment: "fixed",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     height: "100%",
+    boxShadow: "0 0 38px 28px rgba(0,0,0,0.45) inset",
   },
   center: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "column",
+    minHeight: "100vh",
   },
 }));
 
@@ -51,6 +54,7 @@ const Home = () => {
           selectedEndDate={selectedEndDate}
         />
       </div>
+      <Footer />
     </div>
   );
 };

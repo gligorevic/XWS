@@ -21,6 +21,8 @@ import CreatedRequests from "./components/EndUser/Request/CreatedRequests/Create
 import OpenChatBoxes from "./components/EndUser/Chat/OpenChatBoxes";
 import MyRequests from "./components/EndUser/Request/MyRequests";
 
+import "./scrollbar.css";
+
 const store = configureStore();
 
 if (localStorage.jwtToken) {

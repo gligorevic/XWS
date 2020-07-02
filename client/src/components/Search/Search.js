@@ -12,6 +12,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DateInputForm from "./DateInputForm";
 import { searchAdvertisements } from "../../store/actions/advertisement";
 import { connect } from "react-redux";
+import AdvancedSearch from "./AdvancedSearch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,23 +54,34 @@ const Search = ({
   setSelectedEndDate,
 }) => {
   const classes = useStyles();
-
   const [error, setError] = useState(false);
 
   const [cityName, setCityName] = useState("");
 
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
 
+  const [brand, setBrand] = useState();
+  const [model, setModel] = useState();
+  const [gearShift, setGearShif] = useState();
+  const [fuelType, setFuelType] = useState();
+  const [body, setBody] = useState();
+  const [kmPassed, setKmPassed] = useState();
+
   const handleExpandClick = (e) => {
     setAdvancedSearchOpen(!advancedSearchOpen);
   };
 
   const handleSubmit = async (e) => {
-    console.log(cityName);
     const resp = await searchAdvertisements({
       cityName: cityName.length > 0 ? cityName : null,
+      brandName: brand?.brandName,
+      modelName: model?.modelName,
+      gearShiftName: gearShift?.gearShiftName,
+      bodyName: body?.bodyTypeName,
+      fuelTypeName: fuelType?.fuelTypeName,
       freeFrom: selectedStartDate,
       freeTo: selectedEndDate,
+      kmPassed,
     });
     if (resp.status === 400) {
       setError(true);
@@ -79,6 +91,9 @@ const Search = ({
   return (
     <Paper className={classes.root}>
       <Grid container spacing={2}>
+        <Grid item sm={12}>
+          <h2 style={{ margin: "0px 10px" }}>Search</h2>
+        </Grid>
         <Grid item sm={12} lg={4} className={classes.center}>
           <CitySearch
             cityName={cityName}
@@ -99,7 +114,7 @@ const Search = ({
             setSelectedDate={setSelectedEndDate}
           />
         </Grid>
-        <Grid item sm={12}>
+        <Grid item sm={12} style={{ paddingTop: 0 }}>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: advancedSearchOpen,
@@ -110,11 +125,32 @@ const Search = ({
           >
             <ExpandMoreIcon />
           </IconButton>
+          <h3 style={{ display: "inline-block" }}>
+            <em>Advanced search</em>
+          </h3>
           <Collapse in={advancedSearchOpen} timeout="auto" unmountOnExit>
-            <Typography paragraph>ADVANCED SEARCH</Typography>
+            <AdvancedSearch
+              brand={brand}
+              setBrand={setBrand}
+              model={model}
+              setModel={setModel}
+              gearShift={gearShift}
+              setGearShif={setGearShif}
+              fuelType={fuelType}
+              setFuelType={setFuelType}
+              body={body}
+              setBody={setBody}
+              kmPassed={kmPassed}
+              setKmPassed={setKmPassed}
+            />
           </Collapse>
         </Grid>
-        <Grid item sm={12} className={classes.floatRight}>
+        <Grid
+          item
+          sm={12}
+          className={classes.floatRight}
+          style={{ paddingTop: 0 }}
+        >
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Search
           </Button>

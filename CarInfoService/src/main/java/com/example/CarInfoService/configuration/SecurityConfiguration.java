@@ -46,6 +46,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/brand").permitAll()
+                .antMatchers(HttpMethod.GET, "/brand/**/model").permitAll()
+                .antMatchers(HttpMethod.GET, "/model/**/gear-shift-type").permitAll()
+                .antMatchers(HttpMethod.GET, "/model/**/fuel-type").permitAll()
+                .antMatchers(HttpMethod.GET, "/model/**/body-type").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

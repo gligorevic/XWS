@@ -6,11 +6,11 @@ services:
       - "8761:8761"
     tty: true
 
-    axon-server:
-      image: axoniq/axonserver:4.3.2
-      ports:
-        - 8024:8024
-        - 8124:8124
+  axon-server:
+    image: axoniq/axonserver:4.3.2
+    ports:
+      - 8024:8024
+      - 8124:8124
 
   request:
     build: ./RequestService
@@ -36,30 +36,30 @@ services:
     depends_on:
       - eureka-serviceregistry
 
-    car-info:
-      build: ./CarInfoService
-      ports:
-        - "8087:8087"
-      volumes:
-        - ./CarInfoService/logs:/logs
-      environment:
-        - REGISTRY_HOST=eureka-serviceregistry
-      tty: true
-      depends_on:
-        - eureka-serviceregistry
+  car-info:
+    build: ./CarInfoService
+    ports:
+      - "8087:8087"
+    volumes:
+      - ./CarInfoService/logs:/logs
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
 
-   pki-service:
-     build: ./pki
-     ports:
-       - "8082:8082"
-     volumes:
-       - ./download-certificates:/root
-       - ./pki/logs:/logs
-     environment:
-       - REGISTRY_HOST=eureka-serviceregistry
-     tty: true
-     depends_on:
-       - eureka-serviceregistry
+#  pki-service:
+#    build: ./pki
+#    ports:
+#     - "8082:8082"
+#    volumes:
+#     - ./download-certificates:/root
+#     - ./pki/logs:/logs
+#    environment:
+#     - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
 
   zuul:
     build: ./Zuul
@@ -72,23 +72,23 @@ services:
       - eureka-serviceregistry
       - auth
 
-  mongo:
-    container_name: mongo
-    image: mongo
-    ports:
-      - "27017:27017"
-
-  chat:
-    build: ./NodeJSChat
-    ports:
-      - "3200:3200"
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - DATABASE_URL=mongodb://mongo:27017/messages-service
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      - mongo
+#  mongo:
+#    container_name: mongo
+#    image: mongo
+#    ports:
+#      - "27017:27017"
+#
+#  chat:
+#    build: ./NodeJSChat
+#    ports:
+#      - "3200:3200"
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#      - DATABASE_URL=mongodb://mongo:27017/messages-service
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
+#      - mongo
 
   car-service:
     build: ./AxonSaga/CarService
@@ -104,19 +104,19 @@ services:
       - eureka-serviceregistry
       - axon-server
 
-  search-service:
-    build: ./AxonSaga/SearchService
-    ports:
-      - "8084:8084"
-    volumes:
-      - ./AxonSaga/SearchService/logs:/logs
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-      - AXON_HOST=axon-server
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
-      - axon-server
+#  search-service:
+#    build: ./AxonSaga/SearchService
+#    ports:
+#      - "8084:8084"
+#    volumes:
+#      - ./AxonSaga/SearchService/logs:/logs
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#      - AXON_HOST=axon-server
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
+#      - axon-server
 
   image-service:
     build: ./AxonSaga/ImageService

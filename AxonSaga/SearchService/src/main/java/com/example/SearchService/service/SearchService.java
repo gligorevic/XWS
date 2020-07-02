@@ -1,28 +1,23 @@
 package com.example.SearchService.service;
 
 import com.example.SearchService.domain.Advertisement;
-import com.example.SearchService.domain.City;
 import com.example.SearchService.dto.AdvertisementDTO;
+import com.example.SearchService.dto.SimpleAdvertisementDTO;
 import com.example.SearchService.exception.CustomException;
-import com.example.SearchService.repository.CityRepository;
 import com.example.SearchService.repository.ReservationPeriodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class SearchService {
     @Autowired
-    private CityRepository cityRepository;
+    private CityService cityService;
 
     @Autowired
     private ReservationPeriodRepository reservationPeriodRepository;
@@ -33,74 +28,90 @@ public class SearchService {
     @PersistenceContext
     private EntityManager em;
 
-    public List<Advertisement> getAdvertismentsBySearchParams(AdvertisementDTO advertisementDTO) throws CustomException {
-        Query searchQuery = createQueryAndFillParameters( advertisementDTO);
-
+    public List<SimpleAdvertisementDTO> getAdvertismentsBySearchParams(AdvertisementDTO advertisementDTO) throws CustomException {
+        Query searchQuery = createQueryAndFillParameters(advertisementDTO);
         List<Advertisement> advertisements = searchQuery.getResultList();
-
-        Calendar midnightStartDate = calendarService.getMidnightStartDate(advertisementDTO.getFreeFrom());
-        Calendar midnightEndDate = calendarService.getMidnightEndDate(advertisementDTO.getFreeTo());
-
-        List<Long> unavailableAdvertisements = reservationPeriodRepository.getAllReservationPeriodsBetweenDates(midnightStartDate.getTime(), midnightEndDate.getTime());
-
-        if(unavailableAdvertisements.size() > 0) {
-            return advertisements.stream().filter(advertisement -> !unavailableAdvertisements.contains(advertisement.getId())).collect(Collectors.toList());
-        } else {
-            return advertisements;
-        }
+        List<Long> unavailableAdvertisements = getUnavailableAdvertisements(advertisementDTO);
+        List<Advertisement> availableAdvertisemenst = filterUnavailableAdvertisements(advertisements, unavailableAdvertisements);
+        return availableAdvertisemenst.stream().map(advertisement -> new SimpleAdvertisementDTO(advertisement)).collect(Collectors.toList());
     }
 
-    private Query createQueryAndFillParameters( AdvertisementDTO advertisementDTO) throws CustomException {
+    private Query createQueryAndFillParameters(AdvertisementDTO advertisementDTO) throws CustomException {
         String sqlStatement = createSearchSqlStatement(advertisementDTO);
+        Query searchQuery = fillQueryParams(advertisementDTO, sqlStatement);
+        return searchQuery;
+    }
 
+    private Query fillQueryParams(AdvertisementDTO advertisementDTO, String sqlStatement) throws CustomException {
         Query searchQuery = em.createNativeQuery(sqlStatement, Advertisement.class);
 
-        Long cityId = getCityId(advertisementDTO.getCityName());
-
-        if(cityId != null)
+        if (advertisementDTO.getCityName() != null) {
+            Long cityId = cityService.getCityId(advertisementDTO.getCityName());
             searchQuery.setParameter("cityId", cityId);
-        if(advertisementDTO.getFreeFrom() != null)
+        }
+        if (advertisementDTO.getFreeFrom() != null)
             searchQuery.setParameter("freeFrom", advertisementDTO.getFreeFrom());
-        if(advertisementDTO.getFreeTo() != null)
+        if (advertisementDTO.getFreeTo() != null)
             searchQuery.setParameter("freeTo", advertisementDTO.getFreeTo());
+        if (advertisementDTO.getBrandName() != null)
+            searchQuery.setParameter("brandName", advertisementDTO.getBrandName());
+        if (advertisementDTO.getModelName() != null)
+            searchQuery.setParameter("modelName", advertisementDTO.getModelName());
+        if (advertisementDTO.getFuelTypeName() != null)
+            searchQuery.setParameter("fuelTypeName", advertisementDTO.getFuelTypeName());
+        if (advertisementDTO.getGearShiftName() != null)
+            searchQuery.setParameter("gearShiftName", advertisementDTO.getGearShiftName());
+        if (advertisementDTO.getBodyName() != null)
+            searchQuery.setParameter("bodyName", advertisementDTO.getBodyName());
+        if (advertisementDTO.getKmPassed() != null)
+            searchQuery.setParameter("kmPassed", advertisementDTO.getKmPassed());
 
         return searchQuery;
     }
 
     private String createSearchSqlStatement(AdvertisementDTO advertisementDTO) {
         String startQuery = "SELECT * FROM ADVERTISEMENT AS AD WHERE";
-        String sqlQuery = "SELECT * FROM ADVERTISEMENT AS AD WHERE";
+        StringBuilder sqlQueryBuilder = new StringBuilder("SELECT * FROM ADVERTISEMENT AS AD WHERE");
 
-        if(advertisementDTO.getCityName() != null) {
-            sqlQuery = new StringBuilder(sqlQuery).append(" AD.RENTING_CITY_LOCATION_ID = :cityId AND").toString();
-        }
-        if(advertisementDTO.getFreeFrom() != null) {
-            sqlQuery = new StringBuilder(sqlQuery).append(" :freeFrom > AD.FREE_FROM AND :freeFrom < AD.FREE_TO AND").toString();
-        }
-        if(advertisementDTO.getFreeTo() != null) {
-            sqlQuery = new StringBuilder(sqlQuery).append(" :freeTo > AD.FREE_FROM AND :freeTo < AD.FREE_TO AND").toString();
-        }
+        if (advertisementDTO.getCityName() != null)
+            sqlQueryBuilder.append(" AD.RENTING_CITY_LOCATION_ID = :cityId AND");
+        if (advertisementDTO.getFreeFrom() != null)
+            sqlQueryBuilder.append(" :freeFrom > AD.FREE_FROM AND :freeFrom < AD.FREE_TO AND");
+        if (advertisementDTO.getFreeTo() != null)
+            sqlQueryBuilder.append(" :freeTo > AD.FREE_FROM AND :freeTo < AD.FREE_TO AND");
+        if (advertisementDTO.getBrandName() != null)
+            sqlQueryBuilder.append(" AD.BRAND_NAME LIKE :brandName AND");
+        if (advertisementDTO.getModelName() != null)
+            sqlQueryBuilder.append(" AD.MODEL_NAME LIKE :modelName AND");
+        if (advertisementDTO.getFuelTypeName() != null)
+            sqlQueryBuilder.append(" AD.FUEL_TYPE_NAME LIKE :fuelTypeName AND");
+        if (advertisementDTO.getGearShiftName() != null)
+            sqlQueryBuilder.append(" AD.GEAR_SHIFT_NAME LIKE :gearShiftName AND");
+        if (advertisementDTO.getBodyName() != null)
+            sqlQueryBuilder.append(" AD.BODY_NAME LIKE :bodyName AND");
+        if (advertisementDTO.getKmPassed() != null)
+            sqlQueryBuilder.append(" AD.KM_PASSED <= :kmPassed AND");
 
-        if(startQuery.equals(sqlQuery))
+
+        String sqlQuery = sqlQueryBuilder.toString();
+        if (startQuery.equals(sqlQuery))
             return "SELECT * FROM ADVERTISEMENT";
-        else if(sqlQuery.substring(sqlQuery.length() - 3).equals("AND")) {
+        else if (sqlQuery.substring(sqlQuery.length() - 3).equals("AND")) {
             return sqlQuery.substring(0, sqlQuery.length() - 4);
         } else {
             return sqlQuery;
         }
     }
 
-    private Long getCityId(String cityName) throws CustomException{
-        if(cityName != null) {
-            City city = cityRepository.findByName(cityName);
-            if(city == null)
-                throw new CustomException("City doesn't exist", HttpStatus.BAD_REQUEST);
-
-            return city.getId();
-        }
-        return null;
+    private List<Long> getUnavailableAdvertisements(AdvertisementDTO advertisementDTO) {
+        Calendar midnightStartDate = calendarService.getMidnightStartDate(advertisementDTO.getFreeFrom());
+        Calendar midnightEndDate = calendarService.getMidnightEndDate(advertisementDTO.getFreeTo());
+        return reservationPeriodRepository.getAllReservationPeriodsBetweenDates(midnightStartDate.getTime(), midnightEndDate.getTime());
     }
 
-
-
+    private List<Advertisement> filterUnavailableAdvertisements(List<Advertisement> advertisements, List<Long> unavailableAdvertisements) {
+        return unavailableAdvertisements.size() > 0 ?
+                advertisements.stream().filter(advertisement -> !unavailableAdvertisements.contains(advertisement.getId())).collect(Collectors.toList())
+                : advertisements;
+    }
 }
