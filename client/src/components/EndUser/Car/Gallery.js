@@ -10,7 +10,7 @@ export default function Gallery({ images }) {
   };
 
   return (
-    <div style={{ overflow: "hidden" }}>
+    <div style={{ overflow: "hidden", zIndex: 100 }}>
       {images.map((image, i) => (
         <div className="imageContainer">
           <img src={image.source} onClick={() => setCurrentIndex(i)} />

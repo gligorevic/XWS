@@ -73,6 +73,7 @@ const AddAdvertisement = ({ id }) => {
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
+        style={{ zIndex: 40 }}
       >
         <AppBar>
           <Toolbar>
@@ -97,7 +98,7 @@ const AddAdvertisement = ({ id }) => {
             paddingTop: 120,
           }}
         >
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ position: "relative" }}>
             {ad && (
               <Gallery
                 images={ad.images.map((img) => ({
