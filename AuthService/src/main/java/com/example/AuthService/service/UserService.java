@@ -2,13 +2,16 @@ package com.example.AuthService.service;
 
 import com.example.AuthService.constants.Format;
 import com.example.AuthService.controller.UserController;
+import com.example.AuthService.domain.CompanyRequest;
 import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.domain.Role;
 import com.example.AuthService.domain.User;
 import com.example.AuthService.dto.ChangePasswordDTO;
+import com.example.AuthService.dto.CompanyDTO;
 import com.example.AuthService.dto.LoginRequestDTO;
 import com.example.AuthService.dto.UserDTO;
 import com.example.AuthService.exception.CustomException;
+import com.example.AuthService.repository.CompanyRequestRepository;
 import com.example.AuthService.repository.PrivilegeRepository;
 import com.example.AuthService.repository.RoleRepository;
 import com.example.AuthService.repository.UserRepository;
@@ -49,6 +52,9 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private CompanyRequestRepository companyRequestRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -113,12 +119,61 @@ public class UserService {
         roleList.add(role);
         newUser.setRoles(roleList);
         newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+
         userRepository.save(newUser);
         userDTO.setPassword(null);
+
 
         log.info("User successully registrated with email {}", (bCryptPasswordEncoder.encode(userDTO.getEmail())));
 
         return userDTO;
+    }
+
+    public UserDTO registerAgent(UserDTO userDTO, CompanyDTO companyDTO) throws CustomException {
+
+        User user = userRepository.findByEmail(userDTO.getEmail());
+
+        if(user != null) {
+            throw new CustomException("User already exist", HttpStatus.BAD_REQUEST);
+        }
+
+        Role role = roleRepository.findByName(userDTO.getRoleName());
+
+        if(role == null || role.getName().equals("ROLE_ADMIN")) {
+            throw new CustomException("Role doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+
+        User newUser = new User(userDTO);
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(role);
+        newUser.setRoles(roleList);
+        newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+
+        if(role.getName().equals("ROLE_AGENT")){
+
+            CompanyRequest companyRequest = new CompanyRequest(companyDTO);
+            companyRequest.setUserEmail(newUser.getEmail());
+
+            companyRequestRepository.save(companyRequest);
+
+            List<Privilege> restricted = new ArrayList<>();
+            restricted.add(privilegeRepository.findByName("CAR_USAGE_STATISTIC_VIEWING"));
+            restricted.add(privilegeRepository.findByName("AGENT_PAID_REQUEST_CREATING"));
+            restricted.add(privilegeRepository.findByName("PRICELIST_ITEM_DISCOUNT_CREATION"));
+            restricted.add(privilegeRepository.findByName("DATA_SYNCHRONIZATION"));
+
+            newUser.setBlockedPrivileges(restricted);
+
+        }
+
+        userRepository.save(newUser);
+        userDTO.setPassword(null);
+
+
+        log.info("User successully registrated with email {}", (bCryptPasswordEncoder.encode(userDTO.getEmail())));
+
+        return userDTO;
+
     }
 
     public User getUser(String email, Authentication authentication) throws Exception {
@@ -154,4 +209,6 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(newPasswordData.getNewPassword()));
         userRepository.save(user);
     }
+
+
 }

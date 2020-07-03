@@ -19,7 +19,6 @@ import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests"
 
 import CreatedRequests from "./components/EndUser/Request/CreatedRequests/CreatedRequests";
 import OpenChatBoxes from "./components/EndUser/Chat/OpenChatBoxes";
-import MyRequests from "./components/EndUser/Request/MyRequests";
 
 import "./scrollbar.css";
 
@@ -62,7 +61,6 @@ function App() {
           <PrivateUserRoute exact path="/user" component={UserHome} />
           <PrivateUserRoute exact path="/cart" component={CartPage} />
           <PrivateUserRoute exact path="/car/:carId" component={ViewCar} />
-          <PrivateUserRoute exact path="/my-requests" component={MyRequests} />
           <PrivateUserRoute
             exact
             path="/request/ad/:adId"

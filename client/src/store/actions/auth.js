@@ -48,3 +48,13 @@ export const registrate = (userData) => async (dispatch) => {
     return err.response;
   }
 };
+
+export const registrateAgent = (userData, companyData) => async (dispatch) => {
+  try {
+    const response = await axios.post("/auth/agent", userData, companyData);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return err.response;
+  }
+};

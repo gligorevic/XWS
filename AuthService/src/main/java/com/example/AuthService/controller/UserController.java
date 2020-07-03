@@ -2,9 +2,7 @@ package com.example.AuthService.controller;
 
 import com.example.AuthService.constants.Format;
 import com.example.AuthService.domain.User;
-import com.example.AuthService.dto.ChangePasswordDTO;
-import com.example.AuthService.dto.LoginRequestDTO;
-import com.example.AuthService.dto.UserDTO;
+import com.example.AuthService.dto.*;
 import com.example.AuthService.exception.CustomException;
 import com.example.AuthService.service.AdminService;
 import com.example.AuthService.service.UserService;
@@ -20,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 import static com.example.AuthService.security.SecurityConstants.TOKEN_BEARER_PREFIX;
 
@@ -84,7 +84,23 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
         try {
             hasAllRegistrationData(userDTO);
+
             return new ResponseEntity<>(userService.register(userDTO), HttpStatus.CREATED);
+        } catch (CustomException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/agent")
+    public ResponseEntity<?> registerAgent(@RequestBody AgentRegistrationDTO agentRegistrationDTO) {
+        try {
+            hasAllRegistrationData(agentRegistrationDTO.getUserDTO());
+
+            return new ResponseEntity<>(userService.registerAgent(agentRegistrationDTO.getUserDTO(), agentRegistrationDTO.getCompanyDTO()), HttpStatus.CREATED);
         } catch (CustomException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
