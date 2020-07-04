@@ -1,17 +1,4 @@
-2020-07-02 14:24:11,286 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-02 14:24:23,312 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 15.704 seconds (JVM running for 16.97)
-2020-07-02 14:27:03,275 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-1] Successfully added car $2a$10$WriHbc5gsViyMDa6JROAa.4rpueRWbhzqGTfbY8ICsVERBxcOM/k. by user $2a$10$hJ1yZ.E/07cHOCbQfNKgk.F5L3KNTu79w3Kp1MU3cRyMXJEoObVjO
-2020-07-02 14:26:25,476 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-02 14:26:39,719 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 16.524 seconds (JVM running for 17.716)
-2020-07-02 14:43:09,235 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-2] Successfully added car $2a$10$1MMgjMOa8.KzCHZKpivJe.0OzVXozhiHmPJzf1oZFOJTCLNQ6ZbuO by user $2a$10$KKaC48G7Bw/MxSPftBbVXOMGCXkcBx9EeuPQyBNU8l71FX8plhmCG
-2020-07-02 14:43:24,404 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-7] Successfully generated token for car $2a$10$GnEwl7DuSFusLFU5P/z5K.iVpuuyUM.OI/zELSXm/tobff56pHTPG by user $2a$10$hcV/11fqgXdPzyLLN8642.OfLMwCDu7vU6UTwg9q4JQ6Hl/pPLsmS
-2020-07-02 17:51:44,301 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-5] Successfully added car $2a$10$B2pAdVLK8q4Nyhp9fn9YUeriKyzDv.24vs5NQCiHr/mAxkRCrO2qS by user $2a$10$dBup.2bVi6isZxJa/rfZYuV7xeToJ3FA6ThzT9hf/Qk/t6PY8iTQK
-2020-07-02 17:57:01,861 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-2] Successfully added car $2a$10$R7oZg87IsBvFNOM9/c/7pu0Jtm2/3.bTpMvLV6o8j7nFYnGqNpAOO by user $2a$10$lFa2by5LHPqLv3h0kJ5LIOngichpjNVFNLMx9MfLlhgkFV1rea4dK
-2020-07-02 18:16:21,698 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-02 18:17:50,376 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 107.351 seconds (JVM running for 114.277)
-2020-07-02 18:22:58,873 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-3] Successfully added car $2a$10$rsPc7WFAHrJTJBdmEIZAWeDRglanwvVTu6j5jVH8xxD4dTbtbE5My by user $2a$10$I0O1q01.FZqZKzYuOU3hru.sR8FFvICQwaGJ7.R/aGOOZ5QtF589q
-2020-07-02 18:40:52,457 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-7] Successfully added car $2a$10$gsyBSjJ.bDZctgzORdT/beytqveGDbXUErP6ISbu1VVR5YeDeKYSK by user $2a$10$0vCckegiOhdqpMd9wtP0M.91EknY0stoqtrcX8HaU9g02QE.UmM2C
-2020-07-02 19:20:01,669 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-02 19:21:52,357 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 130.07 seconds (JVM running for 138.27)
-2020-07-02 19:23:28,588 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-2] Successfully added car $2a$10$/uP0RE7GzejU24ntzphoKeNYv38LGJQUDpXe1w00iu8t9v2JMRACq by user $2a$10$zCTDqXU6iZofhOwC4TLFpedq1dEr4.bZ4byiwkSLMCq0CClknlOu.
-2020-07-02 19:31:56,917 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-8] Successfully added car $2a$10$rG8nRTeb/8DIQ6ANkgt6ROYVSk7w5tE9r0RT5dZ49Dmsw0rPO/Svi by user $2a$10$MFCMomAodbVs05HWXqd2zuKQPOzgkdD0imvBo09lEG034OiT.Br92
+2020-07-04 09:58:02,468 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-04 10:00:07,499 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 145.887 seconds (JVM running for 156.16)
+2020-07-04 10:53:13,618 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-04 10:54:56,536 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 122.406 seconds (JVM running for 132.582)

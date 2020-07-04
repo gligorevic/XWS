@@ -72,23 +72,23 @@ services:
       - eureka-serviceregistry
       - auth
 
-#  mongo:
-#    container_name: mongo
-#    image: mongo
-#    ports:
-#      - "27017:27017"
-#
-#  chat:
-#    build: ./NodeJSChat
-#    ports:
-#      - "3200:3200"
-#    environment:
-#      - REGISTRY_HOST=eureka-serviceregistry
-#      - DATABASE_URL=mongodb://mongo:27017/messages-service
-#    tty: true
-#    depends_on:
-#      - eureka-serviceregistry
-#      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  chat:
+    build: ./NodeJSChat
+    ports:
+      - "3200:3200"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - DATABASE_URL=mongodb://mongo:27017/messages-service
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - mongo
 
   car-service:
     build: ./AxonSaga/CarService

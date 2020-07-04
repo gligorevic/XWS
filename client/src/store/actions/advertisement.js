@@ -69,7 +69,7 @@ export const searchAdvertisements = (searchParams) => async (
     const allAdvertisements = await axios.post(`/search/search`, searchParams);
     dispatch(setAllAdvertisements(allAdvertisements.data));
     return allAdvertisements;
-    } catch (err) {
+  } catch (err) {
     console.log(err.response);
     return err.response;
   }

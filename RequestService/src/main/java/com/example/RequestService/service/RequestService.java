@@ -333,4 +333,27 @@ public class RequestService {
 
         return requestContainer;
     }
+
+    public Request cancelRequest(Long requestId, String userEmail) throws CustomException {
+        Request request = requestRepository.findById(requestId).get();
+        if(request == null || !request.getUserSentRequest().equals(userEmail))
+            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+        request.setPaidState(PaidState.CANCELED);
+        return requestRepository.save(request);
+    }
+
+    public RequestContainer cancelBundleRequest(Long bundleId, String userEmail) throws CustomException {
+        RequestContainer requestContainer = requestContainerRepository.findById(bundleId).get();
+        if(requestContainer == null || !requestContainer.getUserSentRequest().equals(userEmail))
+            throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+
+        List<Request> requestsToBeCanceled = requestContainer.getBoundleList();
+
+        List<Request> canceledRequests = requestsToBeCanceled.stream().map(request -> {request.setPaidState(PaidState.CANCELED); return  request;}).collect(Collectors.toList());
+        requestContainer.setBoundleList(canceledRequests);
+
+        requestContainerRepository.save(requestContainer);
+
+        return requestContainer;
+    }
 }

@@ -138,7 +138,7 @@ public class RequestController {
 
     @PutMapping("/bundle/{bundleId}/pay")
     @PreAuthorize("hasAuthority('RENT_PAYING')")
-    public ResponseEntity<?> PayBundleRequest(@PathVariable("bundleId") Long bundleId, Authentication authentication) {
+    public ResponseEntity<?> payBundleRequest(@PathVariable("bundleId") Long bundleId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             RequestContainer requestContainer = requestService.payBundleRequest(bundleId, userEmail);
@@ -153,13 +153,47 @@ public class RequestController {
         }
     }
 
+    @PutMapping("/bundle/{requestId}/cancel")
+    @PreAuthorize("hasAuthority('ENDUSER_REQUEST_CANCELING')")
+    public ResponseEntity<?> cancelBundleRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
+        try {
+            RequestContainer requestContainer = requestService.cancelBundleRequest(requestId, userEmail);
+            log.info("User {} canceled bundle request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(requestContainer.getId().toString()));
+            return new ResponseEntity<>(requestContainer, HttpStatus.OK);
+        } catch (CustomException e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PutMapping("/{requestId}/pay")
     @PreAuthorize("hasAuthority('RENT_PAYING')")
-    public ResponseEntity<?> PayRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
+    public ResponseEntity<?> payRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
+        try {
+            Request request = requestService.cancelRequest(requestId, userEmail);
+            log.info("User {} paid request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
+            return new ResponseEntity<>(request, HttpStatus.OK);
+        } catch (CustomException e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{requestId}/cancel")
+    @PreAuthorize("hasAuthority('ENDUSER_REQUEST_CANCELING')")
+    public ResponseEntity<?> cancelRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             Request request = requestService.payRequest(requestId, userEmail);
-            log.info("User {} paid bundle request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
+            log.info("User {} canceled request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
             return new ResponseEntity<>(request, HttpStatus.OK);
         } catch (CustomException e) {
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
@@ -250,6 +284,7 @@ public class RequestController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
 
 
 }

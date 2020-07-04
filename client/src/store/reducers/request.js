@@ -2,8 +2,9 @@ import {
   SET_ALL_REQUESTS,
   SET_CREATED_REQUESTS,
   SET_ALL_PAID_REQUESTS,
+  SET_NEW_BUNDLE_REQUEST_STATUS,
+  SET_NEW_REQUEST_STATUS,
 } from "../actionTypes";
-
 
 const DEFAULT_STATE = {
   allRequests: [],
@@ -27,6 +28,22 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         allPaidRequests: action.allPaidRequests,
+      };
+    case SET_NEW_REQUEST_STATUS:
+      return {
+        ...state,
+        createdRequests: state.createdRequests.map((r) =>
+          r.id == action.requestId ? { ...r, paidState: action.status } : r
+        ),
+      };
+    case SET_NEW_BUNDLE_REQUEST_STATUS:
+      return {
+        ...state,
+        createdRequests: state.createdRequests.map((r) =>
+          r.containerId == action.containerId
+            ? { ...r, paidState: action.status }
+            : r
+        ),
       };
     default:
       return state;

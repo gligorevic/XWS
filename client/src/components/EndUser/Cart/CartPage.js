@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "../../layouts/Navbar/NavbarCart";
 
@@ -24,6 +23,7 @@ import {
   getAdvertisementsForCart,
   setAllAdvertisementsForCart,
 } from "../../../store/actions/advertisement";
+import { setCartNum } from "../../../store/actions/user";
 
 const useStyles = makeStyles((theme) => ({
   paddingMain: {
@@ -39,10 +39,17 @@ const CartPage = ({
   allAdvertisementsCart,
   getAdvertisementsForCart,
   user,
+  setCartNum,
 }) => {
+  const [cartList, setCartList] = React.useState([]);
+
   useEffect(() => {
-    var cartList = JSON.parse(localStorage.getItem("Cart"));
-    getAdvertisementsForCart(cartList.map((cartItem) => cartItem.id));
+    setCartList(JSON.parse(localStorage.getItem("Cart") || "[]"));
+    getAdvertisementsForCart(
+      JSON.parse(localStorage.getItem("Cart") || "[]").map(
+        (cartItem) => cartItem.id
+      )
+    );
   }, []);
 
   const [loading, setLoading] = React.useState(false);
@@ -67,7 +74,7 @@ const CartPage = ({
   const handleSubmitRequest = async (event, ad) => {
     event.preventDefault();
     setLoading(true);
-    var cartList = JSON.parse(localStorage.getItem("Cart"));
+
     var cartItem = cartList.filter((item) => item.id === ad.id);
     cartItem[0]["userEmail"] = ad.userEmail;
     cartItem[0]["userSentRequest"] = user.user.username;
@@ -83,19 +90,22 @@ const CartPage = ({
       setLoading(false);
       setOpenSuccess(true);
 
-      cartList.map((cartItem) => {
-        if (cartItem.id === ad.id)
-          cartList.splice(cartList.indexOf(cartItem), 1);
-      });
-      localStorage.setItem("Cart", JSON.stringify(cartList));
-      getAdvertisementsForCart(cartList.map((cartItem) => cartItem.id));
+      const filteredCart = cartList.filter((cartItem) => cartItem.id !== ad.id);
+
+      setCartList(filteredCart);
+
+      setCartNum(filteredCart.length);
+      localStorage.setItem(
+        "Cart",
+        JSON.stringify(filteredCart.filter((cartItem) => cartItem.id !== ad.id))
+      );
+      getAdvertisementsForCart(filteredCart.map((cartItem) => cartItem.id));
     }
   };
 
   const handleSendBundleRequest = async (e) => {
     e.preventDefault();
     setLoading(true);
-    var cartList = JSON.parse(localStorage.getItem("Cart"));
 
     bundleRequest.requestDTOS = bundle;
     const resp = await Axios.post(`/request/bundle`, bundleRequest).catch(
@@ -111,15 +121,19 @@ const CartPage = ({
     if (resp && resp.status >= 200 && resp.status < 300) {
       setLoading(false);
       setOpenSuccess(true);
-      var cartList = JSON.parse(localStorage.getItem("Cart"));
-      bundle.map((bundleItem) => {
-        cartList.map((cartItem) => {
-          if (cartItem.id === bundleItem.id)
-            cartList.splice(cartList.indexOf(cartItem), 1);
-        });
+
+      let cartListItemsFiltered;
+      bundle.map(async (bundleItem) => {
+        cartListItemsFiltered = cartList.filter(
+          (cartItem) => cartItem.id !== bundleItem.id
+        );
       });
-      getAdvertisementsForCart(cartList.map((cartItem) => cartItem.id));
-      localStorage.setItem("Cart", JSON.stringify(cartList));
+      setCartList(cartListItemsFiltered);
+      setCartNum(cartListItemsFiltered.length);
+      getAdvertisementsForCart(
+        cartListItemsFiltered.map((cartItem) => cartItem.id)
+      );
+      localStorage.setItem("Cart", JSON.stringify(cartListItemsFiltered));
       setBundle([]);
     }
   };
@@ -138,7 +152,7 @@ const CartPage = ({
 
   const handleAddToBundle = (e, ad) => {
     e.preventDefault();
-    var cartList = JSON.parse(localStorage.getItem("Cart"));
+
     var cartItem = cartList.filter((item) => item.id === ad.id);
     cartItem[0]["userEmail"] = ad.userEmail;
     cartItem[0]["userSentRequest"] = user.user.username;
@@ -156,10 +170,11 @@ const CartPage = ({
 
   const handleRemoveFromCart = (e, ad) => {
     e.preventDefault();
-    var cartList = JSON.parse(localStorage.getItem("Cart"));
-    cartList.splice(cartList.indexOf(ad.id), 1);
-    localStorage.setItem("Cart", JSON.stringify(cartList));
-    getAdvertisementsForCart(cartList);
+    const filteredCart = cartList.filter((c) => c.id !== ad.id);
+    setCartList(filteredCart);
+    setCartNum(filteredCart.length);
+    localStorage.setItem("Cart", JSON.stringify(filteredCart));
+    getAdvertisementsForCart(filteredCart);
   };
 
   const drawer = (
@@ -376,5 +391,6 @@ export default withRouter(
   connect(mapStateToProps, {
     getAdvertisementsForCart,
     setAllAdvertisementsForCart,
+    setCartNum,
   })(CartPage)
 );

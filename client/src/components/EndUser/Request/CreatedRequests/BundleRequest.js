@@ -59,6 +59,7 @@ export default function BundleRequest({
             }
             roomId={"b" + requests[0].containerId}
             sendTo={requests[0].userEmail}
+            readOnly={requests[0].paidState !== "RESERVED"}
           />
         </div>
         {requests.map((r) => (

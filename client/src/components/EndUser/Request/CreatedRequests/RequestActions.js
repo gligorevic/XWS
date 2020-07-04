@@ -8,11 +8,8 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ChatIcon from "@material-ui/icons/Chat";
 import { connect } from "react-redux";
-import {
-  setOpenChatBoxes,
-  initializeNewChatBox,
-} from "../../../../store/actions/chat";
-import { payRequest } from "../../../../store/actions/request";
+import { initializeNewChatBox } from "../../../../store/actions/chat";
+import { payRequest, cancelRequest } from "../../../../store/actions/request";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +38,9 @@ function RequestActions({
   sendTo,
   setOpenedDialog,
   payRequest,
+  cancelRequest,
   show,
+  readOnly,
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -64,6 +63,7 @@ function RequestActions({
             sendTo,
             unreadedMessages: 0,
             messages: [],
+            readOnly,
           });
         break;
       case "Rate":
@@ -74,6 +74,9 @@ function RequestActions({
         break;
       case "Pay":
         payRequest(roomId);
+        break;
+      case "Cancel":
+        cancelRequest(roomId);
         break;
     }
 
@@ -93,14 +96,17 @@ function RequestActions({
         visibility: visibility ? "visible" : "hidden",
       }}
     >
-      {actions.map((action) => (
-        <SpeedDialAction
-          key={action.name}
-          icon={action.icon}
-          tooltipTitle={action.name}
-          onClick={() => handleAction(action.name)}
-        />
-      ))}
+      {actions.map(
+        (action) =>
+          show.includes(action.name) && (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={() => handleAction(action.name)}
+            />
+          )
+      )}
     </SpeedDial>
   );
 }
@@ -112,4 +118,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   initializeNewChatBox,
   payRequest,
+  cancelRequest,
 })(RequestActions);

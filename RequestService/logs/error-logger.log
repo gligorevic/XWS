@@ -1,4 +1,2 @@
-2020-06-25 17:57:18,277 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] No requests for this advertisement. Acction initiated by $2a$10$OuLsTBeBDGAC1wSgQ7CYVuxzh2G7QO8F4M5ASlg8evas937u6Z5WS.
-2020-06-25 16:20:53,086 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] No requests for this advertisement. Acction initiated by $2a$10$rSB/ihHahJcX2SMiOTyN0OW3pfX34wT4HyXljJ8eaWwSjSd5nby.C.
-2020-06-25 16:22:59,756 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] No requests for this advertisement. Acction initiated by $2a$10$ttcx9ruZn9nuTB0SRatkaO8fObKOcRBa30GAiYXjOjQIK7/FAClhC.
-2020-06-25 16:23:25,983 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] No requests for this advertisement. Acction initiated by $2a$10$VH2E9dUukFijGMgszeSPJO6stx50W/YkjmK.P1zIuMYDHANUfcnD6.
+2020-07-04 10:07:34,738 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] You can't send request to yourself. Action initiated by $2a$10$2YpAP4Q68AN4vgq5sZ/Jieuc9jYuHLowNTHlGlxqGudlw5Qz/HTtG.
+2020-07-04 14:32:36,862 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] You can't send request to yourself. Action initiated by $2a$10$iWRQ5E2DDNMkD6l2y/0RH.VTrEEzs7ebzfolH2kr/oKWIjkwlUPjy.
