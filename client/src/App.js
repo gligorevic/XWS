@@ -16,7 +16,7 @@ import jwtDecode from "jwt-decode";
 import Registration from "./components/Pages/Registration";
 import ViewCar from "./components/EndUser/Car/ViewCar";
 import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests";
-
+import AddPricelistItems from "./components/EndUser/Pricelist/AddPricelistItems";
 import CreatedRequests from "./components/EndUser/Request/CreatedRequests/CreatedRequests";
 import OpenChatBoxes from "./components/EndUser/Chat/OpenChatBoxes";
 
@@ -61,6 +61,11 @@ function App() {
           <PrivateUserRoute exact path="/user" component={UserHome} />
           <PrivateUserRoute exact path="/cart" component={CartPage} />
           <PrivateUserRoute exact path="/car/:carId" component={ViewCar} />
+          <PrivateUserRoute
+            exact
+            path="/pricelist/:pricelistId"
+            component={AddPricelistItems}
+          />
           <PrivateUserRoute
             exact
             path="/request/ad/:adId"

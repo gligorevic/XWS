@@ -9,6 +9,7 @@ import request from "./request";
 import chat from "./chat";
 import comment from "./comment";
 import report from "./report";
+import pricelist from "./pricelist";
 
 const appReducer = combineReducers({
   certificates,
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   chat,
   comment,
   report,
+  pricelist,
 });
 
 const rootReducer = (state, action) => {

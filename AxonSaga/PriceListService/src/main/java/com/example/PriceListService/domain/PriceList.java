@@ -1,5 +1,7 @@
 package com.example.PriceListService.domain;
 
+import com.example.PriceListService.dto.PriceListDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +21,16 @@ public class PriceList {
 
     private Boolean excludeYear;
 
-    private Long userAgentId;
+    private String userEmail;
+
+    public PriceList(){
+
+    }
+
+    public PriceList(PriceListDTO priceListDTO){
+        this.validFrom = priceListDTO.getValidFrom();
+        this.validTo = priceListDTO.getValidTo();
+    }
 
     public Long getId() {
         return id;
@@ -53,11 +64,11 @@ public class PriceList {
         this.excludeYear = excludeYear;
     }
 
-    public Long getUserAgentId() {
-        return userAgentId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserAgentId(Long userAgentId) {
-        this.userAgentId = userAgentId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

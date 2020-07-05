@@ -14,7 +14,7 @@ import TabPanel from "../layouts/TabPanel";
 
 import Profile from "../Pages/Profile";
 import AddCar from "../EndUser/AddCar";
-import ListMyCars from "../EndUser/ListMyCars";
+import PricelistPage from "../EndUser/Pricelist/PricelistPage";
 import ListMyAdvertisements from "../EndUser/ListMyAdvertisements";
 import CarPage from "../EndUser/Car/CarPage";
 import RequestsPage from "../EndUser/Request/RequestsPage";
@@ -109,7 +109,7 @@ function UserHome({ location, user }) {
         <Tab label="User Home Page" {...a11yProps(0)} />
         <Tab label="Profile" {...a11yProps(1)} />
         <Tab label="Add car" {...a11yProps(2)} />
-        <Tab label="My cars" {...a11yProps(3)} />
+        <Tab label="Pricelists" {...a11yProps(3)} />
         <Tab label="My advertisements" {...a11yProps(4)} />
         <Tab label="Cars" {...a11yProps(5)} />
         <Tab label="Requests" {...a11yProps(6)} />
@@ -158,7 +158,7 @@ function UserHome({ location, user }) {
             {value === 2 && <AddCar />}
           </TabPanel>
           <TabPanel value={value} index={3}>
-            {value === 3 && <ListMyCars />}
+            {value === 3 && <PricelistPage />}
           </TabPanel>
           <TabPanel value={value} index={4}>
             {value === 4 && <ListMyAdvertisements />}
