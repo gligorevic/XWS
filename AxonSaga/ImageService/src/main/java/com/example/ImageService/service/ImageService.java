@@ -1,15 +1,9 @@
 package com.example.ImageService.service;
 
-
-import com.example.ImageService.aggregates.ImageAggregate;
 import com.example.ImageService.domain.Image;
 import com.example.ImageService.repository.ImageRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +20,6 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-
     public void saveImages(Map<String, byte[]> images, Long carId) throws IOException {
         String folder = "images/" + carId.toString() + "/";
         List<Image> newImages = new ArrayList<>();
@@ -42,6 +35,8 @@ public class ImageService {
 
     public List<String> getAllImagesByCarId(Long carId) {
         List<String> images = imageRepository.findImagesByCarId(carId);
+        if(images.isEmpty())
+            return new ArrayList<>();
         return images.stream().map(image -> "/static/images/" + carId + "/" + image).collect(Collectors.toList());
     }
 }

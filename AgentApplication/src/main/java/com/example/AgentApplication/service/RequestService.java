@@ -77,7 +77,7 @@ public class RequestService {
     }
 
     public List<Request> getPassedRequests(){
-        return requestRepository.getRequestsPassedAndPaid(new Date());
+        return requestRepository.getRequestsPassed(new Date());
     }
 
     public List<Request> getReservedRequests() { return  requestRepository.getReservedRequests();}

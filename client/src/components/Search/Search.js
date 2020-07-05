@@ -3,7 +3,6 @@ import Paper from "@material-ui/core/Paper";
 import CitySearch from "./CitySearch";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Collapse from "@material-ui/core/Collapse";
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
@@ -12,10 +11,12 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DateInputForm from "./DateInputForm";
 import { searchAdvertisements } from "../../store/actions/advertisement";
 import { connect } from "react-redux";
+import AdvancedSearch from "./AdvancedSearch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "60px auto",
+    marginBottom: 30,
     padding: "30px 30px",
     maxWidth: 1000,
     boxShadow: "0px 2px 23px 4px rgba(0,0,0,0.75)",
@@ -53,23 +54,43 @@ const Search = ({
   setSelectedEndDate,
 }) => {
   const classes = useStyles();
-
   const [error, setError] = useState(false);
 
   const [cityName, setCityName] = useState("");
 
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
 
+  const [brand, setBrand] = useState();
+  const [model, setModel] = useState();
+  const [gearShift, setGearShif] = useState();
+  const [fuelType, setFuelType] = useState();
+  const [body, setBody] = useState();
+  const [kmPassed, setKmPassed] = useState();
+  const [childSeatsNum, setChildSeatsNum] = useState();
+  const [collisionDamage, setCollisionDamage] = useState();
+  const [kmRestriction, setKmRestriction] = useState();
+  const [price, setPrice] = React.useState([0, 150]);
+
   const handleExpandClick = (e) => {
     setAdvancedSearchOpen(!advancedSearchOpen);
   };
 
   const handleSubmit = async (e) => {
-    console.log(cityName);
     const resp = await searchAdvertisements({
       cityName: cityName.length > 0 ? cityName : null,
+      brandName: brand?.brandName,
+      modelName: model?.modelName,
+      gearShiftName: gearShift?.gearShiftName,
+      bodyName: body?.bodyTypeName,
+      fuelTypeName: fuelType?.fuelTypeName,
       freeFrom: selectedStartDate,
       freeTo: selectedEndDate,
+      kmPassed,
+      numberChildSeats: childSeatsNum,
+      collisionDamage,
+      kmRestriction,
+      price: price[0],
+      priceTo: price[1],
     });
     if (resp.status === 400) {
       setError(true);
@@ -79,6 +100,9 @@ const Search = ({
   return (
     <Paper className={classes.root}>
       <Grid container spacing={2}>
+        <Grid item sm={12}>
+          <h2 style={{ margin: "0px 10px" }}>Search</h2>
+        </Grid>
         <Grid item sm={12} lg={4} className={classes.center}>
           <CitySearch
             cityName={cityName}
@@ -99,7 +123,7 @@ const Search = ({
             setSelectedDate={setSelectedEndDate}
           />
         </Grid>
-        <Grid item sm={12}>
+        <Grid item sm={12} style={{ paddingTop: 0 }}>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: advancedSearchOpen,
@@ -110,11 +134,40 @@ const Search = ({
           >
             <ExpandMoreIcon />
           </IconButton>
+          <h3 style={{ display: "inline-block" }}>
+            <em>Advanced search</em>
+          </h3>
           <Collapse in={advancedSearchOpen} timeout="auto" unmountOnExit>
-            <Typography paragraph>ADVANCED SEARCH</Typography>
+            <AdvancedSearch
+              brand={brand}
+              setBrand={setBrand}
+              model={model}
+              setModel={setModel}
+              gearShift={gearShift}
+              setGearShif={setGearShif}
+              fuelType={fuelType}
+              setFuelType={setFuelType}
+              body={body}
+              setBody={setBody}
+              kmPassed={kmPassed}
+              setKmPassed={setKmPassed}
+              childSeatsNum={childSeatsNum}
+              setChildSeatsNum={setChildSeatsNum}
+              collisionDamage={collisionDamage}
+              setCollisionDamage={setCollisionDamage}
+              kmRestriction={kmRestriction}
+              setKmRestriction={setKmRestriction}
+              price={price}
+              setPrice={setPrice}
+            />
           </Collapse>
         </Grid>
-        <Grid item sm={12} className={classes.floatRight}>
+        <Grid
+          item
+          sm={12}
+          className={classes.floatRight}
+          style={{ paddingTop: 0 }}
+        >
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Search
           </Button>

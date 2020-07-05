@@ -1,0 +1,2 @@
+2020-06-26 12:11:19,427 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-06-26 12:11:55,115 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 43.299 seconds (JVM running for 46.963)

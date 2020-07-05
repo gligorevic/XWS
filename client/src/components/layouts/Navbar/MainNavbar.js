@@ -11,9 +11,9 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
-
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import List from "@material-ui/core/List";
-
+import Slide from "@material-ui/core/Slide";
 import Divider from "@material-ui/core/Divider";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListItem from "@material-ui/core/ListItem";
@@ -101,11 +101,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function HideOnScroll({ children }) {
+  const trigger = useScrollTrigger();
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
 const MainNavbar = ({
   history,
   location,
   logout,
-
   user: { isAuthenticated, user, cartItemsNum },
 }) => {
   const classes = useStyles();
@@ -129,134 +138,137 @@ const MainNavbar = ({
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar className={classes.navContainer}>
-          {!tablet && (
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              className={clsx(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
-
-          <Typography variant="h6" className={classes.title}>
-            <DirectionsCarIcon
-              style={{ fontSize: 32, paddingBottom: 5, marginRight: 4 }}
-            />
-            Rentaj care
-          </Typography>
-          {tablet && (
-            <>
-              <Button
+      <div style={{ marginTop: 40 }} />
+      <HideOnScroll>
+        <AppBar>
+          <Toolbar className={classes.navContainer}>
+            {!tablet && (
+              <IconButton
                 color="inherit"
-                onClick={() => location.pathname !== "/" && history.push("/")}
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                className={clsx(classes.menuButton, open && classes.hide)}
               >
-                Home
-              </Button>
+                <MenuIcon />
+              </IconButton>
+            )}
 
-              <Button color="inherit">MenuItem</Button>
-              {!isAuthenticated ? (
-                <>
-                  <Button
-                    color="inherit"
-                    onClick={() =>
-                      location.pathname !== "/login" && history.push("/login")
-                    }
-                  >
-                    Login
-                  </Button>
-                  <Button
-                    color="inherit"
-                    onClick={() =>
-                      location.pathname !== "/registration" &&
-                      history.push("/registration")
-                    }
-                  >
-                    Registrate
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    color="inherit"
-                    onClick={() => {
-                      switch (user.role.length > 0 && user.role[0].name) {
-                        case "ROLE_ADMIN":
-                          history.push("/admin");
-                          break;
-                        case "ROLE_ENDUSER":
-                        case "ROLE_AGENT":
-                          history.push("/user");
-                          break;
-                      }
-                    }}
-                  >
-                    Profile
-                  </Button>
-                  <div className={classes.username}>
-                    <AccountCircleIcon />
-                    <p style={{ paddingLeft: 5 }}>{user.username}</p>
-                  </div>
-                  {user.role[0].name === "ROLE_ENDUSER" && (
-                    <span
+            <Typography variant="h6" className={classes.title}>
+              <DirectionsCarIcon
+                style={{ fontSize: 32, paddingBottom: 5, marginRight: 4 }}
+              />
+              Rentaj care
+            </Typography>
+            {tablet && (
+              <>
+                <Button
+                  color="inherit"
+                  onClick={() => location.pathname !== "/" && history.push("/")}
+                >
+                  Home
+                </Button>
+
+                <Button color="inherit">MenuItem</Button>
+                {!isAuthenticated ? (
+                  <>
+                    <Button
                       color="inherit"
                       onClick={() =>
-                        location.pathname !== "/cart" && history.push("/cart")
+                        location.pathname !== "/login" && history.push("/login")
                       }
-                      style={{
-                        position: "relative",
-                        display: "inline-block",
-                        width: 30,
-                        height: 30,
-                        margin: "0px 10px",
-                        cursor: "pointer",
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      color="inherit"
+                      onClick={() =>
+                        location.pathname !== "/registration" &&
+                        history.push("/registration")
+                      }
+                    >
+                      Registrate
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      color="inherit"
+                      onClick={() => {
+                        switch (user.role.length > 0 && user.role[0].name) {
+                          case "ROLE_ADMIN":
+                            history.push("/admin");
+                            break;
+                          case "ROLE_ENDUSER":
+                          case "ROLE_AGENT":
+                            history.push("/user");
+                            break;
+                        }
                       }}
                     >
+                      Profile
+                    </Button>
+                    <div className={classes.username}>
+                      <AccountCircleIcon />
+                      <p style={{ paddingLeft: 5 }}>{user.username}</p>
+                    </div>
+                    {user.role[0].name === "ROLE_ENDUSER" && (
                       <span
+                        color="inherit"
+                        onClick={() =>
+                          location.pathname !== "/cart" && history.push("/cart")
+                        }
                         style={{
-                          position: "absolute",
-                          top: -8,
-                          right: -8,
-                          fontSize: 14,
-                          borderRadius: 50,
-                          background: "#ff9800dd",
-                          width: 19,
-                          zIndex: 3,
-                          textAlign: "center",
-                          color: "white",
-                          fontWeight: 700,
+                          position: "relative",
+                          display: "inline-block",
+                          width: 30,
+                          height: 30,
+                          margin: "0px 10px",
+                          cursor: "pointer",
                         }}
                       >
-                        {cartItemsNum}
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: -8,
+                            right: -8,
+                            fontSize: 14,
+                            borderRadius: 50,
+                            background: "#ff9800dd",
+                            width: 19,
+                            zIndex: 3,
+                            textAlign: "center",
+                            color: "white",
+                            fontWeight: 700,
+                          }}
+                        >
+                          {cartItemsNum}
+                        </span>
+                        <ShoppingCartIcon
+                          style={{
+                            position: "absolute",
+                            fontSize: 30,
+                          }}
+                        />
                       </span>
-                      <ShoppingCartIcon
-                        style={{
-                          position: "absolute",
-                          fontSize: 30,
-                        }}
-                      />
-                    </span>
-                  )}
-                  <Button
-                    color="inherit"
-                    onClick={() => {
-                      logout();
-                      history.push("/");
-                    }}
-                  >
-                    <ExitToAppIcon />
-                    Logout
-                  </Button>
-                </>
-              )}
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
+                    )}
+                    <Button
+                      color="inherit"
+                      onClick={() => {
+                        logout();
+                        history.push("/");
+                      }}
+                    >
+                      <ExitToAppIcon />
+                      Logout
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
       {!tablet && (
         <Drawer
           className={classes.drawer}

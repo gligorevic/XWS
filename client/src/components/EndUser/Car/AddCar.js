@@ -171,7 +171,7 @@ function AddCarFullScreen({ open, setOpen, userEmail, addCar }) {
           </Grid>
           <Grid item sm={12} md={6}>
             <TextField
-              label="Number"
+              label="Km passed"
               type="number"
               style={{ margin: "10px 8%" }}
               value={kmPassed}

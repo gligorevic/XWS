@@ -11,8 +11,6 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @Aggregate
@@ -23,17 +21,12 @@ public class ImageAggregate {
     public ImageAggregate() {
     }
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public static final Logger log = LoggerFactory.getLogger(ImageAggregate.class);
 
     @CommandHandler
     public ImageAggregate(AddImagesCommand addImagesCommand, ImageService imageService) {
         try {
             imageService.saveImages(addImagesCommand.getImages(), addImagesCommand.getCarId());
-            log.info("User successfully added images for car {}", bCryptPasswordEncoder.encode(addImagesCommand.getCarId().toString()));
-
             AggregateLifecycle.apply(new ImagesAddedEvent(addImagesCommand.getImageAggregateId()));
         } catch (Exception e) {
             log.error(e.getMessage());

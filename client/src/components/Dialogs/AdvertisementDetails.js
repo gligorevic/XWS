@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Axios from "axios";
@@ -21,6 +20,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
+import Gallery from "../EndUser/Car/Gallery";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -62,7 +62,6 @@ const AddAdvertisement = ({ id }) => {
   };
 
   const [loading, setLoading] = React.useState(false);
-  const [openSuccess, setOpenSuccess] = React.useState(false);
 
   return (
     <div>
@@ -74,6 +73,7 @@ const AddAdvertisement = ({ id }) => {
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
+        style={{ zIndex: 40 }}
       >
         <AppBar>
           <Toolbar>
@@ -90,7 +90,23 @@ const AddAdvertisement = ({ id }) => {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Grid container spacing={2} style={{ padding: 60, paddingTop: 120 }}>
+        <Grid
+          container
+          spacing={2}
+          style={{
+            padding: 60,
+            paddingTop: 120,
+          }}
+        >
+          <Grid item xs={12} style={{ position: "relative" }}>
+            {ad && (
+              <Gallery
+                images={ad.images.map((img) => ({
+                  source: "/img" + img,
+                }))}
+              />
+            )}
+          </Grid>
           <Grid item xs={6}>
             <Paper style={{ padding: 50 }}>
               <Typography
@@ -158,8 +174,7 @@ const AddAdvertisement = ({ id }) => {
                     <ListItem>
                       <ListItemText primary="Renting location" />
                       <Typography variant="subtitle1">
-                        {ad.rentingCityLocation.name},{" "}
-                        {ad.rentingStreetLocation}
+                        {ad.cityName}, {ad.rentingStreetLocation}
                       </Typography>
                     </ListItem>
                     <ListItem>
