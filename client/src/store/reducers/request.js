@@ -2,13 +2,14 @@ import {
   SET_ALL_REQUESTS,
   SET_CREATED_REQUESTS,
   SET_ALL_PAID_REQUESTS,
+  SET_PASSED_REQUESTS,
 } from "../actionTypes";
-
 
 const DEFAULT_STATE = {
   allRequests: [],
   createdRequests: [],
   allPaidRequests: [],
+  passedRequests: [],
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -27,6 +28,11 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         allPaidRequests: action.allPaidRequests,
+      };
+    case SET_PASSED_REQUESTS:
+      return {
+        ...state,
+        passedRequests: action.passedRequests,
       };
     default:
       return state;

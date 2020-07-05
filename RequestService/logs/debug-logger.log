@@ -1,3 +1,8 @@
 2020-07-02 14:25:43,371 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
 2020-07-02 18:17:11,910 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
 2020-07-02 19:21:10,073 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+2020-07-03 15:10:38,145 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+2020-07-03 15:48:26,009 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+2020-07-03 16:17:02,300 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+2020-07-03 16:35:52,632 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+2020-07-03 16:53:49,044 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use

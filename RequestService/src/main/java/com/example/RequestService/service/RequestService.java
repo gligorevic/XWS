@@ -333,4 +333,8 @@ public class RequestService {
 
         return requestContainer;
     }
+
+    public List<Request> getPassedRequests(String userEmail){
+        return requestRepository.getRequestsPassed(new Date(), userEmail);
+    }
 }
