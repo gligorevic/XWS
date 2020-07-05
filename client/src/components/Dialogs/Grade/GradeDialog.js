@@ -41,6 +41,7 @@ const GradeDialog = ({ request, open, setOpen, user }) => {
       grade,
       requestId: request.id,
       username: user.username,
+      agentUsername: request.userEmail,
     });
 
     if (response && response.status >= 200 && response.status < 300) {

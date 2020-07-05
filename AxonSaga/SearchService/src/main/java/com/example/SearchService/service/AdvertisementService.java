@@ -1,10 +1,12 @@
 package com.example.SearchService.service;
 
 import com.baeldung.springsoap.gen.GetAdvertisementRequest;
+import com.example.SearchService.client.FeedbackClient;
 import com.example.SearchService.client.ImageClient;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.domain.City;
 import com.example.SearchService.dto.AdvertisementDTO;
+import com.example.SearchService.dto.AverageGradeDTO;
 import com.example.SearchService.dto.SimpleAdvertisementDTO;
 import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.repository.AdvertisementRepository;
@@ -14,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,13 +25,16 @@ public class AdvertisementService {
     private AdvertisementRepository advertisementRepository;
 
     @Autowired
-    private ImageClient imageClient;
-
-    @Autowired
     private CityRepository cityRepository;
 
     @Autowired
     private CalendarService calendarService;
+
+    @Autowired
+    private FeedbackClient feedbackClient;
+
+    @Autowired
+    private ImageClient imageClient;
 
     public Advertisement addAdvertisement(AdvertisementDTO dto) throws CustomException, Exception{
         if(dto.getCityName() == null)
@@ -57,7 +62,22 @@ public class AdvertisementService {
     }
 
     public List<SimpleAdvertisementDTO> getAllAdvertisements(){
-        return advertisementRepository.findAll().stream().map(advertisement -> new SimpleAdvertisementDTO(advertisement)).collect(Collectors.toList());
+        return getAverageRates(advertisementRepository.findAll());
+    }
+
+    private List<SimpleAdvertisementDTO> getAverageRates(List<Advertisement> advertisements) {
+        List<SimpleAdvertisementDTO> retAdvert = new ArrayList<>();
+        for(Advertisement a : advertisements)
+            retAdvert.add(new SimpleAdvertisementDTO(a));
+
+        List<AverageGradeDTO> averageGradeDTOS = feedbackClient.getAverageRates(new ArrayList<>(new HashSet<>(advertisements.stream().map(advertisement -> advertisement.getUserEmail()).collect(Collectors.toList()))));
+
+        for(AverageGradeDTO avgGrade : averageGradeDTOS)
+            for(SimpleAdvertisementDTO simpleAd : retAdvert)
+                if(avgGrade.getAgentUsername().equals(simpleAd.getAgentUsername()))
+                    simpleAd.setAvgRate(avgGrade.getAverageGrade());
+
+        return retAdvert;
     }
 
     public AdvertisementDTO getAdvertisementById(Long id){

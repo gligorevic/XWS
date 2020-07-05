@@ -22,6 +22,7 @@ import ChangePassword from "../PasswordChange/PasswordChange";
 import { withRouter } from "react-router";
 import CompanyRegistration from "../Agent/Company/CompanyRegistration";
 import { connect } from "react-redux";
+import ListPassedRequests from "../EndUser/Report/ListPassedRequests";
 
 const drawerWidth = 240;
 
@@ -116,6 +117,7 @@ function UserHome({ location, user }) {
         {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
           <Tab label="Reregister company" {...a11yProps(8)} />
         )}
+        <Tab label="Reports" {...a11yProps(9)} />
       </Tabs>
     </div>
   );
@@ -175,6 +177,9 @@ function UserHome({ location, user }) {
               {value === 8 && <CompanyRegistration />}
             </TabPanel>
           )}
+          <TabPanel value={value} index={9}>
+            {value === 9 && <ListPassedRequests />}
+          </TabPanel>
         </main>
       </div>
     </>

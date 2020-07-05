@@ -16,6 +16,7 @@ import AdvancedSearch from "./AdvancedSearch";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "60px auto",
+    marginBottom: 30,
     padding: "30px 30px",
     maxWidth: 1000,
     boxShadow: "0px 2px 23px 4px rgba(0,0,0,0.75)",

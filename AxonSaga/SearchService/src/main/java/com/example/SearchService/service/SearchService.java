@@ -1,7 +1,10 @@
 package com.example.SearchService.service;
 
+import com.example.SearchService.client.FeedbackClient;
+import com.example.SearchService.client.ImageClient;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.dto.AdvertisementDTO;
+import com.example.SearchService.dto.AverageGradeDTO;
 import com.example.SearchService.dto.SimpleAdvertisementDTO;
 import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.repository.ReservationPeriodRepository;
@@ -11,8 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +28,9 @@ public class SearchService {
     @Autowired
     private CalendarService calendarService;
 
+    @Autowired
+    private FeedbackClient feedbackClient;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -34,7 +39,22 @@ public class SearchService {
         List<Advertisement> advertisements = searchQuery.getResultList();
         List<Long> unavailableAdvertisements = getUnavailableAdvertisements(advertisementDTO);
         List<Advertisement> availableAdvertisemenst = filterUnavailableAdvertisements(advertisements, unavailableAdvertisements);
-        return availableAdvertisemenst.stream().map(advertisement -> new SimpleAdvertisementDTO(advertisement)).collect(Collectors.toList());
+        return getAverageRates(availableAdvertisemenst);
+    }
+
+    private List<SimpleAdvertisementDTO> getAverageRates(List<Advertisement> availableAdvertisemenst) {
+        List<SimpleAdvertisementDTO> retAdvert = new ArrayList<>();
+        for(Advertisement a : availableAdvertisemenst)
+            retAdvert.add(new SimpleAdvertisementDTO(a));
+
+        List<AverageGradeDTO> averageGradeDTOS = feedbackClient.getAverageRates(new ArrayList<>(new HashSet<>(availableAdvertisemenst.stream().map(advertisement -> advertisement.getUserEmail()).collect(Collectors.toList()))));
+
+        for(AverageGradeDTO avgGrade : averageGradeDTOS)
+            for(SimpleAdvertisementDTO simpleAd : retAdvert)
+                if(avgGrade.getAgentUsername().equals(simpleAd.getAgentUsername()))
+                    simpleAd.setAvgRate(avgGrade.getAverageGrade());
+
+        return retAdvert;
     }
 
     private Query createQueryAndFillParameters(AdvertisementDTO advertisementDTO) throws CustomException {

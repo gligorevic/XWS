@@ -1,7 +1,0 @@
-2020-07-03 15:21:21,291 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-03 15:21:31,677 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 12.596 seconds (JVM running for 13.97)
-2020-07-03 15:22:54,603 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successfully created request by user $2a$10$3.Hv6f.FkR9MQEHe0wKHeOp18nMwgUorubNBPH3.w94tQ9tgtjoC6
-2020-07-03 15:24:31,732 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successful request info fetching by user $2a$10$fwW/8sXM/niNJwPvaqDd5.JcgXHw8w7XxvJRO4j8LyhoUMOxNDXzi
-2020-07-03 15:24:33,281 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request fetching by user $2a$10$MnWj9pFTl8JjTxNGt5wVheEvAOIsdJNMJoBlaYWf71T8cVgjVAChq
-2020-07-03 15:24:34,448 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] User $2a$10$9bQdn3I8agHnNe1dKH1sfu.ROVmwbNARnYOXRzxab20eEnOdfkdxu accepted request $2a$10$3R2I0S/dyIda5tjbMjX/LOVm3XAEOqd3kYSdOA5xsP85FXZuWePiS
-2020-07-03 15:25:05,802 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-7] User $2a$10$Rw8SHJs.2qI9mZtOg5SYRuuWktKNl7CW/IK/EhyWYsw29UlLU1A6K paid bundle request $2a$10$L/eScQZxWN6HlgBzg1l4c.XVIew1EMG3Pde7rUAMyjEhYS/v1JjT2

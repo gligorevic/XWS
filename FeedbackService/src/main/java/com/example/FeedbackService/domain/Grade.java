@@ -16,20 +16,23 @@ public class Grade {
     private int grade;
     private Long requestId;
     private String username; // dao ocenu
+    private String agentUsername;
 
     public Grade() {
     }
 
-    public Grade(int grade, Long requestId, String username ) {
+    public Grade(int grade, Long requestId, String username, String agentUsername) {
         this.grade = grade;
         this.requestId = requestId;
         this.username = username;
+        this.agentUsername = agentUsername;
     }
 
     public Grade(GradeDTO gradeDTO) {
         this.grade = gradeDTO.getGrade();
         this.requestId = gradeDTO.getRequestId();
         this.username = gradeDTO.getUsername();
+        this.agentUsername = gradeDTO.getAgentUsername();
     }
 
     public Long getId() {
@@ -62,5 +65,13 @@ public class Grade {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getAgentUsername() {
+        return agentUsername;
+    }
+
+    public void setAgentUsername(String agentUsername) {
+        this.agentUsername = agentUsername;
     }
 }

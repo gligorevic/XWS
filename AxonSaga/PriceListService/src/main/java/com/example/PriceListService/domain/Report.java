@@ -1,6 +1,8 @@
 package com.example.PriceListService.domain;
 
 
+import com.example.PriceListService.dto.ReportDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,11 +19,22 @@ public class Report {
 
     private Integer km;
 
-    private Long carId;
+    private Long adId;
 
     private Long requestId;
 
-    private Long userAgentId;
+    private String userEmail;
+
+    public Report(){
+
+    }
+
+    public Report(ReportDTO reportDTO){
+        this.adId = reportDTO.getAdId();
+        this.text = reportDTO.getText();
+        this.km = reportDTO.getKm();
+        this.requestId = reportDTO.getRequestId();
+    }
 
     public Long getId() {
         return id;
@@ -47,14 +60,6 @@ public class Report {
         this.km = km;
     }
 
-    public Long getCarId() {
-        return carId;
-    }
-
-    public void setCarId(Long carId) {
-        this.carId = carId;
-    }
-
     public Long getRequestId() {
         return requestId;
     }
@@ -63,11 +68,19 @@ public class Report {
         this.requestId = requestId;
     }
 
-    public Long getUserAgentId() {
-        return userAgentId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserAgentId(Long userAgentId) {
-        this.userAgentId = userAgentId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Long getAdId() {
+        return adId;
+    }
+
+    public void setAdId(Long adId) {
+        this.adId = adId;
     }
 }

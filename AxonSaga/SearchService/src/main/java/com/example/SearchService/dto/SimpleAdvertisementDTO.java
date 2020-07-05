@@ -9,6 +9,9 @@ public class SimpleAdvertisementDTO {
     private String modelName;
     private String cityName;
     private String mainImagePath;
+    private Integer kmPassed;
+    private Double avgRate = 0.0;
+    private String agentUsername;
 
     public SimpleAdvertisementDTO() {
     }
@@ -20,6 +23,8 @@ public class SimpleAdvertisementDTO {
         this.cityName = advertisement.getRentingCityLocation().getName();
         this.modelName = advertisement.getModelName();
         this.mainImagePath = advertisement.getMainImagePath();
+        this.kmPassed = advertisement.getKmPassed();
+        this.agentUsername = advertisement.getUserEmail();
     }
 
     public Long getId() {
@@ -28,6 +33,22 @@ public class SimpleAdvertisementDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getKmPassed() {
+        return kmPassed;
+    }
+
+    public void setKmPassed(Integer kmPassed) {
+        this.kmPassed = kmPassed;
+    }
+
+    public Double getAvgRate() {
+        return avgRate;
+    }
+
+    public void setAvgRate(Double avgRate) {
+        this.avgRate = avgRate;
     }
 
     public Integer getPrice() {
@@ -68,5 +89,13 @@ public class SimpleAdvertisementDTO {
 
     public void setMainImagePath(String mainImagePath) {
         this.mainImagePath = mainImagePath;
+    }
+
+    public String getAgentUsername() {
+        return agentUsername;
+    }
+
+    public void setAgentUsername(String agentUsername) {
+        this.agentUsername = agentUsername;
     }
 }

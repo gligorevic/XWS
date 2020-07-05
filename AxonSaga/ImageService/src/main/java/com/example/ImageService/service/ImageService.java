@@ -20,7 +20,6 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-
     public void saveImages(Map<String, byte[]> images, Long carId) throws IOException {
         String folder = "images/" + carId.toString() + "/";
         List<Image> newImages = new ArrayList<>();

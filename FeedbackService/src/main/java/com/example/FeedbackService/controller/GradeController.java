@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class GradeController {
 
@@ -54,8 +56,15 @@ public class GradeController {
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
-
     }
 
+    @PostMapping("/grade/average")
+    public ResponseEntity<?> getAgentAverageGrade(@RequestBody List<String> userEmails){
+        try{
+            return new ResponseEntity<>(gradeService.calculateAgentAverageGrade(userEmails), HttpStatus.CREATED);
+        } catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
 }
 

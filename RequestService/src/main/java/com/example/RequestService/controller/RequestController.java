@@ -251,5 +251,16 @@ public class RequestController {
         }
     }
 
+    @GetMapping("/passed")
+    public ResponseEntity<?> getPassedRequests(Authentication authentication){
+        String userEmail = (String) authentication.getPrincipal();
+        try{
+            return new ResponseEntity<>(requestService.getPassedRequests(userEmail), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

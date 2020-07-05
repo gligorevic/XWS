@@ -40,6 +40,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findAllByAdIdAndUserSentRequest(Long adId, String userSentRequest);
 
-
+    @Query("SELECT DISTINCT r FROM Request r WHERE r.paidState=1 AND r.endDate < :today AND r.userEmail = :userEmail")
+    List<Request> getRequestsPassed(@Param("today") Date today, @Param("userEmail") String userEmail);
     
 }
