@@ -18,6 +18,7 @@ import ManipulateCarInfo from "../Admin/CarInfoService/ManipulateCarInfo";
 import ManipulatePrivileges from "../Admin/UserPrivilegesManipulation/ManipulatePrivileges";
 import CommentRequestsList from "../Admin/CommentManipulation/CommentRequestsList";
 import ChangePassword from "../PasswordChange/PasswordChange";
+import CompanyRequests from "../Admin/CompanyRequests";
 
 import Profile from "../Pages/Profile";
 
@@ -109,6 +110,7 @@ function AdminHome(props) {
         <Tab label="Manipulate car info" {...a11yProps(4)} />
         <Tab label="Comment requests" {...a11yProps(5)} />
         <Tab label="Change password" {...a11yProps(6)} />
+        <Tab label="Company requests" {...a11yProps(7)} />
       </Tabs>
     </div>
   );
@@ -159,6 +161,9 @@ function AdminHome(props) {
           </TabPanel>
           <TabPanel value={value} index={6}>
             {value === 6 && <ChangePassword />}
+          </TabPanel>
+          <TabPanel value={value} index={7}>
+            {value === 7 && <CompanyRequests />}
           </TabPanel>
         </main>
       </div>

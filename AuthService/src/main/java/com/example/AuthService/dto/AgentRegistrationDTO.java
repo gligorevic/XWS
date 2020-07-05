@@ -1,7 +1,5 @@
 package com.example.AuthService.dto;
 
-import com.example.AuthService.domain.CompanyRequest;
-
 public class AgentRegistrationDTO {
 
     private UserDTO userDTO;

@@ -20,6 +20,8 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import InfoDialog from "../Dialogs/InfoDialog";
 
+import MuiPhoneInput from "material-ui-phone-number";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -85,18 +87,16 @@ const SignUp = ({ registrate, registrateAgent, user, history }) => {
 
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
-    console.log(state);
   };
 
   const handleChangeCompany = (e) => {
     setCompanyState({ ...companyState, [e.target.name]: e.target.value });
-    console.log(companyState);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    var res = null;
+    let res = null;
     switch (role) {
       case "ROLE_ENDUSER":
         res = await registrate({
@@ -108,15 +108,14 @@ const SignUp = ({ registrate, registrateAgent, user, history }) => {
         });
         break;
       case "ROLE_AGENT":
-        console.log(state, companyState);
         state.roleName = role;
         res = await registrateAgent({
           userDTO: state,
           companyDTO: companyState,
         });
-
         break;
     }
+    console.log(res);
 
     setResponseStatus(res.status);
     setSubmitedEmail(state.email);
@@ -266,15 +265,17 @@ const SignUp = ({ registrate, registrateAgent, user, history }) => {
                     ></TextField>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <TextField
+                    <MuiPhoneInput
                       variant="outlined"
-                      required
-                      fullWidth
-                      label="Phone number"
-                      name="phoneNumber"
-                      id="phoneNumber"
-                      onChange={handleChangeCompany}
-                    ></TextField>
+                      onChange={(phoneNumber) =>
+                        setCompanyState((oldState) => ({
+                          ...oldState,
+                          phoneNumber,
+                        }))
+                      }
+                      defaultCountry="rs"
+                      regions={"europe"}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField

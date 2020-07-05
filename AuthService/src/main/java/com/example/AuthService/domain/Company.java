@@ -1,6 +1,7 @@
 package com.example.AuthService.domain;
 
 import com.example.AuthService.dto.CompanyDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -15,19 +16,21 @@ public class Company {
     private User user;
 
     private String companyName;
-    private String reqistrationNumber;
+    private String registrationNumber;
     private String address;
     private String phoneNumber;
+
+    private CompanyStatus companyStatus;
 
     public Company() {
     }
 
-    public Company(User user, String companyName, String reqistrationNumber, String address, String phoneNumber) {
-        this.user = user;
-        this.companyName = companyName;
-        this.reqistrationNumber = reqistrationNumber;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+    public Company(CompanyDTO companyDTO) {
+        this.companyName = companyDTO.getCompanyName();
+        this.registrationNumber = companyDTO.getRegistrationNumber();
+        this.address = companyDTO.getAddress();
+        this.phoneNumber = companyDTO.getPhoneNumber();
+        this.companyStatus = CompanyStatus.PENDING;
     }
 
     public Long getId() {
@@ -54,12 +57,12 @@ public class Company {
         this.companyName = companyName;
     }
 
-    public String getReqistrationNumber() {
-        return reqistrationNumber;
+    public String getRegistrationNumber() {
+        return registrationNumber;
     }
 
-    public void setReqistrationNumber(String reqistrationNumber) {
-        this.reqistrationNumber = reqistrationNumber;
+    public void setRegistrationNumber(String reqistrationNumber) {
+        this.registrationNumber = reqistrationNumber;
     }
 
     public String getAddress() {
@@ -76,5 +79,21 @@ public class Company {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public CompanyStatus getCompanyStatus() {
+        return companyStatus;
+    }
+
+    public void setCompanyStatus(CompanyStatus companyStatus) {
+        this.companyStatus = companyStatus;
+    }
+
+    public void setNewCompanyInformation(CompanyDTO companyDTO) {
+        this.companyName = companyDTO.getCompanyName();
+        this.registrationNumber = companyDTO.getRegistrationNumber();
+        this.address = companyDTO.getAddress();
+        this.phoneNumber = companyDTO.getPhoneNumber();
+        this.companyStatus = CompanyStatus.PENDING;
     }
 }

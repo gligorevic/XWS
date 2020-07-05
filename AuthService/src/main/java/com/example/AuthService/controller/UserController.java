@@ -99,7 +99,7 @@ public class UserController {
     public ResponseEntity<?> registerAgent(@RequestBody AgentRegistrationDTO agentRegistrationDTO) {
         try {
             hasAllRegistrationData(agentRegistrationDTO.getUserDTO());
-
+            hasAllCompanyData(agentRegistrationDTO.getCompanyDTO());
             return new ResponseEntity<>(userService.registerAgent(agentRegistrationDTO.getUserDTO(), agentRegistrationDTO.getCompanyDTO()), HttpStatus.CREATED);
         } catch (CustomException e) {
             log.error(e.getMessage());
@@ -107,6 +107,15 @@ public class UserController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private void hasAllCompanyData(CompanyDTO companyDTO) throws CustomException {
+        if(StringUtils.isEmpty(companyDTO.getCompanyName()) || StringUtils.isEmpty(companyDTO.getRegistrationNumber()) || StringUtils.isEmpty(companyDTO.getPhoneNumber()) || StringUtils.isEmpty(companyDTO.getAddress())){
+            throw new CustomException("Company fields must not be empty.", HttpStatus.NOT_ACCEPTABLE);
+        }
+        if(!Format.phoneNumber.matcher(companyDTO.getPhoneNumber()).matches()){
+            throw new CustomException("Improper phone number format.", HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

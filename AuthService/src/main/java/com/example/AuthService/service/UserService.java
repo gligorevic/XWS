@@ -1,8 +1,7 @@
 package com.example.AuthService.service;
 
 import com.example.AuthService.constants.Format;
-import com.example.AuthService.controller.UserController;
-import com.example.AuthService.domain.CompanyRequest;
+import com.example.AuthService.domain.Company;
 import com.example.AuthService.domain.Privilege;
 import com.example.AuthService.domain.Role;
 import com.example.AuthService.domain.User;
@@ -11,7 +10,7 @@ import com.example.AuthService.dto.CompanyDTO;
 import com.example.AuthService.dto.LoginRequestDTO;
 import com.example.AuthService.dto.UserDTO;
 import com.example.AuthService.exception.CustomException;
-import com.example.AuthService.repository.CompanyRequestRepository;
+import com.example.AuthService.repository.CompanyRepository;
 import com.example.AuthService.repository.PrivilegeRepository;
 import com.example.AuthService.repository.RoleRepository;
 import com.example.AuthService.repository.UserRepository;
@@ -45,6 +44,9 @@ public class UserService {
     private PrivilegeRepository privilegeRepository;
 
     @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -52,9 +54,6 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
-
-    @Autowired
-    private CompanyRequestRepository companyRequestRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -95,7 +94,7 @@ public class UserService {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        String jwt = TOKEN_BEARER_PREFIX +  tokenHelper.generate(authentication);
+        String jwt = TOKEN_BEARER_PREFIX + tokenHelper.generate(authentication);
 
         return jwt;
     }
@@ -148,27 +147,20 @@ public class UserService {
         roleList.add(role);
         newUser.setRoles(roleList);
         newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        User savedUser = userRepository.save(newUser);
 
         if(role.getName().equals("ROLE_AGENT")){
 
-            CompanyRequest companyRequest = new CompanyRequest(companyDTO);
-            companyRequest.setUserEmail(newUser.getEmail());
+            Company companyRequest = new Company(companyDTO);
+            companyRequest.setUser(savedUser);
 
-            companyRequestRepository.save(companyRequest);
+            savedUser.setCompany(companyRepository.save(companyRequest));
 
-            List<Privilege> restricted = new ArrayList<>();
-            restricted.add(privilegeRepository.findByName("CAR_USAGE_STATISTIC_VIEWING"));
-            restricted.add(privilegeRepository.findByName("AGENT_PAID_REQUEST_CREATING"));
-            restricted.add(privilegeRepository.findByName("PRICELIST_ITEM_DISCOUNT_CREATION"));
-            restricted.add(privilegeRepository.findByName("DATA_SYNCHRONIZATION"));
-
-            newUser.setBlockedPrivileges(restricted);
-
+            savedUser.setBlockedPrivileges(privilegeRepository.findAgentSpecificPrivileges());
+            userRepository.save(savedUser);
         }
 
-        userRepository.save(newUser);
         userDTO.setPassword(null);
-
 
         log.info("User successully registrated with email {}", (bCryptPasswordEncoder.encode(userDTO.getEmail())));
 

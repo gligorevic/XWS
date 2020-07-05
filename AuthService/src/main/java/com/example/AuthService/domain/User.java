@@ -24,6 +24,10 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password;
 
+    @OneToOne
+    @JsonIgnore
+    private Company company;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
@@ -157,5 +161,13 @@ public class User implements UserDetails {
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

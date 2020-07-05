@@ -18,5 +18,6 @@ public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
     @Query(value = "SELECT * FROM PRIVILEGE AS pr INNER JOIN (SELECT * FROM USER_BLOCKED_PRIVILEGES AS ubp WHERE ubp.user_id = ?1) AS ubp1 ON  pr.id = ubp1.privilege_id" , nativeQuery=true)
     List<Privilege> findBlockedPrivilegesByUserId(@Param("userId") Long userId);
 
-    Privilege findByName(String privilegeName);
+    @Query(value = "SELECT * FROM PRIVILEGE AS pr WHERE pr.ID NOT IN  (SELECT PRIVILEGE_ID FROM ROLES_PRIVILEGES AS RP WHERE  RP.ROLE_ID IN (SELECT ID FROM ROLE AS r WHERE r.NAME = 'ROLE_ENDUSER' OR r.NAME = 'ROLE_ADMIN'))", nativeQuery = true)
+    List<Privilege> findAgentSpecificPrivileges();
 }

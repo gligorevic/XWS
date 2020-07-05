@@ -1,9 +1,12 @@
-2020-07-03 19:11:10,554 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-1] null
-2020-07-03 19:13:32,498 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-2] null
-2020-07-03 19:15:42,278 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-3] null
-2020-07-03 19:15:51,068 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-4] null
-2020-07-03 19:17:48,582 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-5] null
-2020-07-03 19:17:50,976 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-6] Fields must not be empty.
-2020-07-03 19:19:45,127 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-7] Fields must not be empty.
-2020-07-03 19:58:27,937 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-2] Fields must not be empty.
-2020-07-03 20:08:54,557 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-1] Error creating bean with name 'entityManagerFactory': Singleton bean creation not allowed while singletons of this factory are in destruction (Do not request a bean from a BeanFactory in a destroy method implementation!)
+2020-07-05 13:49:38,217 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-1] Fail auth $2a$10$CQm75Xzxj9L2Sm2t1GUyaOYonN1vgcYmQksDriQNGcXOqboK4oL2W. null.
+2020-07-05 13:50:27,829 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-2] Fail auth $2a$10$KXtxB6hlDBxC2UUJ/BTCQeGNlJWrL0Drfi0TzfZSlyV7INGbqLAVq. null.
+2020-07-05 13:50:45,678 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-1] Fail auth $2a$10$6PnzoLw2T0uvJjBJ9rj/ZelYmYr24wO7d2pzvR/.8SyyKz4V7v/Ka. null.
+2020-07-05 13:50:54,702 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-2] Fail auth $2a$10$c6lfEsZpeuVBHpnoHNeQK.ewyyEI4NLt7nRMXSN0/ITGPVhMjgbWK. null.
+2020-07-05 13:51:36,530 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-5] Fail auth $2a$10$b/iZiXdDEYDcxa/jG17jS.fdotwB0Is.4Qlw/0CUYgQ2AzYlpyTAa. null.
+2020-07-05 18:32:41,617 ERROR com.example.AuthService.security.CustomAccessDeniedHandler [http-nio-8080-exec-4] User: $2a$10$WXuoWUdJC0WnKtsK9blJHuaaPUFGuP6ijPB6jeJ705U6rtq39AL82 attempted to access the protected URL.
+2020-07-05 18:32:52,539 ERROR com.example.AuthService.security.CustomAccessDeniedHandler [http-nio-8080-exec-7] User: $2a$10$Qn4LOLNwxdUI4YJQGWd4qeNu.YRYOTgjaZCnlFg6UcGz/nyh91kB2 attempted to access the protected URL.
+2020-07-05 18:38:29,401 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-1] AccessToken generation failed.
+2020-07-05 18:38:44,290 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-2] AccessToken generation failed.
+2020-07-05 18:39:01,032 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-3] AccessToken generation failed.
+2020-07-05 18:39:45,288 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-4] AccessToken generation failed.
+2020-07-05 18:40:57,390 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-8] Fail auth $2a$10$5WGnNrntgZ61OdI.JWXP3Oio9vN.93J1SYog9IRxGp.vZWXuHIAYq. Bad credentials.
