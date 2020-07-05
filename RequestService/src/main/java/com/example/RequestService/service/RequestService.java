@@ -38,7 +38,7 @@ public class RequestService {
         Request request = new Request(requestDTO);
         request.setAdId(requestDTO.getId());
 
-        if(request.getUserEmail().equals(request.getUserSentRequest()))
+        if (request.getUserEmail().equals(request.getUserSentRequest()))
             throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
 
         return requestRepository.save(request);
@@ -48,20 +48,20 @@ public class RequestService {
 
         RequestContainer requestContainer = new RequestContainer(requestContainerDTO);
 
-        if(requestContainer == null)
+        if (requestContainer == null)
             throw new CustomException("Could not create bundle request", HttpStatus.BAD_REQUEST);
 
-        if(!checkBundleRequest(requestContainerDTO.getRequestDTOS()))
+        if (!checkBundleRequest(requestContainerDTO.getRequestDTOS()))
             throw new CustomException("Something is wrong with this bundle request", HttpStatus.BAD_REQUEST);
 
         requestContainerRepository.save(requestContainer);
-        for(RequestDTO requestDTO : requestContainerDTO.getRequestDTOS()){
+        for (RequestDTO requestDTO : requestContainerDTO.getRequestDTOS()) {
             requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
             requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
             requestDTO.setInBundle(true);
             Request request = new Request(requestDTO);
             request.setRequestContainer(requestContainer);
-            if(request == null)
+            if (request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
             requestContainer.getBoundleList().add(requestRepository.save(request));
         }
@@ -69,40 +69,40 @@ public class RequestService {
         return requestContainerRepository.save(requestContainer);
     }
 
-    private boolean checkBundleRequest(List<RequestDTO> requestDTOS){
+    private boolean checkBundleRequest(List<RequestDTO> requestDTOS) {
 
-        if(requestDTOS.size() < 2)
+        if (requestDTOS.size() < 2)
             return false;
 
-        for(int i = 0; i < requestDTOS.size() - 1; i++){
+        for (int i = 0; i < requestDTOS.size() - 1; i++) {
             RequestDTO tempRequest = requestDTOS.get(i);
 
-            if(tempRequest.getUserSentRequest().equals(tempRequest.getUserEmail())){
+            if (tempRequest.getUserSentRequest().equals(tempRequest.getUserEmail())) {
                 return false;
             }
 
-            for(int j = i + 1; j < requestDTOS.size(); j++){
+            for (int j = i + 1; j < requestDTOS.size(); j++) {
                 RequestDTO requestDTO = requestDTOS.get(j);
 
-                if(tempRequest.getId() == requestDTO.getId())
+                if (tempRequest.getId() == requestDTO.getId())
                     return false;
 
-                if(!tempRequest.getUserEmail().equals(requestDTO.getUserEmail()))
+                if (!tempRequest.getUserEmail().equals(requestDTO.getUserEmail()))
                     return false;
 
-                if(!tempRequest.getUserSentRequest().equals(requestDTO.getUserSentRequest()))
+                if (!tempRequest.getUserSentRequest().equals(requestDTO.getUserSentRequest()))
                     return false;
 
-                if(requestDTO.getUserSentRequest().equals(requestDTO.getUserEmail()))
+                if (requestDTO.getUserSentRequest().equals(requestDTO.getUserEmail()))
                     return false;
             }
         }
         return true;
     }
 
-    public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO){
+    public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO) {
         List<Request> requests = requestContainerRepository.getRequestsFromBundle(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
-        if(!requests.isEmpty()) {
+        if (!requests.isEmpty()) {
             for (Request r : requests) {
                 r.setPaidState(PaidState.CANCELED);
             }
@@ -116,26 +116,26 @@ public class RequestService {
 
         Map<Long, RequestInfoDTO> requestAdvertMap = new HashMap<>();
 
-        for(Request request : requestList) {
+        for (Request request : requestList) {
             Long key = request.getAdId();
-            if(requestAdvertMap.containsKey(key)) {
+            if (requestAdvertMap.containsKey(key)) {
                 RequestInfoDTO value = requestAdvertMap.get(key);
                 requestAdvertMap.replace(key, value.append(request.getPaidState()));
             } else {
-                requestAdvertMap.put(key, new RequestInfoDTO(request.getAdId(),request.getPaidState()));
+                requestAdvertMap.put(key, new RequestInfoDTO(request.getAdId(), request.getPaidState()));
             }
         }
 
         List<AdvertisementDTO> advertisementsFromRequest;
-        if(requestAdvertMap.size() > 0) {
+        if (requestAdvertMap.size() > 0) {
 
             advertisementsFromRequest = advertisementClient.getAdvertisementsByIds(new ArrayList<>(requestAdvertMap.keySet()), auth).getBody();
 
-            if(advertisementsFromRequest == null){
+            if (advertisementsFromRequest == null) {
                 return new ArrayList<>();
             }
 
-            if(!advertisementsFromRequest.isEmpty()){
+            if (!advertisementsFromRequest.isEmpty()) {
                 for (AdvertisementDTO a : advertisementsFromRequest) {
                     Long key = a.getId();
                     RequestInfoDTO value = requestAdvertMap.get(key);
@@ -151,33 +151,33 @@ public class RequestService {
     public List<Request> getAllRequestsForAd(Long adId, String userEmail) throws CustomException {
 
         List<Request> requestList = requestRepository.findAllByAdId(adId);
-        if(requestList.isEmpty() || requestList == null){
+        if (requestList.isEmpty() || requestList == null) {
             throw new CustomException("No requests for this advertisement", HttpStatus.BAD_REQUEST);
         }
 
-        if(!userEmail.equals(requestList.get(0).getUserEmail())) {
+        if (!userEmail.equals(requestList.get(0).getUserEmail())) {
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 
         return requestList;
     }
 
-    public RequestDTO getRequestById(Long id){
-        Request request =  requestRepository.getOne(id);
+    public RequestDTO getRequestById(Long id) {
+        Request request = requestRepository.getOne(id);
 
         return new RequestDTO(request);
     }
 
-    public Request acceptRequest(Long requestId) throws CustomException{
+    public Request acceptRequest(Long requestId) throws CustomException {
 
         Request request = requestRepository.getOne(requestId);
-        if(request == null){
+        if (request == null) {
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
         }
 
-        if(checkRequest(request.getCrationDate(), 24))
+        if (checkRequest(request.getCrationDate(), 24))
             request.setPaidState(PaidState.RESERVED);
-        else{
+        else {
             request.setPaidState(PaidState.CANCELED);
             requestRepository.save(request);
             throw new CustomException("This request is no longer valid", HttpStatus.BAD_REQUEST);
@@ -188,7 +188,7 @@ public class RequestService {
 
     public Request declineRequest(Long requestId) throws CustomException {
         Request request = requestRepository.getOne(requestId);
-        if(request == null){
+        if (request == null) {
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
         }
         request.setPaidState(PaidState.CANCELED);
@@ -219,14 +219,14 @@ public class RequestService {
 
         List<Request> requests = requestContainerRepository.getRequestsInBundle(requestId);
 
-        if(requests.isEmpty()){
+        if (requests.isEmpty()) {
             throw new CustomException("This request is not in any bundle", HttpStatus.BAD_REQUEST);
         }
         List<RequestBundleDTO> requestBundleDTOS = new ArrayList<>();
         List<Long> requestAdIds = new ArrayList<>(requests.stream().map(request -> request.getAdId()).collect(Collectors.toList()));
         List<AdvertisementDTO> advertisementsFromRequest = advertisementClient.getAdvertisementsByIds(requestAdIds, auth).getBody();
 
-        for(Request request : requests){
+        for (Request request : requests) {
             List<AdvertisementDTO> advertisementDTO = advertisementsFromRequest.stream().filter(adDTO -> adDTO.getId() == request.getAdId()).collect(Collectors.toList());
             requestBundleDTOS.add(new RequestBundleDTO(request, advertisementDTO.get(0)));
         }
@@ -234,28 +234,28 @@ public class RequestService {
         return requestBundleDTOS;
     }
 
-    public boolean requestInBundle(Long requestId){
+    public boolean requestInBundle(Long requestId) {
         List<Request> requests = requestContainerRepository.getRequestsInBundle(requestId);
-        if(requests == null || requests.isEmpty())
+        if (requests == null || requests.isEmpty())
             return false;
         return true;
     }
 
-    public List<Request> getRequestsInBundle(Long requestId){
+    public List<Request> getRequestsInBundle(Long requestId) {
         return requestContainerRepository.getRequestsInBundle(requestId);
     }
 
     @Scheduled(cron = "0 0 * ? * *")
-    public void requestCleaner(){
+    public void requestCleaner() {
 
         System.out.println("Cleaning init...");
 
         List<Request> pendingRequests = requestRepository.findAllPending();
         List<Request> reservedRequests = requestRepository.findAllReserved();
 
-        if(!pendingRequests.isEmpty()){
-            for(Request request : pendingRequests){
-                if(!checkRequest(request.getCrationDate(), 24)){
+        if (!pendingRequests.isEmpty()) {
+            for (Request request : pendingRequests) {
+                if (!checkRequest(request.getCrationDate(), 24)) {
                     System.out.println("Cleaned: " + request.getId());
                     request.setPaidState(PaidState.CANCELED);
                     requestRepository.save(request);
@@ -263,9 +263,9 @@ public class RequestService {
             }
         }
 
-        if(!reservedRequests.isEmpty()){
-            for(Request request : reservedRequests){
-                if(!checkRequest(request.getCrationDate(), 12)){
+        if (!reservedRequests.isEmpty()) {
+            for (Request request : reservedRequests) {
+                if (!checkRequest(request.getCrationDate(), 12)) {
                     System.out.println("Cleaned: " + request.getId());
                     request.setPaidState(PaidState.CANCELED);
                     requestRepository.save(request);
@@ -274,31 +274,33 @@ public class RequestService {
         }
     }
 
-    public boolean checkRequest(Date dateToCheck, int hours){
+    public boolean checkRequest(Date dateToCheck, int hours) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateToCheck);
         calendar.add(Calendar.HOUR_OF_DAY, hours);
         dateToCheck = calendar.getTime();
         Date now = new Date();
 
-        if(dateToCheck.compareTo(now) > 0 ){
+        if (dateToCheck.compareTo(now) > 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
 
-    public Request payRequest(Long requestId, String userEmail) throws CustomException{
+    public Request payRequest(Long requestId, String userEmail) throws CustomException {
         Request request = requestRepository.findById(requestId).get();
-        if(request == null || !request.getUserSentRequest().equals(userEmail))
+        if (request == null || !request.getUserSentRequest().equals(userEmail))
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
         request.setPaidState(PaidState.PAID);
         requestRepository.save(request);
 
         List<Request> requests = requestRepository.findAllPendingByAdIdExceptOne(request.getAdId(), requestId);
-        for(Request r : requests) {
-            r.setPaidState(PaidState.CANCELED);
+        for (Request r : requests) {
+            if (checkIfRequestDatesOverlapping(r, request))
+                if (r.isInBundle()) changeRequestsState(r.getRequestContainer(), PaidState.CANCELED);
+                else r.setPaidState(PaidState.CANCELED);
         }
 
         requestRepository.saveAll(requests);
@@ -306,27 +308,29 @@ public class RequestService {
         return request;
     }
 
-
-    public RequestContainer payBundleRequest(Long bundleId, String userEmail) throws CustomException{
+    public RequestContainer payBundleRequest(Long bundleId, String userEmail) throws CustomException {
         RequestContainer requestContainer = requestContainerRepository.findById(bundleId).get();
 
-        if(requestContainer == null || !requestContainer.getUserSentRequest().equals(userEmail))
+        if (requestContainer == null || !requestContainer.getUserSentRequest().equals(userEmail))
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
 
         List<Request> requestsToBePayed = requestContainer.getBoundleList();
 
-        List<Request> paidRequests = requestsToBePayed.stream().map(request -> {request.setPaidState(PaidState.PAID); return  request;}).collect(Collectors.toList());
-        requestContainer.setBoundleList(paidRequests);
-
-        requestContainerRepository.save(requestContainer);
+        changeRequestsState(requestContainer, PaidState.PAID);
 
         List<Long> bundleAdIds = requestsToBePayed.stream().map(request -> request.getAdId()).collect(Collectors.toList());
         List<Long> requestToBeExcluded = requestsToBePayed.stream().map(request -> request.getId()).collect(Collectors.toList());
 
-        List<Request> requests = requestRepository.findAllByAllAdIds(bundleAdIds, requestToBeExcluded);
+        Map<Long, Request> requestsMap = new HashMap<>();
+        for(Request r : requestsToBePayed) {
+            requestsMap.put(r.getAdId(), r);
+        }
 
-        for(Request r : requests) {
-            r.setPaidState(PaidState.CANCELED);
+        List<Request> requests = requestRepository.findAllByAllAdIds(bundleAdIds, requestToBeExcluded);
+        for (Request r : requests) {
+            if(checkIfRequestDatesOverlapping(requestsMap.get(r.getAdId()), r))
+                if (r.isInBundle()) changeRequestsState(r.getRequestContainer(), PaidState.CANCELED);
+                else r.setPaidState(PaidState.CANCELED);
         }
 
         requestRepository.saveAll(requests);
@@ -334,9 +338,23 @@ public class RequestService {
         return requestContainer;
     }
 
+
+    private boolean checkIfRequestDatesOverlapping(Request request, Request r) {
+        if (r.getStartDate().compareTo(request.getStartDate()) <= 0 && r.getEndDate().compareTo(request.getStartDate()) >= 0) {
+            return true;
+        }
+        if (r.getStartDate().compareTo(request.getEndDate()) <= 0 && r.getEndDate().compareTo(request.getEndDate()) >= 0) {
+            return true;
+        }
+        if (r.getStartDate().compareTo(request.getStartDate()) >= 0 && r.getEndDate().compareTo(request.getEndDate()) <= 0) {
+            return true;
+        }
+        return false;
+    }
+
     public Request cancelRequest(Long requestId, String userEmail) throws CustomException {
         Request request = requestRepository.findById(requestId).get();
-        if(request == null || !request.getUserSentRequest().equals(userEmail))
+        if (request == null || !request.getUserSentRequest().equals(userEmail))
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
         request.setPaidState(PaidState.CANCELED);
         return requestRepository.save(request);
@@ -344,16 +362,21 @@ public class RequestService {
 
     public RequestContainer cancelBundleRequest(Long bundleId, String userEmail) throws CustomException {
         RequestContainer requestContainer = requestContainerRepository.findById(bundleId).get();
-        if(requestContainer == null || !requestContainer.getUserSentRequest().equals(userEmail))
+        if (requestContainer == null || !requestContainer.getUserSentRequest().equals(userEmail))
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
 
-        List<Request> requestsToBeCanceled = requestContainer.getBoundleList();
+        changeRequestsState(requestContainer, PaidState.CANCELED);
 
-        List<Request> canceledRequests = requestsToBeCanceled.stream().map(request -> {request.setPaidState(PaidState.CANCELED); return  request;}).collect(Collectors.toList());
+        return requestContainer;
+    }
+
+    private void changeRequestsState(RequestContainer requestContainer, PaidState padiState) {
+        List<Request> canceledRequests = requestContainer.getBoundleList().stream().map(request -> {
+            request.setPaidState(padiState);
+            return request;
+        }).collect(Collectors.toList());
         requestContainer.setBoundleList(canceledRequests);
 
         requestContainerRepository.save(requestContainer);
-
-        return requestContainer;
     }
 }

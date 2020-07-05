@@ -9,7 +9,11 @@ import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ChatIcon from "@material-ui/icons/Chat";
 import { connect } from "react-redux";
 import { initializeNewChatBox } from "../../../../store/actions/chat";
-import { payRequest, cancelRequest } from "../../../../store/actions/request";
+import {
+  payRequest,
+  cancelRequest,
+  getCreatedRequests,
+} from "../../../../store/actions/request";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +45,8 @@ function RequestActions({
   cancelRequest,
   show,
   readOnly,
+  getCreatedRequests,
+  user,
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -53,7 +59,7 @@ function RequestActions({
     setOpen(true);
   };
 
-  const handleAction = (name) => {
+  const handleAction = async (name) => {
     switch (name) {
       case "Chat":
         if (!openChatBoxes.some((o) => o.chatName === chatName))
@@ -73,7 +79,8 @@ function RequestActions({
         setOpenedDialog("c" + roomId);
         break;
       case "Pay":
-        payRequest(roomId);
+        await payRequest(roomId);
+        getCreatedRequests(user.username);
         break;
       case "Cancel":
         cancelRequest(roomId);
@@ -113,10 +120,12 @@ function RequestActions({
 
 const mapStateToProps = (state) => ({
   openChatBoxes: state.chat.openChatBoxes,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps, {
   initializeNewChatBox,
   payRequest,
   cancelRequest,
+  getCreatedRequests,
 })(RequestActions);

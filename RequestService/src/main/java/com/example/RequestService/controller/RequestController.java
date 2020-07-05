@@ -175,7 +175,7 @@ public class RequestController {
     public ResponseEntity<?> payRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
-            Request request = requestService.cancelRequest(requestId, userEmail);
+            Request request = requestService.payRequest(requestId, userEmail);
             log.info("User {} paid request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
             return new ResponseEntity<>(request, HttpStatus.OK);
         } catch (CustomException e) {
@@ -192,7 +192,7 @@ public class RequestController {
     public ResponseEntity<?> cancelRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
-            Request request = requestService.payRequest(requestId, userEmail);
+            Request request = requestService.cancelRequest(requestId, userEmail);
             log.info("User {} canceled request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
             return new ResponseEntity<>(request, HttpStatus.OK);
         } catch (CustomException e) {

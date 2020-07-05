@@ -72,12 +72,10 @@ export const payRequest = (roomId) => async (dispatch) => {
   try {
     if (roomId.startsWith("b")) {
       const res = await axios.put(`/request/bundle/${roomId.slice(1)}/pay`, {});
-      dispatch(setNewBundleRequestStatus(roomId.slice(1), "PAID"));
       console.log(res);
     } else {
       const res = await axios.put(`/request/${roomId}/pay`, {});
       console.log(res);
-      dispatch(setNewRequestStatus(roomId, "PAID"));
     }
   } catch (error) {
     console.log(error);
