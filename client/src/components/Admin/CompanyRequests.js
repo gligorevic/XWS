@@ -10,12 +10,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import Checkbox from "@material-ui/core/Checkbox";
 
-import CommentDialog from "../../Dialogs/Comment/CommentDialog";
-import GradeDialog from "../../Dialogs/Grade/GradeDialog";
-
-import { getAllPaid } from "../../../store/actions/request";
+import { getAllCompanyRequests } from "../../store/actions/user";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
+const CompanyRequests = ({ getAllCompanyRequests, companyRequests }) => {
   useEffect(() => {
-    getAllPaid(user.user.username);
+    getAllCompanyRequests();
   }, []);
   const classes = useStyles();
 
@@ -53,58 +49,24 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
     setPage(newPage);
   };
 
-  const [openCommentDialog, setOpenCommentDialog] = React.useState(false);
-  const [request, setRequest] = React.useState(null);
-  const [comments, setComments] = React.useState([]);
-
-  const [openGradeDialog, setOpenGradeDialog] = React.useState(false);
-  const [grade, setGrade] = React.useState({});
-
-  const handleOpenCommentDialog = async (event, row) => {
-    const commentResp = await Axios.get(`/feedback/comment/${row.id}`);
-
-    if (commentResp.status >= 200 && commentResp.status < 300) {
-      setRequest(row);
-      setComments(commentResp.data);
-      setOpenCommentDialog(true);
-    }
-  };
-
-  const handleOpenGradeDialog = async (event, row) => {
-    const gradeResp = await Axios.get(`/feedback/grade/${row.id}`).catch(
-      (error) => {
-        if (
-          error.response &&
-          error.response.status === 400 &&
-          error.response.data === "No grade for this request"
-        ) {
-          setOpenGradeDialog(true);
-          setRequest(row);
-          grade["grade"] = 0;
-          grade["requestId"] = row.id;
-          grade["username"] = row.userSentRequest;
-        }
-      }
-    );
-
-    if (gradeResp && gradeResp.status >= 200 && gradeResp.status < 300) {
-      setRequest(row);
-
-      grade["grade"] = gradeResp.data.grade;
-      grade["requestId"] = gradeResp.data.requestId;
-      grade["username"] = row.userSentRequest;
-      setOpenGradeDialog(true);
-    }
-  };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+  const handleAcceptCompanyRequest = async (e, row) => {
+    const resp = await Axios.put(`auth/company/${row.id}/accept`);
+    getAllCompanyRequests();
+  };
+
+  const handleDeclineCompanyRequest = async (e, row) => {
+    const resp = await Axios.put(`auth/company/${row.id}/decline`);
+    getAllCompanyRequests();
+  };
+
   return (
     <div>
-      {allPaidRequests && (
+      {companyRequests && (
         <Paper className={classes.paper}>
           <div className={classes.tableWrapper}>
             <Table
@@ -115,53 +77,58 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">User Sent Request</TableCell>
-                  <TableCell align="left">From</TableCell>
-                  <TableCell align="left">To</TableCell>
-                  <TableCell align="left">STATUS</TableCell>
-                  <TableCell align="left">In Bundle</TableCell>
+                  <TableCell align="left">Company Name</TableCell>
+                  <TableCell align="left">Registration</TableCell>
+                  <TableCell align="left">Phone Number</TableCell>
+                  <TableCell align="left">Address</TableCell>
                   <TableCell></TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allPaidRequests &&
-                  allPaidRequests.length > 0 &&
-                  allPaidRequests.map((row, index) => {
+                {companyRequests &&
+                  companyRequests.length > 0 &&
+                  companyRequests.map((row, index) => {
                     return (
                       <>
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.userSentEmail}
+                          key={row.user.email}
                         >
                           <TableCell component="th" allign="left">
-                            {row.userSentRequest}
+                            {row.user.email}
                           </TableCell>
-                          <TableCell align="left">{row.startDate}</TableCell>
-                          <TableCell align="left">{row.endDate}</TableCell>
+                          <TableCell align="left">{row.companyName}</TableCell>
+                          <TableCell align="left">
+                            {row.reqistrationNumber}
+                          </TableCell>
 
-                          <TableCell align="left">{row.paidState}</TableCell>
-                          <TableCell align="center">
-                            <Checkbox checked={row.inBundle} disabled />
-                          </TableCell>
+                          <TableCell align="left">{row.phoneNumber}</TableCell>
+                          <TableCell align="left">{row.address}</TableCell>
                           <TableCell align="left">
                             <Button
-                              onClick={(e) => handleOpenCommentDialog(e, row)}
+                              onClick={(e) =>
+                                handleAcceptCompanyRequest(e, row)
+                              }
+                              color="primary"
                               size="medium"
                               variant="contained"
                             >
-                              Comment
+                              Accept
                             </Button>
                           </TableCell>
                           <TableCell align="left">
                             <Button
-                              onClick={(e) => handleOpenGradeDialog(e, row)}
+                              onClick={(e) =>
+                                handleDeclineCompanyRequest(e, row)
+                              }
                               size="medium"
                               variant="contained"
                               style={{ backgroundColor: "#d66" }}
                             >
-                              Grade
+                              Decline
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -171,7 +138,7 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
                 {rowsPerPage -
                   Math.min(
                     rowsPerPage,
-                    allPaidRequests.length - page * rowsPerPage
+                    companyRequests.length - page * rowsPerPage
                   ) >
                   0 && (
                   <TableRow
@@ -181,7 +148,7 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
                         (rowsPerPage -
                           Math.min(
                             rowsPerPage,
-                            allPaidRequests.length - page * rowsPerPage
+                            companyRequests.length - page * rowsPerPage
                           )),
                     }}
                   >
@@ -194,7 +161,7 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={allPaidRequests.length}
+            count={companyRequests.length}
             rowsPerPage={rowsPerPage}
             page={page}
             backIconButtonProps={{
@@ -208,33 +175,17 @@ const MyRequests = ({ getAllPaid, allPaidRequests, user }) => {
           />
         </Paper>
       )}
-
-      <CommentDialog
-        openCommentDialog={openCommentDialog}
-        setOpenCommentDialog={setOpenCommentDialog}
-        request={request}
-        comments={comments}
-        setComments={setComments}
-      ></CommentDialog>
-
-      <GradeDialog
-        open={openGradeDialog}
-        setOpen={setOpenGradeDialog}
-        request={request}
-        grade={grade}
-        setGrade={setGrade}
-      ></GradeDialog>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  allPaidRequests: state.request.allPaidRequests,
+  companyRequests: state.user.companyRequests,
 });
 
 export default withRouter(
   connect(mapStateToProps, {
-    getAllPaid,
-  })(MyRequests)
+    getAllCompanyRequests,
+  })(CompanyRequests)
 );

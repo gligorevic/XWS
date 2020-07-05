@@ -15,10 +15,12 @@ import Container from "@material-ui/core/Container";
 import MainNavbar from "../layouts/Navbar/MainNavbar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { connect } from "react-redux";
-import { registrate } from "../../store/actions/auth";
+import { registrate, registrateAgent } from "../../store/actions/auth";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import InfoDialog from "../Dialogs/InfoDialog";
+
+import MuiPhoneInput from "material-ui-phone-number";
 
 function Copyright() {
   return (
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = ({ registrate, user, history }) => {
+const SignUp = ({ registrate, registrateAgent, user, history }) => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(false);
@@ -66,6 +68,14 @@ const SignUp = ({ registrate, user, history }) => {
     email: "",
     password: "",
     passwordRepeated: "",
+    roleName: "",
+  });
+
+  const [companyState, setCompanyState] = useState({
+    companyName: "",
+    registrationNumber: "",
+    phoneNumber: "",
+    address: "",
   });
   const [submitedEmail, setSubmitedEmail] = useState("");
 
@@ -76,20 +86,37 @@ const SignUp = ({ registrate, user, history }) => {
   }, []);
 
   const handleChange = (e) => {
-    console.log(checkPasswordFormat());
     setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleChangeCompany = (e) => {
+    setCompanyState({ ...companyState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const res = await registrate({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      email: state.email,
-      password: state.password,
-      roleName: role,
-    });
+    let res = null;
+    switch (role) {
+      case "ROLE_ENDUSER":
+        res = await registrate({
+          firstName: state.firstName,
+          lastName: state.lastName,
+          email: state.email,
+          password: state.password,
+          roleName: role,
+        });
+        break;
+      case "ROLE_AGENT":
+        state.roleName = role;
+        res = await registrateAgent({
+          userDTO: state,
+          companyDTO: companyState,
+        });
+        break;
+    }
+    console.log(res);
+
     setResponseStatus(res.status);
     setSubmitedEmail(state.email);
     setLoading(false);
@@ -213,8 +240,58 @@ const SignUp = ({ registrate, user, history }) => {
                   }
                 />
               </Grid>
+              {role === "ROLE_AGENT" && (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label="Company name"
+                      name="companyName"
+                      id="companyName"
+                      onChange={handleChangeCompany}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label="Registration number"
+                      name="registrationNumber"
+                      id="registrationNumber"
+                      onChange={handleChangeCompany}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <MuiPhoneInput
+                      variant="outlined"
+                      onChange={(phoneNumber) =>
+                        setCompanyState((oldState) => ({
+                          ...oldState,
+                          phoneNumber,
+                        }))
+                      }
+                      defaultCountry="rs"
+                      regions={"europe"}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label="Address"
+                      name="address"
+                      id="address"
+                      onChange={handleChangeCompany}
+                    ></TextField>
+                  </Grid>
+                </>
+              )}
               <Grid item xs={6}>
-                <Typography variant="h6">Uloga korisnika:</Typography>
+                <Typography variant="h6">User role:</Typography>
               </Grid>
               <Grid item xs={6}>
                 <ButtonGroup
@@ -299,4 +376,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { registrate })(SignUp);
+export default connect(mapStateToProps, { registrate, registrateAgent })(
+  SignUp
+);

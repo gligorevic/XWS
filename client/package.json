@@ -14,6 +14,7 @@
     "axios": "^0.19.2",
     "date-fns": "^2.14.0",
     "jwt-decode": "^2.2.0",
+    "material-ui-phone-number": "^2.2.6",
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

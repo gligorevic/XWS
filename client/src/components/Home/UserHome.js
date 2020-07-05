@@ -19,6 +19,9 @@ import ListMyAdvertisements from "../EndUser/ListMyAdvertisements";
 import CarPage from "../EndUser/Car/CarPage";
 import RequestsPage from "../EndUser/Request/RequestsPage";
 import ChangePassword from "../PasswordChange/PasswordChange";
+import { withRouter } from "react-router";
+import CompanyRegistration from "../Agent/Company/CompanyRegistration";
+import { connect } from "react-redux";
 import ListPassedRequests from "../EndUser/Report/ListPassedRequests";
 
 const drawerWidth = 240;
@@ -66,7 +69,7 @@ function a11yProps(index) {
   };
 }
 
-function UserHome(props) {
+function UserHome({ location, user }) {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,6 +84,11 @@ function UserHome(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  React.useEffect(() => {
+    location?.state?.tab && setValue(location.state.tab);
+  }, []);
+
   const drawer = (
     <div>
       <div className={classes.drawerHeader}>
@@ -106,7 +114,10 @@ function UserHome(props) {
         <Tab label="Cars" {...a11yProps(5)} />
         <Tab label="Requests" {...a11yProps(6)} />
         <Tab label="Change password" {...a11yProps(7)} />
-        <Tab label="Reports" {...a11yProps(8)} />
+        {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+          <Tab label="Reregister company" {...a11yProps(8)} />
+        )}
+        <Tab label="Reports" {...a11yProps(9)} />
       </Tabs>
     </div>
   );
@@ -161,13 +172,21 @@ function UserHome(props) {
           <TabPanel value={value} index={7}>
             {value === 7 && <ChangePassword />}
           </TabPanel>
-          <TabPanel value={value} index={8}>
-            {value === 8 && <ListPassedRequests />}
+          {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+            <TabPanel value={value} index={8}>
+              {value === 8 && <CompanyRegistration />}
+            </TabPanel>
+          )}
+          <TabPanel value={value} index={9}>
+            {value === 9 && <ListPassedRequests />}
           </TabPanel>
         </main>
       </div>
     </>
   );
 }
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+});
 
-export default UserHome;
+export default withRouter(connect(mapStateToProps, null)(UserHome));
