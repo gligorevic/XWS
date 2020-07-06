@@ -14,6 +14,7 @@ export default function BundleRequest({
   setHoveredId,
   colorSelected,
   show,
+  setOpenedDialog,
 }) {
   const getDateCreated = (req) => {
     const date = new Date(req.creationDate);
@@ -60,6 +61,7 @@ export default function BundleRequest({
             roomId={"b" + requests[0].containerId}
             sendTo={requests[0].userEmail}
             readOnly={requests[0].paidState !== "RESERVED"}
+            setOpenedDialog={setOpenedDialog}
           />
         </div>
         {requests.map((r) => (

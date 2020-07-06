@@ -22,3 +22,29 @@
 2020-07-06 19:25:23,465 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-10] Successful request info fetching by user $2a$10$GwDZjqyynuzXvk0PbovqNuX5e9/8NsdvHWcW.Q9UQFwLiENaTzA4e
 2020-07-06 19:25:25,682 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successful request fetching by user $2a$10$xYJQ04YSfLYBPwH4VQZF3.FibrvXmj7S/T3yceJuGvzeJ22fAfqrS
 2020-07-06 19:26:26,342 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request fetching by user $2a$10$GDIYgVrSAxU28mqFtG5AuOKiN2jXQacHp2XGs2ijDWv4pBBZ6EUPq
+2020-07-06 20:21:33,715 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 20:21:44,776 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 15.034 seconds (JVM running for 16.324)
+2020-07-06 18:38:41,717 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 18:40:24,955 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 125.928 seconds (JVM running for 137.08)
+2020-07-06 18:44:20,766 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] User $2a$10$JQDaG5I5SZkcnQUZu0b.F.dNkYQJxZtX7QzS..GOefQRil76GuW2y canceled request $2a$10$IvnbBJ2psJX0Hf2ZadthDeu/gUjRWSk2MhQpwnU4rMKkA2dktxDBC
+2020-07-06 19:01:28,570 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 19:03:22,990 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 137.025 seconds (JVM running for 148.828)
+2020-07-06 21:38:16,530 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 21:45:42,435 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 21:45:53,308 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 14.529 seconds (JVM running for 16.025)
+2020-07-06 19:46:59,368 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 19:48:59,175 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 143.627 seconds (JVM running for 153.478)
+2020-07-06 19:50:01,477 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successful request info fetching by user $2a$10$zaP3g3L0EgR0zSltLvAeQecoFAr.CFQZyVNOJG8VrzAG4T2h.kjZW
+2020-07-06 20:52:39,906 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 20:54:34,539 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 140.13 seconds (JVM running for 151.452)
+2020-07-06 23:07:04,806 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 23:07:16,363 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 16.203 seconds (JVM running for 17.923)
+2020-07-06 21:08:34,412 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 21:10:32,583 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 140.676 seconds (JVM running for 150.335)
+2020-07-06 21:31:19,785 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 21:33:25,490 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 147.761 seconds (JVM running for 160.977)
+2020-07-06 21:44:03,009 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-4] Successful request info fetching by user $2a$10$8yoZl1AK99J2JNKutwWGKucqP/31uWlbtgQ9OzrXchXIq6c7arwLS
+2020-07-06 21:44:08,094 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successful request fetching by user $2a$10$OybHdUutoceBaS9SzCr5deXxG3blOKRQswVtBEyX..qDfzllKC40W
+2020-07-06 21:47:12,425 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] Successful request fetching by user $2a$10$1e1ExvWLyRVtN3eL3AyRx.tzqhl8Q5dUiNae3zzrY5mGuRT2MVnoO
+2020-07-06 23:51:08,023 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 23:51:22,433 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 18.767 seconds (JVM running for 20.571)

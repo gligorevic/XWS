@@ -15,7 +15,8 @@ public class Grade {
     private Long id;
     private int grade;
     private Long requestId;
-    private String username; // dao ocenu
+    private boolean inBundle;
+    private String username;
     private String agentUsername;
 
     public Grade() {
@@ -33,6 +34,7 @@ public class Grade {
         this.requestId = gradeDTO.getRequestId();
         this.username = gradeDTO.getUsername();
         this.agentUsername = gradeDTO.getAgentUsername();
+        this.inBundle = gradeDTO.isInBundle();
     }
 
     public Long getId() {
@@ -41,6 +43,14 @@ public class Grade {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
     }
 
     public int getGrade() {
