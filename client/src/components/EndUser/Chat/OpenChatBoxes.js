@@ -83,6 +83,7 @@ function OpenChatBoxes({
           socket={socket}
           unreads={o.unreadedMessages}
           resetUnreads={() => resetUnreads(o.roomId)}
+          readOnly={o.readOnly}
         />
       ))}
     </div>

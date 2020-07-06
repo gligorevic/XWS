@@ -38,6 +38,9 @@ public class Request {
     private String userEmail;
     private String userSentRequest;
 
+    private String brandName;
+    private String modelName;
+
     public Request() {
     }
 
@@ -49,6 +52,8 @@ public class Request {
         this.userEmail = requestDTO.getUserEmail();
         this.userSentRequest = requestDTO.getUserSentRequest();
         this.inBundle = requestDTO.isInBundle();
+        this.brandName = requestDTO.getBrandName();
+        this.modelName = requestDTO.getModelName();
     }
 
     public Request(PaidState paidState) {
@@ -133,6 +138,22 @@ public class Request {
 
     public void setRequestContainer(RequestContainer requestContainer) {
         this.requestContainer = requestContainer;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
     @PrePersist

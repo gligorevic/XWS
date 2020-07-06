@@ -2,6 +2,8 @@ import {
   SET_ALL_REQUESTS,
   SET_CREATED_REQUESTS,
   SET_ALL_PAID_REQUESTS,
+  SET_NEW_REQUEST_STATUS,
+  SET_NEW_BUNDLE_REQUEST_STATUS,
   SET_PASSED_REQUESTS,
 } from "../actionTypes";
 
@@ -25,6 +27,18 @@ export const setCreatedRequests = (createdRequests) => ({
 export const setPassedRequests = (passedRequests) => ({
   type: SET_PASSED_REQUESTS,
   passedRequests,
+});
+
+export const setNewRequestStatus = (requestId, status) => ({
+  type: SET_NEW_REQUEST_STATUS,
+  requestId,
+  status,
+});
+
+export const setNewBundleRequestStatus = (containerId, status) => ({
+  type: SET_NEW_BUNDLE_REQUEST_STATUS,
+  containerId,
+  status,
 });
 
 export const getAllRequests = (username) => async (dispatch) => {
@@ -81,5 +95,24 @@ export const getPassedRequests = () => async (dispatch) => {
   } catch (err) {
     console.log(err.response);
     return err.response;
+  }
+};
+
+export const cancelRequest = (roomId) => async (dispatch) => {
+  try {
+    if (roomId.startsWith("b")) {
+      const res = await axios.put(
+        `/request/bundle/${roomId.slice(1)}/cancel`,
+        {}
+      );
+      dispatch(setNewBundleRequestStatus(roomId.slice(1), "CANCELED"));
+      console.log(res);
+    } else {
+      const res = await axios.put(`/request/${roomId}/cancel`, {});
+      console.log(res);
+      dispatch(setNewRequestStatus(roomId, "CANCELED"));
+    }
+  } catch (err) {
+    console.log(err);
   }
 };

@@ -1,7 +1,7 @@
 package com.example.RequestService.dto;
 
-import com.example.RequestService.client.AdvertisementClient;
 import com.example.RequestService.domain.PaidState;
+import com.example.RequestService.domain.Request;
 
 public class RequestInfoDTO {
 
@@ -16,11 +16,13 @@ public class RequestInfoDTO {
     public RequestInfoDTO() {
     }
 
-    public RequestInfoDTO(Long adId, PaidState paidState) {
-        this.adId = adId;
+    public RequestInfoDTO(Request request, PaidState paidState) {
+        this.adId = request.getAdId();
         this.acceptedRequestNum = 0;
         this.canceledRequestNum = 0;
         this.pendingRequestNum = 0;
+        this.brandName = request.getBrandName();
+        this.modelName = request.getModelName();
         append(paidState);
     }
 

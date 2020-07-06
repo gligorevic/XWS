@@ -65,6 +65,7 @@ export default function SingleRequest({
             sendTo={request.userEmail}
             setOpenedDialog={setOpenedDialog}
             show={show}
+            readOnly={request.paidState !== "RESERVED"}
           />
         </span>
       </Paper>

@@ -47,10 +47,10 @@ public class RequestController {
 
     @GetMapping("/bundle/{requestId}")
     @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
-    public ResponseEntity<?> getAllRequestsInBundle(@PathVariable("requestId") String requestId, @RequestHeader("Auth") String auth, Authentication authentication) {
+    public ResponseEntity<?> getAllRequestsInBundle(@PathVariable("requestId") String requestId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
-            List<RequestBundleDTO> requestBundles = requestService.getAllRequestsInBundle(Long.parseLong(requestId), auth);
+            List<RequestBundleDTO> requestBundles = requestService.getAllRequestsInBundle(Long.parseLong(requestId));
             log.info("Successful bundle request fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestBundles, HttpStatus.OK);
         } catch (CustomException e) {
@@ -64,13 +64,13 @@ public class RequestController {
 
     @GetMapping("/info/{username}")
     @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
-    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, @RequestHeader("Auth") String auth, Authentication authentication) {
+    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(username)) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username, auth);
+            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username);
             log.info("Successful request info fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestInfos, HttpStatus.OK);
         } catch (CustomException e) {
@@ -138,7 +138,7 @@ public class RequestController {
 
     @PutMapping("/bundle/{bundleId}/pay")
     @PreAuthorize("hasAuthority('RENT_PAYING')")
-    public ResponseEntity<?> PayBundleRequest(@PathVariable("bundleId") Long bundleId, Authentication authentication) {
+    public ResponseEntity<?> payBundleRequest(@PathVariable("bundleId") Long bundleId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             RequestContainer requestContainer = requestService.payBundleRequest(bundleId, userEmail);
@@ -153,13 +153,47 @@ public class RequestController {
         }
     }
 
+    @PutMapping("/bundle/{requestId}/cancel")
+    @PreAuthorize("hasAuthority('ENDUSER_REQUEST_CANCELING')")
+    public ResponseEntity<?> cancelBundleRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
+        try {
+            RequestContainer requestContainer = requestService.cancelBundleRequest(requestId, userEmail);
+            log.info("User {} canceled bundle request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(requestContainer.getId().toString()));
+            return new ResponseEntity<>(requestContainer, HttpStatus.OK);
+        } catch (CustomException e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PutMapping("/{requestId}/pay")
     @PreAuthorize("hasAuthority('RENT_PAYING')")
-    public ResponseEntity<?> PayRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
+    public ResponseEntity<?> payRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             Request request = requestService.payRequest(requestId, userEmail);
-            log.info("User {} paid bundle request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
+            log.info("User {} paid request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
+            return new ResponseEntity<>(request, HttpStatus.OK);
+        } catch (CustomException e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{requestId}/cancel")
+    @PreAuthorize("hasAuthority('ENDUSER_REQUEST_CANCELING')")
+    public ResponseEntity<?> cancelRequest(@PathVariable("requestId") Long requestId, Authentication authentication) {
+        String userEmail = (String) authentication.getPrincipal();
+        try {
+            Request request = requestService.cancelRequest(requestId, userEmail);
+            log.info("User {} canceled request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(request.getId().toString()));
             return new ResponseEntity<>(request, HttpStatus.OK);
         } catch (CustomException e) {
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
@@ -261,6 +295,7 @@ public class RequestController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
 
 
 }

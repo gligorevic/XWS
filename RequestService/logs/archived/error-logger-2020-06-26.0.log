@@ -1,0 +1,4 @@
+2020-06-25 17:57:18,277 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] No requests for this advertisement. Acction initiated by $2a$10$OuLsTBeBDGAC1wSgQ7CYVuxzh2G7QO8F4M5ASlg8evas937u6Z5WS.
+2020-06-25 16:20:53,086 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] No requests for this advertisement. Acction initiated by $2a$10$rSB/ihHahJcX2SMiOTyN0OW3pfX34wT4HyXljJ8eaWwSjSd5nby.C.
+2020-06-25 16:22:59,756 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] No requests for this advertisement. Acction initiated by $2a$10$ttcx9ruZn9nuTB0SRatkaO8fObKOcRBa30GAiYXjOjQIK7/FAClhC.
+2020-06-25 16:23:25,983 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] No requests for this advertisement. Acction initiated by $2a$10$VH2E9dUukFijGMgszeSPJO6stx50W/YkjmK.P1zIuMYDHANUfcnD6.

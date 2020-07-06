@@ -81,3 +81,12 @@ export const decreaseCartNum = () => (dispatch, getState) => {
     return err.response;
   }
 };
+
+export const setCartNum = (cartItemsNum) => (dispatch) => {
+  try {
+    dispatch({ type: SET_CART_ITEMS_NUM, cartItemsNum });
+  } catch (err) {
+    console.log(err);
+    return err.response;
+  }
+};

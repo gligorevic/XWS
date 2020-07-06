@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ViewCar({ match }) {
+function ViewCar({ match, history }) {
   const classes = useStyles();
   const [car, setCar] = useState();
   const getDateCreated = () => {
@@ -47,7 +47,13 @@ function ViewCar({ match }) {
       <AppBar position="static" color="default">
         <Toolbar>
           <span className={classes.grow}>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                history.push({ pathname: `/user`, state: { tab: 5 } })
+              }
+            >
               Go Back
             </Button>
           </span>
