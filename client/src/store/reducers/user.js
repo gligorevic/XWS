@@ -4,6 +4,7 @@ import {
   SET_USER_BLOCKED,
   SET_ALLUSER_DELETE,
   SET_CART_ITEMS_NUM,
+  SET_ALL_COMPANY_REQUESTS,
 } from "../actionTypes";
 
 const DEFAULT_STATE = {
@@ -11,6 +12,7 @@ const DEFAULT_STATE = {
   cartItemsNum: 0,
   user: {},
   allUsers: [],
+  companyRequests: [],
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -42,6 +44,11 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         cartItemsNum: action.cartItemsNum,
+      };
+    case SET_ALL_COMPANY_REQUESTS:
+      return {
+        ...state,
+        companyRequests: action.companyRequests,
       };
     default:
       return state;

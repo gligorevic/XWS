@@ -221,7 +221,7 @@ public class RequestController {
                     log.info("User {} accepted request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
                     return new ResponseEntity<>(acceptedRequest, HttpStatus.OK);
                 case CANCELED:
-                    Request canceledRequest = requestService.acceptRequest(requestId);
+                    Request canceledRequest = requestService.declineRequest(requestId);
                     log.info("User {} canceled request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(canceledRequest.getId().toString()));
                     return new ResponseEntity<>(canceledRequest, HttpStatus.OK);
                 default:
@@ -282,6 +282,17 @@ public class RequestController {
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
 
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/passed")
+    public ResponseEntity<?> getPassedRequests(Authentication authentication){
+        String userEmail = (String) authentication.getPrincipal();
+        try{
+            return new ResponseEntity<>(requestService.getPassedRequests(userEmail), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 

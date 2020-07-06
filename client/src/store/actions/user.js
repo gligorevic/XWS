@@ -3,6 +3,7 @@ import {
   SET_USER_BLOCKED,
   SET_ALLUSER_DELETE,
   SET_CART_ITEMS_NUM,
+  SET_ALL_COMPANY_REQUESTS,
 } from "../actionTypes";
 import axios from "axios";
 
@@ -16,10 +17,25 @@ export const setAllUsersAfterDelete = (userId) => ({
   userId,
 });
 
+export const setAllCompanyRequests = (companyRequests) => ({
+  type: SET_ALL_COMPANY_REQUESTS,
+  companyRequests,
+});
+
 export const getAllUsers = () => async (dispatch) => {
   try {
     const res = await axios.get("/auth/user");
     dispatch(setAllUsers(res.data));
+  } catch (err) {
+    console.log(err);
+    return err.response;
+  }
+};
+
+export const getAllCompanyRequests = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/auth/company/requests");
+    dispatch(setAllCompanyRequests(res.data));
   } catch (err) {
     console.log(err);
     return err.response;

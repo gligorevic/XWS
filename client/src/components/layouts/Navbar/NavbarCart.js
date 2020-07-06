@@ -13,6 +13,8 @@ import clsx from "clsx";
 import { logout } from "../../../store/actions/auth";
 import { connect } from "react-redux";
 
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppBarMyCart = ({ open, handleDrawerOpen, logout, user }) => {
+const AppBarMyCart = ({ open, logout, history }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -70,6 +72,11 @@ const AppBarMyCart = ({ open, handleDrawerOpen, logout, user }) => {
         })}
       >
         <Toolbar>
+          <ArrowBackIosIcon
+            onClick={() => history.push(`/`)}
+            style={{ cursor: "pointer", marginRight: 20 }}
+          />
+
           <Typography variant="h6" className={classes.title}>
             My Cart
           </Typography>

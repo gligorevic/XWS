@@ -102,7 +102,12 @@ INSERT INTO USER_TABLE (first_name, last_name, email, password, blocked) VALUES 
 INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('3', '2');
 
 INSERT INTO USER_TABLE (first_name, last_name, email, password, blocked) VALUES ('Agent', 'Agentic', 'agent@gmail.com', '$2a$10$feiotRqclqYZ7aJnytCDSedhWmzztzhuwyujbVfVucV4nbmMRNnwa', false);
-
 INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('4', '3');
+INSERT INTO COMPANY (ADDRESS, COMPANY_NAME, COMPANY_STATUS, PHONE_NUMBER, REGISTRATION_NUMBER, USER_ID) VALUES ('ulica', 'kompanija', 2, '+381342432', '432423dfsfds', 4);
+
+UPDATE USER_TABLE SET company_id = 1 WHERE id = 4;
 
 
+INSERT INTO USER_TABLE (first_name, last_name, email, password, blocked) VALUES ('User', 'Useric', 'user@gmail.com', '$2a$10$feiotRqclqYZ7aJnytCDSedhWmzztzhuwyujbVfVucV4nbmMRNnwa', false);
+
+INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES ('5', '2');

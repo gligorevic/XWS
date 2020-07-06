@@ -1,0 +1,2 @@
+2020-07-02 19:31:09,390 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-4] AccessToken generation failed.
+2020-07-02 19:31:14,007 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-7] AccessToken generation failed.

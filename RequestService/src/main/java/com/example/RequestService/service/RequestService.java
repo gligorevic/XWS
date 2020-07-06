@@ -27,13 +27,38 @@ public class RequestService {
     public Request add(RequestDTO requestDTO) throws CustomException {
 
         requestDTO.setInBundle(false);
+        requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
+        requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
         Request request = new Request(requestDTO);
         request.setAdId(requestDTO.getId());
 
-        if (request.getUserEmail().equals(request.getUserSentRequest()))
+        List<Request> createdRequests = requestRepository.findAllByAdIdAndUserSentRequest(request.getAdId(), request.getUserSentRequest());
+
+        if(!createdRequests.isEmpty()){
+            if(checkRequestDatesOverlapping(createdRequests, request))
+               throw new CustomException("You have already made request that is in this range of dates.", HttpStatus.BAD_REQUEST);
+        }
+
+        if(request.getUserEmail().equals(request.getUserSentRequest()))
             throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
 
         return requestRepository.save(request);
+    }
+
+    private boolean checkRequestDatesOverlapping(List<Request> req, Request request) {
+
+        for(Request r : req){
+            if(r.getStartDate().compareTo(request.getStartDate()) <= 0 && r.getEndDate().compareTo(request.getStartDate()) >= 0){
+                    return true;
+            }
+            if(r.getStartDate().compareTo(request.getEndDate()) <= 0 && r.getEndDate().compareTo(request.getEndDate()) >= 0){
+                return true;
+            }
+            if(r.getStartDate().compareTo(request.getStartDate()) >= 0 && r.getEndDate().compareTo(request.getEndDate()) <= 0){
+                return true;
+            }
+        }
+        return false;
     }
 
     public RequestContainer addBundle(RequestContainerDTO requestContainerDTO) throws CustomException {
@@ -46,6 +71,8 @@ public class RequestService {
         if (!checkBundleRequest(requestContainerDTO.getRequestDTOS()))
             throw new CustomException("Something is wrong with this bundle request", HttpStatus.BAD_REQUEST);
 
+        List<Request> requestsForBundle = new ArrayList<>();
+
         requestContainerRepository.save(requestContainer);
         for (RequestDTO requestDTO : requestContainerDTO.getRequestDTOS()) {
             requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
@@ -55,9 +82,15 @@ public class RequestService {
             request.setRequestContainer(requestContainer);
             if (request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
-            requestContainer.getBoundleList().add(requestRepository.save(request));
+            List<Request> createdRequests = requestRepository.findAllByAdIdAndUserSentRequest(request.getAdId(), request.getUserSentRequest());
+            if(!createdRequests.isEmpty()){
+                if(checkRequestDatesOverlapping(createdRequests, request))
+                    throw new CustomException("You have already made request that is in this range of dates.", HttpStatus.BAD_REQUEST);
+            }
+            requestsForBundle.add(request);
         }
 
+        requestRepository.saveAll(requestsForBundle);
         return requestContainerRepository.save(requestContainer);
     }
 
@@ -173,6 +206,7 @@ public class RequestService {
     private Calendar getMidnightStartDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -182,6 +216,7 @@ public class RequestService {
     private Calendar getMidnightEndDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.HOUR_OF_DAY, 23);
@@ -340,5 +375,9 @@ public class RequestService {
         requestContainer.setBoundleList(canceledRequests);
 
         requestContainerRepository.save(requestContainer);
+    }
+
+    public List<Request> getPassedRequests(String userEmail){
+        return requestRepository.getRequestsPassed(new Date(), userEmail);
     }
 }

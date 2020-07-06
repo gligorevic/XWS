@@ -4,12 +4,15 @@ import {
   SET_ALL_PAID_REQUESTS,
   SET_NEW_BUNDLE_REQUEST_STATUS,
   SET_NEW_REQUEST_STATUS,
+  SET_PASSED_REQUESTS,
 } from "../actionTypes";
+
 
 const DEFAULT_STATE = {
   allRequests: [],
   createdRequests: [],
   allPaidRequests: [],
+  passedRequests: [],
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -28,6 +31,11 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         allPaidRequests: action.allPaidRequests,
+      };
+    case SET_PASSED_REQUESTS:
+      return {
+        ...state,
+        passedRequests: action.passedRequests,
       };
     case SET_NEW_REQUEST_STATUS:
       return {

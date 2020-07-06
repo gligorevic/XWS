@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Popper from "./Popper";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -27,6 +28,8 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import "./MainNavbar.css";
+import Axios from "axios";
 
 const drawerWidth = 240;
 
@@ -122,6 +125,17 @@ const MainNavbar = ({
   const tablet = useMediaQuery(theme.breakpoints.up("sm"));
 
   const [open, setOpen] = React.useState(false);
+  const [popupClosed, setPopupClosed] = React.useState(true);
+  const [companyStatus, setCompanyStatus] = React.useState("Not Defined");
+  React.useEffect(() => {
+    (async () => {
+      console.log(user.id);
+      const res = await Axios.get(`auth/user/${user.id}/company/status`);
+      console.log(res);
+      if (res.status === 200) setCompanyStatus(res.data);
+      setTimeout(() => setPopupClosed(false), 2000);
+    })();
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -192,22 +206,41 @@ const MainNavbar = ({
                   </>
                 ) : (
                   <>
-                    <Button
-                      color="inherit"
-                      onClick={() => {
-                        switch (user.role.length > 0 && user.role[0].name) {
-                          case "ROLE_ADMIN":
-                            history.push("/admin");
-                            break;
-                          case "ROLE_ENDUSER":
-                          case "ROLE_AGENT":
-                            history.push("/user");
-                            break;
-                        }
-                      }}
-                    >
-                      Profile
-                    </Button>
+                    <div style={{ position: "relative" }}>
+                      <Button
+                        style={{
+                          postion: "absolute",
+                          bottom: "50%",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                        }}
+                        color="inherit"
+                        onClick={() => {
+                          switch (user.role.length > 0 && user.role[0].name) {
+                            case "ROLE_ADMIN":
+                              history.push("/admin");
+                              break;
+                            case "ROLE_ENDUSER":
+                            case "ROLE_AGENT":
+                              history.push("/user");
+                              break;
+                          }
+                        }}
+                      >
+                        Profile
+                      </Button>
+                      <Popper
+                        open={companyStatus === "DENIED" && !popupClosed}
+                        setPopupClosed={setPopupClosed}
+                      />
+                      {companyStatus === "DENIED" && !popupClosed && (
+                        <>
+                          <div className="pulsingDiv pulsingDiv1"></div>
+                          <div className="pulsingDiv pulsingDiv2"></div>
+                          <div className="pulsingDiv pulsingDiv3"></div>
+                        </>
+                      )}
+                    </div>
                     <div className={classes.username}>
                       <AccountCircleIcon />
                       <p style={{ paddingLeft: 5 }}>{user.username}</p>

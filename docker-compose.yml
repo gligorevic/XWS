@@ -12,29 +12,29 @@ services:
       - 8024:8024
       - 8124:8124
 
-  request:
-    build: ./RequestService
-    ports:
-      - "8086:8086"
-    volumes:
-      - ./RequestService/logs:/logs
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
+#  request:
+#    build: ./RequestService
+#    ports:
+#      - "8086:8086"
+#    volumes:
+#      - ./RequestService/logs:/logs
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
 
-  auth:
-    build: ./AuthService
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./AuthService/logs:/logs
-    environment:
-      - REGISTRY_HOST=eureka-serviceregistry
-    tty: true
-    depends_on:
-      - eureka-serviceregistry
+#  auth:
+#    build: ./AuthService
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - ./AuthService/logs:/logs
+#    environment:
+#      - REGISTRY_HOST=eureka-serviceregistry
+#    tty: true
+#    depends_on:
+#      - eureka-serviceregistry
 
   car-info:
     build: ./CarInfoService
@@ -47,6 +47,18 @@ services:
     tty: true
     depends_on:
       - eureka-serviceregistry
+      
+  # pricelist-service:
+    # build: ./AxonSaga/PriceListService
+    # ports:
+      # - "8092:8092"
+    # environment:
+      # - REGISTRY_HOST=eureka-serviceregistry
+      # - AXON_HOST=axon-server
+    # tty: true
+    # depends_on:
+      # - eureka-serviceregistry
+      # - axon-server
 
 #  pki-service:
 #    build: ./pki
@@ -70,7 +82,7 @@ services:
     tty: true
     depends_on:
       - eureka-serviceregistry
-      - auth
+#      - auth
 
   mongo:
     container_name: mongo
@@ -129,3 +141,14 @@ services:
     depends_on:
       - eureka-serviceregistry
       - axon-server
+  feedback:
+    build: ./FeedbackService
+    ports:
+      - "8088:8088"
+    volumes:
+      - ./FeedbackService/logs:/logs
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+    tty: true
+    depends_on:
+      - eureka-serviceregistry

@@ -4,6 +4,7 @@ import {
   SET_ALL_PAID_REQUESTS,
   SET_NEW_REQUEST_STATUS,
   SET_NEW_BUNDLE_REQUEST_STATUS,
+  SET_PASSED_REQUESTS,
 } from "../actionTypes";
 
 import axios from "axios";
@@ -21,6 +22,11 @@ export const setAllPaidRequests = (allPaidRequests) => ({
 export const setCreatedRequests = (createdRequests) => ({
   type: SET_CREATED_REQUESTS,
   createdRequests,
+});
+
+export const setPassedRequests = (passedRequests) => ({
+  type: SET_PASSED_REQUESTS,
+  passedRequests,
 });
 
 export const setNewRequestStatus = (requestId, status) => ({
@@ -79,6 +85,16 @@ export const payRequest = (roomId) => async (dispatch) => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getPassedRequests = () => async (dispatch) => {
+  try {
+    var passedRequests = await axios.get(`/request/passed`);
+    dispatch(setPassedRequests(passedRequests.data));
+  } catch (err) {
+    console.log(err.response);
+    return err.response;
   }
 };
 
