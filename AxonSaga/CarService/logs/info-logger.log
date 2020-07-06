@@ -1,2 +1,2 @@
-2020-07-05 17:17:19,236 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-05 17:19:12,485 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 136.172 seconds (JVM running for 146.704)
+2020-07-06 16:36:49,019 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 16:38:44,676 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 134.606 seconds (JVM running for 143.138)

@@ -14,9 +14,9 @@ public class RequestBundleDTO {
     public RequestBundleDTO() {
     }
 
-    public RequestBundleDTO(Request request,AdvertisementDTO advertisementDTO) {
-        this.brandName = advertisementDTO.getBrandName();
-        this.modelName = advertisementDTO.getModelName();
+    public RequestBundleDTO(Request request) {
+        this.brandName = request.getBrandName();
+        this.modelName = request.getModelName();
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
     }

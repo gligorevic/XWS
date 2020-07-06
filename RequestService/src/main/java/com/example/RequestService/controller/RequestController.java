@@ -47,10 +47,10 @@ public class RequestController {
 
     @GetMapping("/bundle/{requestId}")
     @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
-    public ResponseEntity<?> getAllRequestsInBundle(@PathVariable("requestId") String requestId, @RequestHeader("Auth") String auth, Authentication authentication) {
+    public ResponseEntity<?> getAllRequestsInBundle(@PathVariable("requestId") String requestId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
-            List<RequestBundleDTO> requestBundles = requestService.getAllRequestsInBundle(Long.parseLong(requestId), auth);
+            List<RequestBundleDTO> requestBundles = requestService.getAllRequestsInBundle(Long.parseLong(requestId));
             log.info("Successful bundle request fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestBundles, HttpStatus.OK);
         } catch (CustomException e) {
@@ -64,13 +64,13 @@ public class RequestController {
 
     @GetMapping("/info/{username}")
     @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
-    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, @RequestHeader("Auth") String auth, Authentication authentication) {
+    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(username)) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username, auth);
+            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username);
             log.info("Successful request info fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestInfos, HttpStatus.OK);
         } catch (CustomException e) {

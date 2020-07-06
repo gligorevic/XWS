@@ -78,6 +78,8 @@ const CartPage = ({
     var cartItem = cartList.filter((item) => item.id === ad.id);
     cartItem[0]["userEmail"] = ad.userEmail;
     cartItem[0]["userSentRequest"] = user.user.username;
+    cartItem[0]["brandName"] = ad.brandName;
+    cartItem[0]["modelName"] = ad.modelName;
     const resp = await Axios.post(`/request`, cartItem[0]).catch((error) => {
       if (error.response && error.response.status === 400) {
         setLoading(false);

@@ -1,6 +1,5 @@
 package com.example.RequestService.service;
 
-import com.example.RequestService.client.AdvertisementClient;
 import com.example.RequestService.domain.PaidState;
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.domain.RequestContainer;
@@ -8,23 +7,16 @@ import com.example.RequestService.dto.*;
 import com.example.RequestService.exception.CustomException;
 import com.example.RequestService.repository.RequestContainerRepository;
 import com.example.RequestService.repository.RequestRepository;
-import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class RequestService {
 
-    @Autowired
-    private AdvertisementClient advertisementClient;
 
     @Autowired
     private RequestRepository requestRepository;
@@ -111,7 +103,7 @@ public class RequestService {
         return requests;
     }
 
-    public List<RequestInfoDTO> getAllRequestsInfoByReciverUsername(String username, String auth) throws CustomException {
+    public List<RequestInfoDTO> getAllRequestsInfoByReciverUsername(String username) throws CustomException {
         List<Request> requestList = requestRepository.findAllByUserEmail(username);
 
         Map<Long, RequestInfoDTO> requestAdvertMap = new HashMap<>();
@@ -122,29 +114,10 @@ public class RequestService {
                 RequestInfoDTO value = requestAdvertMap.get(key);
                 requestAdvertMap.replace(key, value.append(request.getPaidState()));
             } else {
-                requestAdvertMap.put(key, new RequestInfoDTO(request.getAdId(), request.getPaidState()));
+                requestAdvertMap.put(key, new RequestInfoDTO(request, request.getPaidState()));
             }
         }
 
-        List<AdvertisementDTO> advertisementsFromRequest;
-        if (requestAdvertMap.size() > 0) {
-
-            advertisementsFromRequest = advertisementClient.getAdvertisementsByIds(new ArrayList<>(requestAdvertMap.keySet()), auth).getBody();
-
-            if (advertisementsFromRequest == null) {
-                return new ArrayList<>();
-            }
-
-            if (!advertisementsFromRequest.isEmpty()) {
-                for (AdvertisementDTO a : advertisementsFromRequest) {
-                    Long key = a.getId();
-                    RequestInfoDTO value = requestAdvertMap.get(key);
-                    value.setBrandName(a.getBrandName());
-                    value.setModelName(a.getModelName());
-                    requestAdvertMap.replace(a.getId(), value);
-                }
-            }
-        }
         return new ArrayList<>(requestAdvertMap.values());
     }
 
@@ -215,23 +188,12 @@ public class RequestService {
         return calendar;
     }
 
-    public List<RequestBundleDTO> getAllRequestsInBundle(Long requestId, String auth) throws CustomException {
-
+    public List<RequestBundleDTO> getAllRequestsInBundle(Long requestId) throws CustomException {
         List<Request> requests = requestContainerRepository.getRequestsInBundle(requestId);
-
-        if (requests.isEmpty()) {
+        if (requests.isEmpty())
             throw new CustomException("This request is not in any bundle", HttpStatus.BAD_REQUEST);
-        }
-        List<RequestBundleDTO> requestBundleDTOS = new ArrayList<>();
-        List<Long> requestAdIds = new ArrayList<>(requests.stream().map(request -> request.getAdId()).collect(Collectors.toList()));
-        List<AdvertisementDTO> advertisementsFromRequest = advertisementClient.getAdvertisementsByIds(requestAdIds, auth).getBody();
 
-        for (Request request : requests) {
-            List<AdvertisementDTO> advertisementDTO = advertisementsFromRequest.stream().filter(adDTO -> adDTO.getId() == request.getAdId()).collect(Collectors.toList());
-            requestBundleDTOS.add(new RequestBundleDTO(request, advertisementDTO.get(0)));
-        }
-
-        return requestBundleDTOS;
+        return requests.stream().map(request -> new RequestBundleDTO(request)).collect(Collectors.toList());
     }
 
     public boolean requestInBundle(Long requestId) {

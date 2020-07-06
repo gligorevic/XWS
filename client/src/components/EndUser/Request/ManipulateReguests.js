@@ -157,7 +157,9 @@ function ManipulateRequests({ match, history, user }) {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => history.push(`/user`)}
+              onClick={() =>
+                history.push({ pathname: `/user`, state: { tab: 6 } })
+              }
             >
               Go Back
             </Button>
