@@ -37,7 +37,7 @@ public class RequestDTO {
         } else {
             this.containerId = -1L;
         }
-
+        this.inBundle = request.isInBundle();
         this.paidState = request.getPaidState();
         this.adId = request.getAdId();
         this.modelName = request.getModelName();

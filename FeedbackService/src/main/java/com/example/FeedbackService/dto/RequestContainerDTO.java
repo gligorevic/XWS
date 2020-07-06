@@ -1,12 +1,6 @@
-package com.example.RequestService.dto;
+package com.example.FeedbackService.dto;
 
-import com.example.RequestService.domain.PaidState;
-import com.example.RequestService.domain.RequestContainer;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RequestContainerDTO {
 
@@ -23,13 +17,6 @@ public class RequestContainerDTO {
         this.userEmail = userEmail;
         this.userSentRequest = userSentRequest;
         this.requestDTOS = requestDTOS;
-    }
-
-    public RequestContainerDTO(RequestContainer requestContainer){
-        this.id = requestContainer.getId();
-        this.userEmail = requestContainer.getUserEmail();
-        this.userSentRequest = requestContainer.getUserSentRequest();
-        this.requestDTOS = requestContainer.getBoundleList().stream().map(request -> new RequestDTO(request)).collect(Collectors.toList());;
     }
 
     public List<RequestDTO> getRequestDTOS() {

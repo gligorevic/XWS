@@ -14,6 +14,9 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
 
     List<Comment> findAllByRequestId(Long id);
 
+    @Query("SELECT c FROM Comment c WHERE c.requestId = :id AND c.inBundle = true")
+    List<Comment> findAllByRequestContainerId(@Param("id") Long id);
+
     @Query("SELECT c FROM Comment c WHERE c.commentStatus=0")
     List<Comment> findAllPending();
 

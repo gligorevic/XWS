@@ -154,7 +154,7 @@ public class RequestService {
         return new ArrayList<>(requestAdvertMap.values());
     }
 
-    public List<Request> getAllRequestsForAd(Long adId, String userEmail) throws CustomException {
+    public List<RequestDTO> getAllRequestsForAd(Long adId, String userEmail) throws CustomException {
 
         List<Request> requestList = requestRepository.findAllByAdId(adId);
         if (requestList.isEmpty() || requestList == null) {
@@ -165,7 +165,7 @@ public class RequestService {
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 
-        return requestList;
+        return requestList.stream().map(r -> new RequestDTO(r)).collect(Collectors.toList());
     }
 
     public RequestDTO getRequestById(Long id) {
@@ -379,5 +379,12 @@ public class RequestService {
 
     public List<Request> getPassedRequests(String userEmail){
         return requestRepository.getRequestsPassed(new Date(), userEmail);
+    }
+
+    public RequestContainerDTO getRequestContainer(Long containerId){
+
+        RequestContainer requestContainer = requestContainerRepository.findById(containerId).get();
+
+        return new RequestContainerDTO(requestContainer);
     }
 }

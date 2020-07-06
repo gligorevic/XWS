@@ -41,7 +41,14 @@ const CommentDialog = ({ request, open, setOpen, user }) => {
 
   useEffect(() => {
     (async () => {
-      const commentResp = await Axios.get(`/feedback/comment/${request.id}`);
+      let commentResp;
+      if (!request.inBundle) {
+        commentResp = await Axios.get(`/feedback/comment/${request.id}`);
+      } else {
+        commentResp = await Axios.get(
+          `/feedback/comment/bundle/${request.containerId}`
+        );
+      }
       setComments(commentResp.data);
     })();
   }, []);
@@ -92,6 +99,7 @@ const CommentDialog = ({ request, open, setOpen, user }) => {
                   setErrorMessage={setErrorMessage}
                   requestId={request.id}
                   user={request.userSentRequest}
+                  request={request}
                   setOpen={setOpen}
                 ></CommentReply>
               </Typography>
@@ -115,6 +123,7 @@ const CommentDialog = ({ request, open, setOpen, user }) => {
                   setErrorMessage={setErrorMessage}
                   requestId={request.id}
                   user={request.userEmail}
+                  request={request}
                   setOpen={setOpen}
                 ></CommentReply>
               </Typography>

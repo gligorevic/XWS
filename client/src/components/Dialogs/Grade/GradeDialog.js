@@ -16,12 +16,19 @@ const GradeDialog = ({ request, open, setOpen, user }) => {
     false
   );
 
-  console.log(user);
-  console.log(request);
   useEffect(() => {
     (async () => {
       try {
-        const gradeResp = await Axios.get(`/feedback/grade/${request.id}`);
+        console.log(request);
+        let gradeResp;
+        if (!request.inBundle) {
+          gradeResp = await Axios.get(`/feedback/grade/${request.id}`);
+        } else {
+          gradeResp = await Axios.get(
+            `/feedback/grade/bundle/${request.containerId}`
+          );
+        }
+
         setGrade(gradeResp.data);
         gradeResp.data > 0
           ? setFetchedAndGreatherThanZero(true)
@@ -37,12 +44,24 @@ const GradeDialog = ({ request, open, setOpen, user }) => {
   };
 
   const handleSubmit = async () => {
-    const response = await Axios.post(`/feedback/grade`, {
-      grade,
-      requestId: request.id,
-      username: user.username,
-      agentUsername: request.userEmail,
-    });
+    let response;
+    if (!request.inBundle) {
+      response = await Axios.post(`/feedback/grade`, {
+        grade,
+        requestId: request.id,
+        username: user.username,
+        agentUsername: request.userEmail,
+        inBundle: false,
+      });
+    } else {
+      response = await Axios.post("/feedback/grade/bundle", {
+        grade,
+        requestId: request.containerId,
+        username: user.username,
+        agentUsername: request.userEmail,
+        inBundle: true,
+      });
+    }
 
     if (response && response.status >= 200 && response.status < 300) {
       setOpen(-1);

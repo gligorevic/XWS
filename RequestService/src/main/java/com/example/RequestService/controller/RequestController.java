@@ -33,7 +33,7 @@ public class RequestController {
     public ResponseEntity<?> getAllRequestsForAd(@PathVariable("adId") String adId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
-            List<Request> requests = requestService.getAllRequestsForAd(Long.parseLong(adId), userEmail);
+            List<RequestDTO> requests = requestService.getAllRequestsForAd(Long.parseLong(adId), userEmail);
             log.info("Successful request fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requests, HttpStatus.OK);
         } catch (CustomException e) {

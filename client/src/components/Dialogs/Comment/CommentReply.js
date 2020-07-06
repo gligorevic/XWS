@@ -13,13 +13,16 @@ function CommentReply({
   setOpenFailure,
   setErrorMessage,
   setOpenSuccess,
+  request,
 }) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
     text: "",
-    requestId: requestId,
+    requestId: request.inBundle ? request.containerId : request.id,
     username: user,
+    agentUsername: request.userEmail,
+    inBundle: request.inBundle,
   });
 
   const handleChangeTextField = (e) => {
@@ -28,15 +31,29 @@ function CommentReply({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await Axios.post("/feedback/comment", state).catch((error) => {
-      if (error.response && error.response.status === 400) {
-        setOpen(-1);
-        setOpenFailure(true);
-        setErrorMessage(error.response.data);
-      }
-    });
+
+    let resp;
+    if (!request.inBundle) {
+      resp = await Axios.post("/feedback/comment", state).catch((error) => {
+        if (error.response && error.response.status === 400) {
+          setOpen(-1);
+          setOpenFailure(true);
+          setErrorMessage(error.response.data);
+        }
+      });
+    } else {
+      resp = await Axios.post("/feedback/comment/bundle", state).catch(
+        (error) => {
+          if (error.response && error.response.status === 400) {
+            setOpen(-1);
+            setOpenFailure(true);
+            setErrorMessage(error.response.data);
+          }
+        }
+      );
+    }
+
     if (resp && resp.status >= 200 && resp.status < 300) {
-      console.log("uslo");
       setState({
         ...state,
         text: "",
