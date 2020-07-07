@@ -82,8 +82,6 @@ function ManipulateRequests({ match, history, user }) {
   const handleOpenCommentDialog = (event, row) => {
     setRequest(row);
     setOpenedCommentDialog(row.id);
-    console.log(row);
-    console.log(openedCommentDialog);
   };
 
   const sort = (requests) => {

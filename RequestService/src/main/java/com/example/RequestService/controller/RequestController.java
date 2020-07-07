@@ -256,14 +256,14 @@ public class RequestController {
                 switch (requestStatusDTO.getPaidState()) {
                     case RESERVED:
                         for (Request request : requests) {
-                            Request acceptedRequest = requestService.acceptRequest(requestId);
+                            Request acceptedRequest = requestService.acceptRequest(request.getId());
                             log.info("User {} accepted request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
                         }
                         return new ResponseEntity<>(requests, HttpStatus.OK);
                     case CANCELED:
                         for (Request request : requests) {
-                            Request acceptedRequest = requestService.declineRequest(request.getId());
-                            log.info("User {} canceled request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
+                            Request declinedRequest = requestService.declineRequest(request.getId());
+                            log.info("User {} canceled request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(declinedRequest.getId().toString()));
                         }
                         return new ResponseEntity<>(requests, HttpStatus.OK);
                     default:

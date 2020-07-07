@@ -1,5 +1,6 @@
 package com.example.RequestService.service;
 
+import com.example.RequestService.MQConfig.ChannelBinding;
 import com.example.RequestService.domain.PaidState;
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.domain.RequestContainer;
@@ -9,8 +10,13 @@ import com.example.RequestService.repository.RequestContainerRepository;
 import com.example.RequestService.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +29,15 @@ public class RequestService {
 
     @Autowired
     private RequestContainerRepository requestContainerRepository;
+
+    private MessageChannel email;
+
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+
+    public RequestService(ChannelBinding channelBinding) {
+        this.email = channelBinding.mailing();
+    }
+
 
     public Request add(RequestDTO requestDTO) throws CustomException {
 
@@ -42,7 +57,12 @@ public class RequestService {
         if(request.getUserEmail().equals(request.getUserSentRequest()))
             throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
 
-        return requestRepository.save(request);
+        Request createdRequest = requestRepository.save(request);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(request.getUserEmail(), "Created advertisement request", "User " + request.getUserSentRequest() + " created request for car " + request.getBrandName() + " " + request.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return createdRequest;
     }
 
     private boolean checkRequestDatesOverlapping(List<Request> req, Request request) {
@@ -91,7 +111,13 @@ public class RequestService {
         }
 
         requestRepository.saveAll(requestsForBundle);
-        return requestContainerRepository.save(requestContainer);
+        RequestContainer createdRequestContainer = requestContainerRepository.save(requestContainer);
+
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(createdRequestContainer.getUserEmail(), "Created advertisement request", "User " + createdRequestContainer.getUserSentRequest() + " created request for cars " + createdRequestContainer.getBoundleList().stream().map(request -> request.getBrandName() + " " + request.getModelName() + ", ").collect(Collectors.joining()) + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return createdRequestContainer;
     }
 
     private boolean checkBundleRequest(List<RequestDTO> requestDTOS) {
@@ -130,6 +156,9 @@ public class RequestService {
         if (!requests.isEmpty()) {
             for (Request r : requests) {
                 r.setPaidState(PaidState.CANCELED);
+
+                Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(r.getUserSentRequest(), "Canceled advertisement request", "Agent " + r.getUserEmail() + " denied request for car " + r.getBrandName() + " " + r.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+                this.email.send(msg);
             }
             requestRepository.saveAll(requests);
         }
@@ -177,9 +206,8 @@ public class RequestService {
     public Request acceptRequest(Long requestId) throws CustomException {
 
         Request request = requestRepository.getOne(requestId);
-        if (request == null) {
+        if (request == null)
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
-        }
 
         if (checkRequest(request.getCrationDate(), 24))
             request.setPaidState(PaidState.RESERVED);
@@ -189,7 +217,12 @@ public class RequestService {
             throw new CustomException("This request is no longer valid", HttpStatus.BAD_REQUEST);
         }
 
-        return requestRepository.save(request);
+        Request acceptedRequest = requestRepository.save(request);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(request.getUserSentRequest(), "Accepted advertisement request", "Agent " + request.getUserEmail() + " acepted request for car " + request.getBrandName() + " " + request.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return acceptedRequest;
     }
 
     public Request declineRequest(Long requestId) throws CustomException {
@@ -198,6 +231,9 @@ public class RequestService {
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
         }
         request.setPaidState(PaidState.CANCELED);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(request.getUserSentRequest(), "Declined advertisement request", "Agent " + request.getUserEmail() + " declined request for car " + request.getBrandName() + " " + request.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
 
         return requestRepository.save(request);
     }

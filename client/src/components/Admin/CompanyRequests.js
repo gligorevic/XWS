@@ -102,7 +102,7 @@ const CompanyRequests = ({ getAllCompanyRequests, companyRequests }) => {
                           </TableCell>
                           <TableCell align="left">{row.companyName}</TableCell>
                           <TableCell align="left">
-                            {row.reqistrationNumber}
+                            {row.registrationNumber}
                           </TableCell>
 
                           <TableCell align="left">{row.phoneNumber}</TableCell>
