@@ -1,8 +1,13 @@
-import { SET_PRICELISTS, SET_PRICELIST_ITEMS } from "../actionTypes";
+import {
+  SET_PRICELISTS,
+  SET_PRICELIST_ITEMS,
+  SET_ADS_FOR_PRICELIST,
+} from "../actionTypes";
 
 const DEFAULT_STATE = {
   pricelists: [],
   pricelistItems: [],
+  adsForPricelist: [],
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -16,6 +21,11 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         pricelistItems: action.pricelistItems,
+      };
+    case SET_ADS_FOR_PRICELIST:
+      return {
+        ...state,
+        adsForPricelist: action.adsForPricelist,
       };
     default:
       return state;

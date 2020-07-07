@@ -17,6 +17,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
+import { getPricelists } from "../../../store/actions/pricelist";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -32,7 +33,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const AddPricelist = ({ open, setOpen }) => {
+const AddPricelist = ({ open, setOpen, getPricelists }) => {
   const [success, setSuccess] = useState();
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
@@ -65,7 +66,7 @@ const AddPricelist = ({ open, setOpen }) => {
       }
     });
     if (resp && resp.status >= 200 && resp.status < 300) {
-      console.log("uspesno");
+      getPricelists();
     }
 
     setLoading(false);
@@ -138,4 +139,4 @@ const mapStateToProps = (state) => ({
   userEmail: state.user.user.username,
 });
 
-export default connect(mapStateToProps, {})(AddPricelist);
+export default connect(mapStateToProps, { getPricelists })(AddPricelist);

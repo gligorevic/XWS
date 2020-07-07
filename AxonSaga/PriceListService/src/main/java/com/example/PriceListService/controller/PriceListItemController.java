@@ -2,6 +2,7 @@ package com.example.PriceListService.controller;
 
 import com.example.PriceListService.dto.PriceListDTO;
 import com.example.PriceListService.dto.PriceListItemDTO;
+import com.example.PriceListService.exception.CustomException;
 import com.example.PriceListService.service.PriceListItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,11 @@ public class PriceListItemController {
     public ResponseEntity<?> addNewPricelistItem(@RequestBody PriceListItemDTO priceListItemDTO){
         try{
             return new ResponseEntity<>(priceListItemService.addNewPriceListItem(priceListItemDTO) , HttpStatus.CREATED);
-        }catch (Exception e){
+        }catch (CustomException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        }
+        catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

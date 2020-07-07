@@ -1,6 +1,2 @@
-2020-07-05 20:00:43,539 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-05 20:01:05,003 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 29.027 seconds (JVM running for 31.865)
-2020-07-05 18:08:27,146 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-05 18:10:38,589 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 154.489 seconds (JVM running for 170.842)
-2020-07-05 19:30:27,114 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-05 19:33:10,264 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 205.599 seconds (JVM running for 227.771)
+2020-07-06 17:04:16,957 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-06 17:06:34,801 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 175.065 seconds (JVM running for 190.246)

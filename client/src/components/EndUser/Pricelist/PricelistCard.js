@@ -29,20 +29,10 @@ function PricelistCard({ pricelist, history, userEmail }) {
       />
 
       <CardActions disableSpacing className="cardFooter">
-        <IconButton
-          onClick={() => {
-            setOpenAcitveAd(pricelist.id);
-          }}
-        >
+        <IconButton>
           <AddCommentIcon />
         </IconButton>
-        {openActiveAd === pricelist.id && (
-          <AddAdvertisement
-            carId={pricelist.id}
-            open={openActiveAd === pricelist.id}
-            setOpen={handleSetOpen}
-          />
-        )}
+
         <Button
           size="small"
           color="primary"

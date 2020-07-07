@@ -1,5 +1,7 @@
 package com.example.PriceListService.dto;
 
+import com.example.PriceListService.domain.PriceListItem;
+
 public class PriceListItemDTO {
 
     private String brandName;
@@ -19,6 +21,22 @@ public class PriceListItemDTO {
     private Integer minNumberDays;
 
     private Integer percentage;
+
+    public PriceListItemDTO(){
+
+    }
+
+    public PriceListItemDTO(PriceListItem priceListItem){
+        this.advertisementId = priceListItem.getAdvertisementId();
+        this.brandName = priceListItem.getBrandName();
+        this.modelName = priceListItem.getModelName();
+        this.minNumberDays = priceListItem.getDiscount().getMinNumberDays();
+        this.percentage = priceListItem.getDiscount().getPercentage();
+        this.priceListId = priceListItem.getPriceList().getId();
+        this.pricePerDay = priceListItem.getPricePerDay();
+        this.pricePerKm = priceListItem.getPricePerKm();
+        this.priceCollisionDamage = priceListItem.getPriceCollisionDamage();
+    }
 
     public String getBrandName() {
         return brandName;
