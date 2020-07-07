@@ -111,18 +111,18 @@ public class CommentController {
     @PutMapping("/comment/{commentId}")
     @PreAuthorize("hasAuthority('RENT_COMMENT_APPROVING')")
     public ResponseEntity<?> changeCommentStatus(@RequestBody CommentStatusDTO commentStatusDTO,
-                                                 @PathVariable("commentId") Long commentId, Authentication authentication) {
+                                                 @PathVariable("commentId") Long commentId, Authentication authentication, @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             Comment comment = commentService.getCommentById(commentId);
 
             switch (commentStatusDTO.getCommentStatus()) {
                 case ACCEPTED:
-                    Comment commentToAccept = commentService.acceptComment(comment);
+                    Comment commentToAccept = commentService.acceptComment(comment, userEmail, auth);
                     log.info("Successfully accepted comment {} by user {}", bCryptPasswordEncoder.encode(commentToAccept.getId().toString()), bCryptPasswordEncoder.encode(userEmail));
                     return new ResponseEntity<>(commentToAccept, HttpStatus.OK);
                 case REJECTED:
-                    Comment commentToReject = commentService.acceptComment(comment);
+                    Comment commentToReject = commentService.cancelComment(comment, userEmail, auth);
                     log.info("Successfully rejected comment {} by user {}", bCryptPasswordEncoder.encode(commentToReject.getId().toString()), bCryptPasswordEncoder.encode(userEmail));
                     return new ResponseEntity<>(commentToReject, HttpStatus.OK);
                 default:

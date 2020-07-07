@@ -1,6 +1,7 @@
 package com.example.FeedbackService.service;
 
 
+import com.example.FeedbackService.MQConfig.ChannelBinding;
 import com.example.FeedbackService.client.RequestClient;
 import com.example.FeedbackService.domain.Comment;
 import com.example.FeedbackService.domain.CommentStatus;
@@ -11,12 +12,17 @@ import com.example.FeedbackService.repository.CommentRepository;
 import com.example.FeedbackService.repository.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GradeService {
@@ -27,6 +33,13 @@ public class GradeService {
     @Autowired
     private RequestClient requestClient;
 
+    private MessageChannel email;
+
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+
+    public GradeService(ChannelBinding channelBinding) {
+        this.email = channelBinding.mailing();
+    }
 
     public int getGradeForRequest(Long requestId) {
 
@@ -66,7 +79,12 @@ public class GradeService {
         if (grade == null)
             throw new CustomException("Couldn't create grade", HttpStatus.BAD_REQUEST);
 
-        return gradeRepository.save(grade);
+        Grade createdGrade = gradeRepository.save(grade);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(createdGrade.getAgentUsername(), "New grade!", "User " + createdGrade.getUsername() + " put a grade on advertisement " + requestDTO.getBrandName() + " " + requestDTO.getModelName() + " has been canceled by our administration " + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return createdGrade;
     }
 
     public Grade addBundleGrade(GradeDTO gradeDTO, String auth) throws CustomException {
@@ -86,7 +104,12 @@ public class GradeService {
         if (grade == null)
             throw new CustomException("Couldn't create grade", HttpStatus.BAD_REQUEST);
 
-        return gradeRepository.save(grade);
+        Grade createdGrade = gradeRepository.save(grade);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(createdGrade.getAgentUsername(), "New grade!", "User " + createdGrade.getUsername() + " put a grade on advertisement " + requestContainerDTO.getRequestDTOS().stream().map(requestDTO -> requestDTO.getBrandName() + " " + requestDTO.getModelName() + ", ").collect(Collectors.joining()) + " has been canceled by our administration " + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return createdGrade;
     }
 
 
