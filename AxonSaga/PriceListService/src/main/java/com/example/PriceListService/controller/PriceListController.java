@@ -21,7 +21,8 @@ public class PriceListController {
             String userEmail = (String) authentication.getPrincipal();
             return new ResponseEntity<>(priceListService.addNewPriceList(priceListDTO, userEmail), HttpStatus.CREATED);
         }catch (CustomException e){
-            throw new CustomException(e.getMessage(), e.getHttpStatus());
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

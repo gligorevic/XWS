@@ -21,8 +21,6 @@ public class PriceList {
 
     private Boolean excludeYear;
 
-    private String userEmail;
-
     public PriceList(){
 
     }
@@ -64,11 +62,4 @@ public class PriceList {
         this.excludeYear = excludeYear;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
 }

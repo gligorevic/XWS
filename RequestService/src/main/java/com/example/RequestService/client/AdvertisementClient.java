@@ -1,6 +1,7 @@
 package com.example.RequestService.client;
 
 import com.example.RequestService.dto.AdvertisementDTO;
+import com.example.RequestService.dto.AdvertisementStatisticDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,4 +15,7 @@ public interface AdvertisementClient {
 
     @PostMapping("/reqAdList")
     ResponseEntity<List<AdvertisementDTO>> getAdvertisementsByIds(@RequestBody List<Long> advertisementIds, @RequestHeader("Auth") String Auth);
+
+    @PostMapping("/user")
+    ResponseEntity<List<AdvertisementStatisticDTO>> getAdvertisementsByUserEmail(@RequestHeader("Auth") String Auth);
 }

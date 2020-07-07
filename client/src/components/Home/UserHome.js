@@ -23,6 +23,7 @@ import { withRouter } from "react-router";
 import CompanyRegistration from "../Agent/Company/CompanyRegistration";
 import { connect } from "react-redux";
 import ListPassedRequests from "../EndUser/Report/ListPassedRequests";
+import StatisticTab from "../Agent/Statistic/StatisticTab";
 
 const drawerWidth = 240;
 
@@ -114,10 +115,11 @@ function UserHome({ location, user }) {
         <Tab label="Cars" {...a11yProps(5)} />
         <Tab label="Requests" {...a11yProps(6)} />
         <Tab label="Change password" {...a11yProps(7)} />
+        <Tab label="Reports" {...a11yProps(8)} />
+        <Tab label="Statistic" {...a11yProps(9)} />
         {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-          <Tab label="Reregister company" {...a11yProps(8)} />
+          <Tab label="Reregister company" {...a11yProps(10)} />
         )}
-        <Tab label="Reports" {...a11yProps(9)} />
       </Tabs>
     </div>
   );
@@ -172,14 +174,18 @@ function UserHome({ location, user }) {
           <TabPanel value={value} index={7}>
             {value === 7 && <ChangePassword />}
           </TabPanel>
+
+          <TabPanel value={value} index={8}>
+            {value === 8 && <ListPassedRequests />}
+          </TabPanel>
+          <TabPanel value={value} index={9}>
+            {value === 9 && <StatisticTab />}
+          </TabPanel>
           {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-            <TabPanel value={value} index={8}>
-              {value === 8 && <CompanyRegistration />}
+            <TabPanel value={value} index={10}>
+              {value === 10 && <CompanyRegistration />}
             </TabPanel>
           )}
-          <TabPanel value={value} index={9}>
-            {value === 9 && <ListPassedRequests />}
-          </TabPanel>
         </main>
       </div>
     </>

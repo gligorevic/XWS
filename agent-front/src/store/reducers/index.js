@@ -6,6 +6,7 @@ import request from "./request";
 import report from "./report";
 import comment from "./comment";
 import statistic from "./statistic";
+import pricelist from "./pricelist";
 
 const appReducer = combineReducers({
   advertisement,
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   report,
   comment,
   statistic,
+  pricelist,
 });
 
 const rootReducer = (state, action) => {

@@ -1,0 +1,1 @@
+2020-07-06 17:05:51,743 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use

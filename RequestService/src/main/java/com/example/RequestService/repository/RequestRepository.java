@@ -42,5 +42,8 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     @Query("SELECT DISTINCT r FROM Request r WHERE r.paidState=1 AND r.endDate < :today AND r.userEmail = :userEmail")
     List<Request> getRequestsPassed(@Param("today") Date today, @Param("userEmail") String userEmail);
+
+    @Query("SELECT DISTINCT r FROM Request  r WHERE (r.crationDate BETWEEN :startDate AND :endDate)")
+    List<Request> getRequestsByBetweenDates(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
     
 }

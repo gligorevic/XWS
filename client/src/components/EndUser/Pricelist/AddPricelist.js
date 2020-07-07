@@ -37,6 +37,10 @@ const AddPricelist = ({ open, setOpen, getPricelists }) => {
   const [success, setSuccess] = useState();
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
+  const [openFailure, setOpenFailure] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(
+    "Something went wrong"
+  );
 
   const [state, setState] = React.useState({
     validFrom: new Date(),
@@ -56,6 +60,10 @@ const AddPricelist = ({ open, setOpen, getPricelists }) => {
       validTo: date,
     });
   };
+
+  const handleCloseError = () => {
+    setOpenFailure(false);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(state);
@@ -63,6 +71,11 @@ const AddPricelist = ({ open, setOpen, getPricelists }) => {
     const resp = await Axios.post("/price-list", state).catch((error) => {
       if (error.response.status === 406) {
         setLoading(false);
+        setErrorMessage("Dates of price lists are overlapping!");
+        setOpenFailure(true);
+      } else {
+        setErrorMessage("Something went wrong.");
+        setOpenFailure(true);
       }
     });
     if (resp && resp.status >= 200 && resp.status < 300) {
@@ -131,6 +144,15 @@ const AddPricelist = ({ open, setOpen, getPricelists }) => {
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <Snackbar
+        open={openFailure}
+        autoHideDuration={2000}
+        onClose={handleCloseError}
+      >
+        <Alert onClose={handleCloseError} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

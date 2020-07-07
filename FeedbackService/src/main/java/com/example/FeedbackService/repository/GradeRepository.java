@@ -18,4 +18,7 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
 
     @Query("SELECT new com.example.FeedbackService.dto.AverageGradeDTO(AVG(gr.grade), gr.agentUsername) FROM Grade gr WHERE gr.agentUsername IN ?1 GROUP BY gr.agentUsername")
     List<AverageGradeDTO> calculateAverageGrades(@Param("userEmails") List<String> userEmails);
+
+    @Query("SELECT AVG(gr.grade) FROM Grade gr WHERE gr.requestId IN ?1")
+    Double calculateAverageGradeAdvertisement(@Param("requestIds")List<Long> list);
 }

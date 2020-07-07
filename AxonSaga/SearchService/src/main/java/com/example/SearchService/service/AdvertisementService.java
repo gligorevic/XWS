@@ -6,6 +6,7 @@ import com.example.SearchService.client.ImageClient;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.domain.City;
 import com.example.SearchService.dto.AdvertisementDTO;
+import com.example.SearchService.dto.AdvertisementStatisticDTO;
 import com.example.SearchService.dto.AverageGradeDTO;
 import com.example.SearchService.dto.SimpleAdvertisementDTO;
 import com.example.SearchService.exception.CustomException;
@@ -59,6 +60,12 @@ public class AdvertisementService {
 
     public List<Advertisement> getAdvertisementsByUserId(String email){
         return advertisementRepository.findAdvertisementsByUserEmail(email);
+    }
+
+    public List<AdvertisementStatisticDTO> getAdvertisementsByUserIdStatistic(String email){
+        List<AdvertisementStatisticDTO> list = new ArrayList<>();
+        advertisementRepository.findAdvertisementsByUserEmail(email).stream().forEach(advertisement -> list.add(new AdvertisementStatisticDTO(advertisement)));
+        return list;
     }
 
     public List<SimpleAdvertisementDTO> getAllAdvertisements(){

@@ -4,6 +4,7 @@ import com.baeldung.springsoap.gen.GetAdvertisementRequest;
 import com.baeldung.springsoap.gen.GetAdvertisementResponse;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.dto.AdvertisementDTO;
+import com.example.SearchService.dto.AdvertisementStatisticDTO;
 import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.service.AdvertisementService;
 import org.slf4j.Logger;
@@ -60,6 +61,18 @@ public class AdvertisementController {
         } catch (Exception e){
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/user")
+    @PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
+    public ResponseEntity<List<AdvertisementStatisticDTO>> getAdvertisementsByUserIdStatistic(Authentication authentication){
+        String userEmail = (String) authentication.getPrincipal();
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisementsByUserIdStatistic(userEmail), HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 

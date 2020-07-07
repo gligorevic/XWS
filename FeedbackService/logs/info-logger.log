@@ -1,2 +1,12 @@
-2020-07-06 17:04:00,407 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 17:06:27,801 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 174.805 seconds (JVM running for 183.871)
+2020-07-07 14:39:15,740 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-07 14:42:05,741 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 213.752 seconds (JVM running for 232.067)
+2020-07-07 21:59:01,110 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-07 21:59:15,071 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplicationTests in 18.026 seconds (JVM running for 19.274)
+2020-07-07 20:10:39,661 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-07 20:12:37,218 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 144.662 seconds (JVM running for 152.252)
+2020-07-07 22:23:39,206 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-07 22:24:04,020 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplicationTests in 31.902 seconds (JVM running for 35.13)
+2020-07-07 20:25:36,899 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-07 20:27:47,105 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 172.569 seconds (JVM running for 179.376)
+2020-07-07 20:49:07,291 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-07 20:51:25,845 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 167.683 seconds (JVM running for 176.53)

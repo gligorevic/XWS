@@ -11,6 +11,7 @@ import Login from "./components/Pages/Login";
 import { setAuthorizationToken, setUser } from "./store/actions/auth";
 import jwtDecode from "jwt-decode";
 import PrivateAgentRoute from "./routing/PrivateUserRoute";
+import AddPricelistItems from "./components/Pricelist/AddPricelistItems";
 const store = configureStore();
 
 if (localStorage.jwtToken) {
@@ -49,6 +50,11 @@ function App() {
           <Route exact path="/" component={Home} />
           <PrivateAgentRoute exact path="/agent" component={AgentProfile} />
           <PrivateAgentRoute exact path="/car/:carId" component={ViewCar} />
+          <PrivateAgentRoute
+            exact
+            path="/pricelist/:pricelistId"
+            component={AddPricelistItems}
+          />
           <Route exact path="/ad/:adId" component={AdDetails} />
           <Route exact path="/login" render={(props) => <Login {...props} />} />
         </Switch>
