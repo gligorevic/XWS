@@ -1,1 +1,4 @@
-2020-07-05 20:11:53,388 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] connect timed out executing POST http://search-service/reqAdList. Action initiated by $2a$10$mNozv6Jo4crINZmKRBJ7x.VkQVC494Ejr9tLhFTgr29MVBRpBDB7y.
+2020-07-08 16:25:55,503 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-9] This request is no longer valid. Action initiated by $2a$10$/iYPuo81n0oNxzxWGjCGTO..mbWnVGCCnWaeXljxtKQQ0cmV84s9q.
+2020-07-08 16:26:06,854 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] This bundle request is no longer valid. Action initiated by $2a$10$7fBz2/j7mOULToKWMf7EaercNePOuFWEGdxikv8gB93BDY.XJ1R8y.
+2020-07-08 18:48:54,800 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] This bundle request is no longer valid. Action initiated by $2a$10$HKM/JR52X08.TDtqWf9cjOCa5XUfL4EmXNwXxJ7jqm76TlbOxTK/O.
+2020-07-08 19:04:57,812 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-8] This request is no longer valid. Action initiated by $2a$10$y5V8EWDSKmWzQb4c0MWss.yMyym4XyQGuegk4Sm3ll2fTW3ys/vY2.

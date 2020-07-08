@@ -183,7 +183,7 @@ public class RequestService {
         return new ArrayList<>(requestAdvertMap.values());
     }
 
-    public List<RequestDTO> getAllRequestsForAd(Long adId, String userEmail) throws CustomException {
+    public List<Request> getAllRequestsForAd(Long adId, String userEmail) throws CustomException {
 
         List<Request> requestList = requestRepository.findAllByAdId(adId);
         if (requestList.isEmpty() || requestList == null) {
@@ -194,7 +194,7 @@ public class RequestService {
             throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 
-        return requestList.stream().map(r -> new RequestDTO(r)).collect(Collectors.toList());
+        return requestList;
     }
 
     public RequestDTO getRequestById(Long id) {
@@ -209,7 +209,7 @@ public class RequestService {
         if (request == null)
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
 
-        if (checkRequest(request.getCrationDate(), 24))
+        if (checkRequest(request.getEndDate(), 0))
             request.setPaidState(PaidState.RESERVED);
         else {
             request.setPaidState(PaidState.CANCELED);
@@ -422,5 +422,37 @@ public class RequestService {
         RequestContainer requestContainer = requestContainerRepository.findById(containerId).get();
 
         return new RequestContainerDTO(requestContainer);
+    }
+
+    public List<Request> acceptBundle(List<Request> requests) throws CustomException {
+
+        for(Request r : requests){
+            if (checkRequest(r.getEndDate(), 0))
+                r.setPaidState(PaidState.RESERVED);
+            else {
+                requestRepository.saveAll(requests.stream().map(request -> {request.setPaidState(PaidState.CANCELED); return request;}).collect(Collectors.toList()));
+                Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(requests.get(0).getUserSentRequest(), "Bundle request timed out", "Your bundle request for cars" + requests.stream().map(request -> request.getBrandName() + " " + request.getModelName() + ", ") + "has expired at " + simpleDateFormat.format(new Date()))).build();
+                this.email.send(msg);
+                throw new CustomException("This bundle request is no longer valid", HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(requests.get(0).getUserSentRequest(), "Accepted bundle request", "Agent " + requests.get(0).getUserEmail() + " acepted bundle request for cars " + requests.stream().map(request -> request.getBrandName() + " " + request.getModelName() + ", ") + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return requestRepository.saveAll(requests);
+
+    }
+
+    public List<Request> declineBundle(List<Request> requests) {
+
+        for(Request r : requests){
+            r.setPaidState(PaidState.CANCELED);
+        }
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(requests.get(0).getUserSentRequest(), "Canceled bundle request", "Agent " + requests.get(0).getUserEmail() + " canceled bundle request for cars " + requests.stream().map(request -> request.getBrandName() + " " + request.getModelName() + ", ") + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return requestRepository.saveAll(requests);
     }
 }

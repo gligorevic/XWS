@@ -33,7 +33,7 @@ public class RequestController {
     public ResponseEntity<?> getAllRequestsForAd(@PathVariable("adId") String adId, Authentication authentication) {
         String userEmail = (String) authentication.getPrincipal();
         try {
-            List<RequestDTO> requests = requestService.getAllRequestsForAd(Long.parseLong(adId), userEmail);
+            List<Request> requests = requestService.getAllRequestsForAd(Long.parseLong(adId), userEmail);
             log.info("Successful request fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requests, HttpStatus.OK);
         } catch (CustomException e) {
@@ -255,16 +255,12 @@ public class RequestController {
 
                 switch (requestStatusDTO.getPaidState()) {
                     case RESERVED:
-                        for (Request request : requests) {
-                            Request acceptedRequest = requestService.acceptRequest(request.getId());
-                            log.info("User {} accepted request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
-                        }
+                        List<Request> acceptedRequest = requestService.acceptBundle(requests);
+                        log.info("User {} accepted request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.get(0).getRequestContainer().getId().toString()));
                         return new ResponseEntity<>(requests, HttpStatus.OK);
                     case CANCELED:
-                        for (Request request : requests) {
-                            Request declinedRequest = requestService.declineRequest(request.getId());
-                            log.info("User {} canceled request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(declinedRequest.getId().toString()));
-                        }
+                        List<Request> declinedRequest = requestService.declineBundle(requests);
+                        log.info("User {} canceled request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(declinedRequest.get(0).getRequestContainer().getId().toString()));
                         return new ResponseEntity<>(requests, HttpStatus.OK);
                     default:
                         log.error("Paid state not found for bundle request {}. Acction initiated by {}.", bCryptPasswordEncoder.encode(requestId.toString()), bCryptPasswordEncoder.encode(userEmail));

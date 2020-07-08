@@ -13,6 +13,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { format } from "date-fns";
 
 import AcceptDialog from "./AcceptDialog";
 import DeclineDialog from "./DeclineDialog";
@@ -141,10 +142,11 @@ function ManipulateRequests({ match, history, user }) {
   const checkIfOverlaping = (row) =>
     requests.some(
       (r) =>
-        r.paidState === "RESERVED" &&
-        ((r.startDate <= row.startDate && r.endDate > row.startDate) ||
-          (r.startDate <= row.endDate && r.endDate >= row.endDate) ||
-          (r.startDate > row.startDate && r.endDate < row.endDate))
+        r.paidState === "RESERVED" ||
+        (r.paidState === "PAID" &&
+          ((r.startDate <= row.startDate && r.endDate >= row.startDate) ||
+            (r.startDate <= row.endDate && r.endDate >= row.endDate) ||
+            (r.startDate >= row.startDate && r.endDate <= row.endDate)))
     );
 
   return (

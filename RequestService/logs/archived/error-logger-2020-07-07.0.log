@@ -1,0 +1,1 @@
+2020-07-05 20:11:53,388 ERROR com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] connect timed out executing POST http://search-service/reqAdList. Action initiated by $2a$10$mNozv6Jo4crINZmKRBJ7x.VkQVC494Ejr9tLhFTgr29MVBRpBDB7y.

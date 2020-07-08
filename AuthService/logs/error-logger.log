@@ -1,0 +1,1 @@
+2020-07-08 16:01:44,977 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-4] Fail auth $2a$10$SZMbqnTjbFV5s58oUbAsyO5wVqsadyllpsTxwTG9FYztlTZtGpzxa. Bad credentials.
