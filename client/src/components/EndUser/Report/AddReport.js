@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ResponsiveDialog = ({ id, adId }) => {
+const ResponsiveDialog = ({ request }) => {
   const [open, setOpen] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openError, setOpenError] = React.useState(false);
@@ -66,8 +66,11 @@ const ResponsiveDialog = ({ id, adId }) => {
   const [state, setState] = React.useState({
     km: "",
     text: "",
-    requestId: id,
-    adId: adId,
+    requestId: request.id,
+    adId: request.adId,
+    rentedFrom: new Date(request.startDate),
+    rentedTo: new Date(request.endDate),
+    userEmailRented: request.userSentRequest,
   });
 
   const handleSubmit = async (e) => {

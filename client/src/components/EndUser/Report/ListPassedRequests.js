@@ -208,7 +208,7 @@ const ListPassedRequests = ({ getPassedRequests, requests, history }) => {
                               <TableCell align="left">{row.adId}</TableCell>
 
                               <TableCell align="right">
-                                <AddReport id={row.id} adId={row.adId} />
+                                <AddReport request={row} />
                               </TableCell>
                               <TableCell align="right">
                                 <ViewReport id={row.id} />
