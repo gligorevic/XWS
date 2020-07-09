@@ -3,6 +3,7 @@ package com.example.AgentApplication.domain;
 import com.example.AgentApplication.enumeration.PaidState;
 import com.example.AgentApplication.dto.RequestDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,6 +29,12 @@ public class Request {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date creationDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private RequestContainer requestContainer;
+
+    private boolean inBundle;
+
     @ManyToOne
     private User userSentRequest;
 
@@ -36,7 +43,7 @@ public class Request {
 
     public Request(RequestDTO requestDTO) {
         this.startDate = requestDTO.getFreeFrom();
-        this.endDate = requestDTO.getFreeTo();
+        this.endDate = requestDTO.getEndDate();
         this.paidState = PaidState.PENDING;
     }
 
@@ -99,5 +106,25 @@ public class Request {
 
     public void setUserSentRequest(User userSentRequest) {
         this.userSentRequest = userSentRequest;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public RequestContainer getRequestContainer() {
+        return requestContainer;
+    }
+
+    public void setRequestContainer(RequestContainer requestContainer) {
+        this.requestContainer = requestContainer;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
     }
 }
