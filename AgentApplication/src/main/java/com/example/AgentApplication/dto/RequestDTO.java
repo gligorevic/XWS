@@ -66,11 +66,11 @@ public class RequestDTO {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Date getFreeTo() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setFreeTo(Date endDate) {
         this.endDate = endDate;
     }
 

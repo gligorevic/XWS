@@ -21,7 +21,6 @@ public class BodyTypeController {
 
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getAllBodyTypes(){
         try{
 
@@ -33,24 +32,19 @@ public class BodyTypeController {
             return new ResponseEntity<>(bodyTypes, HttpStatus.OK);
 
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{bodyTypeName}")
-    //@PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getBodyTypeByName(@PathVariable("bodyTypeName") String bodyTypeName){
         try{
-
             return new ResponseEntity<>(bodyTypeService.getBodyTypeByName(bodyTypeName), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

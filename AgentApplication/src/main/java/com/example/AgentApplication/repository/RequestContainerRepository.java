@@ -19,4 +19,5 @@ public interface RequestContainerRepository extends JpaRepository<RequestContain
     @Query("SELECT DISTINCT r.boundleList FROM RequestContainer r LEFT JOIN r.boundleList boundle WHERE boundle.id =:requestId")
     List<Request> getRequestsInBundle(@Param("requestId") Long requestId);
 
+
 }

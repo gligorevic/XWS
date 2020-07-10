@@ -6,6 +6,7 @@ import com.example.AgentApplication.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,21 +21,19 @@ public class ReportController {
         try{
             return new ResponseEntity<>(reportService.getReportByRequestId(id), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> addReport(@RequestBody ReportDTO reportDTO){
         try{
             return new ResponseEntity<>(reportService.addNewReport(reportDTO), HttpStatus.CREATED);
         }catch (CustomException e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

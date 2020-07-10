@@ -16,7 +16,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import AcceptDialog from "./AcceptDialog";
 import DeclineDialog from "./DeclineDialog";
-// import CommentDialog from "../../Dialogs/Comment/CommentDialog";
+import CommentDialog from "../Dialogs/Comment/CommentDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -363,13 +363,13 @@ function ManipulateRequests({ match, history, user }) {
         setRequest={setRequest}
         requestsInBundle={requestsInBundle}
       ></DeclineDialog>
-      {/* {openedCommentDialog !== -1 && (
+      {openedCommentDialog !== -1 && (
         <CommentDialog
           open={openedCommentDialog !== -1}
           setOpen={setOpenedCommentDialog}
           request={requests.find((r) => r.id == openedCommentDialog)}
         ></CommentDialog>
-      )} */}
+      )}
     </div>
   );
 }

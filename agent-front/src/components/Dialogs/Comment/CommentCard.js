@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardActions from "@material-ui/core/CardActions";
-import { withRouter } from "react-router";
 import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import { format } from "date-fns";
-import IconButton from "@material-ui/core/IconButton";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Collapse from "@material-ui/core/Collapse";
 import CommentReply from "./CommentReply";
@@ -37,7 +32,7 @@ const CommentCard = ({ comment, user }) => {
   return (
     <Card raised style={{ width: 450 }}>
       <CardHeader
-        title={`${comment.username} `}
+        title={`${comment.userEmail} `}
         subheader={
           format(new Date(comment.creationDate), "dd MMM yyyy") +
           "  -  " +

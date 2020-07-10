@@ -22,8 +22,13 @@ public class RequestController {
     private RequestService requestService;
 
     @PostMapping
-    public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO){
+    @PreAuthorize("hasAuthority('ROLE_ENDUSER')")
+    public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO, Authentication authentication){
         try{
+            String userEmail = (String) authentication.getPrincipal();
+            if (!userEmail.equals(requestDTO.getUserSentRequest())) {
+                throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+            }
             return new ResponseEntity<>(requestService.add(requestDTO), HttpStatus.CREATED);
         }catch (CustomException e){
             e.printStackTrace();
@@ -36,21 +41,24 @@ public class RequestController {
     }
 
     @PostMapping("/bundle")
-    public ResponseEntity<?> addBundleRequest(@RequestBody RequestContainerDTO requestContainerDTO){
+    @PreAuthorize("hasAuthority('ROLE_ENDUSER')")
+    public ResponseEntity<?> addBundleRequest(@RequestBody RequestContainerDTO requestContainerDTO, Authentication authentication){
         try{
-
+            String userEmail = (String) authentication.getPrincipal();
+            if (!userEmail.equals(requestContainerDTO.getUserSentRequest())) {
+                throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+            }
             return new ResponseEntity<>(requestService.addBundle(requestContainerDTO), HttpStatus.CREATED);
 
         }catch (CustomException e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/ad/{adId}")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> getAllRequestsForAd(@PathVariable("adId") String adId) {
         try {
             List<RequestDTO> requests = requestService.getAllRequestsForAd(Long.parseLong(adId));
@@ -63,12 +71,11 @@ public class RequestController {
     }
 
     @GetMapping("/info")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> getAllRequestsInfo() {
         try {
             List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername();
             return new ResponseEntity<>(requestInfos, HttpStatus.OK);
-        } catch (CustomException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -108,8 +115,11 @@ public class RequestController {
 
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<?> changeRequestStatus(@RequestBody RequestStatusDTO requestStatusDTO, @PathVariable("requestId") Long requestId) {
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
+    public ResponseEntity<?> changeRequestStatus(@RequestBody RequestStatusDTO requestStatusDTO, @PathVariable("requestId") Long requestId, Authentication authentication) {
         try {
+            String username = authentication.getPrincipal().toString();
+            System.out.println(username);
             if (requestService.getRequestById(requestId).isInBundle())
                 return new ResponseEntity<>("This request is in bundle.", HttpStatus.BAD_REQUEST);
 
@@ -132,6 +142,7 @@ public class RequestController {
     }
 
     @PutMapping("bundle/{requestId}")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> changeBundleStatus(@RequestBody RequestStatusDTO requestStatusDTO, @PathVariable("requestId") Long requestId) {
         try {
             if (!requestService.getRequestById(requestId).isInBundle())
@@ -164,6 +175,7 @@ public class RequestController {
 
 
     @PutMapping("/bundle/{bundleId}/pay")
+    @PreAuthorize("hasAuthority('ROLE_ENDUSER')")
     public ResponseEntity<?> PayBundleRequest(@PathVariable("bundleId") Long bundleId) {
         try {
             RequestContainer requestContainer = requestService.payBundleRequest(bundleId);
@@ -176,6 +188,7 @@ public class RequestController {
     }
 
     @PutMapping("/{requestId}/pay")
+    @PreAuthorize("hasAuthority('ROLE_ENDUSER')")
     public ResponseEntity<?> PayRequest(@PathVariable("requestId") Long requestId) {
         try {
             Request request = requestService.payRequest(requestId);
@@ -188,6 +201,7 @@ public class RequestController {
     }
 
     @GetMapping("user/{email}/created")
+    @PreAuthorize("hasAuthority('ROLE_ENDUSER')")
     public ResponseEntity<?> getAllCreatedRequests(@PathVariable("email") String email){
         try{
             return new ResponseEntity<>(requestService.getAllCreatedRequests(email), HttpStatus.OK);

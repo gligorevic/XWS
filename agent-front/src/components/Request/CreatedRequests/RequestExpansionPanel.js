@@ -4,10 +4,15 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
-//import GradeDialog from "../../../Dialogs/Grade/GradeDialog";
-//import CommentDialog from "../../Dialogs/Comment/CommentDialog";
+import GradeDialog from "../../Dialogs/Grade/GradeDialog";
+import CommentDialog from "../../Dialogs/Comment/CommentDialog";
 import SingleRequest from "./SingleRequest";
 import BundleRequest from "./BundleRequest";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import MessageBox from "../../Message/MessageBox";
 
 const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
   const [hoveredId, setHoveredId] = useState(-1);
@@ -52,6 +57,10 @@ const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
   const [colorSelected, setColorSelected] = useState("#ffffff");
   const [openedDialog, setOpenedDialog] = useState(-1);
 
+  const handleClose = () => {
+    setOpenedDialog(-1);
+  };
+
   const colorChanger = () => {
     setColorSelected(getColor());
   };
@@ -77,6 +86,7 @@ const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
       requests={requests}
       hoveredId={hoveredId}
       setHoveredId={setHoveredId}
+      setOpenedDialog={setOpenedDialog}
       show={show}
     />
   );
@@ -99,22 +109,51 @@ const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      {/* {openedDialog !== -1 && !openedDialog.startsWith("c") && (
-        <GradeDialog
-          user={user}
-          open={openedDialog !== -1}
-          setOpen={setOpenedDialog}
-          request={requests.find((r) => r.id === openedDialog)}
-        ></GradeDialog>
-      )} */}
-      {/* {openedDialog !== -1 && openedDialog.startsWith("c") && (
-        <CommentDialog
-          user={user}
-          open={openedDialog !== -1}
-          setOpen={setOpenedDialog}
-          request={requests.find((r) => r.id == openedDialog.slice(1))}
-        ></CommentDialog>
-      )} */}
+      {openedDialog !== -1 &&
+        !openedDialog.startsWith("c") &&
+        openedDialog.startsWith("m") && (
+          <Dialog open={openedDialog !== -1} onClose={handleClose}>
+            <DialogTitle id="responsive-dialog-title">
+              {"Chat with agent"}
+            </DialogTitle>
+            <DialogContent
+              style={{ minWidth: 250, maxWidth: 300, height: 450 }}
+            >
+              <MessageBox
+                selectedRequestId={openedDialog.slice(1)}
+                user={user}
+              ></MessageBox>
+            </DialogContent>
+          </Dialog>
+        )}
+      {openedDialog !== -1 &&
+        !openedDialog.startsWith("c") &&
+        !openedDialog.startsWith("m") && (
+          <GradeDialog
+            user={user}
+            open={openedDialog !== -1}
+            setOpen={setOpenedDialog}
+            request={
+              openedDialog.startsWith("b")
+                ? requests.find((r) => r.containerId == openedDialog.slice(1))
+                : requests.find((r) => r.id == openedDialog)
+            }
+          ></GradeDialog>
+        )}
+      {openedDialog !== -1 &&
+        openedDialog.startsWith("c") &&
+        !openedDialog.startsWith("m") && (
+          <CommentDialog
+            user={user}
+            open={openedDialog !== -1}
+            setOpen={setOpenedDialog}
+            request={
+              openedDialog.startsWith("cb")
+                ? requests.find((r) => r.containerId == openedDialog.slice(2))
+                : requests.find((r) => r.id == openedDialog.slice(1))
+            }
+          ></CommentDialog>
+        )}
     </>
   );
 };

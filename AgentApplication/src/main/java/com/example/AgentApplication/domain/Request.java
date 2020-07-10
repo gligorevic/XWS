@@ -43,7 +43,7 @@ public class Request {
 
     public Request(RequestDTO requestDTO) {
         this.startDate = requestDTO.getFreeFrom();
-        this.endDate = requestDTO.getEndDate();
+        this.endDate = requestDTO.getFreeTo();
         this.paidState = PaidState.PENDING;
     }
 

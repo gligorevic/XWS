@@ -37,7 +37,7 @@ public class RequestService {
 
         requestDTO.setInBundle(false);
         requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
-        requestDTO.setEndDate(getMidnightEndDate(requestDTO.getEndDate()).getTime());
+        requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
         Request request = new Request(requestDTO);
 
         Advertisement advertisement = advertisementRepository.findAdvertisementById(requestDTO.getId());
@@ -92,7 +92,7 @@ public class RequestService {
         requestContainerRepository.save(requestContainer);
         for (RequestDTO requestDTO : requestContainerDTO.getRequestDTOS()) {
             requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
-            requestDTO.setEndDate(getMidnightEndDate(requestDTO.getEndDate()).getTime());
+            requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
             Request request = new Request(requestDTO);
             if (request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
@@ -172,6 +172,7 @@ public class RequestService {
     private Calendar getMidnightStartDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 999);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -181,6 +182,7 @@ public class RequestService {
     private Calendar getMidnightEndDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 999);
         calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.HOUR_OF_DAY, 23);
@@ -193,7 +195,7 @@ public class RequestService {
 
     public List<Request> getReservedRequests() { return  requestRepository.getReservedRequests();}
 
-    public List<RequestInfoDTO> getAllRequestsInfoByReciverUsername() throws CustomException {
+    public List<RequestInfoDTO> getAllRequestsInfoByReciverUsername() {
         List<Request> requestList = requestRepository.findAll();
 
         Map<Long, RequestInfoDTO> requestAdvertMap = new HashMap<>();
@@ -218,7 +220,6 @@ public class RequestService {
     }
 
     public Request acceptRequest(Long requestId) throws CustomException{
-
         Request request = requestRepository.getOne(requestId);
         if(request == null){
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
@@ -313,14 +314,13 @@ public class RequestService {
     public List<Request> acceptBundle(List<Request> requests) throws CustomException {
 
         for(Request r : requests){
-            if (checkRequest(r.getEndDate(), 0))
+            if (checkRequest(r.getCreationDate(), 24))
                 r.setPaidState(PaidState.RESERVED);
             else {
                 requestRepository.saveAll(requests.stream().map(request -> {request.setPaidState(PaidState.CANCELED); return request;}).collect(Collectors.toList()));
                 throw new CustomException("This bundle request is no longer valid", HttpStatus.BAD_REQUEST);
             }
         }
-
         return requestRepository.saveAll(requests);
     }
 

@@ -20,7 +20,7 @@ function CommentReply({
   const [state, setState] = React.useState({
     text: "",
     requestId: request.inBundle ? request.containerId : request.id,
-    username: user,
+    userEmail: user,
     agentUsername: request.userEmail,
     inBundle: request.inBundle,
   });

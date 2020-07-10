@@ -8,6 +8,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ChatIcon from "@material-ui/icons/Chat";
 import { connect } from "react-redux";
+import MessageTab from "../../Message/MessageTab";
 // import {
 //   setOpenChatBoxes,
 //   initializeNewChatBox,
@@ -37,7 +38,6 @@ function RequestActions({
   chatName,
   roomId,
   openChatBoxes,
-  //initializeNewChatBox,
   sendTo,
   setOpenedDialog,
   payRequest,
@@ -57,15 +57,8 @@ function RequestActions({
   const handleAction = (name) => {
     switch (name) {
       case "Chat":
-      // if (!openChatBoxes.some((o) => o.chatName === chatName))
-      //   initializeNewChatBox({
-      //     chatName,
-      //     roomId,
-      //     sendTo,
-      //     unreadedMessages: 0,
-      //     messages: [],
-      //   });
-      // break;
+        setOpenedDialog("m" + roomId);
+        break;
       case "Rate":
         setOpenedDialog(roomId);
         break;
@@ -105,11 +98,8 @@ function RequestActions({
   );
 }
 
-const mapStateToProps = (state) => ({
-  // openChatBoxes: state.chat.openChatBoxes,
-});
+const mapStateToProps = (state) => ({});
 
 export default connect(mapStateToProps, {
-  // initializeNewChatBox,
   payRequest,
 })(RequestActions);
