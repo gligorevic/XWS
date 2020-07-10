@@ -16,4 +16,8 @@ public interface RequestContainerRepository extends JpaRepository<RequestContain
     @Query("SELECT DISTINCT r.boundleList FROM RequestContainer r  LEFT JOIN r.boundleList boundle WHERE boundle.advertisement.id =:adId AND  boundle.paidState=3 AND (:startDate BETWEEN boundle.startDate AND boundle.endDate OR :endDate BETWEEN boundle.startDate AND boundle.endDate)")
     List<Request> getRequestsFromBundle(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("adId") Long adId);
 
+    @Query("SELECT DISTINCT r.boundleList FROM RequestContainer r LEFT JOIN r.boundleList boundle WHERE boundle.id =:requestId")
+    List<Request> getRequestsInBundle(@Param("requestId") Long requestId);
+
+
 }

@@ -6,6 +6,7 @@ import com.example.AgentApplication.service.PriceListItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,16 +17,15 @@ public class PriceListItemController {
     private PriceListItemService priceListItemService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> addNewPricelistItem(@RequestBody PriceListItemDTO priceListItemDTO){
         try{
             return new ResponseEntity<>(priceListItemService.addNewPriceListItem(priceListItemDTO) , HttpStatus.CREATED);
         }catch (CustomException e) {
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
         catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -34,8 +34,7 @@ public class PriceListItemController {
         try{
             return new ResponseEntity<>(priceListItemService.getPriceListItems(id), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

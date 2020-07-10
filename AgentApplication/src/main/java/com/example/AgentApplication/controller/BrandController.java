@@ -36,22 +36,18 @@ public class BrandController {
             return new ResponseEntity<>(brands, HttpStatus.OK);
 
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{brandName}")
-    //@PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getBrandByName(@PathVariable("brandName") String brandName){
         try{
             return new ResponseEntity<>(brandService.getBrandByName(brandName), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
         }catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }
@@ -63,9 +59,7 @@ public class BrandController {
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
         }catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         }
     }

@@ -32,7 +32,6 @@ const MessageBox = ({ id, selectedRequestId, user }) => {
   useEffect(() => {
     setInterval(async () => {
       const res = await axios.get(`/message/request/${selectedRequestId}`);
-      console.log(res);
       setMessages(res.data);
     }, 1000);
   }, []);
@@ -51,7 +50,6 @@ const MessageBox = ({ id, selectedRequestId, user }) => {
         sentBy: user.id,
         requestId: selectedRequestId,
       });
-      console.log(res);
       if (res.status < 300) setMessage("");
     }
   };

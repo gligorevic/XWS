@@ -1,5 +1,7 @@
 package com.example.AgentApplication.domain;
 
+import com.example.AgentApplication.dto.GradeDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,10 +18,16 @@ public class Grade {
     @ManyToOne
     private User user; // dao ocenu
 
+    private boolean inBundle;
+
 
     public Grade() {
     }
 
+    public Grade(GradeDTO gradeDTO) {
+        this.grade = gradeDTO.getGrade();
+        this.inBundle = gradeDTO.isInBundle();
+    }
 
     public Long getId() {
         return id;
@@ -51,5 +59,13 @@ public class Grade {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
     }
 }

@@ -39,6 +39,10 @@ const MessageTab = ({ id, user }) => {
   const [messages, setMessages] = useState([]);
   const [selectedRequestId, setSelecetedRequestId] = useState(-1);
 
+  if (id !== null && id !== undefined) {
+    setSelecetedRequestId(id);
+  }
+
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
