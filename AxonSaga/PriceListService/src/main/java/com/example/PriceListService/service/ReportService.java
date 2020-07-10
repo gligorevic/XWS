@@ -52,7 +52,7 @@ public class ReportService {
             throw new CustomException("Advertisement doesn't exist.", HttpStatus.BAD_REQUEST);
 
         if(reportDTO.getKm() > ad.getKmRestriction()){
-            List<PriceList> priceLists = priceListRepository.getPricelistsForCalculating(reportDTO.getRentedFrom(), reportDTO.getRentedTo());
+            List<PriceList> priceLists = priceListRepository.getPricelistsForCalculating(reportDTO.getRentedFrom(), reportDTO.getRentedTo(), userEmail);
             if(!priceLists.isEmpty()){
                 for(PriceList priceList : priceLists) {
                     PriceListItem priceListItem = priceListItemRepository.checkAdvertisementIdExists(priceList.getId(), report.getAdId());

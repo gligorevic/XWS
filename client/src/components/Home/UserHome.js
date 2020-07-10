@@ -117,8 +117,10 @@ function UserHome({ location, user }) {
         <Tab label="Requests" {...a11yProps(6)} />
         <Tab label="Change password" {...a11yProps(7)} />
         <Tab label="Reports" {...a11yProps(8)} />
-        <Tab label="Statistic" {...a11yProps(9)} />
-        <Tab label="Additional expences" {...a11yProps(10)} />
+        <Tab label="Additional expences" {...a11yProps(9)} />
+        {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+          <Tab label="Statistic" {...a11yProps(10)} />
+        )}
         {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
           <Tab label="Reregister company" {...a11yProps(11)} />
         )}
@@ -181,11 +183,13 @@ function UserHome({ location, user }) {
             {value === 8 && <ListPassedRequests />}
           </TabPanel>
           <TabPanel value={value} index={9}>
-            {value === 9 && <StatisticTab />}
+            {value === 9 && <AddedPriceTab />}
           </TabPanel>
-          <TabPanel value={value} index={10}>
-            {value === 10 && <AddedPriceTab />}
-          </TabPanel>
+          {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+            <TabPanel value={value} index={10}>
+              {value === 10 && <StatisticTab />}
+            </TabPanel>
+          )}
           {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
             <TabPanel value={value} index={11}>
               {value === 11 && <CompanyRegistration />}

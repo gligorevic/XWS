@@ -48,6 +48,7 @@ const AddPricelistItems = ({
   match,
   getAdsForPricelist,
   ads,
+  user,
 }) => {
   useEffect(() => {
     getPricelistItems(`${match.params.pricelistId}`);
@@ -197,24 +198,28 @@ const AddPricelistItems = ({
               required
               label="Price for collision damage"
             />
-            <TextField
-              style={{ margin: 20 }}
-              type="number"
-              name="minNumberDays"
-              onChange={handleChangeTextField}
-              value={state.minNumberDays}
-              required
-              label="Min number of days for discount"
-            />
-            <TextField
-              style={{ margin: 20 }}
-              type="number"
-              name="percentage"
-              onChange={handleChangeTextField}
-              value={state.percentage}
-              required
-              label="Discount percentage"
-            />
+            {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+              <>
+                <TextField
+                  style={{ margin: 20 }}
+                  type="number"
+                  name="minNumberDays"
+                  onChange={handleChangeTextField}
+                  value={state.minNumberDays}
+                  required
+                  label="Min number of days for discount"
+                />
+                <TextField
+                  style={{ margin: 20 }}
+                  type="number"
+                  name="percentage"
+                  onChange={handleChangeTextField}
+                  value={state.percentage}
+                  required
+                  label="Discount percentage"
+                />
+              </>
+            )}
           </Grid>
           <Button onClick={handleSubmit} variant="contained" color="primary">
             Add
@@ -315,6 +320,7 @@ const AddPricelistItems = ({
 const mapStateToProps = (state) => ({
   items: state.pricelist.pricelistItems,
   ads: state.pricelist.adsForPricelist,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps, {

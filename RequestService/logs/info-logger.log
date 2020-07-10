@@ -43,3 +43,13 @@
 2020-07-10 19:55:57,441 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 33.163 seconds (JVM running for 37.437)
 2020-07-10 17:59:47,186 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-07-10 18:02:46,217 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 211.642 seconds (JVM running for 227.304)
+2020-07-10 18:54:50,616 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-2] Successful request info fetching by user $2a$10$UQKZmvN1alxt53am8OBR1uh69lMwVIfRN49xRnXWyEqqviq1kbRz2
+2020-07-10 18:55:22,543 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successful request info fetching by user $2a$10$Rf3sdAglv5E20tqeqyP.2usisF7Y2JKRh3a9w/BNmCNuVbmcptqjS
+2020-07-10 18:55:44,551 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-5] Successful request info fetching by user $2a$10$zLk8JMm95TLkN0itH3C4yemSuwUbrlBFB3Sef/krAeYz.IybCx/VS
+2020-07-10 19:26:13,674 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 19:28:32,034 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 163.735 seconds (JVM running for 176.759)
+2020-07-10 21:50:08,836 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 21:50:21,275 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 15.122 seconds (JVM running for 17.24)
+2020-07-10 19:54:51,040 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 19:56:50,402 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 139.727 seconds (JVM running for 148.956)
+2020-07-10 20:10:42,384 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-3] Successful request info fetching by user $2a$10$BPVJc7f5wNC2SSH9K/1k9ejm8A6kNGi6R/7iFL78Xb160PvG8i8ka

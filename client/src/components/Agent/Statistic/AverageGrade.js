@@ -20,7 +20,9 @@ const AverageGrade = ({ statistic }) => {
         Overall average grade
       </Typography>
       <Typography component="p" variant="h4">
-        {statistic.averageGradeCars}
+        {statistic.averageGradeCars == undefined
+          ? statistic.averageGradeCars
+          : "Your advertisements aren't graded."}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         {`on ` + format(new Date(), "dd MMM yyyy")}

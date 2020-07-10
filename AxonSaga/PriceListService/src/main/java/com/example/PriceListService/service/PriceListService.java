@@ -17,7 +17,7 @@ public class PriceListService {
     private PriceListRepository priceListRepository;
 
     public PriceList addNewPriceList(PriceListDTO priceListDTO, String userEmail) throws CustomException {
-        List<PriceList> priceLists = priceListRepository.checkIfDatesAreOverlaping(priceListDTO.getValidFrom(), priceListDTO.getValidTo());
+        List<PriceList> priceLists = priceListRepository.checkIfDatesAreOverlaping(priceListDTO.getValidFrom(), priceListDTO.getValidTo(), userEmail);
         if(!priceLists.isEmpty())
             throw new CustomException("Dates of pricelists are overlaping.", HttpStatus.NOT_ACCEPTABLE);
 

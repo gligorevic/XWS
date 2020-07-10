@@ -17,10 +17,10 @@ public interface PriceListRepository extends JpaRepository<PriceList, Long> {
 
     Optional<PriceList> findById(Long id);
 
-    @Query("SELECT DISTINCT p FROM PriceList p WHERE :from BETWEEN  p.validFrom AND p.validTo OR :to BETWEEN p.validFrom AND p.validTo")
-    List<PriceList> checkIfDatesAreOverlaping(@Param("from")Date from, @Param("to") Date to);
+    @Query("SELECT DISTINCT p FROM PriceList p WHERE p.userEmail= :userEmail  AND (:from BETWEEN  p.validFrom AND p.validTo OR :to BETWEEN p.validFrom AND p.validTo )")
+    List<PriceList> checkIfDatesAreOverlaping(@Param("from")Date from, @Param("to") Date to, @Param("userEmail") String userEmail);
 
-    @Query("SELECT DISTINCT p FROM PriceList p WHERE :from BETWEEN  p.validFrom AND p.validTo OR :to BETWEEN p.validFrom AND p.validTo OR ( :from < p.validFrom AND :to > p.validTo )")
-    List<PriceList> getPricelistsForCalculating(@Param("from")Date from, @Param("to") Date to);
+    @Query("SELECT DISTINCT p FROM PriceList p WHERE p.userEmail = :userEmail AND (:from BETWEEN  p.validFrom AND p.validTo OR :to BETWEEN p.validFrom AND p.validTo OR ( :from < p.validFrom AND :to > p.validTo ))")
+    List<PriceList> getPricelistsForCalculating(@Param("from")Date from, @Param("to") Date to, @Param("userEmail") String userEmail);
 
 }

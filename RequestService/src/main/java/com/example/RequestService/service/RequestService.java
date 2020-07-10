@@ -143,12 +143,21 @@ public class RequestService {
     }
 
     public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO){
+        //odbijanje zahteva iz bundle-a
         List<Request> requests = requestContainerRepository.getRequestsFromBundle(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
         if(!requests.isEmpty()) {
             for (Request r : requests) {
                 r.setPaidState(PaidState.CANCELED);
             }
             requestRepository.saveAll(requests);
+        }
+        //odbijanje obicnih zahteva
+        List<Request> requests1 = requestRepository.getRequestsForCanceling(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
+        if(!requests1.isEmpty()) {
+            for (Request r : requests1) {
+                r.setPaidState(PaidState.CANCELED);
+            }
+            requestRepository.saveAll(requests1);
         }
         return requests;
     }
