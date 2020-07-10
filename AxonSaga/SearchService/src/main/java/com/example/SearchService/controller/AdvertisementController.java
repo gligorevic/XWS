@@ -111,4 +111,14 @@ public class AdvertisementController {
 
     }
 
+    @PostMapping("/simple/{id}")
+    public ResponseEntity<?> getSimpleAdvertisementById(@PathVariable Long id){
+        try{
+            return new ResponseEntity<>(advertisementService.getAdvertisementForCalculating(id), HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

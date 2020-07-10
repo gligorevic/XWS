@@ -27,10 +27,10 @@ public class ReportController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addReport(@RequestBody ReportDTO reportDTO, Authentication authentication){
+    public ResponseEntity<?> addReport(@RequestBody ReportDTO reportDTO, Authentication authentication, @RequestHeader("Auth") String auth){
         String userEmail = (String) authentication.getPrincipal();
         try{
-            return new ResponseEntity<>(reportService.addNewReport(reportDTO, userEmail), HttpStatus.CREATED);
+            return new ResponseEntity<>(reportService.addNewReport(reportDTO, userEmail, auth), HttpStatus.CREATED);
         }catch (CustomException e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());

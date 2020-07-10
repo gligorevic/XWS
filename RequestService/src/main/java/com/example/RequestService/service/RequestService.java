@@ -1,6 +1,7 @@
 package com.example.RequestService.service;
 
 import com.example.RequestService.client.AdvertisementClient;
+import com.example.RequestService.client.PricelistClient;
 import com.example.RequestService.domain.PaidState;
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.domain.RequestContainer;
@@ -32,8 +33,15 @@ public class RequestService {
     @Autowired
     private RequestContainerRepository requestContainerRepository;
 
-    public Request add(RequestDTO requestDTO) throws CustomException {
+    @Autowired
+    private PricelistClient pricelistClient;
 
+    public Request add(RequestDTO requestDTO, String auth) throws CustomException {
+        Boolean flag  = pricelistClient.checkIfNotPaid(auth).getBody();
+        System.out.println(flag);
+        if(flag){
+            throw new CustomException("Cannot create requests until you pay additional expences.", HttpStatus.BAD_REQUEST);
+        }
         requestDTO.setInBundle(false);
         requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
         requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
@@ -69,8 +77,10 @@ public class RequestService {
         return false;
     }
 
-    public RequestContainer addBundle(RequestContainerDTO requestContainerDTO) throws CustomException {
-
+    public RequestContainer addBundle(RequestContainerDTO requestContainerDTO, String auth) throws CustomException {
+        if(pricelistClient.checkIfNotPaid(auth).getBody()){
+            throw new CustomException("Cannot create requests until you pay additional expences.", HttpStatus.BAD_REQUEST);
+        }
         RequestContainer requestContainer = new RequestContainer(requestContainerDTO);
 
         if(requestContainer == null)

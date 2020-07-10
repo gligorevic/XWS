@@ -38,15 +38,17 @@ public class StatisticService {
         });
         List<FeedbackStatisticDTO> feedbackList = feedbackClient.getFeedbackStatistic(requests, authentication).getBody();
         advertisementList.stream().forEach(ad -> {
-            CarStatisticDTO carStatisticDTO = new CarStatisticDTO(ad);
-            carStatisticDTO.setKm(ad.getKmPassed());
+
             feedbackList.stream().forEach(feedbackStatisticDTO -> {
                 if(feedbackStatisticDTO.getAdId().equals(ad.getId())) {
+                    CarStatisticDTO carStatisticDTO = new CarStatisticDTO(ad);
+                    carStatisticDTO.setKm(ad.getKmPassed());
                     carStatisticDTO.setAverageGrade(feedbackStatisticDTO.getAverageGrade());
                     carStatisticDTO.setNumberOfComments(feedbackStatisticDTO.getNumberOfComments());
+                    list.add(carStatisticDTO);
                 }
             });
-            list.add(carStatisticDTO);
+
         });
 
         Double sum = 0.0;

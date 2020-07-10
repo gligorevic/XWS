@@ -2,6 +2,7 @@ import {
   SET_PRICELISTS,
   SET_PRICELIST_ITEMS,
   SET_ADS_FOR_PRICELIST,
+  SET_ADDED_PRICES,
 } from "../actionTypes";
 import axios from "axios";
 
@@ -18,6 +19,11 @@ export const setPricelistItems = (pricelistItems) => ({
 export const setAdsForPricelist = (adsForPricelist) => ({
   type: SET_ADS_FOR_PRICELIST,
   adsForPricelist,
+});
+
+export const setAddedPrices = (addedPrices) => ({
+  type: SET_ADDED_PRICES,
+  addedPrices,
 });
 
 export const getPricelists = () => async (dispatch) => {
@@ -50,5 +56,15 @@ export const getAdsForPricelist = () => async (dispatch, getState) => {
     }
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getAddedPrices = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`/price-list/added-price`);
+    dispatch(setAddedPrices(res.data));
+  } catch (err) {
+    console.log(err);
+    return err.response;
   }
 };

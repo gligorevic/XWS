@@ -84,13 +84,13 @@ public class RequestController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('REQUEST_CREATING')")
-    public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO, Authentication authentication) {
+    public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO, Authentication authentication,  @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(requestDTO.getUserSentRequest())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            Request request = requestService.add(requestDTO);
+            Request request = requestService.add(requestDTO, auth);
             log.info("Successfully created request by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(request, HttpStatus.CREATED);
         } catch (CustomException e) {
@@ -104,13 +104,13 @@ public class RequestController {
 
     @PostMapping("/bundle")
     @PreAuthorize("hasAuthority('REQUEST_CREATING')")
-    public ResponseEntity<?> addBundleRequest(@RequestBody RequestContainerDTO requestContainerDTO, Authentication authentication) {
+    public ResponseEntity<?> addBundleRequest(@RequestBody RequestContainerDTO requestContainerDTO, Authentication authentication,  @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(requestContainerDTO.getUserSentRequest())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            RequestContainer requestContainer = requestService.addBundle(requestContainerDTO);
+            RequestContainer requestContainer = requestService.addBundle(requestContainerDTO, auth);
             log.info("Successfully created bundle request by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestContainer, HttpStatus.CREATED);
         } catch (CustomException e) {

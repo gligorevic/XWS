@@ -5,10 +5,7 @@ import com.example.SearchService.client.FeedbackClient;
 import com.example.SearchService.client.ImageClient;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.domain.City;
-import com.example.SearchService.dto.AdvertisementDTO;
-import com.example.SearchService.dto.AdvertisementStatisticDTO;
-import com.example.SearchService.dto.AverageGradeDTO;
-import com.example.SearchService.dto.SimpleAdvertisementDTO;
+import com.example.SearchService.dto.*;
 import com.example.SearchService.exception.CustomException;
 import com.example.SearchService.repository.AdvertisementRepository;
 import com.example.SearchService.repository.CityRepository;
@@ -105,4 +102,10 @@ public class AdvertisementService {
         }
 
     }
+
+    public AdvertisementCalculatingDTO getAdvertisementForCalculating(Long id){
+        Advertisement advertisement = advertisementRepository.findAdvertisementById(id);
+        return new AdvertisementCalculatingDTO(advertisement);
+    }
+
 }

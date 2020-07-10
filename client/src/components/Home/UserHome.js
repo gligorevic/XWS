@@ -24,6 +24,7 @@ import CompanyRegistration from "../Agent/Company/CompanyRegistration";
 import { connect } from "react-redux";
 import ListPassedRequests from "../EndUser/Report/ListPassedRequests";
 import StatisticTab from "../Agent/Statistic/StatisticTab";
+import AddedPriceTab from "../EndUser/AdditionalPrice/AddedPriceTab";
 
 const drawerWidth = 240;
 
@@ -117,8 +118,9 @@ function UserHome({ location, user }) {
         <Tab label="Change password" {...a11yProps(7)} />
         <Tab label="Reports" {...a11yProps(8)} />
         <Tab label="Statistic" {...a11yProps(9)} />
+        <Tab label="Additional expences" {...a11yProps(10)} />
         {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-          <Tab label="Reregister company" {...a11yProps(10)} />
+          <Tab label="Reregister company" {...a11yProps(11)} />
         )}
       </Tabs>
     </div>
@@ -181,9 +183,12 @@ function UserHome({ location, user }) {
           <TabPanel value={value} index={9}>
             {value === 9 && <StatisticTab />}
           </TabPanel>
+          <TabPanel value={value} index={10}>
+            {value === 10 && <AddedPriceTab />}
+          </TabPanel>
           {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-            <TabPanel value={value} index={10}>
-              {value === 10 && <CompanyRegistration />}
+            <TabPanel value={value} index={11}>
+              {value === 11 && <CompanyRegistration />}
             </TabPanel>
           )}
         </main>
