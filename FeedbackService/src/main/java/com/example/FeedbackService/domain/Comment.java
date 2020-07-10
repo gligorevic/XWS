@@ -19,6 +19,8 @@ public class Comment {
     private CommentStatus commentStatus;
     private Long requestId;
     private String username; // dao komentar
+    private String agentUsername;
+    private boolean inBundle;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Belgrade")
     private Date creationDate;
@@ -38,6 +40,8 @@ public class Comment {
         this.commentStatus = CommentStatus.PENDING;
         this.requestId = commentDTO.getRequestId();
         this.username = commentDTO.getUsername();
+        this.agentUsername = commentDTO.getAgentUsername();
+        this.inBundle = commentDTO.isInBundle();
     }
 
     public CommentStatus getCommentStatus() {
@@ -47,6 +51,22 @@ public class Comment {
 
     public void setCommentStatus(CommentStatus commentStatus) {
         this.commentStatus = commentStatus;
+    }
+
+    public String getAgentUsername() {
+        return agentUsername;
+    }
+
+    public void setAgentUsername(String agentUsername) {
+        this.agentUsername = agentUsername;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
     }
 
     public String getText() {

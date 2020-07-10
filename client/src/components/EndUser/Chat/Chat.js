@@ -25,6 +25,7 @@ function Chat({
   socket,
   unreads,
   resetUnreads,
+  readOnly,
 }) {
   const [message, setMessage] = useState("");
 
@@ -178,7 +179,7 @@ function Chat({
             <Tooltip title="Send">
               <IconButton
                 color="primary"
-                disabled={message.length === 0}
+                disabled={message.length === 0 || readOnly}
                 onClick={(e) => sendMessage(e)}
               >
                 <SendIcon />

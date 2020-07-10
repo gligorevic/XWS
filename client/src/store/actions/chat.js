@@ -14,7 +14,7 @@ export const addOpenChatBox = (room) => async (dispatch, getState) => {
   const messagesRes = await axios.post("/chat/message/", {
     roomId: room.room,
   });
-  console.log(messagesRes);
+  console.log(room);
   const chatBox = {
     roomId: room.room,
     chatName: room.chatName,
@@ -37,7 +37,7 @@ export const initializeNewChatBox = (newChatBox) => async (
   getState
 ) => {
   const openChatBoxes = getState().chat.openChatBoxes;
-
+  console.log(newChatBox);
   if (!openChatBoxes.find((ocb) => ocb.roomId === newChatBox.roomId)) {
     const messagesRes = await axios.post("/chat/message/", {
       roomId: newChatBox.roomId,

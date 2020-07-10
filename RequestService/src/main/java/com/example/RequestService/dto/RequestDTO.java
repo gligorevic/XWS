@@ -25,21 +25,6 @@ public class RequestDTO {
     public RequestDTO() {
     }
 
-    public RequestDTO(Long id, Date freeFrom, Date freeTo, boolean inBundle) {
-        this.id = id;
-        this.freeFrom = freeFrom;
-        this.freeTo = freeTo;
-        this.inBundle = inBundle;
-    }
-
-    public RequestDTO(Long id, Date freeFrom, Date freeTo, String userEmail, String userSentRequest) {
-        this.id = id;
-        this.freeFrom = freeFrom;
-        this.freeTo = freeTo;
-        this.userEmail = userEmail;
-        this.userSentRequest = userSentRequest;
-    }
-
     public RequestDTO(Request request) {
         this.id = request.getId();
         this.freeFrom = request.getStartDate();
@@ -52,9 +37,11 @@ public class RequestDTO {
         } else {
             this.containerId = -1L;
         }
-
+        this.inBundle = request.isInBundle();
         this.paidState = request.getPaidState();
         this.adId = request.getAdId();
+        this.modelName = request.getModelName();
+        this.brandName = request.getBrandName();
     }
 
     public Long getId() {

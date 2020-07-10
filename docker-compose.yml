@@ -82,7 +82,7 @@ services:
     tty: true
     depends_on:
       - eureka-serviceregistry
-#      - auth
+      - auth
 
   mongo:
     container_name: mongo

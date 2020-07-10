@@ -27,4 +27,15 @@ public class FeedbackController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/feedBundleRequest")
+    @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
+    public ResponseEntity<?> getBundleRequestById(@RequestBody Long containerId){
+        try {
+            return new ResponseEntity<>(requestService.getRequestContainer(containerId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

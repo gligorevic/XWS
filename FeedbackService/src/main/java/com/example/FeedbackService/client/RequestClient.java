@@ -1,5 +1,6 @@
 package com.example.FeedbackService.client;
 
+import com.example.FeedbackService.dto.RequestContainerDTO;
 import com.example.FeedbackService.dto.RequestDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -12,5 +13,8 @@ public interface RequestClient {
 
     @PostMapping("/feedRequest")
     ResponseEntity<RequestDTO> getRequestById(@RequestBody Long requestId, @RequestHeader("Auth") String Auth);
+
+    @PostMapping("/feedBundleRequest")
+    ResponseEntity<RequestContainerDTO> getRequestContainerById(@RequestBody Long containerId, @RequestHeader("Auth") String Auth);
 
 }

@@ -39,6 +39,18 @@ public class CommentController {
         }
     }
 
+    @GetMapping("/comment/bundle/{reqId}")
+    public ResponseEntity<?> getAllCommentsForBundleRequest(@PathVariable("reqId") String reqId, Authentication authentication, @RequestHeader("Auth") String auth) {
+        try {
+            return new ResponseEntity<>(commentService.getAllCommentsForBundleRequest(Long.parseLong(reqId), authentication, auth), HttpStatus.OK);
+        } catch (CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/comment")
     @PreAuthorize("hasAuthority('RENT_COMMENT_APPROVING')")
     public ResponseEntity<?> getAllCommentsForAdmin() {
@@ -74,21 +86,43 @@ public class CommentController {
 
     }
 
+    @PostMapping("/comment/bundle")
+    @PreAuthorize("hasAuthority('RENT_COMMENTING')")
+    public ResponseEntity<?> addBundleComment(@RequestBody CommentDTO commentDTO, Authentication authentication, @RequestHeader("Auth") String auth) {
+        String userEmail = (String) authentication.getPrincipal();
+        try {
+            if (!userEmail.equals(commentDTO.getUsername())) {
+                throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+            }
+            Comment comment = commentService.addBundleComment(commentDTO, auth);
+            log.info("User {} successfully added comment for request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(comment.getRequestId().toString()));
+
+            return new ResponseEntity<>(comment, HttpStatus.CREATED);
+        } catch (CustomException e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
     @PutMapping("/comment/{commentId}")
     @PreAuthorize("hasAuthority('RENT_COMMENT_APPROVING')")
     public ResponseEntity<?> changeCommentStatus(@RequestBody CommentStatusDTO commentStatusDTO,
-                                                 @PathVariable("commentId") Long commentId, Authentication authentication) {
+                                                 @PathVariable("commentId") Long commentId, Authentication authentication, @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             Comment comment = commentService.getCommentById(commentId);
 
             switch (commentStatusDTO.getCommentStatus()) {
                 case ACCEPTED:
-                    Comment commentToAccept = commentService.acceptComment(comment);
+                    Comment commentToAccept = commentService.acceptComment(comment, userEmail, auth);
                     log.info("Successfully accepted comment {} by user {}", bCryptPasswordEncoder.encode(commentToAccept.getId().toString()), bCryptPasswordEncoder.encode(userEmail));
                     return new ResponseEntity<>(commentToAccept, HttpStatus.OK);
                 case REJECTED:
-                    Comment commentToReject = commentService.acceptComment(comment);
+                    Comment commentToReject = commentService.cancelComment(comment, userEmail, auth);
                     log.info("Successfully rejected comment {} by user {}", bCryptPasswordEncoder.encode(commentToReject.getId().toString()), bCryptPasswordEncoder.encode(userEmail));
                     return new ResponseEntity<>(commentToReject, HttpStatus.OK);
                 default:

@@ -82,8 +82,6 @@ function ManipulateRequests({ match, history, user }) {
   const handleOpenCommentDialog = (event, row) => {
     setRequest(row);
     setOpenedCommentDialog(row.id);
-    console.log(row);
-    console.log(openedCommentDialog);
   };
 
   const sort = (requests) => {
@@ -157,7 +155,9 @@ function ManipulateRequests({ match, history, user }) {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => history.push(`/user`)}
+              onClick={() =>
+                history.push({ pathname: `/user`, state: { tab: 6 } })
+              }
             >
               Go Back
             </Button>

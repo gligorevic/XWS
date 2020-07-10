@@ -8,7 +8,9 @@ public class CommentDTO {
 
     private String text;
     private Long requestId;
-    private String username; // dao komentar
+    private String username;
+    private String agentUsername;
+    private boolean inBundle;
 
     public CommentDTO(){}
 
@@ -16,6 +18,22 @@ public class CommentDTO {
         this.text = text;
         this.requestId = requestId;
         this.username = username;
+    }
+
+    public String getAgentUsername() {
+        return agentUsername;
+    }
+
+    public void setAgentUsername(String agentUsername) {
+        this.agentUsername = agentUsername;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
     }
 
     public String getText() {

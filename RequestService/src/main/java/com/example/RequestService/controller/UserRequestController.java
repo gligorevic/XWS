@@ -2,14 +2,11 @@ package com.example.RequestService.controller;
 
 import com.example.RequestService.exception.CustomException;
 import com.example.RequestService.service.UserRequestService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +23,7 @@ public class UserRequestController {
             String userEmail = (String)authentication.getPrincipal();
             if(!email.equals(userEmail))
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
-            return new ResponseEntity<>(userRequestService.getAllCreatedRequests(email, auth), HttpStatus.OK);
+            return new ResponseEntity<>(userRequestService.getAllCreatedRequests(email), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());

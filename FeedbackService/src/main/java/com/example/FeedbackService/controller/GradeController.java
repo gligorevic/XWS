@@ -30,8 +30,16 @@ public class GradeController {
     public ResponseEntity<?> getGradeForRequest(@PathVariable("reqId") String reqId) {
         try {
             return new ResponseEntity<>(gradeService.getGradeForRequest(Long.parseLong(reqId)), HttpStatus.OK);
-        } catch (CustomException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/grade/bundle/{reqId}")
+    public ResponseEntity<?> getGradeForBundleRequest(@PathVariable("reqId") String reqId) {
+        try {
+            return new ResponseEntity<>(gradeService.getGradeForBundleRequest(Long.parseLong(reqId)), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -45,7 +53,29 @@ public class GradeController {
             if(!userEmail.equals(gradeDTO.getUsername())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
+
             Grade grade = gradeService.add(gradeDTO, auth);
+            log.info("User {} added grade for request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(gradeDTO.getRequestId().toString()));
+
+            return new ResponseEntity<>(grade, HttpStatus.CREATED);
+        } catch (CustomException e) {
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch(Exception e){
+            log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/grade/bundle")
+    public ResponseEntity<?> addBundleGrade(@RequestBody GradeDTO gradeDTO, Authentication authentication, @RequestHeader("Auth") String auth){
+        String userEmail = (String) authentication.getPrincipal();
+        try{
+            if(!userEmail.equals(gradeDTO.getUsername())) {
+                throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
+            }
+
+            Grade grade = gradeService.addBundleGrade(gradeDTO, auth);
             log.info("User {} added grade for request {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(gradeDTO.getRequestId().toString()));
 
             return new ResponseEntity<>(grade, HttpStatus.CREATED);

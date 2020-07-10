@@ -6,6 +6,7 @@ public class GradeDTO {
     private Long requestId;
     private String username;
     private String agentUsername;
+    private boolean inBundle;
 
     public GradeDTO() {
     }
@@ -23,6 +24,14 @@ public class GradeDTO {
 
     public Long getRequestId() {
         return requestId;
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
     }
 
     public String getAgentUsername() {

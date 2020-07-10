@@ -77,6 +77,7 @@ const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
       requests={requests}
       hoveredId={hoveredId}
       setHoveredId={setHoveredId}
+      setOpenedDialog={setOpenedDialog}
       show={show}
     />
   );
@@ -104,7 +105,11 @@ const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
           user={user}
           open={openedDialog !== -1}
           setOpen={setOpenedDialog}
-          request={requests.find((r) => r.id === openedDialog)}
+          request={
+            openedDialog.startsWith("b")
+              ? requests.find((r) => r.containerId == openedDialog.slice(1))
+              : requests.find((r) => r.id == openedDialog)
+          }
         ></GradeDialog>
       )}
       {openedDialog !== -1 && openedDialog.startsWith("c") && (
@@ -112,7 +117,11 @@ const RequestExpansionPanel = ({ title, color, requests, user, show }) => {
           user={user}
           open={openedDialog !== -1}
           setOpen={setOpenedDialog}
-          request={requests.find((r) => r.id == openedDialog.slice(1))}
+          request={
+            openedDialog.startsWith("cb")
+              ? requests.find((r) => r.containerId == openedDialog.slice(2))
+              : requests.find((r) => r.id == openedDialog.slice(1))
+          }
         ></CommentDialog>
       )}
     </>
