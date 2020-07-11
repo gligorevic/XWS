@@ -1,5 +1,7 @@
 package com.example.RequestService.controller;
 
+import com.baeldung.springsoap.gen.GetContainerRequest;
+import com.baeldung.springsoap.gen.GetContainerResponse;
 import com.baeldung.springsoap.gen.GetRequestRequest;
 import com.baeldung.springsoap.gen.GetRequestResponse;
 import com.example.RequestService.domain.Request;
@@ -315,6 +317,29 @@ public class RequestController {
         }catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getContainerRequest")
+    @ResponsePayload
+    public GetContainerResponse postRequestContainersAgent(@RequestPayload GetContainerRequest request) {
+        try {
+            GetContainerResponse response = new GetContainerResponse();
+            response.getId().addAll(requestService.saveAgentContainer(request.getContainer()));
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @PostMapping("/resPeriod")
+    public ResponseEntity<?> cancelRequestsReservationPeriodAgent(@RequestBody ReservationPeriodDTO reservationPeriodDTO) {
+        try {
+            Boolean b = requestService.cancelRequestsAgent(reservationPeriodDTO);
+            return new ResponseEntity<>(b, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -14,8 +14,9 @@ import java.util.List;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Long> {
 
-    @Query("SELECT r FROM Request r WHERE r.adId=:adId AND r.paidState=3 AND (:startDate BETWEEN r.startDate AND r.endDate OR :endDate BETWEEN r.startDate AND r.endDate)")
+    @Query("SELECT DISTINCT r FROM Request  r WHERE r.adId =?3 AND r.paidState=3 AND ((?1 BETWEEN r.startDate AND r.endDate) OR (?2 BETWEEN r.startDate AND r.endDate) OR (?1 <r.startDate AND  r.endDate < ?2))")
     List<Request> getRequestsForCanceling(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("adId") Long adId);
+
 
     List<Request> findAllByUserEmail(String userEmail);
 

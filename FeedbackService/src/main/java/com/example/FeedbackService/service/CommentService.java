@@ -209,4 +209,9 @@ public class CommentService {
         return commentRepository.findAllPending();
     }
 
+    public Long commentAgent(com.baeldung.springsoap.gen.Comment comment){
+        Comment saved = commentRepository.save( new Comment(comment));
+        return saved.getId();
+    }
+
 }

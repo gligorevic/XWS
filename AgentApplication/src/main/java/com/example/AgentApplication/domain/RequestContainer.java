@@ -19,6 +19,8 @@ public class RequestContainer {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Request> boundleList;
 
+    private Long remoteId;
+
     public RequestContainer() {
     }
 
@@ -62,5 +64,13 @@ public class RequestContainer {
 
     public void setBoundleList(List<Request> boundleList) {
         this.boundleList = boundleList;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

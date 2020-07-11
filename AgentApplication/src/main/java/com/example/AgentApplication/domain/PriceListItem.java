@@ -23,6 +23,8 @@ public class PriceListItem {
 
     private Float priceCollisionDamage;
 
+    private Long remoteId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="pricelist_id")
     private PriceList priceList;
@@ -125,5 +127,13 @@ public class PriceListItem {
 
     public void setPercentage(Integer percentage) {
         this.percentage = percentage;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

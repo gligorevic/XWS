@@ -1,5 +1,7 @@
 package com.example.PriceListService.dto;
 
+import com.baeldung.springsoap.gen.Report;
+
 import java.util.Date;
 
 public class ReportDTO {
@@ -17,6 +19,20 @@ public class ReportDTO {
     private Date rentedTo;
 
     private String userEmailRented; //ko je iznajmio
+
+    public ReportDTO(){
+
+    }
+
+    public ReportDTO(Report report){
+        this.km = report.getKm();
+        this.rentedFrom = report.getRentedFrom().toGregorianCalendar().getTime();
+        this.rentedTo = report.getRentedTo().toGregorianCalendar().getTime();
+        this.text = report.getText();
+        this.requestId = report.getRequestId();
+        this.adId = report.getAdId();
+        this.userEmailRented = report.getUserEmailRented();
+    }
 
     public String getUserEmailRented() {
         return userEmailRented;

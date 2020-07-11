@@ -1,5 +1,9 @@
 package com.example.AgentApplication.service;
 
+import com.baeldung.soap.ws.client.generated.AdvertisementPort;
+import com.baeldung.soap.ws.client.generated.AdvertisementPortService;
+import com.baeldung.soap.ws.client.generated.GetReservationPeriodRequest;
+import com.baeldung.soap.ws.client.generated.GetReservationPeriodResponse;
 import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.domain.Request;
 import com.example.AgentApplication.domain.ReservationPeriod;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +38,7 @@ public class ReservationPeriodService {
     @Autowired
     private RequestRepository requestRepository;
 
-    public ReservationPeriod addNewReservationPeriod(ReservationPeriodDTO dto) throws CustomException {
+    public ReservationPeriod addNewReservationPeriod(ReservationPeriodDTO dto) throws CustomException, DatatypeConfigurationException {
         Calendar midnightStartDate = getMidnightStartDate(dto.getStartDate());
         dto.setStartDate(midnightStartDate.getTime());
 
@@ -69,6 +74,18 @@ public class ReservationPeriodService {
         }
 
         ReservationPeriod reservationPeriod = new ReservationPeriod(dto.getStartDate(), dto.getEndDate(), advertisement);
+        AdvertisementPortService service = new AdvertisementPortService();
+        AdvertisementPort advertisementPort = service.getAdvertisementPortSoap11();
+        try {
+            com.baeldung.soap.ws.client.generated.ReservationPeriod period = new com.baeldung.soap.ws.client.generated.ReservationPeriod(reservationPeriod);
+            GetReservationPeriodRequest request = new GetReservationPeriodRequest();
+            request.setReservationPeriod(period);
+            GetReservationPeriodResponse response = advertisementPort.getReservationPeriod(request);
+            reservationPeriod.setRemoteId(response.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi");
+        }
+
         return reservationPeriodRepository.save(reservationPeriod);
     }
 

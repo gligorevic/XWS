@@ -20,6 +20,7 @@ public class Grade {
 
     private boolean inBundle;
 
+    private Long remoteId;
 
     public Grade() {
     }
@@ -67,5 +68,13 @@ public class Grade {
 
     public void setInBundle(boolean inBundle) {
         this.inBundle = inBundle;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

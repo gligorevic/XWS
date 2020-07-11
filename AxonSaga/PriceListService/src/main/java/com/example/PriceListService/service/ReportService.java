@@ -69,4 +69,17 @@ public class ReportService {
         return reportRepository.save(report);
     }
 
+    public Long addReportAgent(com.baeldung.springsoap.gen.Report report1) throws CustomException {
+        ReportDTO reportDTO = new ReportDTO(report1);
+        Report report = new Report(reportDTO);
+        report.setUserEmail(report1.getUserEmail());
+
+        if(reportRepository.getReportByRequestId(reportDTO.getRequestId()) != null)
+            throw new CustomException("Report for this request already exists.", HttpStatus.NOT_ACCEPTABLE);
+
+
+        Report saved = reportRepository.save(report);
+        return saved.getId();
+    }
+
 }

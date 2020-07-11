@@ -1,0 +1,35 @@
+2020-07-11 17:14:29,354 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:14:47,399 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 22.85 seconds (JVM running for 24.777)
+2020-07-11 17:42:01,112 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:42:14,904 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 18.033 seconds (JVM running for 19.448)
+2020-07-11 17:46:51,041 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:47:10,262 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 23.062 seconds (JVM running for 24.975)
+2020-07-11 17:56:39,223 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:56:59,620 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 24.323 seconds (JVM running for 26.319)
+2020-07-11 18:01:56,752 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:02:07,870 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 13.329 seconds (JVM running for 15.619)
+2020-07-11 18:05:41,985 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:05:55,647 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 15.959 seconds (JVM running for 17.834)
+2020-07-11 18:11:43,640 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:12:26,196 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:12:53,943 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:14:24,879 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:14:35,821 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 13.586 seconds (JVM running for 15.673)
+2020-07-11 18:18:12,165 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:18:27,114 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 17.121 seconds (JVM running for 18.938)
+2020-07-11 18:25:05,257 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:25:18,517 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 16.788 seconds (JVM running for 19.52)
+2020-07-11 18:31:39,742 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:31:50,423 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 12.533 seconds (JVM running for 13.791)
+2020-07-11 18:33:02,126 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:33:15,170 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 15.515 seconds (JVM running for 17.248)
+2020-07-11 18:46:58,149 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:47:09,013 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 13.005 seconds (JVM running for 14.669)
+2020-07-11 18:55:17,065 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:55:27,917 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 12.828 seconds (JVM running for 14.791)
+2020-07-11 19:00:15,261 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 19:00:32,593 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 23.075 seconds (JVM running for 25.417)
+2020-07-11 19:45:51,071 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 19:46:12,979 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 27.122 seconds (JVM running for 31.928)
+2020-07-11 23:37:51,523 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 23:38:16,461 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 31.013 seconds (JVM running for 33.906)
