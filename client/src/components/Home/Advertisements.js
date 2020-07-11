@@ -241,7 +241,10 @@ const Advertisements = ({
                       alignItems: "center",
                     }}
                   >
-                    <ViewDetails id={row.id} />
+                    <ViewDetails
+                      id={row.id}
+                      agentUsername={row.agentUsername}
+                    />
                     {user.role &&
                       user.role.some((r) => r.name === "ROLE_ENDUSER") && (
                         <IconButton

@@ -146,6 +146,7 @@ public class CommentController {
 
         }
     }
+<<<<<<< HEAD
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCommentRequest")
     @ResponsePayload
     public GetCommentResponse addResPeriodAgent(@RequestPayload GetCommentRequest request) {
@@ -158,5 +159,15 @@ public class CommentController {
             return null;
         }
 
+=======
+
+    @GetMapping("/user/{agentUsername}/comment")
+    public ResponseEntity<?> changeCommentStatus(@PathVariable("agentUsername") String agentUsername) {
+        try {
+            return new ResponseEntity<>(commentService.getAllCommentsForAgent(agentUsername), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+>>>>>>> origin/location-service
     }
 }

@@ -20,6 +20,7 @@ const AllUserCars = ({
   cars,
   setAddCarDialogOpened,
   setTokenGenerated,
+  user,
 }) => {
   const [open, setOpened] = useState(false);
   const [token, setToken] = useState(null);
@@ -61,6 +62,7 @@ const AllUserCars = ({
                 getExistingToken={getExistingToken}
                 generateToken={generateToken}
                 car={car}
+                user={user}
               />
             </Grid>
           ))}
@@ -103,6 +105,7 @@ const AllUserCars = ({
 
 const mapStateToProps = (state) => ({
   cars: state.cars.myCars,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps, { getCars, setTokenGenerated })(

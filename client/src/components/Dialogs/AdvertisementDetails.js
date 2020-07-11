@@ -41,11 +41,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddAdvertisement = ({ id }) => {
+const AdvertisementDetails = ({ id, agentUsername }) => {
   const classes = useStyles();
-
   const [ad, setAd] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [comments, setComments] = React.useState([]);
+
+  React.useEffect(() => {
+    (async () => {
+      if (open) {
+        const res = await Axios.get(`/feedback/user/${agentUsername}/comment`);
+        console.log(res);
+        setComments(res.data);
+      }
+    })();
+  }, [open]);
 
   const handleClickOpen = async (e) => {
     setOpen(true);
@@ -215,6 +225,39 @@ const AddAdvertisement = ({ id }) => {
               )}
             </Paper>
           </Grid>
+          <Grid item sm={12}>
+            <Grid container>
+              <Grid
+                item
+                sm={12}
+                md={6}
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <h2 style={{ marginBottom: 0 }}>
+                  Comments for {ad?.userEmail} advertisements
+                </h2>
+                <Divider style={{ marginTop: 10, marginBottom: 15 }} />
+                {comments.map((c) => (
+                  <Paper
+                    style={{ padding: 30, marginBottom: 15 }}
+                    elevation={3}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        color: "#a1a1a1",
+                      }}
+                    >
+                      <p>Posted by: {c.username}</p>
+                      <p>Created at: {c.creationDate}</p>
+                    </div>
+                    <p>{c.text}</p>
+                  </Paper>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
           <Backdrop className={classes.backdrop} open={loading}>
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -224,8 +267,4 @@ const AddAdvertisement = ({ id }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {};
-}
-
-export default connect(mapStateToProps, {})(AddAdvertisement);
+export default AdvertisementDetails;

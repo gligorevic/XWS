@@ -135,4 +135,12 @@ public class CarDTO {
     public void setImages(List<String> images) {
         this.images = images;
     }
+
+    public Boolean getTokenGenerated() {
+        return tokenGenerated;
+    }
+
+    public void setTokenGenerated(Boolean tokenGenerated) {
+        this.tokenGenerated = tokenGenerated;
+    }
 }

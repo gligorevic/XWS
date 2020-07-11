@@ -1,1 +1,5 @@
+<<<<<<< HEAD:AuthService/logs/archived/debug-logger-2020-07-06.0.log
 2020-07-06 17:05:34,062 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+=======
+2020-07-07 16:22:09,832 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+>>>>>>> origin/location-service:AxonSaga/SearchService/logs/archived/debug-logger-2020-07-07.0.log

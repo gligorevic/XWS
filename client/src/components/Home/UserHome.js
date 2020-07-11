@@ -23,8 +23,12 @@ import { withRouter } from "react-router";
 import CompanyRegistration from "../Agent/Company/CompanyRegistration";
 import { connect } from "react-redux";
 import ListPassedRequests from "../EndUser/Report/ListPassedRequests";
+<<<<<<< HEAD
 import StatisticTab from "../Agent/Statistic/StatisticTab";
 import AddedPriceTab from "../EndUser/AdditionalPrice/AddedPriceTab";
+=======
+import CreatedRequests from "../EndUser/Request/CreatedRequests/CreatedRequests";
+>>>>>>> origin/location-service
 
 const drawerWidth = 240;
 
@@ -124,6 +128,11 @@ function UserHome({ location, user }) {
         {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
           <Tab label="Reregister company" {...a11yProps(11)} />
         )}
+<<<<<<< HEAD
+=======
+        <Tab label="Reports" {...a11yProps(9)} />
+        <Tab label="Created Requests" {...a11yProps(10)} />
+>>>>>>> origin/location-service
       </Tabs>
     </div>
   );
@@ -195,6 +204,15 @@ function UserHome({ location, user }) {
               {value === 11 && <CompanyRegistration />}
             </TabPanel>
           )}
+<<<<<<< HEAD
+=======
+          <TabPanel value={value} index={9}>
+            {value === 9 && <ListPassedRequests />}
+          </TabPanel>
+          <TabPanel value={value} index={10}>
+            {value === 10 && <CreatedRequests />}
+          </TabPanel>
+>>>>>>> origin/location-service
         </main>
       </div>
     </>

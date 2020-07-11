@@ -23,6 +23,14 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
     @Query("SELECT c FROM Comment c WHERE c.requestId=:requestId AND c.commentStatus=1")
     List<Comment> findAllByRequestIdAndAccepted(@Param("requestId") Long requestId);
 
+<<<<<<< HEAD
     List<Comment> findAllByRequestIdIn(List<Long> list);
+=======
+
+    List<Comment> findAllByAgentUsername(String agentUsername);
+
+    @Query("SELECT c FROM Comment c WHERE c.commentStatus=1 AND c.agentUsername = ?1")
+    List<Comment> findAllByAgentUsernameAndCommentStatusAccepted(@Param("agentUsername") String agentUsername);
+>>>>>>> origin/location-service
 }
 
