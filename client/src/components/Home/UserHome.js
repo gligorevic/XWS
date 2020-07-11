@@ -23,12 +23,9 @@ import { withRouter } from "react-router";
 import CompanyRegistration from "../Agent/Company/CompanyRegistration";
 import { connect } from "react-redux";
 import ListPassedRequests from "../EndUser/Report/ListPassedRequests";
-<<<<<<< HEAD
 import StatisticTab from "../Agent/Statistic/StatisticTab";
 import AddedPriceTab from "../EndUser/AdditionalPrice/AddedPriceTab";
-=======
 import CreatedRequests from "../EndUser/Request/CreatedRequests/CreatedRequests";
->>>>>>> origin/location-service
 
 const drawerWidth = 240;
 
@@ -122,17 +119,13 @@ function UserHome({ location, user }) {
         <Tab label="Change password" {...a11yProps(7)} />
         <Tab label="Reports" {...a11yProps(8)} />
         <Tab label="Additional expences" {...a11yProps(9)} />
-        {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-          <Tab label="Statistic" {...a11yProps(10)} />
-        )}
-        {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-          <Tab label="Reregister company" {...a11yProps(11)} />
-        )}
-<<<<<<< HEAD
-=======
-        <Tab label="Reports" {...a11yProps(9)} />
         <Tab label="Created Requests" {...a11yProps(10)} />
->>>>>>> origin/location-service
+        {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+          <Tab label="Statistic" {...a11yProps(11)} />
+        )}
+        {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+          <Tab label="Reregister company" {...a11yProps(12)} />
+        )}
       </Tabs>
     </div>
   );
@@ -194,25 +187,19 @@ function UserHome({ location, user }) {
           <TabPanel value={value} index={9}>
             {value === 9 && <AddedPriceTab />}
           </TabPanel>
-          {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-            <TabPanel value={value} index={10}>
-              {value === 10 && <StatisticTab />}
-            </TabPanel>
-          )}
-          {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-            <TabPanel value={value} index={11}>
-              {value === 11 && <CompanyRegistration />}
-            </TabPanel>
-          )}
-<<<<<<< HEAD
-=======
-          <TabPanel value={value} index={9}>
-            {value === 9 && <ListPassedRequests />}
-          </TabPanel>
           <TabPanel value={value} index={10}>
             {value === 10 && <CreatedRequests />}
           </TabPanel>
->>>>>>> origin/location-service
+          {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+            <TabPanel value={value} index={11}>
+              {value === 11 && <StatisticTab />}
+            </TabPanel>
+          )}
+          {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
+            <TabPanel value={value} index={12}>
+              {value === 12 && <CompanyRegistration />}
+            </TabPanel>
+          )}
         </main>
       </div>
     </>

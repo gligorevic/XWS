@@ -104,3 +104,7 @@
 2020-07-11 15:53:36,422 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-8] Location token for car $2a$10$VlNDLGtlcb64rVHsKbEkl.HP5IXcZqmRgp72RPyik.kkwD4ymSXli shown to user $2a$10$rrq7CIDbRN6FZRfLuDV0..GeZoZOwaGLm9RpvXNA0yf4wWWsXY8YW.
 2020-07-11 15:56:28,981 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-4] Location token for car $2a$10$RcYygM5DZwv0/mhjiFI6jOOw4/OTh6ZdXLP9SIP2uZG7W31FSqH66 shown to user $2a$10$VGJWQGcyky4.uXXhPwP1w.mnLRX8.761i6I2Yn7DtPAg5p5mIRrWW.
 >>>>>>> origin/location-service
+2020-07-11 22:29:30,427 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 22:31:10,321 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 115.292 seconds (JVM running for 121.828)
+2020-07-11 22:49:30,011 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 22:51:12,037 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 120.595 seconds (JVM running for 128.718)

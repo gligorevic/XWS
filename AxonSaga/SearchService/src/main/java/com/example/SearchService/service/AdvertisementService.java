@@ -67,27 +67,25 @@ public class AdvertisementService {
 
     public List<SimpleAdvertisementDTO> getAllAdvertisements(){
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, 2);
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, 2);
         return getAverageRates(advertisementRepository.findAllAdsValidTwoDaysFromNow(calendar.getTime()));
     }
 
     private List<SimpleAdvertisementDTO> getAverageRates(List<Advertisement> advertisements) {
         List<SimpleAdvertisementDTO> retAdvert = new ArrayList<>();
-        for(Advertisement a : advertisements)
+        for (Advertisement a : advertisements)
             retAdvert.add(new SimpleAdvertisementDTO(a));
 
-        try {
-            List<AverageGradeDTO> averageGradeDTOS = feedbackClient.getAverageRates(new ArrayList<>(new HashSet<>(advertisements.stream().map(advertisement -> advertisement.getUserEmail()).collect(Collectors.toList()))));
 
-            for (AverageGradeDTO avgGrade : averageGradeDTOS)
-                for (SimpleAdvertisementDTO simpleAd : retAdvert)
-                    if (avgGrade.getAgentUsername().equals(simpleAd.getAgentUsername()))
-                        simpleAd.setAvgRate(avgGrade.getAverageGrade());
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            return retAdvert;
-        }
+        List<AverageGradeDTO> averageGradeDTOS = feedbackClient.getAverageRates(new ArrayList<>(new HashSet<>(advertisements.stream().map(advertisement -> advertisement.getUserEmail()).collect(Collectors.toList()))));
+
+        for (AverageGradeDTO avgGrade : averageGradeDTOS)
+            for (SimpleAdvertisementDTO simpleAd : retAdvert)
+                if (avgGrade.getAgentUsername().equals(simpleAd.getAgentUsername()))
+                    simpleAd.setAvgRate(avgGrade.getAverageGrade());
+
+        return retAdvert;
     }
 
     public AdvertisementDTO getAdvertisementById(Long id){

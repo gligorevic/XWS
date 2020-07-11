@@ -16,12 +16,14 @@ public class RequestInfoDTO {
     public RequestInfoDTO() {
     }
 
-    public RequestInfoDTO(Long adId, PaidState paidState) {
-        this.adId = adId;
+    public RequestInfoDTO(Request request) {
+        this.adId = request.getAdId();
         this.acceptedRequestNum = 0;
         this.canceledRequestNum = 0;
         this.pendingRequestNum = 0;
-        append(paidState);
+        this.brandName = request.getBrandName();
+        this.modelName = request.getModelName();
+        append(request.getPaidState());
     }
 
     public RequestInfoDTO append(PaidState paidState) {

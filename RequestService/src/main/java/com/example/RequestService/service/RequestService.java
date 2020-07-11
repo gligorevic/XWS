@@ -197,7 +197,7 @@ public class RequestService {
                 RequestInfoDTO value = requestAdvertMap.get(key);
                 requestAdvertMap.replace(key, value.append(request.getPaidState()));
             } else {
-                requestAdvertMap.put(key, new RequestInfoDTO(request.getAdId(),request.getPaidState()));
+                requestAdvertMap.put(key, new RequestInfoDTO(request));
             }
         }
 

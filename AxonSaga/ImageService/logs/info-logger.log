@@ -47,3 +47,5 @@
 2020-07-12 00:18:30,358 INFO  org.springframework.boot.StartupInfoLogger [main] Started ImageServiceApplicationTests in 16.855 seconds (JVM running for 17.804)
 2020-07-12 00:20:42,833 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-07-12 00:20:58,529 INFO  org.springframework.boot.StartupInfoLogger [main] Started ImageServiceApplicationTests in 16.856 seconds (JVM running for 17.799)
+2020-07-12 00:48:10,640 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 00:48:26,561 INFO  org.springframework.boot.StartupInfoLogger [main] Started ImageServiceApplicationTests in 17.127 seconds (JVM running for 18.336)
