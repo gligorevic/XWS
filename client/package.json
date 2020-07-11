@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "date-fns": "^2.14.0",
+    "google-maps-react": "^2.0.6",
     "jwt-decode": "^2.2.0",
     "material-ui-phone-number": "^2.2.6",
     "moment": "^2.24.0",
@@ -23,12 +24,10 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-scroll-to-bottom": "^2.0.0",
-    "react-stomp": "^5.0.0",
+    "recharts": "^1.8.5",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "socket.io-client": "^2.3.0",
-    "sockjs-client": "^1.4.0",
-    "stompjs": "^2.3.3"
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "set HTTPS=true&&set SSL_CRT_FILE=ssl/agentAppCert.crt&&set SSL_KEY_FILE=ssl/agentAppKey.key&&react-scripts start",

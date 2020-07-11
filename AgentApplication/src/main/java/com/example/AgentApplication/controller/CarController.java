@@ -25,25 +25,22 @@ public class CarController {
     private ImageService imageService;
 
     @GetMapping("/{carId}")
-    //@PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
     public ResponseEntity<?> getCarById(@PathVariable("carId") Long carId){
         try{
             List<String> images = imageService.getAllImagesByCarId(carId);
             return new ResponseEntity<>(new CarDTO(carService.getCarById(carId), images), HttpStatus.OK);
         } catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping
-    //@PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> addNewCar(@RequestPart("car") CarDTO carDTO, @RequestPart("file") MultipartFile[] files){
         try{
             System.out.println(files[0].getOriginalFilename());
             return new ResponseEntity<>(carService.addNewCar(carDTO, files), HttpStatus.OK);
         } catch (CustomException e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e){
             e.printStackTrace();
@@ -53,42 +50,36 @@ public class CarController {
 
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('CAR_ADMINISTRATION')")
     public ResponseEntity<?> getCarsByOwnerEmail(){
         try{
             return new ResponseEntity<>(carService.getCars(), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/locationToken")
-    //@PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> generateLocationToken(@RequestBody Long carId){
         try{
             return new ResponseEntity<>(carService.generateLocationToken(carId), HttpStatus.OK);
         }catch (CustomException e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
         catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/locationToken/{carId}")
-    //@PreAuthorize("hasAuthority('CAR_LOCATION_TOKEN')")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> getLocationToken(@PathVariable String carId){
         try{
             return new ResponseEntity<>(carService.getLocationToken(Long.parseLong(carId)), HttpStatus.OK);
         }catch (CustomException e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
         catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

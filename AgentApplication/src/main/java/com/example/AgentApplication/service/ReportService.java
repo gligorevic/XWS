@@ -1,5 +1,6 @@
 package com.example.AgentApplication.service;
 
+import com.baeldung.soap.ws.client.generated.*;
 import com.example.AgentApplication.domain.Car;
 import com.example.AgentApplication.domain.Report;
 import com.example.AgentApplication.domain.Request;
@@ -11,6 +12,8 @@ import com.example.AgentApplication.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import javax.xml.datatype.DatatypeConfigurationException;
 
 @Service
 public class ReportService {
@@ -28,7 +31,7 @@ public class ReportService {
         return reportRepository.getReportByRequestId(id);
     }
 
-    public Report addNewReport(ReportDTO reportDTO) throws CustomException {
+    public Report addNewReport(ReportDTO reportDTO) throws CustomException, DatatypeConfigurationException {
         Report report = new Report(reportDTO);
         Request request = requestRepository.getOne(reportDTO.getRequestId());
 
@@ -42,6 +45,20 @@ public class ReportService {
         car.setKmPassed(car.getKmPassed() + reportDTO.getKm());
 
         report.setRequest(request);
+
+        //soap
+        PricelistPortService service = new PricelistPortService();
+        PricelistPort pricelistPort = service.getPricelistPortSoap11();
+        GetReportRequest reportRequest = new GetReportRequest();
+        try {
+            com.baeldung.soap.ws.client.generated.Report report1 = new com.baeldung.soap.ws.client.generated.Report(report);
+            reportRequest.setReport(report1);
+            GetReportResponse response = pricelistPort.getReport(reportRequest);
+            report.setRemoteId(response.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi");
+        }
+
         return reportRepository.save(report);
     }
 

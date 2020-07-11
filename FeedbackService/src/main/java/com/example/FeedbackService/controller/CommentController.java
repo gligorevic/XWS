@@ -1,5 +1,7 @@
 package com.example.FeedbackService.controller;
 
+import com.baeldung.springsoap.gen.GetCommentRequest;
+import com.baeldung.springsoap.gen.GetCommentResponse;
 import com.example.FeedbackService.domain.Comment;
 import com.example.FeedbackService.dto.CommentDTO;
 import com.example.FeedbackService.dto.CommentStatusDTO;
@@ -14,9 +16,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+@Endpoint
 @RestController
 public class CommentController {
+
+    private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
 
     @Autowired
     private CommentService commentService;
@@ -111,18 +120,18 @@ public class CommentController {
     @PutMapping("/comment/{commentId}")
     @PreAuthorize("hasAuthority('RENT_COMMENT_APPROVING')")
     public ResponseEntity<?> changeCommentStatus(@RequestBody CommentStatusDTO commentStatusDTO,
-                                                 @PathVariable("commentId") Long commentId, Authentication authentication) {
+                                                 @PathVariable("commentId") Long commentId, Authentication authentication, @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             Comment comment = commentService.getCommentById(commentId);
 
             switch (commentStatusDTO.getCommentStatus()) {
                 case ACCEPTED:
-                    Comment commentToAccept = commentService.acceptComment(comment);
+                    Comment commentToAccept = commentService.acceptComment(comment, userEmail, auth);
                     log.info("Successfully accepted comment {} by user {}", bCryptPasswordEncoder.encode(commentToAccept.getId().toString()), bCryptPasswordEncoder.encode(userEmail));
                     return new ResponseEntity<>(commentToAccept, HttpStatus.OK);
                 case REJECTED:
-                    Comment commentToReject = commentService.acceptComment(comment);
+                    Comment commentToReject = commentService.cancelComment(comment, userEmail, auth);
                     log.info("Successfully rejected comment {} by user {}", bCryptPasswordEncoder.encode(commentToReject.getId().toString()), bCryptPasswordEncoder.encode(userEmail));
                     return new ResponseEntity<>(commentToReject, HttpStatus.OK);
                 default:
@@ -135,6 +144,28 @@ public class CommentController {
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCommentRequest")
+    @ResponsePayload
+    public GetCommentResponse addResPeriodAgent(@RequestPayload GetCommentRequest request) {
+        try {
+            GetCommentResponse response = new GetCommentResponse();
+            response.setId(commentService.commentAgent(request.getComment()));
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/user/{agentUsername}/comment")
+    public ResponseEntity<?> changeCommentStatus(@PathVariable("agentUsername") String agentUsername) {
+        try {
+            return new ResponseEntity<>(commentService.getAllCommentsForAgent(agentUsername), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

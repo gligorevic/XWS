@@ -18,7 +18,6 @@ public class FeedbackController {
     private RequestService requestService;
 
     @PostMapping("/feedRequest")
-    @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
     public ResponseEntity<?> getRequestById(@RequestBody Long requestId){
         try {
             return new ResponseEntity<>(requestService.getRequestById(requestId), HttpStatus.OK);
@@ -29,7 +28,6 @@ public class FeedbackController {
     }
 
     @PostMapping("/feedBundleRequest")
-    @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
     public ResponseEntity<?> getBundleRequestById(@RequestBody Long containerId){
         try {
             return new ResponseEntity<>(requestService.getRequestContainer(containerId), HttpStatus.OK);

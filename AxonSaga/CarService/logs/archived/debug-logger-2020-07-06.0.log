@@ -1,0 +1,6 @@
+<<<<<<<< HEAD:AxonSaga/CarService/logs/archived/debug-logger-2020-07-06.0.log
+2020-07-06 17:05:51,743 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+========
+2020-07-04 09:59:10,686 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+2020-07-04 10:54:19,146 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtAuthenticationFilter' configured for use
+>>>>>>>> origin/feedback-v2.0:AxonSaga/SearchService/logs/archived/debug-logger-2020-07-04.0.log

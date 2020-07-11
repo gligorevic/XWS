@@ -26,7 +26,6 @@ public class AdvertisementController {
         try{
             return new ResponseEntity<>(advertisementService.getSimpleAdvertisements(), HttpStatus.OK);
         } catch(Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -36,21 +35,18 @@ public class AdvertisementController {
         try{
             return new ResponseEntity<>(advertisementService.getAdvertisementsCart(addvertismentIds), HttpStatus.OK);
         }  catch(Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping
-    //@PreAuthorize("hasAuthority('ADVERTISEMENT_ADMINISTRATION')")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> addNewAdvertisement(@RequestBody AdvertisementPostDTO advertisementPostDTO){
         try{
             return new ResponseEntity<>(advertisementService.addAdvertisement(advertisementPostDTO), HttpStatus.OK);
         } catch(CustomException e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -60,12 +56,10 @@ public class AdvertisementController {
         try{
             return new ResponseEntity<>(advertisementService.getAdvertismentsBySearchParams(searchDTO), HttpStatus.OK);
         }catch(CustomException e){
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         catch(Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -74,8 +68,7 @@ public class AdvertisementController {
         try{
             return new ResponseEntity<>(advertisementService.getAdvertisementById(id), HttpStatus.OK);
         }catch(Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

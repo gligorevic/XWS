@@ -1,0 +1,2 @@
+2020-07-08 16:41:40,790 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-08 16:44:02,295 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 174.668 seconds (JVM running for 185.185)

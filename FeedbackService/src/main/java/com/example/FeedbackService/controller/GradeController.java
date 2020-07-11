@@ -1,5 +1,9 @@
 package com.example.FeedbackService.controller;
 
+import com.baeldung.springsoap.gen.GetCommentRequest;
+import com.baeldung.springsoap.gen.GetCommentResponse;
+import com.baeldung.springsoap.gen.GetGradeRequest;
+import com.baeldung.springsoap.gen.GetGradeResponse;
 import com.example.FeedbackService.domain.Grade;
 import com.example.FeedbackService.dto.GradeDTO;
 import com.example.FeedbackService.exception.CustomException;
@@ -12,11 +16,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
 
+@Endpoint
 @RestController
 public class GradeController {
+
+    private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
 
     @Autowired
     private GradeService gradeService;
@@ -95,6 +106,20 @@ public class GradeController {
         } catch(Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getGradeRequest")
+    @ResponsePayload
+    public GetGradeResponse gradeAgent(@RequestPayload GetGradeRequest request) {
+        try{
+           GetGradeResponse response = new GetGradeResponse();
+            response.setId(gradeService.gradeAgent(request.getGrade()));
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }
 

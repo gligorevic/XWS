@@ -48,17 +48,17 @@ services:
     depends_on:
       - eureka-serviceregistry
       
-  # pricelist-service:
-    # build: ./AxonSaga/PriceListService
-    # ports:
-      # - "8092:8092"
-    # environment:
-      # - REGISTRY_HOST=eureka-serviceregistry
-      # - AXON_HOST=axon-server
-    # tty: true
-    # depends_on:
-      # - eureka-serviceregistry
-      # - axon-server
+  pricelist-service:
+    build: ./AxonSaga/PriceListService
+    ports:
+      - "8092:8092"
+    environment:
+      - REGISTRY_HOST=eureka-serviceregistry
+      - AXON_HOST=axon-server
+    tty: true
+    depends_on:
+      - eureka-serviceregistry
+      - axon-server
 
 #  pki-service:
 #    build: ./pki
@@ -141,6 +141,7 @@ services:
     depends_on:
       - eureka-serviceregistry
       - axon-server
+
   feedback:
     build: ./FeedbackService
     ports:

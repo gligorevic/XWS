@@ -90,8 +90,11 @@
 				</executions>
 				<configuration>
 					<wsdlUrls>
-						<wsdlUrl>http://localhost:8090/ws/cars.wsdl</wsdlUrl>
-						<wsdlUrl>http://localhost:8084/ws/advertisement.wsdl</wsdlUrl>
+<!--						<wsdlUrl>http://localhost:8090/ws/cars.wsdl</wsdlUrl>-->
+<!--						<wsdlUrl>http://localhost:8084/ws/advertisement.wsdl</wsdlUrl>-->
+<!--						<wsdlUrl>http://localhost:8086/ws/requests.wsdl</wsdlUrl>-->
+<!--						<wsdlUrl>http://localhost:8088/ws/feedback.wsdl</wsdlUrl>-->
+<!--						<wsdlUrl>http://localhost:8092/ws/pricelist.wsdl</wsdlUrl>-->
 					</wsdlUrls>
 					<keep>true</keep>
 					<packageName>com.baeldung.soap.ws.client.generated</packageName>

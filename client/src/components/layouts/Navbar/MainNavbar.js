@@ -182,8 +182,6 @@ const MainNavbar = ({
                 >
                   Home
                 </Button>
-
-                <Button color="inherit">MenuItem</Button>
                 {!isAuthenticated ? (
                   <>
                     <Button

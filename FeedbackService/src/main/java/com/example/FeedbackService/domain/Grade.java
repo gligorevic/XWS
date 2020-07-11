@@ -37,6 +37,14 @@ public class Grade {
         this.inBundle = gradeDTO.isInBundle();
     }
 
+    public Grade(com.baeldung.springsoap.gen.Grade grade){
+        this.grade = grade.getGrade();
+        this.requestId = grade.getRequestId();
+        this.agentUsername = grade.getAgentUsername();
+        this.username = grade.getUsername();
+        this.inBundle = grade.isInBundle();
+    }
+
     public Long getId() {
         return id;
     }

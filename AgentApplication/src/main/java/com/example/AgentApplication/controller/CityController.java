@@ -21,8 +21,7 @@ public class CityController {
         try{
             return new ResponseEntity<>(cityService.getCityLike(cityName), HttpStatus.OK);
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -13,8 +13,14 @@ public class Discount {
 
     private Integer percentage;
 
-    @OneToOne
-    private PriceListItem priceListItem;
+    public Discount(){
+
+    }
+
+    public Discount(Integer minNumberDays, Integer percentage){
+        this.minNumberDays = minNumberDays;
+        this.percentage = percentage;
+    }
 
     public Long getId() {
         return id;
@@ -40,11 +46,4 @@ public class Discount {
         this.percentage = percentage;
     }
 
-    public PriceListItem getPriceListItem() {
-        return priceListItem;
-    }
-
-    public void setPriceListItem(PriceListItem priceListItem) {
-        this.priceListItem = priceListItem;
-    }
 }

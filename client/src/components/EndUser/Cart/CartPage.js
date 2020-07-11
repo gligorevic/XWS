@@ -42,6 +42,7 @@ const CartPage = ({
   setCartNum,
 }) => {
   const [cartList, setCartList] = React.useState([]);
+  const [priceMap, setPriceMap] = React.useState({});
 
   useEffect(() => {
     setCartList(JSON.parse(localStorage.getItem("Cart") || "[]"));
@@ -51,6 +52,15 @@ const CartPage = ({
       )
     );
   }, []);
+  useEffect(() => {
+    const newPriceMap = {};
+    if (allAdvertisementsCart.length != 0) {
+      allAdvertisementsCart.forEach(async (ad) => {
+        newPriceMap[ad.id] = await getPriceForAd(ad);
+      });
+    }
+    setPriceMap(newPriceMap);
+  }, [allAdvertisementsCart]);
 
   const [loading, setLoading] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
@@ -74,13 +84,21 @@ const CartPage = ({
   const handleSubmitRequest = async (event, ad) => {
     event.preventDefault();
     setLoading(true);
+    console.log(cartList.find((item) => item.id === ad.id));
+    var cartItem = cartList.find((item) => item.id === ad.id);
+    cartItem["userEmail"] = ad.userEmail;
+    cartItem["userSentRequest"] = user.user.username;
+    cartItem["brandName"] = ad.brandName;
+    cartItem["modelName"] = ad.modelName;
 
-    var cartItem = cartList.filter((item) => item.id === ad.id);
-    cartItem[0]["userEmail"] = ad.userEmail;
-    cartItem[0]["userSentRequest"] = user.user.username;
-    cartItem[0]["brandName"] = ad.brandName;
-    cartItem[0]["modelName"] = ad.modelName;
-    const resp = await Axios.post(`/request`, cartItem[0]).catch((error) => {
+    const res = await Axios.post(`/pricelist-service/price`, {
+      dateFrom: cartItem.freeFrom,
+      dateTo: cartItem.freeTo,
+      adId: cartItem.id,
+    });
+    cartItem["finalPrice"] = res.data;
+
+    const resp = await Axios.post(`/request`, cartItem).catch((error) => {
       if (error.response && error.response.status === 400) {
         setLoading(false);
         setOpenFailure(true);
@@ -191,6 +209,26 @@ const CartPage = ({
     </div>
   );
 
+  const getPriceForAd = async (ad) => {
+    const cartItem = cartList.find((item) => item.id === ad.id);
+
+    if (!!cartItem) {
+      const { data } = await Axios.post(`/pricelist-service/price`, {
+        dateFrom: cartItem.freeFrom,
+        dateTo: cartItem.freeTo,
+        adId: cartItem.id,
+      });
+
+      return data;
+    }
+    return 0;
+  };
+
+  const [hovered, setHovered] = React.useState();
+  const handleOnMouseOver = (ad) => {
+    setHovered(ad.id);
+  };
+
   return (
     <>
       <div className={classes.root}>
@@ -214,7 +252,12 @@ const CartPage = ({
                     return (
                       <>
                         <ListItem>
-                          <Grid container justify="space-around">
+                          <Grid
+                            container
+                            justify="space-around"
+                            onMouseEnter={() => handleOnMouseOver(ad)}
+                            onMouseLeave={() => setHovered()}
+                          >
                             <Grid item className={classes.listContainer} sm={2}>
                               <ListItemText
                                 primary={ad.brandName + " - " + ad.modelName}
@@ -245,10 +288,30 @@ const CartPage = ({
                             >
                               <Divider orientation="vertical" />
                             </Grid>
+                            {hovered === ad.id && (
+                              <Grid item sm={1}>
+                                <div
+                                  style={{
+                                    display: "inline-block",
+                                    height: "80%",
+                                    width: "80%",
+                                    margin: "10%",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    aligntItems: "center",
+                                    background: "#ff9800",
+                                    color: "white",
+                                    borderRadius: "50%",
+                                  }}
+                                >
+                                  <p>{priceMap[ad.id]}€</p>
+                                </div>
+                              </Grid>
+                            )}
                             <Grid
                               item
                               className={classes.listContainer}
-                              sm={6}
+                              sm={5}
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",

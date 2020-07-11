@@ -1,5 +1,9 @@
 package com.example.RequestService.controller;
 
+import com.baeldung.springsoap.gen.GetContainerRequest;
+import com.baeldung.springsoap.gen.GetContainerResponse;
+import com.baeldung.springsoap.gen.GetRequestRequest;
+import com.baeldung.springsoap.gen.GetRequestResponse;
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.domain.RequestContainer;
 import com.example.RequestService.dto.*;
@@ -14,11 +18,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
 
+@Endpoint
 @RestController
 public class RequestController {
+
+    private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
 
     @Autowired
     private RequestService requestService;
@@ -64,13 +75,13 @@ public class RequestController {
 
     @GetMapping("/info/{username}")
     @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
-    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, Authentication authentication) {
+    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, Authentication authentication, @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(username)) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username);
+            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username, auth);
             log.info("Successful request info fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestInfos, HttpStatus.OK);
         } catch (CustomException e) {
@@ -84,13 +95,13 @@ public class RequestController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('REQUEST_CREATING')")
-    public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO, Authentication authentication) {
+    public ResponseEntity<?> addRequest(@RequestBody RequestDTO requestDTO, Authentication authentication,  @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(requestDTO.getUserSentRequest())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            Request request = requestService.add(requestDTO);
+            Request request = requestService.add(requestDTO, auth);
             log.info("Successfully created request by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(request, HttpStatus.CREATED);
         } catch (CustomException e) {
@@ -104,13 +115,13 @@ public class RequestController {
 
     @PostMapping("/bundle")
     @PreAuthorize("hasAuthority('REQUEST_CREATING')")
-    public ResponseEntity<?> addBundleRequest(@RequestBody RequestContainerDTO requestContainerDTO, Authentication authentication) {
+    public ResponseEntity<?> addBundleRequest(@RequestBody RequestContainerDTO requestContainerDTO, Authentication authentication,  @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(requestContainerDTO.getUserSentRequest())) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            RequestContainer requestContainer = requestService.addBundle(requestContainerDTO);
+            RequestContainer requestContainer = requestService.addBundle(requestContainerDTO, auth);
             log.info("Successfully created bundle request by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestContainer, HttpStatus.CREATED);
         } catch (CustomException e) {
@@ -256,14 +267,14 @@ public class RequestController {
                 switch (requestStatusDTO.getPaidState()) {
                     case RESERVED:
                         for (Request request : requests) {
-                            Request acceptedRequest = requestService.acceptRequest(requestId);
+                            Request acceptedRequest = requestService.acceptRequest(request.getId());
                             log.info("User {} accepted request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
                         }
                         return new ResponseEntity<>(requests, HttpStatus.OK);
                     case CANCELED:
                         for (Request request : requests) {
-                            Request acceptedRequest = requestService.declineRequest(request.getId());
-                            log.info("User {} canceled request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(acceptedRequest.getId().toString()));
+                            Request declinedRequest = requestService.declineRequest(request.getId());
+                            log.info("User {} canceled request in bundle {}", bCryptPasswordEncoder.encode(userEmail), bCryptPasswordEncoder.encode(declinedRequest.getId().toString()));
                         }
                         return new ResponseEntity<>(requests, HttpStatus.OK);
                     default:
@@ -296,6 +307,40 @@ public class RequestController {
         }
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getRequestRequest")
+    @ResponsePayload
+    public GetRequestResponse postRequest(@RequestPayload GetRequestRequest request) {
+        try {
+            GetRequestResponse response = new GetRequestResponse();
+            response.setId(requestService.saveAgentRequest(request.getRequest()));
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getContainerRequest")
+    @ResponsePayload
+    public GetContainerResponse postRequestContainersAgent(@RequestPayload GetContainerRequest request) {
+        try {
+            GetContainerResponse response = new GetContainerResponse();
+            response.getId().addAll(requestService.saveAgentContainer(request.getContainer()));
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @PostMapping("/resPeriod")
+    public ResponseEntity<?> cancelRequestsReservationPeriodAgent(@RequestBody ReservationPeriodDTO reservationPeriodDTO) {
+        try {
+            Boolean b = requestService.cancelRequestsAgent(reservationPeriodDTO);
+            return new ResponseEntity<>(b, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

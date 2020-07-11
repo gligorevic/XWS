@@ -26,7 +26,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {

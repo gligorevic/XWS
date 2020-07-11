@@ -17,7 +17,6 @@ public class GearShiftTypeController {
 
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getAllGearShiftTypes(){
         try{
             return new ResponseEntity<>(gearShiftTypeService.getAllGearShiftTypes(), HttpStatus.OK);
@@ -29,17 +28,14 @@ public class GearShiftTypeController {
     }
 
     @GetMapping("/{gearShiftTypeName}")
-    //@PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getGearShiftTypeByName(@PathVariable("gearShiftTypeName") String gearShiftTypeName){
         try{
             return new ResponseEntity<>(gearShiftTypeService.getGearShiftTypeByName(gearShiftTypeName), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

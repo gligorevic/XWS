@@ -145,7 +145,7 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
     const resp = await Axios.post("/car/advert/activate", {
       carId: state.carId,
       kmRestriction: state.kmRestriction,
-      price: state.price,
+      price: 0,
       numberChildSeats: state.numberChildSeats,
       collisionDamage: state.collisionDamage,
       rentingStreetLocation: state.rentingStreetLocation,
@@ -260,16 +260,6 @@ const AddAdvertisement = ({ carId, open, setOpen }) => {
                 value={state.kmRestriction}
                 required
                 label="Km restriction"
-              />
-              <TextField
-                className={classes.text}
-                fullWidth
-                name="price"
-                type="number"
-                onChange={handleChangeTextField}
-                value={state.price}
-                required
-                label="Price"
               />
               <TextField
                 className={classes.text}

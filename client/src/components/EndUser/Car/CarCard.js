@@ -10,9 +10,23 @@ import AddCommentIcon from "@material-ui/icons/AddComment";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
+import axios from "axios";
 
-function CarCard({ generateToken, getExistingToken, car, history }) {
+function CarCard({ generateToken, getExistingToken, car, history, user }) {
   const [openActiveAd, setOpenAcitveAd] = useState(-1);
+
+  const showCarOnMap = async (car) => {
+    try {
+      const { data } = await axios.get(`/car/locationToken/${car.id}`);
+      history.push({
+        pathname: "/maps",
+        state: { carToken: data, agentUsername: user.username },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleSetOpen = (openState) => {
     if (!openState) {
@@ -48,9 +62,14 @@ function CarCard({ generateToken, getExistingToken, car, history }) {
           />
         )}
         {car.tokenGenerated ? (
-          <IconButton onClick={() => getExistingToken(car.id)}>
-            <LocationOnIcon />
-          </IconButton>
+          <>
+            <IconButton onClick={() => getExistingToken(car.id)}>
+              <LocationOnIcon />
+            </IconButton>
+            <IconButton onClick={() => showCarOnMap(car)}>
+              <MyLocationIcon />
+            </IconButton>
+          </>
         ) : (
           <IconButton
             style={{ color: "#4caf50" }}

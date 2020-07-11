@@ -1,14 +1,19 @@
 package com.example.AuthService.service;
 
+import com.example.AuthService.MQConfig.ChannelBinding;
 import com.example.AuthService.domain.Company;
 import com.example.AuthService.domain.CompanyStatus;
 import com.example.AuthService.domain.User;
 import com.example.AuthService.dto.CompanyDTO;
+import com.example.AuthService.dto.EmailMessage;
 import com.example.AuthService.exception.CustomException;
 import com.example.AuthService.repository.CompanyRepository;
 import com.example.AuthService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,12 +21,17 @@ import java.util.List;
 
 @Service
 public class CompanyService {
-
     @Autowired
     private CompanyRepository companyRepository;
 
     @Autowired
     private UserRepository userRepository;
+
+    private MessageChannel email;
+
+    public CompanyService(ChannelBinding channelBinding) {
+        this.email = channelBinding.mailing();
+    }
 
     public List<Company> findAllPending(){
         return companyRepository.findAllByCompanyStatusPending();
@@ -36,7 +46,12 @@ public class CompanyService {
         company.setCompanyStatus(CompanyStatus.ACTIVE);
         userRepository.save(user);
 
-        return companyRepository.save(company);
+        Company acceptedCompany = companyRepository.save(company);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(user.getEmail(), "Accepted company request", "Company request has been accepted.")).build();
+        this.email.send(msg);
+
+        return acceptedCompany;
     }
 
     public Company declineRequest(Long id){
@@ -44,7 +59,12 @@ public class CompanyService {
 
         company.setCompanyStatus(CompanyStatus.DENIED);
 
-        return companyRepository.save(company);
+        Company declinedCompany = companyRepository.save(company);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(company.getUser().getEmail(), "Declined company request", "Company request has been declined. You can change company information and resend company registration request.")).build();
+        this.email.send(msg);
+
+        return declinedCompany;
     }
 
     public Company getCompany(Long userId) throws Exception {

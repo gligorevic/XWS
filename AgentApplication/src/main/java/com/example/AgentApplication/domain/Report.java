@@ -21,6 +21,8 @@ public class Report {
     @JsonIgnore
     private Request request;
 
+    private Long remoteId;
+
     public Report(){
 
     }
@@ -60,5 +62,13 @@ public class Report {
 
     public void setRequest(Request request) {
         this.request = request;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

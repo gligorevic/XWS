@@ -14,5 +14,5 @@ public interface CityRepository extends JpaRepository<City, Long> {
     @Query(value = "SELECT * FROM CITY AS c WHERE UPPER(c.name) LIKE CONCAT('%',UPPER(:city),'%') ORDER BY CASE WHEN UPPER(c.name) LIKE CONCAT(UPPER(:city),'%') THEN 1 WHEN UPPER(c.name) LIKE CONCAT('%', UPPER(:city)) THEN 2 ELSE 3 END LIMIT 6", nativeQuery = true)
     List<City> findCitiesLike(@Param("city") String city);
 
-    City findByName(String cityName);
+    City findCityByName(String cityName);
 }

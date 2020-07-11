@@ -30,27 +30,75 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAdvertisementRequest }
+     * Create an instance of {@link GetPricelistRequest }
      * 
      */
-    public GetAdvertisementRequest createGetAdvertisementRequest() {
-        return new GetAdvertisementRequest();
+    public GetPricelistRequest createGetPricelistRequest() {
+        return new GetPricelistRequest();
     }
 
     /**
-     * Create an instance of {@link Advertisement }
+     * Create an instance of {@link Pricelist }
      * 
      */
-    public Advertisement createAdvertisement() {
-        return new Advertisement();
+    public Pricelist createPricelist() {
+        return new Pricelist();
     }
 
     /**
-     * Create an instance of {@link GetAdvertisementResponse }
+     * Create an instance of {@link GetPricelistResponse }
      * 
      */
-    public GetAdvertisementResponse createGetAdvertisementResponse() {
-        return new GetAdvertisementResponse();
+    public GetPricelistResponse createGetPricelistResponse() {
+        return new GetPricelistResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetPricelistItemRequest }
+     * 
+     */
+    public GetPricelistItemRequest createGetPricelistItemRequest() {
+        return new GetPricelistItemRequest();
+    }
+
+    /**
+     * Create an instance of {@link PricelistItem }
+     * 
+     */
+    public PricelistItem createPricelistItem() {
+        return new PricelistItem();
+    }
+
+    /**
+     * Create an instance of {@link GetPricelistItemResponse }
+     * 
+     */
+    public GetPricelistItemResponse createGetPricelistItemResponse() {
+        return new GetPricelistItemResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetReportRequest }
+     * 
+     */
+    public GetReportRequest createGetReportRequest() {
+        return new GetReportRequest();
+    }
+
+    /**
+     * Create an instance of {@link Report }
+     * 
+     */
+    public Report createReport() {
+        return new Report();
+    }
+
+    /**
+     * Create an instance of {@link GetReportResponse }
+     * 
+     */
+    public GetReportResponse createGetReportResponse() {
+        return new GetReportResponse();
     }
 
 }

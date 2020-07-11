@@ -23,6 +23,10 @@ public class Comment {
 
     private Date creationDate;
 
+    private boolean inBundle;
+
+    private Long remoteId;
+
 
     public Comment(){
     }
@@ -71,12 +75,32 @@ public class Comment {
         this.user = user;
     }
 
-    public Date getCrationDate() {
+    public Date getCreationDate() {
         return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     @PrePersist
     protected void onCreate(){
         this.creationDate= new Date();
+    }
+
+    public boolean isInBundle() {
+        return inBundle;
+    }
+
+    public void setInBundle(boolean inBundle) {
+        this.inBundle = inBundle;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

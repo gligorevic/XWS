@@ -24,6 +24,8 @@ public class ReservationPeriod {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Advertisement advertisement;
 
+    private Long remoteId;
+
     public ReservationPeriod(){
 
     }
@@ -64,5 +66,13 @@ public class ReservationPeriod {
 
     public void setAdvertisement(Advertisement advertisement) {
         this.advertisement = advertisement;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

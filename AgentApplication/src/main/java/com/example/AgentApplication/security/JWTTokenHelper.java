@@ -99,15 +99,15 @@ public class JWTTokenHelper {
         String role = claims.get("role").toString();
 
         System.out.println(role);
-        role = role.replaceFirst("\\[", "");
+        role = role.replace("[", "");
         role = role.replace("]", "");
 
-        String[] roles = role.split(", ");
+        String[] roles = role.split("},");
 
         for(String r : roles) {
+            r = r.split(",")[1].split("=")[1].replace("}", "");
             rolesFromJWT.add(r);
         }
-
 
         return rolesFromJWT;
     }

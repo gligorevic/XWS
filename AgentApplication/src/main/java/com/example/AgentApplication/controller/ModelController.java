@@ -26,20 +26,16 @@ public class ModelController {
     @GetMapping
     public ResponseEntity<?> getAllModels(){
         try{
-
             return new ResponseEntity<>(modelService.getAllModels(), HttpStatus.OK);
 
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{modelId}")
-    //@PreAuthorize("hasAuthority('CAR_CODEBOOK_CRUD')")
     public ResponseEntity<?> getModelById(@PathVariable("modelId") Long modelId){
         try{
-
             return new ResponseEntity<>(modelService.getModelById(modelId), HttpStatus.OK);
 
         } catch(CustomException e) {
@@ -54,51 +50,39 @@ public class ModelController {
     @GetMapping("/{modelId}/body-type")
     public ResponseEntity<?> getBodyTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
-
             Model model = modelService.getModelById(modelId);
-
             return new ResponseEntity<>(modelService.getBodyTypesFromModel(model.getId()), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{modelId}/gear-shift-type")
     public ResponseEntity<?> getGearShiftTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
-
             Model model = modelService.getModelById(modelId);
-
             return new ResponseEntity<>(modelService.getGearShiftTypesFromModel(model.getId()), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{modelId}/fuel-type")
     public ResponseEntity<?> getFuelTypeByModelId(@PathVariable("modelId") Long modelId){
         try{
-
             Model model = modelService.getModelById(modelId);
-
             return new ResponseEntity<>(modelService.getFuelTypesFromModel(model.getId()), HttpStatus.OK);
 
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

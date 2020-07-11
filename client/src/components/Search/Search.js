@@ -121,6 +121,7 @@ const Search = ({
           <DateInputForm
             selectedDate={selectedEndDate}
             setSelectedDate={setSelectedEndDate}
+            minDate={selectedStartDate}
           />
         </Grid>
         <Grid item sm={12} style={{ paddingTop: 0 }}>
@@ -168,7 +169,12 @@ const Search = ({
           className={classes.floatRight}
           style={{ paddingTop: 0 }}
         >
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            disabled={selectedStartDate > selectedEndDate}
+          >
             Search
           </Button>
         </Grid>

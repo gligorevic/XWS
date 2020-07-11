@@ -1,0 +1,3 @@
+2020-07-08 16:41:44,393 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-08 16:44:05,695 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 178.853 seconds (JVM running for 188.525)
+2020-07-08 16:47:44,413 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-1] Successful request info fetching by user $2a$10$ekKEa9fOSkhCOxS9ypBKj.Vl/qzHuAYOax1OI2QZpW9SKkyx8JSWG

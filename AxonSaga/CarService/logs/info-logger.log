@@ -1,16 +1,110 @@
-2020-07-06 16:36:49,019 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 16:38:44,676 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 134.606 seconds (JVM running for 143.138)
-2020-07-06 18:28:25,394 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 18:30:02,060 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 114.044 seconds (JVM running for 121.088)
-2020-07-06 18:38:40,563 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 18:40:34,291 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 134.183 seconds (JVM running for 145.002)
-2020-07-06 19:01:30,399 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 19:03:43,149 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 157.055 seconds (JVM running for 168.049)
-2020-07-06 19:47:04,059 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 19:49:15,943 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 158.414 seconds (JVM running for 169.495)
-2020-07-06 20:52:37,758 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 20:54:50,320 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 155.117 seconds (JVM running for 165.732)
-2020-07-06 21:08:36,482 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 21:11:01,060 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 168.197 seconds (JVM running for 178.379)
-2020-07-06 21:31:22,073 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-06 21:33:46,015 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 168.037 seconds (JVM running for 180.649)
+<<<<<<< HEAD
+2020-07-10 15:59:35,046 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 16:02:02,316 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 182.885 seconds (JVM running for 204.504)
+2020-07-10 16:16:39,366 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 16:19:55,117 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 226.411 seconds (JVM running for 241.819)
+2020-07-10 16:26:24,081 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 16:30:17,784 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 266.835 seconds (JVM running for 281.236)
+2020-07-10 16:37:39,911 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 16:41:01,268 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 232.699 seconds (JVM running for 248.167)
+2020-07-10 16:54:50,671 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 16:58:46,254 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 273.147 seconds (JVM running for 291.244)
+2020-07-10 17:09:57,172 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 17:12:58,842 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 209.057 seconds (JVM running for 223.1)
+2020-07-10 17:59:47,620 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 18:02:55,240 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 219.315 seconds (JVM running for 235.315)
+2020-07-10 18:33:43,546 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 18:34:08,581 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 28.16 seconds (JVM running for 31.197)
+2020-07-10 19:05:02,186 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 19:05:20,335 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 20.246 seconds (JVM running for 21.801)
+2020-07-10 19:10:28,590 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 19:11:25,549 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 67.429 seconds (JVM running for 71.122)
+2020-07-10 19:26:09,466 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-10 19:28:46,444 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 181.803 seconds (JVM running for 191.818)
+2020-07-11 12:00:03,319 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 12:01:33,798 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 100.813 seconds (JVM running for 105.215)
+2020-07-11 12:24:30,572 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 12:25:57,369 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 107.355 seconds (JVM running for 114.384)
+2020-07-11 14:32:31,402 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 14:33:59,425 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 99.11 seconds (JVM running for 104.573)
+2020-07-11 14:38:12,172 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 14:38:28,635 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 18.098 seconds (JVM running for 19.665)
+2020-07-11 15:05:29,001 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:05:39,929 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 12.246 seconds (JVM running for 12.916)
+2020-07-11 15:07:17,815 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:07:28,592 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 11.972 seconds (JVM running for 12.663)
+2020-07-11 15:10:31,990 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:10:42,632 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 12.073 seconds (JVM running for 12.786)
+2020-07-11 15:12:53,707 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:14:40,247 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 111.228 seconds (JVM running for 119.416)
+2020-07-11 15:19:28,413 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:21:02,581 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 111.564 seconds (JVM running for 120.223)
+2020-07-11 17:33:23,571 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:34:56,557 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:36:30,086 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 111.406 seconds (JVM running for 116.924)
+2020-07-11 17:45:59,364 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:47:33,088 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 109.573 seconds (JVM running for 116.527)
+2020-07-11 18:13:47,483 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:15:21,981 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 109.289 seconds (JVM running for 115.671)
+2020-07-11 20:05:56,399 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 20:07:32,167 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 116.651 seconds (JVM running for 123.885)
+2020-07-11 20:24:12,917 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 20:25:56,831 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 120.423 seconds (JVM running for 127.374)
+2020-07-11 20:39:00,916 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 20:40:34,028 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 108.991 seconds (JVM running for 114.962)
+=======
+2020-07-11 11:52:00,611 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 11:54:44,176 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 195.243 seconds (JVM running for 206.285)
+2020-07-11 11:58:23,038 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-2] Successfully generated token for car $2a$10$eD5pxjUR7xeJAXjsZZGIde0HeUAsAsnS1P2MRCb/sSsAUlWy8foym by user $2a$10$8GcQuRm2UiMiNJR52Ndv.OBjaSIShWhB4jTRnrcqPHSczG9TQZXqC
+2020-07-11 11:58:30,887 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-3] Location token for car $2a$10$LbNUSpPBDg8yeabGsxLg9em1sxpDoIK8j9JO39YoHYro7mQfHIKc2 shown to user $2a$10$Q7mEs51uXpG6bMe.ucf65eQe3Zc0umzg1I3aHJp6FKjegyODSCzxa.
+2020-07-11 12:01:27,546 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-6] Location token for car $2a$10$4NfB2qzMwTVrRh9ebZESHuMictMfAld/6Pjq7.R24Oi1qTvlOnkga shown to user $2a$10$//EK/KVzHd45WRd4E1gQYuHycHMPTg/6QxelqVPkOOnQcbyyiUZhu.
+2020-07-11 12:11:12,271 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-9] Location token for car $2a$10$CuDq0E0LvmFA6NrqpNrfyOGCgI7hay7XonDKIoRyeEgXeRUcNSDfe shown to user $2a$10$cc3LeVpveYqQY.X0XYdRiOjoNfi.KqTsaF25t0BtKV/SWu0oCRo...
+2020-07-11 12:11:28,834 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-1] Location token for car $2a$10$gKXIr0X7Nd.1Gcl0s8Wua.Huowx6yMVxrsZlxyrSmfCSt13NqFrA2 shown to user $2a$10$Ne7NooEa/Tpsrv8ntqocgelrXcvsNiZgVD3gsG9msAJa7zLEdpVcy.
+2020-07-11 12:13:30,005 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-4] Location token for car $2a$10$2N5PITLIozzBj4AhZVkFMuH4kgHn/pl2LhhY/7m16pQ8TDZvDIyMO shown to user $2a$10$0DrXyrMRBVPin0Wbxq82aOMuQbkr3u8RgNkvFUHeEE4oJcYvwETtO.
+2020-07-11 12:15:08,806 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-7] Location token for car $2a$10$ZwDOaS/R/fBhy1rHvCND8ufCTtqJtUrxpYjaE2fptc8A82AYyiBAG shown to user $2a$10$sRJpHiUqsT8VOt6zE03YhO.lrMopOIFPa950c/D0XuJCowWFy2yHq.
+2020-07-11 12:17:29,870 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-10] Location token for car $2a$10$kh8z1Jm2KM.9K7VVhRUDQ.Fp8Ylez8kx8OUFjIb0GH1izKbjuKrde shown to user $2a$10$UMy6O1fd7vc5txorpKdUleTx.5kjaFKrnE3QOLf9ZrTQAFppuZ6m6.
+2020-07-11 12:23:57,611 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-3] Location token for car $2a$10$1z8okEH7LReMJ.k9BFPLkep8s4Esj.AXXtCgK7jPLm9jtQODVf0/2 shown to user $2a$10$..E4mOuoO5Lw5i9nwIf94.hFzqBJsdGmRIg/cIDQP4XIcjNrcXJRG.
+2020-07-11 12:24:11,686 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-5] Location token for car $2a$10$bVlR21hvZgducx4yyvSyZeIr9fEbK5sA8RvYw.1.TPR4kyZZE0ZOa shown to user $2a$10$AEQaOzrau37SPRLV0qz6c.5xWqh3CTzSKOS1whHkBJSMvoELnHSv6.
+2020-07-11 12:26:12,236 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-8] Location token for car $2a$10$aPy1/90ty.PPDKhTbg0gI.9UJANhtgm17nC.ikGJkW9cdfl/9RdNO shown to user $2a$10$003r0fe.8yzhJRPBgWo3ju34cxVhMC5cJvqqEX/oRCmchhnFwX9sC.
+2020-07-11 12:26:31,286 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-10] Location token for car $2a$10$Lvj6BHI2uruyyZwbwLberOjsHyvZUTzA2YV1g5fXd/5tfDgNHbU6e shown to user $2a$10$5M1/Co7fyDwwoz0k.RwLdO9JA788KWQ/DBSSsaRXdUcf2o/TNO0ce.
+2020-07-11 12:26:53,718 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-2] Location token for car $2a$10$6twXXVooruV73Rt01n/cw.pAjXLR0z4wyQnSVJVpWGW0Za6h4AqSa shown to user $2a$10$MBCX7MOzr.XqQ8TNiUoAPuKRcTnwp9618rFdw3QVPTGbbKQ2RL3Ny.
+2020-07-11 12:28:27,207 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-5] Successfully generated token for car $2a$10$Ek6H18H7waqGWgLxr0wHquv5IgIHpu9qzpCovWcJ6p529ZVwGx2eW by user $2a$10$YAvHfMofuWfh7uO0rqUjLeuJvIC0uqn8qp1NYjvW6kqnod205X8Oq
+2020-07-11 12:28:30,390 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-6] Location token for car $2a$10$LwC1ACnd.F4xKc672nMzxuCYIG/G4axyU0ssA/iSTYaUK1vUK5xGW shown to user $2a$10$o4xFbExjyguimqik4T8psOZLBal0Dz38tpcihd6BQuaPm4TWgX3qy.
+2020-07-11 12:32:40,704 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-9] Location token for car $2a$10$P0WngYCml.tQxXGOYJ.P5OGioFim/nI0hmNa6TNgCffPOhDyToTvK shown to user $2a$10$MKLK6LibfTv2AMUL1RmqJONHvHIZ/RZtqOzY2Pe7o6Zw/VKqnjIqC.
+2020-07-11 12:40:20,646 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 12:42:24,891 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 149.657 seconds (JVM running for 159.2)
+2020-07-11 15:17:53,680 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:18:03,928 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 13.926 seconds (JVM running for 15.282)
+2020-07-11 15:23:18,271 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:23:29,728 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 14.869 seconds (JVM running for 16.742)
+2020-07-11 15:27:56,324 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-5] Successfully generated token for car $2a$10$rxBwuuBkZVIhyexxWz.IwunSRW7wat.0gwPzfd7AhP0IDFHU9evAC by user $2a$10$xAYD8GouXtOFUK9bxh6kn.OWZosNh9bWBnajX8iUOcT81UG7WWjmi
+2020-07-11 15:28:10,030 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-7] Location token for car $2a$10$SNxUDcxevsP4gJwaq1iVTu4y38Qa6OKTn9cIbQ0QFPSJ6PA3Mx7ZG shown to user $2a$10$S4tPz6dM2gpE9iH4GM3UdeajxEYAJnU17ahLfq2J/IJPgHcBM0uJS.
+2020-07-11 15:28:19,109 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-9] Location token for car $2a$10$D3UUNLGVRK4c.HenCzJ/YOc1stth0wIZUmS84pnTGtP3JVtoo4uAm shown to user $2a$10$z2UAryFWN5FB7DdX9BhRHe.nFrQME2NZeHX7TKrmcfblh7I/YikCm.
+2020-07-11 15:37:07,737 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-3] Location token for car $2a$10$AqfwmZMWvOJBD/yzwGyBBux7XtLU22rOECd6jVAEkNd.aMKE.KemC shown to user $2a$10$1aql3r20Ls5gNJQae4xU4OO16pIOwyPW8qZYs9VYti7jTgcaJOz9u.
+2020-07-11 15:38:21,175 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-6] Location token for car $2a$10$UvtWlYMZDWJTWDjxJb6jeOBUC7VSCQZGMNBoErAq9fzOBN7dAjeBK shown to user $2a$10$AIxCt0BCtCR4Cl9gp1eHjOE8rP7V8TafDb1VwpATwO1zvNKsC/YyO.
+2020-07-11 15:39:16,217 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-8] Successfully generated token for car $2a$10$A4m5rODhVzoHYI0PKRmDKOg7Dvsnly0tHvkGn.GvnZZ4n5K7mhWH6 by user $2a$10$TIlFdj7k0w3WAoKTvTXUXeCZFPBHL9GQ.xP0gIcX7MewxQj6Ba47S
+2020-07-11 15:39:18,461 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-9] Location token for car $2a$10$nkwEdLml/48bY2D.H1z2g.ctqR4IlGsogGivisfptSc4zAGho08cW shown to user $2a$10$2LLc.3B/ECUBGKVcLu2QxueapunTp/.Qy3D/Cd4.FTIRjLB75yDme.
+2020-07-11 15:39:28,468 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-1] Location token for car $2a$10$aSS0VwfoQ6LwJgVE/Mlbwex4Ene00jmyiSYvQPpSBEOax9i7SKpyi shown to user $2a$10$eUr0hxzZLGjbxOQtC6xnJO26VA/x75i30CTrF8w.9XbeuZvXAzTxe.
+2020-07-11 15:39:40,432 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-3] Location token for car $2a$10$YBW6JnEDyDWUrMxFjcZ8PO1MKuCp5nUJoaC1pu7ez1/tXahV45jV. shown to user $2a$10$oEfOTtODSLkiduaElDjMBe4BjG/KpL847OrkIBVI5JCkp/aSoEa7a.
+2020-07-11 15:39:46,855 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-5] Location token for car $2a$10$U9y3LPbtLzlZI8UoXAsBM.n0JchZgSTmkjn5TopOoPpbbEAa6qjdu shown to user $2a$10$VQumE8AtlAgjr8buX9uPCemU.NkVMRpY1VJ9POAQmBqglNYSB0xTS.
+2020-07-11 14:39:43,328 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 14:41:54,603 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 152.999 seconds (JVM running for 162.458)
+2020-07-11 14:56:04,701 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 14:58:14,008 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 151.617 seconds (JVM running for 161.25)
+2020-07-11 15:06:06,905 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:08:21,369 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 155.614 seconds (JVM running for 165.599)
+2020-07-11 15:24:08,649 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:26:17,212 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 153.68 seconds (JVM running for 164.854)
+2020-07-11 15:44:21,098 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:46:27,536 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 152.262 seconds (JVM running for 162.77)
+2020-07-11 15:53:16,490 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-2] Successfully generated token for car $2a$10$JDuJ2AzJldlFqe53I67N3u6bN6bKs67Ma7H11cUTuKWfHRqEUX3Rm by user $2a$10$DqlhQGvUcexshwuqnSMISehFOjm/RvfN3nM2/JK3Hrc1GYiLlXfO6
+2020-07-11 15:53:21,012 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-3] Location token for car $2a$10$ivqkMSKqZd4Azo88cVxK3uyxmSzkYsjygjgp.b2eTHTZF3iXCxK46 shown to user $2a$10$tPN/lkxgj16tyYTAd8IeWuih.bLQ0ORArx2DNglzrS3K9fAdiYEyO.
+2020-07-11 15:53:27,724 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-5] Location token for car $2a$10$oJCgg99BDu0nrQTaOYpHIu4CXDOXzahk92fBIvkeAmylXatgIA7sa shown to user $2a$10$4EuRq5pLlypeKzy9epxQBOsEBAxBBOgo2eDrYCPWIqwc3Fflz1CUq.
+2020-07-11 15:53:33,895 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-7] Successfully generated token for car $2a$10$I/3BE65FmTVFzXidFM1WFOyby.dIye5IBv8xzE7IOLgNWGkRyVjQO by user $2a$10$k/nFbsp0udL.DraaHqUEt.oSL87oWJ1sjMF30VVJyJQJ7L0Xh2Vei
+2020-07-11 15:53:36,422 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-8] Location token for car $2a$10$VlNDLGtlcb64rVHsKbEkl.HP5IXcZqmRgp72RPyik.kkwD4ymSXli shown to user $2a$10$rrq7CIDbRN6FZRfLuDV0..GeZoZOwaGLm9RpvXNA0yf4wWWsXY8YW.
+2020-07-11 15:56:28,981 INFO  com.example.CarService.controller.LocationTokenController [http-nio-8090-exec-4] Location token for car $2a$10$RcYygM5DZwv0/mhjiFI6jOOw4/OTh6ZdXLP9SIP2uZG7W31FSqH66 shown to user $2a$10$VGJWQGcyky4.uXXhPwP1w.mnLRX8.761i6I2Yn7DtPAg5p5mIRrWW.
+>>>>>>> origin/location-service
+2020-07-11 22:29:30,427 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 22:31:10,321 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 115.292 seconds (JVM running for 121.828)
+2020-07-11 22:49:30,011 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 22:51:12,037 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 120.595 seconds (JVM running for 128.718)

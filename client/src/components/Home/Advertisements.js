@@ -210,7 +210,7 @@ const Advertisements = ({
                   <CardMedia
                     className={classes.media}
                     image={`/img${row.mainImagePath}`}
-                    title="Paella dish"
+                    title={row.brandName + " " + row.modelName}
                   />
                   <CardContent>
                     <Typography
@@ -241,7 +241,10 @@ const Advertisements = ({
                       alignItems: "center",
                     }}
                   >
-                    <ViewDetails id={row.id} />
+                    <ViewDetails
+                      id={row.id}
+                      agentUsername={row.agentUsername}
+                    />
                     {user.role &&
                       user.role.some((r) => r.name === "ROLE_ENDUSER") && (
                         <IconButton

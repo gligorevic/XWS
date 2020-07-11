@@ -20,11 +20,9 @@ public class MessageController {
         try {
             return new ResponseEntity<>(messageService.sendMessage(messageDTO), HttpStatus.CREATED );
         } catch (CustomException e) {
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -33,7 +31,7 @@ public class MessageController {
         try{
             return new ResponseEntity<>(messageService.getMessagesByReciever(email), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -42,7 +40,7 @@ public class MessageController {
         try{
             return new ResponseEntity<>(messageService.getMessagesByRequest(id), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

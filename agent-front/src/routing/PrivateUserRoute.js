@@ -3,12 +3,12 @@ import { Route, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-const PrivateAgentRoute = ({ user, component: Component, ...rest }) => (
+const PrivateUserRoute = ({ user, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
       !user.role ||
-      !user.role.some((role) => role.name && role.name === "ROLE_AGENT") ? (
+      !user.role.some((role) => role.name && role.name === "ROLE_ENDUSER") ? (
         <Redirect to="/login" />
       ) : (
         <Component {...props} />
@@ -21,4 +21,4 @@ const mapStateToProps = (state) => ({
   user: state.user.user,
 });
 
-export default connect(mapStateToProps)(PrivateAgentRoute);
+export default connect(mapStateToProps)(PrivateUserRoute);

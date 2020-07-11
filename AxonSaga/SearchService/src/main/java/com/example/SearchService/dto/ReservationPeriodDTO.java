@@ -1,5 +1,7 @@
 package com.example.SearchService.dto;
 
+import com.baeldung.springsoap.gen.ReservationPeriod;
+
 import java.util.Date;
 
 public class ReservationPeriodDTO {
@@ -9,6 +11,16 @@ public class ReservationPeriodDTO {
     private Date endDate;
 
     private Long advertisementId;
+
+    public ReservationPeriodDTO(){
+
+    }
+
+    public ReservationPeriodDTO(ReservationPeriod reservationPeriod){
+        this.advertisementId = reservationPeriod.getAdvertisementId();
+        this.startDate = reservationPeriod.getStartDate().toGregorianCalendar().getTime();
+        this.endDate = reservationPeriod.getEndDate().toGregorianCalendar().getTime();
+    }
 
     public Date getStartDate() {
         return startDate;

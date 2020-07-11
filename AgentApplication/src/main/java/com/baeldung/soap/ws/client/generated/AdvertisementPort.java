@@ -35,4 +35,16 @@ public interface AdvertisementPort {
         @WebParam(name = "getAdvertisementRequest", targetNamespace = "http://www.baeldung.com/springsoap/gen", partName = "getAdvertisementRequest")
         GetAdvertisementRequest getAdvertisementRequest);
 
+    /**
+     * 
+     * @param getReservationPeriodRequest
+     * @return
+     *     returns com.baeldung.soap.ws.client.generated.GetReservationPeriodResponse
+     */
+    @WebMethod
+    @WebResult(name = "getReservationPeriodResponse", targetNamespace = "http://www.baeldung.com/springsoap/gen", partName = "getReservationPeriodResponse")
+    public GetReservationPeriodResponse getReservationPeriod(
+        @WebParam(name = "getReservationPeriodRequest", targetNamespace = "http://www.baeldung.com/springsoap/gen", partName = "getReservationPeriodRequest")
+        GetReservationPeriodRequest getReservationPeriodRequest);
+
 }

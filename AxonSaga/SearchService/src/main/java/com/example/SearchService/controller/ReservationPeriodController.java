@@ -1,5 +1,9 @@
 package com.example.SearchService.controller;
 
+import com.baeldung.springsoap.gen.GetAdvertisementRequest;
+import com.baeldung.springsoap.gen.GetAdvertisementResponse;
+import com.baeldung.springsoap.gen.GetReservationPeriodRequest;
+import com.baeldung.springsoap.gen.GetReservationPeriodResponse;
 import com.example.SearchService.domain.ReservationPeriod;
 import com.example.SearchService.dto.ReservationPeriodDTO;
 import com.example.SearchService.exception.CustomException;
@@ -13,12 +17,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
 
+@Endpoint
 @RestController
 @RequestMapping(value = "/reservationPeriod")
 public class ReservationPeriodController {
+
+    private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
 
     @Autowired
     private ReservationPeriodService reservationPeriodService;
@@ -55,5 +66,19 @@ public class ReservationPeriodController {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getReservationPeriodRequest")
+    @ResponsePayload
+    public GetReservationPeriodResponse addResPeriodAgent(@RequestPayload GetReservationPeriodRequest request) {
+        try{
+            GetReservationPeriodResponse response = new GetReservationPeriodResponse();
+            response.setId(reservationPeriodService.saveReservationPeriodAgent(request.getReservationPeriod()));
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

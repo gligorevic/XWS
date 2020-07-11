@@ -1,5 +1,6 @@
 package com.example.RequestService.domain;
 
+import com.baeldung.springsoap.gen.Container;
 import com.example.RequestService.dto.RequestContainerDTO;
 import com.example.RequestService.dto.RequestDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,6 +34,12 @@ public class RequestContainer {
     public RequestContainer(RequestContainerDTO requestContainerDTO) {
         this.userEmail = requestContainerDTO.getUserEmail();
         this.userSentRequest = requestContainerDTO.getUserSentRequest();
+        this.boundleList = new ArrayList<>();
+    }
+
+    public RequestContainer(Container container){
+        this.userEmail = container.getUserEmail();
+        this.userSentRequest = container.getUserSentRequest();
         this.boundleList = new ArrayList<>();
     }
 

@@ -1,5 +1,9 @@
 package com.example.RequestService.service;
 
+import com.baeldung.springsoap.gen.Container;
+import com.example.RequestService.client.AdvertisementClient;
+import com.example.RequestService.client.PricelistClient;
+import com.example.RequestService.MQConfig.ChannelBinding;
 import com.example.RequestService.domain.PaidState;
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.domain.RequestContainer;
@@ -9,8 +13,13 @@ import com.example.RequestService.repository.RequestContainerRepository;
 import com.example.RequestService.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,8 +33,24 @@ public class RequestService {
     @Autowired
     private RequestContainerRepository requestContainerRepository;
 
-    public Request add(RequestDTO requestDTO) throws CustomException {
+    private MessageChannel email;
 
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+
+    public RequestService(ChannelBinding channelBinding) {
+        this.email = channelBinding.mailing();
+    }
+    @Autowired
+    private PricelistClient pricelistClient;
+
+
+    public Request add(RequestDTO requestDTO, String auth) throws CustomException {
+
+        Boolean flag  = pricelistClient.checkIfNotPaid(auth).getBody();
+        System.out.println(flag);
+        if(flag){
+            throw new CustomException("Cannot create requests until you pay additional expences.", HttpStatus.BAD_REQUEST);
+        }
         requestDTO.setInBundle(false);
         requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
         requestDTO.setFreeTo(getMidnightEndDate(requestDTO.getFreeTo()).getTime());
@@ -42,7 +67,12 @@ public class RequestService {
         if(request.getUserEmail().equals(request.getUserSentRequest()))
             throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
 
-        return requestRepository.save(request);
+        Request createdRequest = requestRepository.save(request);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(request.getUserEmail(), "Created advertisement request", "User " + request.getUserSentRequest() + " created request for car " + request.getBrandName() + " " + request.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return createdRequest;
     }
 
     private boolean checkRequestDatesOverlapping(List<Request> req, Request request) {
@@ -61,14 +91,16 @@ public class RequestService {
         return false;
     }
 
-    public RequestContainer addBundle(RequestContainerDTO requestContainerDTO) throws CustomException {
-
+    public RequestContainer addBundle(RequestContainerDTO requestContainerDTO, String auth) throws CustomException {
+        if(pricelistClient.checkIfNotPaid(auth).getBody()){
+            throw new CustomException("Cannot create requests until you pay additional expences.", HttpStatus.BAD_REQUEST);
+        }
         RequestContainer requestContainer = new RequestContainer(requestContainerDTO);
 
-        if (requestContainer == null)
+        if(requestContainer == null)
             throw new CustomException("Could not create bundle request", HttpStatus.BAD_REQUEST);
 
-        if (!checkBundleRequest(requestContainerDTO.getRequestDTOS()))
+        if(!checkBundleRequest(requestContainerDTO.getRequestDTOS()))
             throw new CustomException("Something is wrong with this bundle request", HttpStatus.BAD_REQUEST);
 
         List<Request> requestsForBundle = new ArrayList<>();
@@ -80,7 +112,7 @@ public class RequestService {
             requestDTO.setInBundle(true);
             Request request = new Request(requestDTO);
             request.setRequestContainer(requestContainer);
-            if (request == null)
+            if(request == null)
                 throw new CustomException("Could not create request in bundle", HttpStatus.BAD_REQUEST);
             List<Request> createdRequests = requestRepository.findAllByAdIdAndUserSentRequest(request.getAdId(), request.getUserSentRequest());
             if(!createdRequests.isEmpty()){
@@ -91,63 +123,81 @@ public class RequestService {
         }
 
         requestRepository.saveAll(requestsForBundle);
-        return requestContainerRepository.save(requestContainer);
+        RequestContainer createdRequestContainer = requestContainerRepository.save(requestContainer);
+
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(createdRequestContainer.getUserEmail(), "Created advertisement request", "User " + createdRequestContainer.getUserSentRequest() + " created request for cars " + createdRequestContainer.getBoundleList().stream().map(request -> request.getBrandName() + " " + request.getModelName() + ", ").collect(Collectors.joining()) + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return createdRequestContainer;
     }
 
-    private boolean checkBundleRequest(List<RequestDTO> requestDTOS) {
+    private boolean checkBundleRequest(List<RequestDTO> requestDTOS){
 
-        if (requestDTOS.size() < 2)
+        if(requestDTOS.size() < 2)
             return false;
 
-        for (int i = 0; i < requestDTOS.size() - 1; i++) {
+        for(int i = 0; i < requestDTOS.size() - 1; i++){
             RequestDTO tempRequest = requestDTOS.get(i);
 
-            if (tempRequest.getUserSentRequest().equals(tempRequest.getUserEmail())) {
+            if(tempRequest.getUserSentRequest().equals(tempRequest.getUserEmail())){
                 return false;
             }
 
-            for (int j = i + 1; j < requestDTOS.size(); j++) {
+            for(int j = i + 1; j < requestDTOS.size(); j++){
                 RequestDTO requestDTO = requestDTOS.get(j);
 
-                if (tempRequest.getId() == requestDTO.getId())
+                if(tempRequest.getId() == requestDTO.getId())
                     return false;
 
-                if (!tempRequest.getUserEmail().equals(requestDTO.getUserEmail()))
+                if(!tempRequest.getUserEmail().equals(requestDTO.getUserEmail()))
                     return false;
 
-                if (!tempRequest.getUserSentRequest().equals(requestDTO.getUserSentRequest()))
+                if(!tempRequest.getUserSentRequest().equals(requestDTO.getUserSentRequest()))
                     return false;
 
-                if (requestDTO.getUserSentRequest().equals(requestDTO.getUserEmail()))
+                if(requestDTO.getUserSentRequest().equals(requestDTO.getUserEmail()))
                     return false;
             }
         }
         return true;
     }
 
-    public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO) {
+    public List<Request> cancelRequestsReservationPeriod(ReservationPeriodDTO reservationPeriodDTO){
+        //odbijanje zahteva iz bundle-a
         List<Request> requests = requestContainerRepository.getRequestsFromBundle(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
-        if (!requests.isEmpty()) {
+        if(!requests.isEmpty()) {
             for (Request r : requests) {
                 r.setPaidState(PaidState.CANCELED);
+
+                Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(r.getUserSentRequest(), "Canceled advertisement request", "Agent " + r.getUserEmail() + " denied request for car " + r.getBrandName() + " " + r.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+                this.email.send(msg);
             }
             requestRepository.saveAll(requests);
+        }
+        //odbijanje obicnih zahteva
+        List<Request> requests1 = requestRepository.getRequestsForCanceling(reservationPeriodDTO.getStartDate(), reservationPeriodDTO.getEndDate(), reservationPeriodDTO.getAdvertisementId());
+        if(!requests1.isEmpty()) {
+            for (Request r : requests1) {
+                r.setPaidState(PaidState.CANCELED);
+            }
+            requestRepository.saveAll(requests1);
         }
         return requests;
     }
 
-    public List<RequestInfoDTO> getAllRequestsInfoByReciverUsername(String username) throws CustomException {
+    public List<RequestInfoDTO> getAllRequestsInfoByReciverUsername(String username, String auth) throws CustomException {
         List<Request> requestList = requestRepository.findAllByUserEmail(username);
 
         Map<Long, RequestInfoDTO> requestAdvertMap = new HashMap<>();
 
-        for (Request request : requestList) {
+        for(Request request : requestList) {
             Long key = request.getAdId();
-            if (requestAdvertMap.containsKey(key)) {
+            if(requestAdvertMap.containsKey(key)) {
                 RequestInfoDTO value = requestAdvertMap.get(key);
                 requestAdvertMap.replace(key, value.append(request.getPaidState()));
             } else {
-                requestAdvertMap.put(key, new RequestInfoDTO(request, request.getPaidState()));
+                requestAdvertMap.put(key, new RequestInfoDTO(request));
             }
         }
 
@@ -177,9 +227,8 @@ public class RequestService {
     public Request acceptRequest(Long requestId) throws CustomException {
 
         Request request = requestRepository.getOne(requestId);
-        if (request == null) {
+        if (request == null)
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
-        }
 
         if (checkRequest(request.getCrationDate(), 24))
             request.setPaidState(PaidState.RESERVED);
@@ -189,7 +238,12 @@ public class RequestService {
             throw new CustomException("This request is no longer valid", HttpStatus.BAD_REQUEST);
         }
 
-        return requestRepository.save(request);
+        Request acceptedRequest = requestRepository.save(request);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(request.getUserSentRequest(), "Accepted advertisement request", "Agent " + request.getUserEmail() + " acepted request for car " + request.getBrandName() + " " + request.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
+
+        return acceptedRequest;
     }
 
     public Request declineRequest(Long requestId) throws CustomException {
@@ -198,6 +252,9 @@ public class RequestService {
             throw new CustomException("There is no request with that id", HttpStatus.BAD_REQUEST);
         }
         request.setPaidState(PaidState.CANCELED);
+
+        Message<EmailMessage> msg = MessageBuilder.withPayload(new EmailMessage(request.getUserSentRequest(), "Declined advertisement request", "Agent " + request.getUserEmail() + " declined request for car " + request.getBrandName() + " " + request.getModelName() + " at " + simpleDateFormat.format(new Date()))).build();
+        this.email.send(msg);
 
         return requestRepository.save(request);
     }
@@ -300,6 +357,7 @@ public class RequestService {
                 else r.setPaidState(PaidState.CANCELED);
         }
 
+
         requestRepository.saveAll(requests);
 
         return request;
@@ -386,5 +444,42 @@ public class RequestService {
         RequestContainer requestContainer = requestContainerRepository.findById(containerId).get();
 
         return new RequestContainerDTO(requestContainer);
+    }
+
+    public Long saveAgentRequest(com.baeldung.springsoap.gen.Request request){
+        Request request1 = new Request(request);
+        Request saved = requestRepository.save(request1);
+        return saved.getId();
+    }
+
+    public List<Long> saveAgentContainer(Container container){
+        RequestContainer requestContainer = new RequestContainer(container);
+        container.getBoundleList().stream().forEach(request -> {
+            Request request1 = new Request(request);
+            requestRepository.save(request1);
+            request1.setRequestContainer(requestContainer);
+            requestContainer.getBoundleList().add(request1);
+        });
+        List<Long> ret = new ArrayList<>();
+        RequestContainer saved = requestContainerRepository.save(requestContainer);
+        List<Request> savedRequests = requestRepository.saveAll(requestContainer.getBoundleList());
+
+        ret.add(saved.getId());
+        savedRequests.stream().forEach(request -> {
+            ret.add(request.getId());
+        });
+
+        return ret;
+    }
+
+    public Boolean cancelRequestsAgent(ReservationPeriodDTO reservationPeriodDTO){
+        System.out.println("pozvao");
+        try{
+            cancelRequestsReservationPeriod(reservationPeriodDTO);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

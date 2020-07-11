@@ -1,6 +1,6 @@
 package com.example.PriceListService.domain;
 
-import com.example.PriceListService.enumeration.ServiceDescription;
+import com.example.PriceListService.dto.PriceListItemDTO;
 
 import javax.persistence.*;
 
@@ -11,18 +11,37 @@ public class PriceListItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Float price;
+    private String brandName;
 
-    private ServiceDescription serviceDescription;
+    private String modelName;
+
+    private Long advertisementId;
+
+    private Float pricePerDay;
+
+    private Float pricePerKm;
+
+    private Float priceCollisionDamage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="pricelist_id")
     private PriceList priceList;
 
-    private Long advertisementId;
-
     @OneToOne
     private Discount discount;
+
+    public PriceListItem(){
+
+    }
+
+    public PriceListItem(PriceListItemDTO priceListItemDTO){
+        this.advertisementId = priceListItemDTO.getAdvertisementId();
+        this.modelName = priceListItemDTO.getModelName();
+        this.brandName = priceListItemDTO.getBrandName();
+        this.priceCollisionDamage = priceListItemDTO.getPriceCollisionDamage();
+        this.pricePerDay = priceListItemDTO.getPricePerDay();
+        this.pricePerKm = priceListItemDTO.getPricePerKm();
+    }
 
     public Long getId() {
         return id;
@@ -32,21 +51,46 @@ public class PriceListItem {
         this.id = id;
     }
 
-    public Float getPrice() {
-        return price;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
-    public ServiceDescription getServiceDescription() {
-        return serviceDescription;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setServiceDescription(ServiceDescription serviceDescription) {
-        this.serviceDescription = serviceDescription;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
+
+    public Float getPricePerDay() {
+        return pricePerDay;
+    }
+
+    public void setPricePerDay(Float pricePerDay) {
+        this.pricePerDay = pricePerDay;
+    }
+
+    public Float getPricePerKm() {
+        return pricePerKm;
+    }
+
+    public void setPricePerKm(Float pricePerKm) {
+        this.pricePerKm = pricePerKm;
+    }
+
+    public Float getPriceCollisionDamage() {
+        return priceCollisionDamage;
+    }
+
+    public void setPriceCollisionDamage(Float priceCollisionDamage) {
+        this.priceCollisionDamage = priceCollisionDamage;
+    }
+
 
     public PriceList getPriceList() {
         return priceList;

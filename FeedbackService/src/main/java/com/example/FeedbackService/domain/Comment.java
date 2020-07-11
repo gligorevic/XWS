@@ -44,6 +44,16 @@ public class Comment {
         this.inBundle = commentDTO.isInBundle();
     }
 
+    public Comment(com.baeldung.springsoap.gen.Comment comment){
+        this.agentUsername = comment.getAgentUsername();
+        this.commentStatus = CommentStatus.ACCEPTED;
+        this.creationDate = comment.getCreationDate().toGregorianCalendar().getTime();
+        this.username = comment.getUsername();
+        this.inBundle = comment.isInBundle();
+        this.requestId = comment.getRequestId();
+        this.text = comment.getText();
+    }
+
     public CommentStatus getCommentStatus() {
         return commentStatus;
     }

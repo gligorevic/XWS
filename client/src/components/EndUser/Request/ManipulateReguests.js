@@ -82,8 +82,6 @@ function ManipulateRequests({ match, history, user }) {
   const handleOpenCommentDialog = (event, row) => {
     setRequest(row);
     setOpenedCommentDialog(row.id);
-    console.log(row);
-    console.log(openedCommentDialog);
   };
 
   const sort = (requests) => {
@@ -148,6 +146,11 @@ function ManipulateRequests({ match, history, user }) {
           (r.startDate <= row.endDate && r.endDate >= row.endDate) ||
           (r.startDate > row.startDate && r.endDate < row.endDate))
     );
+
+  const getDateCreated = (newdate) => {
+    const date = new Date(newdate);
+    return `${date.getDay() + 1}/${date.getMonth()}/${date.getFullYear()} `;
+  };
 
   return (
     <div>
@@ -218,8 +221,12 @@ function ManipulateRequests({ match, history, user }) {
                             <TableCell component="th" allign="left">
                               {row.userSentRequest}
                             </TableCell>
-                            <TableCell align="left">{row.startDate}</TableCell>
-                            <TableCell align="left">{row.endDate}</TableCell>
+                            <TableCell align="left">
+                              {getDateCreated(row.freeFrom)}
+                            </TableCell>
+                            <TableCell align="left">
+                              {getDateCreated(row.freeTo)}
+                            </TableCell>
 
                             <TableCell align="left">{row.paidState}</TableCell>
                             <TableCell align="center">

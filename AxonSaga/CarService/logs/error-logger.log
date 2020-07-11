@@ -1,1 +1,8 @@
-2020-07-02 18:47:01,419 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-3] User already has 3 cars.. Action initiated by $2a$10$LyJzunbBpoFgMhbYWZ9voOGaaRi8Kt2M8jv9tMPbCVKoA27mQjAPO.
+2020-07-11 12:30:29,350 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-2] User already has 3 cars.. Action initiated by $2a$10$juVrP9TC7DKJwEQ5KeU3MOiEycmpOTRWcrTsdoAcZAKOfZeFhYsIW.
+2020-07-11 14:40:47,683 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-2] User already has 3 cars.. Action initiated by $2a$10$yfhlU0a067.qSBzdRiO4wuWknDmdsow..XECbOPi0BBOYRyPYmKYy.
+2020-07-11 14:59:16,876 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-4] User already has 3 cars.. Action initiated by $2a$10$DGmid0QcZOmZP31kKYKHXurliywQPEJrbtZ6P6qukLj/MQ8pP8FcO.
+2020-07-11 15:06:16,377 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-1] User already has 3 cars.. Action initiated by $2a$10$kSwEMkJ9N4rDsgA5Fwn8u.g9vGgRCNVovbsJ8qnEY//5GmQCO8dCG.
+2020-07-11 15:06:43,623 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-4] User already has 3 cars.. Action initiated by $2a$10$LOQq0p814lk2yZqDTeiwxedLx3I29XU82HOwVGbI9lR9ZqgoUOt1..
+2020-07-11 15:07:36,380 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-1] User already has 3 cars.. Action initiated by $2a$10$kpZx8I1C4KkwEVLyACwu4.jBGb/anilxRxEQ/fr0gUxPmjbbmh9Pu.
+2020-07-11 15:10:54,312 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-1] User already has 3 cars.. Action initiated by $2a$10$9umDRA8Qy7xcEN.FsgZSueDTGRWBRyIps79JtNYRxxGZXqC3S3TGK.
+2020-07-11 15:17:45,622 ERROR com.example.CarService.controller.CarController [http-nio-8090-exec-2] User already has 3 cars.. Action initiated by $2a$10$.xGqri0kUlwfxex8IhQIEeyKi1aqWFrYzJvdYlfbg2esqhzHD/Gju.

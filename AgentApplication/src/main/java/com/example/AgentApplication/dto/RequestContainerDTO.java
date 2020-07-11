@@ -1,6 +1,9 @@
 package com.example.AgentApplication.dto;
 
+import com.example.AgentApplication.domain.RequestContainer;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RequestContainerDTO {
 
@@ -17,6 +20,13 @@ public class RequestContainerDTO {
         this.userEmail = userEmail;
         this.userSentRequest = userSentRequest;
         this.requestDTOS = requestDTOS;
+    }
+
+    public RequestContainerDTO(RequestContainer requestContainer){
+        this.id = requestContainer.getId();
+        this.userEmail = requestContainer.getUserEmail();
+        this.userSentRequest = requestContainer.getUserSentRequest();
+        this.requestDTOS = requestContainer.getBoundleList().stream().map(request -> new RequestDTO(request)).collect(Collectors.toList());;
     }
 
     public List<RequestDTO> getRequestDTOS() {

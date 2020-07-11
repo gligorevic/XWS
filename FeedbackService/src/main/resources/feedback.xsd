@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getCommentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="comment" type="tns:comment"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCommentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getGradeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="grade" type="tns:grade"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getGradeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="comment">
+        <xs:sequence>
+            <xs:element name="text" type="xs:string"/>
+            <xs:element name="commentStatus" type="xs:int"/>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="agentUsername" type="xs:string"/>
+            <xs:element name="crationDate" type="xs:date"/>
+            <xs:element name="inBundle" type="xs:boolean"/>
+            <xs:element name="creationDate" type="xs:date" />
+            <xs:element name="requestId" type="xs:long" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="grade">
+        <xs:sequence>
+            <xs:element name="grade" type="xs:int"/>
+            <xs:element name="requestId" type="xs:long" />
+            <xs:element name="inBundle" type="xs:boolean"/>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="agentUsername" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

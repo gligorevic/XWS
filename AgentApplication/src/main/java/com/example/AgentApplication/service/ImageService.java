@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +35,21 @@ public class ImageService {
     public List<String> getAllImagesByCarId(Long carId) {
         List<String> images = imageRepository.findImagesByCarId(carId);
         return images.stream().map(image -> "/images/" + carId + "/" + image).collect(Collectors.toList());
+    }
+
+    public Map<String, byte[]> getImages(Long carId){
+        Map<String, byte[]> map = new HashMap<>();
+        List<String> images = imageRepository.findImagesByCarId(carId);
+        images.stream().forEach(image ->{
+            String folder = "images/" + carId + "/";
+            try {
+                byte[] bytes = Files.readAllBytes(Paths.get(folder + image));
+                map.put(image, bytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+        return  map;
     }
 }

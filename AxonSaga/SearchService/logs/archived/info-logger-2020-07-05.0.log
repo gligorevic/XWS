@@ -1,7 +1,4 @@
-2020-07-05 17:17:15,166 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-05 17:19:04,939 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 129.001 seconds (JVM running for 139.066)
-2020-07-05 18:08:55,483 INFO  com.example.SearchService.controller.AdvertisementController [http-nio-8084-exec-8] Successful added advertisement $2a$10$0BSvHwiUjAzbM9P7pQDgZuE2l2S1Ct1lbdeOijnDSMelZAoG3Jz2q by user $2a$10$lRfSos2h8K71HhBfVFKR3OBTuZp3lYc3d/hMS9e70ZRNknnGRCQ1S
-2020-07-05 20:15:33,064 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-05 20:15:44,105 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 15.048 seconds (JVM running for 17.049)
-2020-07-05 20:33:15,965 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
-2020-07-05 20:33:29,405 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 17.544 seconds (JVM running for 18.923)
+2020-07-05 18:08:41,317 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-05 18:11:12,961 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 190.777 seconds (JVM running for 204.659)
+2020-07-05 19:30:18,216 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-05 19:33:10,560 INFO  org.springframework.boot.StartupInfoLogger [main] Started SearchServiceApplication in 207.917 seconds (JVM running for 227.233)

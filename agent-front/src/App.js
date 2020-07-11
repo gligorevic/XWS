@@ -10,7 +10,12 @@ import AdDetails from "./components/Advertisement/AdDetails";
 import Login from "./components/Pages/Login";
 import { setAuthorizationToken, setUser } from "./store/actions/auth";
 import jwtDecode from "jwt-decode";
-import PrivateAgentRoute from "./routing/PrivateUserRoute";
+import PrivateAgentRoute from "./routing/PrivateAgentRoute";
+import PrivateUserRoute from "./routing/PrivateAgentRoute";
+import ManipulateRequests from "./components/Request/ManipulateReguests";
+import CreatedRequests from "./components/Request/CreatedRequests/CreatedRequests";
+import AddPricelistItems from "./components/Pricelist/AddPricelistItems";
+import CartPage from "./components/Cart/CartPage";
 const store = configureStore();
 
 if (localStorage.jwtToken) {
@@ -49,6 +54,18 @@ function App() {
           <Route exact path="/" component={Home} />
           <PrivateAgentRoute exact path="/agent" component={AgentProfile} />
           <PrivateAgentRoute exact path="/car/:carId" component={ViewCar} />
+          <PrivateAgentRoute
+            exact
+            path="/pricelist/:pricelistId"
+            component={AddPricelistItems}
+          />
+          <Route
+            exact
+            path="/request/ad/:adId"
+            component={ManipulateRequests}
+          />
+          <Route exact path="/cart" component={CartPage} />
+          <Route exact path="/chat" component={CreatedRequests} />
           <Route exact path="/ad/:adId" component={AdDetails} />
           <Route exact path="/login" render={(props) => <Login {...props} />} />
         </Switch>

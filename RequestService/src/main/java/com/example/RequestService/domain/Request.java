@@ -41,6 +41,8 @@ public class Request {
     private String brandName;
     private String modelName;
 
+    private Float finalPrice;
+
     public Request() {
     }
 
@@ -48,6 +50,19 @@ public class Request {
         this.adId = requestDTO.getId();
         this.startDate = requestDTO.getFreeFrom();
         this.endDate = requestDTO.getFreeTo();
+        this.paidState = PaidState.PENDING;
+        this.userEmail = requestDTO.getUserEmail();
+        this.userSentRequest = requestDTO.getUserSentRequest();
+        this.inBundle = requestDTO.isInBundle();
+        this.brandName = requestDTO.getBrandName();
+        this.modelName = requestDTO.getModelName();
+        this.finalPrice = requestDTO.getFinalPrice();
+    }
+
+    public Request(com.baeldung.springsoap.gen.Request requestDTO) {
+        this.adId = requestDTO.getAdId();
+        this.startDate = requestDTO.getStartDate().toGregorianCalendar().getTime();
+        this.endDate = requestDTO.getEndDate().toGregorianCalendar().getTime();
         this.paidState = PaidState.PENDING;
         this.userEmail = requestDTO.getUserEmail();
         this.userSentRequest = requestDTO.getUserSentRequest();
@@ -159,5 +174,13 @@ public class Request {
     @PrePersist
     protected void onCreate(){
         this.crationDate = new Date();
+    }
+
+    public Float getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(Float finalPrice) {
+        this.finalPrice = finalPrice;
     }
 }

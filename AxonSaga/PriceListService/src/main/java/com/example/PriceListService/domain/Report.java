@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Report {
@@ -25,6 +26,12 @@ public class Report {
 
     private String userEmail;
 
+    private Date rentedFrom;
+
+    private Date rentedTo;
+
+    private String userEmailRented;
+
     public Report(){
 
     }
@@ -34,6 +41,9 @@ public class Report {
         this.text = reportDTO.getText();
         this.km = reportDTO.getKm();
         this.requestId = reportDTO.getRequestId();
+        this.rentedFrom = reportDTO.getRentedFrom();
+        this.rentedTo = reportDTO.getRentedTo();
+        this.userEmailRented = reportDTO.getUserEmailRented();
     }
 
     public Long getId() {
@@ -82,5 +92,29 @@ public class Report {
 
     public void setAdId(Long adId) {
         this.adId = adId;
+    }
+
+    public Date getRentedFrom() {
+        return rentedFrom;
+    }
+
+    public void setRentedFrom(Date rentedFrom) {
+        this.rentedFrom = rentedFrom;
+    }
+
+    public Date getRentedTo() {
+        return rentedTo;
+    }
+
+    public void setRentedTo(Date rentedTo) {
+        this.rentedTo = rentedTo;
+    }
+
+    public String getUserEmailRented() {
+        return userEmailRented;
+    }
+
+    public void setUserEmailRented(String userEmailRented) {
+        this.userEmailRented = userEmailRented;
     }
 }
