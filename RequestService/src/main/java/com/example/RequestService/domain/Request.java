@@ -56,6 +56,18 @@ public class Request {
         this.modelName = requestDTO.getModelName();
     }
 
+    public Request(com.baeldung.springsoap.gen.Request requestDTO) {
+        this.adId = requestDTO.getAdId();
+        this.startDate = requestDTO.getStartDate().toGregorianCalendar().getTime();
+        this.endDate = requestDTO.getEndDate().toGregorianCalendar().getTime();
+        this.paidState = PaidState.PENDING;
+        this.userEmail = requestDTO.getUserEmail();
+        this.userSentRequest = requestDTO.getUserSentRequest();
+        this.inBundle = requestDTO.isInBundle();
+        this.brandName = requestDTO.getBrandName();
+        this.modelName = requestDTO.getModelName();
+    }
+
     public Request(PaidState paidState) {
         this.paidState = paidState;
     }

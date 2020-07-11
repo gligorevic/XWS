@@ -38,6 +38,8 @@ public class Request {
     @ManyToOne
     private User userSentRequest;
 
+    private Long remoteId;
+
     public Request() {
     }
 
@@ -126,5 +128,13 @@ public class Request {
 
     public void setInBundle(boolean inBundle) {
         this.inBundle = inBundle;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

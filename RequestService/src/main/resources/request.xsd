@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getRequestRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="request" type="tns:request"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getRequestResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="request">
+        <xs:sequence>
+            <xs:element name="brandName" type="xs:string"/>
+            <xs:element name="modelName" type="xs:string"/>
+            <xs:element name="userEmail" type="xs:string"/>
+            <xs:element name="userSentRequest" type="xs:string"/>
+            <xs:element name="crationDate" type="xs:date"/>
+            <xs:element name="inBundle" type="xs:boolean"/>
+            <xs:element name="startDate" type="xs:date"/>
+            <xs:element name="endDate" type="xs:date" />
+            <xs:element name="adId" type="xs:long" />
+        </xs:sequence>
+    </xs:complexType>
+
+
+</xs:schema>

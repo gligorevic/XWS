@@ -1,5 +1,9 @@
 package com.example.AgentApplication.service;
 
+import com.baeldung.soap.ws.client.generated.GetRequestRequest;
+import com.baeldung.soap.ws.client.generated.GetRequestResponse;
+import com.baeldung.soap.ws.client.generated.RequestsPort;
+import com.baeldung.soap.ws.client.generated.RequestsPortService;
 import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.domain.User;
 import com.example.AgentApplication.dto.*;
@@ -15,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,7 +38,7 @@ public class RequestService {
     @Autowired
     private UserRepository userRepository;
 
-    public Request add(RequestDTO requestDTO) throws CustomException {
+    public Request add(RequestDTO requestDTO) throws CustomException, DatatypeConfigurationException {
 
         requestDTO.setInBundle(false);
         requestDTO.setFreeFrom(getMidnightStartDate(requestDTO.getFreeFrom()).getTime());
@@ -60,7 +65,17 @@ public class RequestService {
         if(request.getAdvertisement().getCar().getUserEmail().equals(request.getUserSentRequest()))
             throw new CustomException("You can't send request to yourself", HttpStatus.BAD_REQUEST);
 
-        return requestRepository.save(request);
+        Request r = requestRepository.save(request);
+
+        RequestsPortService requestsPortService = new RequestsPortService();
+        RequestsPort requestsPort = requestsPortService.getRequestsPortSoap11();
+        GetRequestRequest getReqRequest = new GetRequestRequest();
+        com.baeldung.soap.ws.client.generated.Request request1 = new com.baeldung.soap.ws.client.generated.Request(r);
+        getReqRequest.setRequest(request1);
+        GetRequestResponse getReqResponse = requestsPort.getRequest(getReqRequest);
+        r.setRemoteId(getReqResponse.getId());
+
+        return requestRepository.save(r);
     }
 
     private boolean checkRequestDatesOverlapping(List<Request> req, Request request) {

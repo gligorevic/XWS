@@ -1,5 +1,7 @@
 package com.example.RequestService.controller;
 
+import com.baeldung.springsoap.gen.GetRequestRequest;
+import com.baeldung.springsoap.gen.GetRequestResponse;
 import com.example.RequestService.domain.Request;
 import com.example.RequestService.domain.RequestContainer;
 import com.example.RequestService.dto.*;
@@ -14,11 +16,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
 
+@Endpoint
 @RestController
 public class RequestController {
+
+    private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
 
     @Autowired
     private RequestService requestService;
@@ -64,13 +73,13 @@ public class RequestController {
 
     @GetMapping("/info/{username}")
     @PreAuthorize("hasAuthority('REQUEST_VIEWING')")
-    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, Authentication authentication) {
+    public ResponseEntity<?> getAllRequestsInfo(@PathVariable("username") String username, Authentication authentication, @RequestHeader("Auth") String auth) {
         String userEmail = (String) authentication.getPrincipal();
         try {
             if (!userEmail.equals(username)) {
                 throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username);
+            List<RequestInfoDTO> requestInfos = requestService.getAllRequestsInfoByReciverUsername(username, auth);
             log.info("Successful request info fetching by user {}", bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(requestInfos, HttpStatus.OK);
         } catch (CustomException e) {
@@ -296,6 +305,17 @@ public class RequestController {
         }
     }
 
-
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getRequestRequest")
+    @ResponsePayload
+    public GetRequestResponse postRequest(@RequestPayload GetRequestRequest request) {
+        try {
+            GetRequestResponse response = new GetRequestResponse();
+            response.setId(requestService.saveAgentRequest(request.getRequest()));
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

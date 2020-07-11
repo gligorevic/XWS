@@ -43,7 +43,7 @@ public class RequestService {
     private PricelistClient pricelistClient;
 
 
-    public Request add(RequestDTO requestDTO) throws CustomException {
+    public Request add(RequestDTO requestDTO, String auth) throws CustomException {
 
         Boolean flag  = pricelistClient.checkIfNotPaid(auth).getBody();
         System.out.println(flag);
@@ -442,5 +442,11 @@ public class RequestService {
         RequestContainer requestContainer = requestContainerRepository.findById(containerId).get();
 
         return new RequestContainerDTO(requestContainer);
+    }
+
+    public Long saveAgentRequest(com.baeldung.springsoap.gen.Request request){
+        Request request1 = new Request(request);
+        Request saved = requestRepository.save(request1);
+        return saved.getId();
     }
 }
