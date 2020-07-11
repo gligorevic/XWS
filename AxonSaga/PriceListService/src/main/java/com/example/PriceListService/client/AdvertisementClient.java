@@ -13,4 +13,7 @@ public interface AdvertisementClient {
     @PostMapping("/simple/{id}")
     ResponseEntity<AdvertisementCalculatingDTO> getAdvertisemenById(@PathVariable("id") Long id, @RequestHeader("Auth") String Auth);
 
+    @PostMapping("/{id}/priceKm/{priceKm}/priceDay/{priceDay}")
+    ResponseEntity<AdvertisementCalculatingDTO> setPriceForAdvertisement(@PathVariable("id") Long id, @PathVariable("priceKm") Integer priceKm, @PathVariable("priceDay") Integer priceDay, @RequestHeader("Auth") String Auth);
+
 }

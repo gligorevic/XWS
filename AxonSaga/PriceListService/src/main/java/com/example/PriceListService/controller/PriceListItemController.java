@@ -18,9 +18,9 @@ public class PriceListItemController {
     private PriceListItemService priceListItemService;
 
     @PostMapping
-    public ResponseEntity<?> addNewPricelistItem(@RequestBody PriceListItemDTO priceListItemDTO){
+    public ResponseEntity<?> addNewPricelistItem(@RequestBody PriceListItemDTO priceListItemDTO, @RequestHeader("Auth") String auth){
         try{
-            return new ResponseEntity<>(priceListItemService.addNewPriceListItem(priceListItemDTO) , HttpStatus.CREATED);
+            return new ResponseEntity<>(priceListItemService.addNewPriceListItem(priceListItemDTO, auth) , HttpStatus.CREATED);
         }catch (CustomException e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());

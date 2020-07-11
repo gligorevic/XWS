@@ -40,7 +40,7 @@ public class CarService {
         List<String> roles = jwtTokenHelper.getRoleFromAccesToken(jwt);
         String userEmail = jwtTokenHelper.getUserEmailFromAccesToken(jwt);
 
-        if(roles.indexOf("ROLE_AGENT") == -1 && carRepository.findCarsByUserEmail(carDTO.getUserEmail()).size() == MAX_ENDUSER_CARS){
+        if(roles.stream().anyMatch(role -> role.contains("ROLE_AGENT")) && carRepository.findCarsByUserEmail(carDTO.getUserEmail()).size() == MAX_ENDUSER_CARS){
             throw new CustomException("User already has 3 cars.", HttpStatus.NOT_ACCEPTABLE);
         }
         carDTO.setUserEmail(userEmail);

@@ -128,7 +128,7 @@ const ResponsiveDialog = ({ id }) => {
               onChange={handleDateChangeFrom}
             />
           </MuiPickersUtilsProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils} id="fromDate">
+          <MuiPickersUtilsProvider utils={DateFnsUtils} id="toDate">
             <KeyboardDatePicker
               id="date-picker-dialog2"
               className={classes.datePicker}

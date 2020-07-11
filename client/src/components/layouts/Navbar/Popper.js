@@ -49,7 +49,7 @@ function Popper({ open, setPopupClosed, history }) {
           marginBottom: 10,
         }}
         size="small"
-        onClick={(e) => history.push({ pathname: "/user", state: { tab: 8 } })}
+        onClick={(e) => history.push({ pathname: "/user", state: { tab: 11 } })}
       >
         Do it
       </Button>

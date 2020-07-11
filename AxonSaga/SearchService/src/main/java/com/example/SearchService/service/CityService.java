@@ -22,7 +22,7 @@ public class CityService {
 
     public Long getCityId(String cityName) throws CustomException {
         if (cityName != null) {
-            City city = cityRepository.findByName(cityName);
+            City city = cityRepository.findCityByName(cityName);
             if (city == null)
                 throw new CustomException("City doesn't exist", HttpStatus.BAD_REQUEST);
 

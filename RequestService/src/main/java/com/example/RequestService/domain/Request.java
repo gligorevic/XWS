@@ -41,6 +41,8 @@ public class Request {
     private String brandName;
     private String modelName;
 
+    private Float finalPrice;
+
     public Request() {
     }
 
@@ -54,6 +56,7 @@ public class Request {
         this.inBundle = requestDTO.isInBundle();
         this.brandName = requestDTO.getBrandName();
         this.modelName = requestDTO.getModelName();
+        this.finalPrice = requestDTO.getFinalPrice();
     }
 
     public Request(com.baeldung.springsoap.gen.Request requestDTO) {
@@ -171,5 +174,13 @@ public class Request {
     @PrePersist
     protected void onCreate(){
         this.crationDate = new Date();
+    }
+
+    public Float getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(Float finalPrice) {
+        this.finalPrice = finalPrice;
     }
 }

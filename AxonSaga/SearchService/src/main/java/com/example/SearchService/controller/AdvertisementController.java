@@ -121,4 +121,13 @@ public class AdvertisementController {
         }
     }
 
+    @PostMapping("/{id}/priceKm/{priceKm}/priceDay/{priceDay}")
+    public ResponseEntity<?> setPriceForAdvertisement(@PathVariable Long id, @PathVariable Integer priceKm, @PathVariable Integer priceDay){
+        try{
+            return new ResponseEntity<>(advertisementService.setPriceForAdvertisement(id, priceKm, priceDay), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

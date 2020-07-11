@@ -8,7 +8,11 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
-export default function DateInputForm({ selectedDate, setSelectedDate }) {
+export default function DateInputForm({
+  selectedDate,
+  setSelectedDate,
+  minDate,
+}) {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -23,7 +27,9 @@ export default function DateInputForm({ selectedDate, setSelectedDate }) {
           format="MM/dd/yyyy"
           value={selectedDate}
           onChange={handleDateChange}
-          minDate={new Date().getTime() + 1000 * 60 * 60 * 24 * 2}
+          minDate={
+            minDate ? minDate : new Date().getTime() + 1000 * 60 * 60 * 24 * 2
+          }
           KeyboardButtonProps={{
             "aria-label": "change date",
           }}

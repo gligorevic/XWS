@@ -38,7 +38,7 @@ public class AdvertisementService {
         if(dto.getCityName() == null)
             throw new Exception("City not found");
 
-        City city = cityRepository.findByName(dto.getCityName());
+        City city = cityRepository.findCityByName(dto.getCityName());
 
         if(city == null)
             throw new Exception("City not found");
@@ -66,7 +66,9 @@ public class AdvertisementService {
     }
 
     public List<SimpleAdvertisementDTO> getAllAdvertisements(){
-        return getAverageRates(advertisementRepository.findAll());
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 2);
+        return getAverageRates(advertisementRepository.findAllAdsValidTwoDaysFromNow(calendar.getTime()));
     }
 
     private List<SimpleAdvertisementDTO> getAverageRates(List<Advertisement> advertisements) {
@@ -74,14 +76,18 @@ public class AdvertisementService {
         for(Advertisement a : advertisements)
             retAdvert.add(new SimpleAdvertisementDTO(a));
 
-        List<AverageGradeDTO> averageGradeDTOS = feedbackClient.getAverageRates(new ArrayList<>(new HashSet<>(advertisements.stream().map(advertisement -> advertisement.getUserEmail()).collect(Collectors.toList()))));
+        try {
+            List<AverageGradeDTO> averageGradeDTOS = feedbackClient.getAverageRates(new ArrayList<>(new HashSet<>(advertisements.stream().map(advertisement -> advertisement.getUserEmail()).collect(Collectors.toList()))));
 
-        for(AverageGradeDTO avgGrade : averageGradeDTOS)
-            for(SimpleAdvertisementDTO simpleAd : retAdvert)
-                if(avgGrade.getAgentUsername().equals(simpleAd.getAgentUsername()))
-                    simpleAd.setAvgRate(avgGrade.getAverageGrade());
-
-        return retAdvert;
+            for (AverageGradeDTO avgGrade : averageGradeDTOS)
+                for (SimpleAdvertisementDTO simpleAd : retAdvert)
+                    if (avgGrade.getAgentUsername().equals(simpleAd.getAgentUsername()))
+                        simpleAd.setAvgRate(avgGrade.getAverageGrade());
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return retAdvert;
+        }
     }
 
     public AdvertisementDTO getAdvertisementById(Long id){
@@ -92,7 +98,7 @@ public class AdvertisementService {
 
     public Long addNewAdvertisementByAgent(GetAdvertisementRequest request) {
         Advertisement advertisement = new Advertisement(request.getAdvertisement());
-        advertisement.setRentingCityLocation(cityRepository.findByName(request.getAdvertisement().getRentingCityLocation()));
+        advertisement.setRentingCityLocation(cityRepository.findCityByName(request.getAdvertisement().getRentingCityLocation()));
 
         Advertisement newAdvertisement = advertisementRepository.save(advertisement);
         if (newAdvertisement == null) {
@@ -108,4 +114,13 @@ public class AdvertisementService {
         return new AdvertisementCalculatingDTO(advertisement);
     }
 
+    public AdvertisementDTO setPriceForAdvertisement(Long id, Integer priceKm, Integer priceDay) {
+        Advertisement advertisement = advertisementRepository.findById(id).get();
+
+        advertisement.setPriceFrom(priceDay);
+        advertisement.setPriceTo(priceKm);
+
+        advertisementRepository.save(advertisement);
+        return new AdvertisementDTO(advertisement);
+    }
 }

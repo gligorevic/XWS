@@ -16,3 +16,28 @@
 2020-07-10 19:28:44,568 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 177.21 seconds (JVM running for 189.188)
 2020-07-10 19:54:52,895 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-07-10 19:57:02,386 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 151.915 seconds (JVM running for 161.162)
+2020-07-11 13:50:12,115 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 13:50:25,010 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplicationTests in 13.983 seconds (JVM running for 15.019)
+2020-07-11 12:00:03,705 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 12:01:32,881 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 99.658 seconds (JVM running for 104.833)
+2020-07-11 12:24:25,918 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 12:25:56,207 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 107.346 seconds (JVM running for 113.67)
+2020-07-11 14:32:32,134 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 14:33:57,346 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 96.729 seconds (JVM running for 102.506)
+2020-07-11 15:13:03,003 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:14:41,361 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 114.602 seconds (JVM running for 120.589)
+2020-07-11 15:19:28,512 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 15:20:58,844 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 108.606 seconds (JVM running for 118.102)
+2020-07-11 17:33:22,172 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:34:50,970 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:36:22,097 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 103.638 seconds (JVM running for 109.085)
+2020-07-11 17:46:01,065 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 17:47:38,447 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 113.939 seconds (JVM running for 122.136)
+2020-07-11 18:13:45,404 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 18:15:17,403 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 105.352 seconds (JVM running for 111.57)
+2020-07-11 20:05:48,143 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 20:07:29,028 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 115.413 seconds (JVM running for 121.432)
+2020-07-11 20:24:12,704 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 20:25:58,206 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 121.925 seconds (JVM running for 129.797)
+2020-07-11 20:39:05,025 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-11 20:40:37,193 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 111.203 seconds (JVM running for 118.325)

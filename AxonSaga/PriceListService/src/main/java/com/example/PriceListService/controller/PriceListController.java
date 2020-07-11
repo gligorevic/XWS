@@ -1,5 +1,6 @@
 package com.example.PriceListService.controller;
 
+import com.example.PriceListService.dto.DataForPriceCalculationDTO;
 import com.example.PriceListService.dto.PriceListDTO;
 import com.example.PriceListService.exception.CustomException;
 import com.example.PriceListService.service.PriceListService;
@@ -26,6 +27,16 @@ public class PriceListController {
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/price")
+    public ResponseEntity<?> getPriceForAdInPeriod(@RequestBody DataForPriceCalculationDTO dataForPriceCalculationDTO) {
+        try{
+            return new ResponseEntity<>(priceListService.calculatePriceForRequest(dataForPriceCalculationDTO), HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

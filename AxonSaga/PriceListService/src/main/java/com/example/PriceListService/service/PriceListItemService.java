@@ -1,5 +1,6 @@
 package com.example.PriceListService.service;
 
+import com.example.PriceListService.client.AdvertisementClient;
 import com.example.PriceListService.domain.Discount;
 import com.example.PriceListService.domain.PriceList;
 import com.example.PriceListService.domain.PriceListItem;
@@ -13,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PriceListItemService {
@@ -27,16 +30,29 @@ public class PriceListItemService {
     @Autowired
     private DiscountRepository discountRepository;
 
-    public PriceListItem addNewPriceListItem(PriceListItemDTO priceListItemDTO) throws CustomException {
-        if(priceListItemDTO.getAdvertisementId() == null || priceListItemDTO.getAdvertisementId().equals(""))
+    @Autowired
+    private AdvertisementClient advertisementClient;
+
+    public PriceListItem addNewPriceListItem(PriceListItemDTO priceListItemDTO, String auth) throws CustomException {
+        if (priceListItemDTO.getAdvertisementId() == null || priceListItemDTO.getAdvertisementId().equals(""))
             throw new CustomException("Wrong input.", HttpStatus.BAD_REQUEST);
         PriceListItem priceListItem = new PriceListItem(priceListItemDTO);
         PriceList priceList = priceListRepository.findById(priceListItemDTO.getPriceListId()).get();
-        if(priceList == null)
+        if (priceList == null)
             throw new CustomException("Price list doesn't exist.", HttpStatus.BAD_REQUEST);
 
-        if(priceListItemRepository.checkAdvertisementIdExists(priceListItemDTO.getPriceListId(), priceListItemDTO.getAdvertisementId()) != null)
+        if (priceListItemRepository.checkAdvertisementIdExists(priceListItemDTO.getPriceListId(), priceListItemDTO.getAdvertisementId()) != null)
             throw new CustomException("Price List item for advertisement already exists.", HttpStatus.NOT_ACCEPTABLE);
+
+        List<PriceListItem> priceListItemList = priceListItemRepository.findAllByAdvertisementId(priceListItem.getAdvertisementId());
+        if (priceListItemList.isEmpty())
+            advertisementClient.setPriceForAdvertisement(priceListItem.getAdvertisementId(), priceListItem.getPricePerKm().intValue(), priceListItem.getPricePerDay().intValue(), auth);
+        else {
+            priceListItemList.add(priceListItem);
+            PriceListItem lowestPrice = priceListItemList.stream().min(Comparator.comparing(PriceListItem::getPricePerDay)).orElseThrow(NoSuchElementException::new);
+            advertisementClient.setPriceForAdvertisement(lowestPrice.getAdvertisementId(), lowestPrice.getPricePerKm().intValue(), lowestPrice.getPricePerDay().intValue(), auth);
+        }
+
 
         priceListItem.setPriceList(priceList);
         Discount discount = new Discount(priceListItemDTO.getMinNumberDays(), priceListItemDTO.getPercentage());
@@ -45,9 +61,11 @@ public class PriceListItemService {
         return priceListItemRepository.save(priceListItem);
     }
 
-    public List<PriceListItemDTO> getPriceListItems(Long priceListId){
+    public List<PriceListItemDTO> getPriceListItems(Long priceListId) {
         List<PriceListItemDTO> list = new ArrayList<>();
-        priceListItemRepository.findAllByPriceListId(priceListId).stream().forEach(priceListItem -> {list.add(new PriceListItemDTO(priceListItem));});
+        priceListItemRepository.findAllByPriceListId(priceListId).stream().forEach(priceListItem -> {
+            list.add(new PriceListItemDTO(priceListItem));
+        });
         return list;
     }
 }

@@ -210,7 +210,7 @@ const Advertisements = ({
                   <CardMedia
                     className={classes.media}
                     image={`/img${row.mainImagePath}`}
-                    title="Paella dish"
+                    title={row.brandName + " " + row.modelName}
                   />
                   <CardContent>
                     <Typography

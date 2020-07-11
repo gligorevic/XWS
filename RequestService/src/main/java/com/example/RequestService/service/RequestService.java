@@ -356,6 +356,7 @@ public class RequestService {
                 else r.setPaidState(PaidState.CANCELED);
         }
 
+
         requestRepository.saveAll(requests);
 
         return request;

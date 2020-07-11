@@ -21,6 +21,7 @@ public class RequestDTO {
     private Long containerId;
     private PaidState paidState;
     private Long adId;
+    private Float finalPrice;
 
     public RequestDTO() {
     }
@@ -42,6 +43,7 @@ public class RequestDTO {
         this.adId = request.getAdId();
         this.modelName = request.getModelName();
         this.brandName = request.getBrandName();
+        this.finalPrice = request.getFinalPrice();
     }
 
     public Long getId() {
@@ -146,5 +148,13 @@ public class RequestDTO {
 
     public void setAdId(Long adId) {
         this.adId = adId;
+    }
+
+    public Float getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(Float finalPrice) {
+        this.finalPrice = finalPrice;
     }
 }

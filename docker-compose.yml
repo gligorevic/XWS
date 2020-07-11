@@ -141,6 +141,7 @@ services:
     depends_on:
       - eureka-serviceregistry
       - axon-server
+
   feedback:
     build: ./FeedbackService
     ports:
