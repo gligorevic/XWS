@@ -168,4 +168,8 @@ public class CommentService {
         return commentRepository.findAllPending();
     }
 
+    public List<Comment> getAllCommentsForAgent(String agentUsername) {
+        return commentRepository.findAllByAgentUsernameAndCommentStatusAccepted(agentUsername);
+    }
+
 }

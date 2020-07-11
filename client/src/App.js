@@ -19,6 +19,7 @@ import ManipulateRequests from "./components/EndUser/Request/ManipulateReguests"
 
 import CreatedRequests from "./components/EndUser/Request/CreatedRequests/CreatedRequests";
 import OpenChatBoxes from "./components/EndUser/Chat/OpenChatBoxes";
+import Maps from "./components/Maps/Maps";
 
 import "./scrollbar.css";
 
@@ -56,7 +57,7 @@ function App() {
     <Provider store={store}>
       <Router className="App">
         <Switch>
-          <Route exact path="/chat" component={CreatedRequests} />
+          <PrivateUserRoute exact path="/maps" component={Maps} />
           <PrivateAdminRoute exact path="/admin" component={AdminHome} />
           <PrivateUserRoute exact path="/user" component={UserHome} />
           <PrivateUserRoute exact path="/cart" component={CartPage} />

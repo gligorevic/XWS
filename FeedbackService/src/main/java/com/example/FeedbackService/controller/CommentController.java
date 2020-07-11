@@ -137,4 +137,13 @@ public class CommentController {
 
         }
     }
+
+    @GetMapping("/user/{agentUsername}/comment")
+    public ResponseEntity<?> changeCommentStatus(@PathVariable("agentUsername") String agentUsername) {
+        try {
+            return new ResponseEntity<>(commentService.getAllCommentsForAgent(agentUsername), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -12,6 +12,8 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 function ViewCarActivities({ setTokenGenerated, car }) {
   const [token, setToken] = useState(null);
 
+  console.log(car);
+
   const generateToken = async (carId) => {
     try {
       const res = await axios.post("/car/locationToken", carId, {

@@ -23,6 +23,7 @@ import { withRouter } from "react-router";
 import CompanyRegistration from "../Agent/Company/CompanyRegistration";
 import { connect } from "react-redux";
 import ListPassedRequests from "../EndUser/Report/ListPassedRequests";
+import CreatedRequests from "../EndUser/Request/CreatedRequests/CreatedRequests";
 
 const drawerWidth = 240;
 
@@ -118,6 +119,7 @@ function UserHome({ location, user }) {
           <Tab label="Reregister company" {...a11yProps(8)} />
         )}
         <Tab label="Reports" {...a11yProps(9)} />
+        <Tab label="Created Requests" {...a11yProps(10)} />
       </Tabs>
     </div>
   );
@@ -179,6 +181,9 @@ function UserHome({ location, user }) {
           )}
           <TabPanel value={value} index={9}>
             {value === 9 && <ListPassedRequests />}
+          </TabPanel>
+          <TabPanel value={value} index={10}>
+            {value === 10 && <CreatedRequests />}
           </TabPanel>
         </main>
       </div>
