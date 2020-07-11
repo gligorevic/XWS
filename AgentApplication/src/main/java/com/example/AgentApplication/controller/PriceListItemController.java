@@ -25,6 +25,7 @@ public class PriceListItemController {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
         catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

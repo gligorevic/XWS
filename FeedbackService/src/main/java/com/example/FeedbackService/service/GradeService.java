@@ -117,4 +117,9 @@ public class GradeService {
         return gradeRepository.calculateAverageGrades(userEmails);
     }
 
+    public Long gradeAgent(com.baeldung.springsoap.gen.Grade grade){
+        Grade saved = gradeRepository.save(new Grade(grade));
+        return saved.getId();
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.example.AgentApplication.service;
 
-import com.baeldung.soap.ws.client.generated.GetRequestRequest;
-import com.baeldung.soap.ws.client.generated.GetRequestResponse;
-import com.baeldung.soap.ws.client.generated.RequestsPort;
-import com.baeldung.soap.ws.client.generated.RequestsPortService;
+import com.baeldung.soap.ws.client.generated.*;
 import com.example.AgentApplication.domain.Advertisement;
 import com.example.AgentApplication.domain.User;
 import com.example.AgentApplication.dto.*;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.util.*;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,10 +68,14 @@ public class RequestService {
         RequestsPortService requestsPortService = new RequestsPortService();
         RequestsPort requestsPort = requestsPortService.getRequestsPortSoap11();
         GetRequestRequest getReqRequest = new GetRequestRequest();
-        com.baeldung.soap.ws.client.generated.Request request1 = new com.baeldung.soap.ws.client.generated.Request(r);
-        getReqRequest.setRequest(request1);
-        GetRequestResponse getReqResponse = requestsPort.getRequest(getReqRequest);
-        r.setRemoteId(getReqResponse.getId());
+        try {
+            com.baeldung.soap.ws.client.generated.Request request1 = new com.baeldung.soap.ws.client.generated.Request(r);
+            getReqRequest.setRequest(request1);
+            GetRequestResponse getReqResponse = requestsPort.getRequest(getReqRequest);
+            r.setRemoteId(getReqResponse.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi");
+        }
 
         return requestRepository.save(r);
     }
@@ -132,6 +134,30 @@ public class RequestService {
             }
             requestsForBundle.add(request);
             requestContainer.getBoundleList().add(request);
+        }
+
+        requestsForBundle = requestRepository.saveAll(requestsForBundle);
+        requestContainer = requestContainerRepository.save(requestContainer);
+
+        //soap
+        RequestsPortService requestsPortService = new RequestsPortService();
+        RequestsPort requestsPort = requestsPortService.getRequestsPortSoap11();
+        GetContainerRequest getContainerRequest = new GetContainerRequest();
+        Container container = new Container(requestContainer);
+        List<com.baeldung.soap.ws.client.generated.Request> bundle = new ArrayList<>();
+        requestsForBundle.stream().forEach(request -> {
+            try {
+                bundle.add(new com.baeldung.soap.ws.client.generated.Request(request));
+            } catch (DatatypeConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
+        container.getBoundleList().addAll(bundle);
+        getContainerRequest.setContainer(container);
+        GetContainerResponse getContainerResponse = requestsPort.getContainer(getContainerRequest);
+        requestContainer.setRemoteId(getContainerResponse.getId().get(0));
+        for(int i = 1; i<getContainerResponse.getId().size(); i ++){
+            requestsForBundle.get(i-1).setRemoteId(getContainerResponse.getId().get(i));
         }
 
         requestRepository.saveAll(requestsForBundle);

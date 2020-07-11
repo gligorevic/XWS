@@ -1,5 +1,6 @@
 package com.example.SearchService.service;
 
+import com.example.SearchService.client.RequestClient;
 import com.example.SearchService.domain.Advertisement;
 import com.example.SearchService.domain.ReservationPeriod;
 import com.example.SearchService.dto.ReservationPeriodDTO;
@@ -22,6 +23,9 @@ public class ReservationPeriodService {
 
     @Autowired
     private AdvertisementRepository advertisementRepository;
+
+    @Autowired
+    private RequestClient requestClient;
 
     public ReservationPeriod addNewReservationPeriod(ReservationPeriodDTO dto) throws CustomException {
         Calendar midnightStartDate = getMidnightStartDate(dto.getStartDate());
@@ -63,5 +67,16 @@ public class ReservationPeriodService {
 
     public List<ReservationPeriod> getReservationPeriodsByAdvertisementId(Long id){
         return reservationPeriodRepository.findReservationPeriodsByAdvertisementId(id);
+    }
+
+    public Long saveReservationPeriodAgent(com.baeldung.springsoap.gen.ReservationPeriod reservationPeriod) throws CustomException {
+        ReservationPeriodDTO dto = new ReservationPeriodDTO(reservationPeriod);
+        ReservationPeriod resPeriod = addNewReservationPeriod(dto);
+        try{
+            requestClient.canselRequests(dto);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resPeriod.getId();
     }
 }

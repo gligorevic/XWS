@@ -74,7 +74,7 @@ const ResponsiveDialog = ({ id }) => {
         }
       }
     );
-    if (resp.status >= 200 && resp.status < 300) {
+    if (resp && resp.status >= 200 && resp.status < 300) {
       setLoading(false);
       setOpen(false);
     }

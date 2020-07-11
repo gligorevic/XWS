@@ -1,5 +1,9 @@
 package com.example.AgentApplication.service;
 
+import com.baeldung.soap.ws.client.generated.FeedbackPort;
+import com.baeldung.soap.ws.client.generated.FeedbackPortService;
+import com.baeldung.soap.ws.client.generated.GetGradeRequest;
+import com.baeldung.soap.ws.client.generated.GetGradeResponse;
 import com.example.AgentApplication.domain.Grade;
 import com.example.AgentApplication.dto.GradeDTO;
 import com.example.AgentApplication.dto.RequestContainerDTO;
@@ -70,6 +74,21 @@ public class GradeService {
 
         grade.setRequest(requestRepository.findById(gradeDTO.getRequestId()).get());
         grade.setUser(userRepository.findByEmail(gradeDTO.getUsername()));
+        Grade saved = gradeRepository.save(grade);
+
+        //soap
+        FeedbackPortService service = new FeedbackPortService();
+        FeedbackPort feedbackPort = service.getFeedbackPortSoap11();
+        GetGradeRequest request = new GetGradeRequest();
+        try {
+            com.baeldung.soap.ws.client.generated.Grade grade1 = new com.baeldung.soap.ws.client.generated.Grade(saved);
+            request.setGrade(grade1);
+            GetGradeResponse response = feedbackPort.getGrade(request);
+            grade.setRemoteId(response.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi");
+        }
+
         return gradeRepository.save(grade);
     }
 
@@ -92,6 +111,23 @@ public class GradeService {
 
         grade.setRequest(requestContainerRepository.findById(gradeDTO.getRequestId()).get().getBoundleList().get(0));
         grade.setUser(userRepository.findByEmail(gradeDTO.getUsername()));
+
+        Grade saved = gradeRepository.save(grade);
+
+        //soap
+        FeedbackPortService service = new FeedbackPortService();
+        FeedbackPort feedbackPort = service.getFeedbackPortSoap11();
+        GetGradeRequest request = new GetGradeRequest();
+        try {
+            com.baeldung.soap.ws.client.generated.Grade grade1 = new com.baeldung.soap.ws.client.generated.Grade(saved);
+            request.setGrade(grade1);
+            GetGradeResponse response = feedbackPort.getGrade(request);
+            grade.setRemoteId(response.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi.");
+        }
+
+
         return gradeRepository.save(grade);
     }
 }

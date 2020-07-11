@@ -25,6 +25,8 @@ public class Comment {
 
     private boolean inBundle;
 
+    private Long remoteId;
+
 
     public Comment(){
     }
@@ -92,5 +94,13 @@ public class Comment {
 
     public void setInBundle(boolean inBundle) {
         this.inBundle = inBundle;
+    }
+
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
     }
 }

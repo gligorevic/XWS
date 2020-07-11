@@ -1,5 +1,6 @@
 package com.example.RequestService.service;
 
+import com.baeldung.springsoap.gen.Container;
 import com.example.RequestService.client.AdvertisementClient;
 import com.example.RequestService.client.PricelistClient;
 import com.example.RequestService.MQConfig.ChannelBinding;
@@ -449,5 +450,36 @@ public class RequestService {
         Request request1 = new Request(request);
         Request saved = requestRepository.save(request1);
         return saved.getId();
+    }
+
+    public List<Long> saveAgentContainer(Container container){
+        RequestContainer requestContainer = new RequestContainer(container);
+        container.getBoundleList().stream().forEach(request -> {
+            Request request1 = new Request(request);
+            requestRepository.save(request1);
+            request1.setRequestContainer(requestContainer);
+            requestContainer.getBoundleList().add(request1);
+        });
+        List<Long> ret = new ArrayList<>();
+        RequestContainer saved = requestContainerRepository.save(requestContainer);
+        List<Request> savedRequests = requestRepository.saveAll(requestContainer.getBoundleList());
+
+        ret.add(saved.getId());
+        savedRequests.stream().forEach(request -> {
+            ret.add(request.getId());
+        });
+
+        return ret;
+    }
+
+    public Boolean cancelRequestsAgent(ReservationPeriodDTO reservationPeriodDTO){
+        System.out.println("pozvao");
+        try{
+            cancelRequestsReservationPeriod(reservationPeriodDTO);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

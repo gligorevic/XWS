@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getPricelistRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pricelist" type="tns:pricelist"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPricelistResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPricelistItemRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pricelistItem" type="tns:pricelistItem"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPricelistItemResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getReportRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="report" type="tns:report"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getReportResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="pricelist">
+        <xs:sequence>
+            <xs:element name="userEmail" type="xs:string"/>
+            <xs:element name="validFrom" type="xs:date" />
+            <xs:element name="validTo" type="xs:date" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="pricelistItem">
+        <xs:sequence>
+            <xs:element name="pricelistId" type="xs:long"/>
+            <xs:element name="brandName" type="xs:string"/>
+            <xs:element name="modelName" type="xs:string"/>
+            <xs:element name="advertisementId" type="xs:long"/>
+            <xs:element name="pricePerDay" type="xs:float"/>
+            <xs:element name="pricePerKm" type="xs:float"/>
+            <xs:element name="priceCollisionDamage" type="xs:float"/>
+            <xs:element name="minNumberDays" type="xs:int"/>
+            <xs:element name="percentage" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="report">
+        <xs:sequence>
+            <xs:element name="text" type="xs:string"/>
+            <xs:element name="km" type="xs:int" />
+            <xs:element name="adId" type="xs:long" />
+            <xs:element name="requestId" type="xs:long" />
+            <xs:element name="userEmail" type="xs:string" />
+            <xs:element name="userEmailRented" type="xs:string" />
+            <xs:element name="rentedFrom" type="xs:date" />
+            <xs:element name="rentedTo" type="xs:date" />
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

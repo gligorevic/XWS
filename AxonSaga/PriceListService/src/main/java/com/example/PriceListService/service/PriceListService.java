@@ -1,6 +1,7 @@
 package com.example.PriceListService.service;
 
 import com.example.PriceListService.client.AdvertisementClient;
+import com.baeldung.springsoap.gen.Pricelist;
 import com.example.PriceListService.domain.PriceList;
 import com.example.PriceListService.domain.PriceListItem;
 import com.example.PriceListService.dto.DataForPriceCalculationDTO;
@@ -10,6 +11,7 @@ import com.example.PriceListService.repository.PriceListItemRepository;
 import com.example.PriceListService.repository.PriceListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.Period;
@@ -38,6 +40,12 @@ public class PriceListService {
 
     public List<PriceList> getPricelistsByUserEmail(String userEmail){
         return priceListRepository.findAllByUserEmail(userEmail);
+    }
+
+    public Long addPricelistAgent(Pricelist pricelist) throws CustomException {
+        PriceListDTO priceListDTO = new PriceListDTO(pricelist);
+        PriceList p = addNewPriceList(priceListDTO, pricelist.getUserEmail());
+        return p.getId();
     }
 
     public Float calculatePriceForRequest(DataForPriceCalculationDTO dataForPriceCalculationDTO) {

@@ -1,5 +1,6 @@
 package com.example.AgentApplication.service;
 
+import com.baeldung.soap.ws.client.generated.*;
 import com.example.AgentApplication.domain.Comment;
 import com.example.AgentApplication.dto.CommentDTO;
 import com.example.AgentApplication.dto.RequestContainerDTO;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -83,7 +85,7 @@ public class CommentService {
         return commentList;
     }
 
-    public Comment add(CommentDTO commentDTO) throws CustomException{
+    public Comment add(CommentDTO commentDTO) throws CustomException, DatatypeConfigurationException {
 
         RequestDTO requestDTO = new RequestDTO(requestRepository.findById(commentDTO.getRequestId()).get());
 
@@ -116,10 +118,26 @@ public class CommentService {
         comment.setRequest(requestRepository.findById(commentDTO.getRequestId()).get());
         comment.setUser(userRepository.findByEmail(commentDTO.getUserEmail()));
         comment.setCommentStatus(CommentStatus.ACCEPTED);
+        Comment saved = commentRepository.save(comment);
+
+        //soap
+        FeedbackPortService service = new FeedbackPortService();
+        FeedbackPort feedbackPort = service.getFeedbackPortSoap11();
+        GetCommentRequest request = new GetCommentRequest();
+        try {
+            com.baeldung.soap.ws.client.generated.Comment comment1 = new com.baeldung.soap.ws.client.generated.Comment(saved);
+            request.setComment(comment1);
+            GetCommentResponse response = feedbackPort.getComment(request);
+            comment.setRemoteId(response.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi");
+        }
+
+
         return commentRepository.save(comment);
     }
 
-    public Comment addBundleComment(CommentDTO commentDTO) throws CustomException {
+    public Comment addBundleComment(CommentDTO commentDTO) throws CustomException, DatatypeConfigurationException {
         RequestContainerDTO requestContainerDTO = new RequestContainerDTO(requestContainerRepository.findById(commentDTO.getRequestId()).get());
 
         if (requestContainerDTO == null) {
@@ -153,6 +171,20 @@ public class CommentService {
         comment.setRequest(requestContainerRepository.findById(commentDTO.getRequestId()).get().getBoundleList().get(0));
         comment.setUser(userRepository.findByEmail(commentDTO.getUserEmail()));
         comment.setCommentStatus(CommentStatus.ACCEPTED);
+        Comment saved = commentRepository.save(comment);
+
+        FeedbackPortService service = new FeedbackPortService();
+        FeedbackPort feedbackPort = service.getFeedbackPortSoap11();
+        GetCommentRequest request = new GetCommentRequest();
+        try {
+            com.baeldung.soap.ws.client.generated.Comment comment1 = new com.baeldung.soap.ws.client.generated.Comment(saved);
+            request.setComment(comment1);
+            GetCommentResponse response = feedbackPort.getComment(request);
+            comment.setRemoteId(response.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi.");
+        }
+
         return commentRepository.save(comment);
     }
 }

@@ -18,6 +18,22 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="getReservationPeriodRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reservationPeriod" type="tns:reservationPeriod"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getReservationPeriodResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:complexType name="advertisement">
         <xs:sequence>
             <xs:element name="carId" type="xs:long"/>
@@ -38,6 +54,14 @@
             <xs:element name="rentingStreetLocation" type="xs:string" />
             <xs:element name="freeFrom" type="xs:date" />
             <xs:element name="freeTo" type="xs:date" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="reservationPeriod">
+        <xs:sequence>
+            <xs:element name="advertisementId" type="xs:long"/>
+            <xs:element name="startDate" type="xs:date"/>
+            <xs:element name="endDate" type="xs:date"/>
         </xs:sequence>
     </xs:complexType>
 

@@ -21,19 +21,20 @@ public class ReservationPeriodController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_AGENT')")
-    private ResponseEntity<?> addNewReservationPeriod(@RequestBody ReservationPeriodDTO reservationPeriodDTO){
+    public ResponseEntity<?> addNewReservationPeriod(@RequestBody ReservationPeriodDTO reservationPeriodDTO){
         try{
             ReservationPeriod reservationPeriod = reservationPeriodService.addNewReservationPeriod(reservationPeriodDTO);
             return new ResponseEntity<>(reservationPeriod, HttpStatus.OK);
         } catch(CustomException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<?> getReservationPeriodsByAdvertisement(@PathVariable Long id){
+    public ResponseEntity<?> getReservationPeriodsByAdvertisement(@PathVariable Long id){
         try{
             return new ResponseEntity<>(reservationPeriodService.getReservationPeriodsByAdvertisementId(id), HttpStatus.OK);
         }catch(Exception e){

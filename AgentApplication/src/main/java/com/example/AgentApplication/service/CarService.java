@@ -85,16 +85,20 @@ public class CarService {
         CarsPortService service = new CarsPortService();
         CarsPort carsPort = service.getCarsPortSoap11();
         GetCarRequest getCarRequest = new GetCarRequest();
-        com.baeldung.soap.ws.client.generated.Car car1 = new com.baeldung.soap.ws.client.generated.Car(car);
-        imagesMap.keySet().stream().forEach(key -> {
-            com.baeldung.soap.ws.client.generated.Map map = new com.baeldung.soap.ws.client.generated.Map();
-            map.setKey(key);
-            map.setValue(imagesMap.get(key));
-            car1.getMapImages().add(map);
-        });
-        getCarRequest.setCar(car1);
-        GetCarResponse getCarResponse = carsPort.getCar(getCarRequest);
-        car.setRemoteId(getCarResponse.getId());
+        try {
+            com.baeldung.soap.ws.client.generated.Car car1 = new com.baeldung.soap.ws.client.generated.Car(car);
+            imagesMap.keySet().stream().forEach(key -> {
+                com.baeldung.soap.ws.client.generated.Map map = new com.baeldung.soap.ws.client.generated.Map();
+                map.setKey(key);
+                map.setValue(imagesMap.get(key));
+                car1.getMapImages().add(map);
+            });
+            getCarRequest.setCar(car1);
+            GetCarResponse getCarResponse = carsPort.getCar(getCarRequest);
+            car.setRemoteId(getCarResponse.getId());
+        }catch (Exception e){
+            System.out.println("Mikroservis ne radi");
+        }
 
         Car newCar = carRepository.save(car);
         imageService.saveImages(imagesMap, newCar.getId());

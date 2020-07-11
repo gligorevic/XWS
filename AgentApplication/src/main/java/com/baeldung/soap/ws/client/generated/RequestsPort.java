@@ -25,6 +25,18 @@ public interface RequestsPort {
 
     /**
      * 
+     * @param getContainerRequest
+     * @return
+     *     returns com.baeldung.soap.ws.client.generated.GetContainerResponse
+     */
+    @WebMethod
+    @WebResult(name = "getContainerResponse", targetNamespace = "http://www.baeldung.com/springsoap/gen", partName = "getContainerResponse")
+    public GetContainerResponse getContainer(
+        @WebParam(name = "getContainerRequest", targetNamespace = "http://www.baeldung.com/springsoap/gen", partName = "getContainerRequest")
+        GetContainerRequest getContainerRequest);
+
+    /**
+     * 
      * @param getRequestRequest
      * @return
      *     returns com.baeldung.soap.ws.client.generated.GetRequestResponse

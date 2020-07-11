@@ -1,6 +1,7 @@
 package com.example.PriceListService.service;
 
 import com.example.PriceListService.client.AdvertisementClient;
+import com.baeldung.springsoap.gen.PricelistItem;
 import com.example.PriceListService.domain.Discount;
 import com.example.PriceListService.domain.PriceList;
 import com.example.PriceListService.domain.PriceListItem;
@@ -67,5 +68,11 @@ public class PriceListItemService {
             list.add(new PriceListItemDTO(priceListItem));
         });
         return list;
+    }
+
+    public Long addPricelistItemAgent(PricelistItem pricelistItem) throws CustomException {
+        PriceListItemDTO dto = new PriceListItemDTO(pricelistItem);
+        PriceListItem item = addNewPriceListItem(dto);
+        return item.getId();
     }
 }

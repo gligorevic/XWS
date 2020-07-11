@@ -18,6 +18,22 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="getContainerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="container" type="tns:container"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getContainerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:complexType name="request">
         <xs:sequence>
             <xs:element name="brandName" type="xs:string"/>
@@ -32,5 +48,12 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="container">
+        <xs:sequence>
+            <xs:element name="userEmail" type="xs:string"/>
+            <xs:element name="userSentRequest" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" type="tns:request" name="boundleList"/>
+        </xs:sequence>
+    </xs:complexType>
 
 </xs:schema>

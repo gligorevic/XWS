@@ -21,6 +21,8 @@ public class PriceList {
 
     private Boolean excludeYear;
 
+    private Long remoteId;
+
     public PriceList(){
 
     }
@@ -62,4 +64,11 @@ public class PriceList {
         this.excludeYear = excludeYear;
     }
 
+    public Long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        this.remoteId = remoteId;
+    }
 }

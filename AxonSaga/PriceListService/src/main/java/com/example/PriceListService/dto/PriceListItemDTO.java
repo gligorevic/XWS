@@ -1,5 +1,6 @@
 package com.example.PriceListService.dto;
 
+import com.baeldung.springsoap.gen.PricelistItem;
 import com.example.PriceListService.domain.PriceListItem;
 
 public class PriceListItemDTO {
@@ -36,6 +37,18 @@ public class PriceListItemDTO {
         this.pricePerDay = priceListItem.getPricePerDay();
         this.pricePerKm = priceListItem.getPricePerKm();
         this.priceCollisionDamage = priceListItem.getPriceCollisionDamage();
+    }
+
+    public PriceListItemDTO(PricelistItem pricelistItem){
+        this.advertisementId = pricelistItem.getAdvertisementId();
+        this.brandName = pricelistItem.getBrandName();
+        this.modelName = pricelistItem.getModelName();
+        this.minNumberDays = pricelistItem.getMinNumberDays();
+        this.percentage = pricelistItem.getPercentage();
+        this.priceListId = pricelistItem.getPricelistId();
+        this.pricePerDay = pricelistItem.getPricePerDay();
+        this.pricePerKm = pricelistItem.getPricePerKm();
+        this.priceCollisionDamage = pricelistItem.getPriceCollisionDamage();
     }
 
     public String getBrandName() {
