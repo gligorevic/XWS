@@ -72,7 +72,7 @@ public class PriceListItemService {
 
     public Long addPricelistItemAgent(PricelistItem pricelistItem) throws CustomException {
         PriceListItemDTO dto = new PriceListItemDTO(pricelistItem);
-        PriceListItem item = addNewPriceListItem(dto);
+        PriceListItem item = addNewPriceListItem(dto, null);
         return item.getId();
     }
 }

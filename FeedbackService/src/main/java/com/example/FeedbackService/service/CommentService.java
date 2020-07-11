@@ -209,14 +209,11 @@ public class CommentService {
         return commentRepository.findAllPending();
     }
 
-<<<<<<< HEAD
-    public Long commentAgent(com.baeldung.springsoap.gen.Comment comment){
-        Comment saved = commentRepository.save( new Comment(comment));
+    public Long commentAgent(com.baeldung.springsoap.gen.Comment comment) {
+        Comment saved = commentRepository.save(new Comment(comment));
         return saved.getId();
-=======
+    }
     public List<Comment> getAllCommentsForAgent(String agentUsername) {
         return commentRepository.findAllByAgentUsernameAndCommentStatusAccepted(agentUsername);
->>>>>>> origin/location-service
     }
-
 }

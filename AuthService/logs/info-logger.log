@@ -2245,3 +2245,13 @@
 2020-07-11 16:12:35,026 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$9Mz5wN3I1rvjpJ34k6/eU.t/3KRiMHXQlBwNs5ntJMrlHXVWytFaC verified
 2020-07-11 16:12:35,122 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] AccessToken generated for user $2a$10$QKegfjucYcErxkpk9SpfGu4cn7COmbQIHfzJtAoKwNoqMx84K4rkC
 >>>>>>> origin/location-service
+2020-07-12 00:05:56,286 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 00:06:08,477 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 13.322 seconds (JVM running for 14.579)
+2020-07-12 00:10:41,251 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 00:10:50,491 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 10.473 seconds (JVM running for 11.655)
+2020-07-12 00:15:34,794 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 00:15:42,499 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 8.792 seconds (JVM running for 9.833)
+2020-07-12 00:17:35,633 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 00:17:43,378 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 8.828 seconds (JVM running for 9.805)
+2020-07-12 00:20:04,654 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 00:20:12,607 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 9.067 seconds (JVM running for 10.056)
