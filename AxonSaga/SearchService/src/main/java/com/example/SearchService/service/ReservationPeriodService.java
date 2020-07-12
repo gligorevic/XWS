@@ -72,11 +72,11 @@ public class ReservationPeriodService {
     public Long saveReservationPeriodAgent(com.baeldung.springsoap.gen.ReservationPeriod reservationPeriod) throws CustomException {
         ReservationPeriodDTO dto = new ReservationPeriodDTO(reservationPeriod);
         ReservationPeriod resPeriod = addNewReservationPeriod(dto);
-        try{
+        /*try{
             requestClient.canselRequests(dto);
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
         return resPeriod.getId();
     }
 }

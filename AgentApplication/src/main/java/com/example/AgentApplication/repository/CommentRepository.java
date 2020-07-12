@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment,Long> {
 
+    List<Comment> findAll();
+
     @Query("SELECT DISTINCT c FROM Comment c WHERE c.commentStatus=1 AND c.request.advertisement.id = :adId")
     List<Comment> getCommentsForAdvertisement(@Param("adId") Long adId);
 

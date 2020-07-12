@@ -109,21 +109,21 @@ public class Advertisement {
 
     }
 
-    public Advertisement(Car car, com.example.AgentApplication.domain.Advertisement advertisement) throws DatatypeConfigurationException {
-        this.carId = car.getId();
+    public Advertisement(com.example.AgentApplication.domain.Advertisement advertisement) throws DatatypeConfigurationException {
+        this.carId = advertisement.getCar().getRemoteId();
         this.kmRestriction = advertisement.getKmRestriction();
         this.priceFrom = advertisement.getPriceFrom();
         this.priceTo = advertisement.getPriceTo();
-        this.brandName = car.getBrand().getBrandName();
-        this.modelName = car.getModel().getModelName();
-        this.gearShiftName = car.getGearShift().getGearShiftName();
-        this.fuelTypeName = car.getFuelType().getFuelTypeName();
-        this.bodyName = car.getBodyType().getBodyTypeName();
-        this.kmPassed = car.getKmPassed();
+        this.brandName = advertisement.getCar().getBrand().getBrandName();
+        this.modelName = advertisement.getCar().getModel().getModelName();
+        this.gearShiftName = advertisement.getCar().getGearShift().getGearShiftName();
+        this.fuelTypeName = advertisement.getCar().getFuelType().getFuelTypeName();
+        this.bodyName = advertisement.getCar().getBodyType().getBodyTypeName();
+        this.kmPassed = advertisement.getCar().getKmPassed();
         this.numberChildSeats = advertisement.getNumberChildSeats();
         this.collisionDamage = advertisement.getCollisionDamage();
         this.userEmail = "agent@gmail.com";
-        this.mainImagePath = car.getMainImageUrl();
+        this.mainImagePath = advertisement.getCar().getMainImageUrl();
         this.rentingCityLocation = advertisement.getRentingCityLocation().getName();
         this.rentingStreetLocation = advertisement.getRentingStreetLocation();
         GregorianCalendar c = new GregorianCalendar();

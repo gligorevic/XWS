@@ -141,3 +141,5 @@
 2020-07-11 23:12:00,382 INFO  com.example.RequestService.controller.RequestController [http-nio-8086-exec-10] User $2a$10$kKMRyMOgTUiXzZDk5YJbo.P1iZJxWXGkK7/UaEGzvPl7W5sr8tjA. paid request $2a$10$1L1wW8GaMY0KHr/vokjBU.2FAWoSEPAmmt.PPrSuzu.Ab5DHrl0Fq
 2020-07-12 01:30:45,450 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-07-12 01:30:58,077 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplicationTests in 13.82 seconds (JVM running for 14.985)
+2020-07-12 03:24:22,253 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 03:24:46,694 INFO  org.springframework.boot.StartupInfoLogger [main] Started RequestServiceApplication in 28.822 seconds (JVM running for 30.864)
