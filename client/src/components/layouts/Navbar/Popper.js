@@ -29,7 +29,7 @@ function Popper({ open, setPopupClosed, history }) {
       >
         <IconButton
           disabled
-          style={{ color: "rgba(0,0,0,0.54)", paddingLeft: 10 }}
+          style={{ color: "rgba(0,0,0,0.54)", paddingLeft: 9 }}
         >
           <BusinessIcon />
         </IconButton>

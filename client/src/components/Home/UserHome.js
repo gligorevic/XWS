@@ -109,22 +109,20 @@ function UserHome({ location, user }) {
         variant="scrollable"
         aria-label="simple tabs example"
       >
-        <Tab label="User Home Page" {...a11yProps(0)} />
-        <Tab label="Profile" {...a11yProps(1)} />
-        <Tab label="Add car" {...a11yProps(2)} />
-        <Tab label="Pricelists" {...a11yProps(3)} />
-        <Tab label="My advertisements" {...a11yProps(4)} />
-        <Tab label="Cars" {...a11yProps(5)} />
-        <Tab label="Requests" {...a11yProps(6)} />
-        <Tab label="Change password" {...a11yProps(7)} />
-        <Tab label="Reports" {...a11yProps(8)} />
-        <Tab label="Additional expences" {...a11yProps(9)} />
-        <Tab label="Created Requests" {...a11yProps(10)} />
+        <Tab label="Profile" {...a11yProps(0)} />
+        <Tab label="Pricelists" {...a11yProps(1)} />
+        <Tab label="My advertisements" {...a11yProps(2)} />
+        <Tab label="Cars" {...a11yProps(3)} />
+        <Tab label="Requests" {...a11yProps(4)} />
+        <Tab label="Change password" {...a11yProps(5)} />
+        <Tab label="Reports" {...a11yProps(6)} />
+        <Tab label="Additional expences" {...a11yProps(7)} />
+        <Tab label="Created Requests" {...a11yProps(8)} />
         {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-          <Tab label="Statistic" {...a11yProps(11)} />
+          <Tab label="Statistic" {...a11yProps(9)} />
         )}
         {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-          <Tab label="Reregister company" {...a11yProps(12)} />
+          <Tab label="Reregister company" {...a11yProps(10)} />
         )}
       </Tabs>
     </div>
@@ -157,47 +155,41 @@ function UserHome({ location, user }) {
         >
           <div className={classes.drawerHeader} />
           <TabPanel value={value} index={0}>
-            <p>User home page</p>
+            {value === 0 && <Profile />}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {value === 1 && <Profile />}
+            {value === 1 && <PricelistPage />}
           </TabPanel>
           <TabPanel value={value} index={2}>
-            {value === 2 && <AddCar />}
+            {value === 2 && <ListMyAdvertisements />}
           </TabPanel>
           <TabPanel value={value} index={3}>
-            {value === 3 && <PricelistPage />}
+            {value === 3 && <CarPage />}
           </TabPanel>
           <TabPanel value={value} index={4}>
-            {value === 4 && <ListMyAdvertisements />}
+            {value === 4 && <RequestsPage />}
           </TabPanel>
           <TabPanel value={value} index={5}>
-            {value === 5 && <CarPage />}
-          </TabPanel>
-          <TabPanel value={value} index={6}>
-            {value === 6 && <RequestsPage />}
-          </TabPanel>
-          <TabPanel value={value} index={7}>
-            {value === 7 && <ChangePassword />}
+            {value === 5 && <ChangePassword />}
           </TabPanel>
 
+          <TabPanel value={value} index={6}>
+            {value === 6 && <ListPassedRequests />}
+          </TabPanel>
+          <TabPanel value={value} index={7}>
+            {value === 7 && <AddedPriceTab />}
+          </TabPanel>
           <TabPanel value={value} index={8}>
-            {value === 8 && <ListPassedRequests />}
-          </TabPanel>
-          <TabPanel value={value} index={9}>
-            {value === 9 && <AddedPriceTab />}
-          </TabPanel>
-          <TabPanel value={value} index={10}>
-            {value === 10 && <CreatedRequests />}
+            {value === 8 && <CreatedRequests />}
           </TabPanel>
           {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-            <TabPanel value={value} index={11}>
-              {value === 11 && <StatisticTab />}
+            <TabPanel value={value} index={9}>
+              {value === 9 && <StatisticTab />}
             </TabPanel>
           )}
           {user?.role && user.role.some((r) => r.name === "ROLE_AGENT") && (
-            <TabPanel value={value} index={12}>
-              {value === 12 && <CompanyRegistration />}
+            <TabPanel value={value} index={10}>
+              {value === 10 && <CompanyRegistration />}
             </TabPanel>
           )}
         </main>

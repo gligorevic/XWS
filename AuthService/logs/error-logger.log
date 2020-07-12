@@ -1,1 +1,3 @@
 2020-07-11 15:16:26,426 ERROR com.example.AuthService.controller.UserController [http-nio-8080-exec-1] AccessToken generation failed.
+2020-07-12 09:06:49,578 ERROR com.example.AuthService.security.CustomAccessDeniedHandler [http-nio-8080-exec-6] User: $2a$10$l8D1MV9.Rn.lcSA0YWYhperBJ9HdgqbkT9eh939aBtMjLjqEumNGW attempted to access the protected URL.
+2020-07-12 09:06:56,675 ERROR com.example.AuthService.security.CustomAccessDeniedHandler [http-nio-8080-exec-5] User: $2a$10$tHNqaagj9HGBVskS7nQkTuXt0KhguasklGWgikpPyctOcLLelk8Ma attempted to access the protected URL.

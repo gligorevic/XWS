@@ -51,7 +51,7 @@ function ViewCar({ match, history }) {
               variant="contained"
               color="primary"
               onClick={() =>
-                history.push({ pathname: `/user`, state: { tab: 5 } })
+                history.push({ pathname: `/user`, state: { tab: 3 } })
               }
             >
               Go Back

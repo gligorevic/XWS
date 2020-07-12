@@ -38,7 +38,6 @@ public class CompanyController {
     }
 
     @PutMapping("/user/{userId}/company/reregister")
-    @PreAuthorize("hasAuthority('DATA_SYNCHRONIZATION')")
     public ResponseEntity<?> reregisterCompany(@PathVariable("userId") Long userId, @RequestBody CompanyDTO companyDTO, Authentication authentication){
         try{
             User user = (User) authentication.getPrincipal();

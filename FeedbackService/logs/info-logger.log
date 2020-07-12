@@ -91,3 +91,11 @@
 2020-07-11 23:18:25,242 INFO  com.example.FeedbackService.controller.CommentController [http-nio-8088-exec-2] User $2a$10$SlPXCZHj2nAGlX3phJEvXeklfpVomV/LC0QSUVTqFxnpsS8SXVyhe successfully added comment for request $2a$10$rn60zQAyFbnKleEloH1GluBPLX29GfSeQAg7GMYgsGmdTkHWR1ADa
 2020-07-12 03:39:17,868 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-07-12 03:39:38,862 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 25.485 seconds (JVM running for 31.5)
+2020-07-12 10:13:36,588 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 10:14:07,035 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplicationTests in 36.116 seconds (JVM running for 39.262)
+2020-07-12 08:20:23,948 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 10:32:56,438 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 10:33:19,179 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplicationTests in 26.518 seconds (JVM running for 28.024)
+2020-07-12 08:36:50,436 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 08:51:10,643 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 08:53:26,891 INFO  org.springframework.boot.StartupInfoLogger [main] Started FeedbackServiceApplication in 159.87 seconds (JVM running for 169.62)

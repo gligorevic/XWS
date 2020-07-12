@@ -67,7 +67,7 @@ const Maps = (props) => {
               variant="contained"
               color="primary"
               onClick={() =>
-                props.history.push({ pathname: `/user`, state: { tab: 5 } })
+                props.history.push({ pathname: `/user`, state: { tab: 3 } })
               }
             >
               Go Back
