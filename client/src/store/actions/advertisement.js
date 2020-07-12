@@ -28,12 +28,12 @@ export const setAllAdvertisementsForCart = (allAdvertisementsCart) => ({
 
 export const getUserAdvertisements = () => async (dispatch, getState) => {
   try {
-    const profileState = getState().profile.profile;
-    if (profileState === null) {
-      const email = getState().user.user.username;
-      const advertisements = await axios.get(`/search/user/${email}`);
-      dispatch(setUserAdvertisements(advertisements.data));
-    }
+    // const profileState = getState().profile.profile;
+    // if (profileState === null) {
+    const email = getState().user.user.username;
+    const advertisements = await axios.get(`/search/user/${email}`);
+    dispatch(setUserAdvertisements(advertisements.data));
+    // }
   } catch (err) {
     console.log(err);
   }

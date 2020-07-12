@@ -112,3 +112,6 @@
 2020-07-12 08:36:53,535 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-07-12 08:51:11,498 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2020-07-12 08:53:24,983 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 157.387 seconds (JVM running for 167.595)
+2020-07-12 09:39:32,284 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 09:40:51,327 INFO  org.springframework.boot.StartupInfoLogger [main] Started CarServiceApplication in 99.036 seconds (JVM running for 105.622)
+2020-07-12 09:43:22,619 INFO  com.example.CarService.controller.CarController [http-nio-8090-exec-2] Successfully added car $2a$10$WHcyzcxbTTCBS5f3HlZMvOKe1lPJFGtFeeHJnpGX05th1kUgDAbRG by user $2a$10$Y7uOSmCEgYdLkanwjDmUlew8FFY1bwt3xvo9rECjjoBh0/ez/EVQu

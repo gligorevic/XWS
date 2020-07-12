@@ -2447,3 +2447,169 @@
 2020-07-12 09:09:06,668 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$Qf3cIqx9/fgQ.wwJFsVcOuMX5i.SVYfLfIS9ut2bPcPLi7uqoLsJC verified
 2020-07-12 09:09:06,905 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$G.005jzTRGpsTNMtU/j2qer2gqRIipUzQyvHEAyFhmuYVp1y5v2Ii
 2020-07-12 11:09:10,357 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 23.048 seconds (JVM running for 24.918)
+2020-07-12 11:29:58,527 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 11:30:06,634 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplicationTests in 9.322 seconds (JVM running for 10.542)
+2020-07-12 09:39:34,538 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-07-12 09:40:54,495 INFO  org.springframework.boot.StartupInfoLogger [main] Started AuthServiceApplication in 100.88 seconds (JVM running for 110.195)
+2020-07-12 09:42:44,549 INFO  com.example.AuthService.controller.UserController [http-nio-8080-exec-5] Successfull auth $2a$10$bOzIU7gkhFPIf1DY0fu0BOGn9QVjbXryN9wpUKjbU5fdynEH5r.ni
+2020-07-12 09:42:45,563 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$Ngli/IgTug74yexq6/BJvuEghxvHc0m06OnRMLKpQiTX3puJrmJU2 verified
+2020-07-12 09:42:45,615 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$twiUjUbotNo0101De3CqeeExV92XWw3cePH.Xby0H4pG8EonAUk6S verified
+2020-07-12 09:42:45,651 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$6HIg7HCwUa1SDe7yd4wS..HFRP.Ifk54hhXlCZc/E/7o82D1drqKm
+2020-07-12 09:42:45,700 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$kiY/XbHKa2uFNSfdaX5Fyumq71OmNxJA3igT7M4QXVx13/6cYEGCO
+2020-07-12 09:42:50,199 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$EfALeuS.eRFWAzELy/aesem4eYDNx7CqlEfap0XUVh1rPkA65VHtq verified
+2020-07-12 09:42:50,274 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$5IeHhLFKIMUusqsOVrzn..TRzQo8./AfvMj/zz7DgKI48UmYlDw8a
+2020-07-12 09:42:50,368 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$Jg5APoKETcvx9gCWwfTNmuFkwb5onoRhvEIUB9eoTkHwzeuPAqsuW found.
+2020-07-12 09:43:04,537 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] User $2a$10$UFVJUsY0HFBk9.Y/kF.P5eCHcrS6s0WhkipmJ/QWut4vO5830P7Nm verified
+2020-07-12 09:43:04,610 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] AccessToken generated for user $2a$10$itPlrmGW0k5Td15iNntPyegSvh3vUTDQ21MtgNft00TD.DpJY4iL2
+2020-07-12 09:43:07,329 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$uE74bJvxC5O7du40d0q38ew/rlR4BHCKx.WSBLaPuikXsqsCH8x0S verified
+2020-07-12 09:43:07,403 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] AccessToken generated for user $2a$10$Tu7pMZZ3UbkM225kRk54QORMwcqHvulRz0hJtJSgvDIPLg3b.l5Ti
+2020-07-12 09:43:09,329 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$dgYBK/9EXQ00A2z4N6rwx./P.PWc5Z1bB6mex92FCUh0BdiokkoIa verified
+2020-07-12 09:43:09,340 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$KKUnsfFl7okVg0xvJH9S7uA6r/V91R8u45BlEN8f30rE/WkWrHKvW verified
+2020-07-12 09:43:09,406 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$z5P/UbHQYmyeDwWFktMbQOMgIlOR6KYs/1mnvSRgYIuWwy/Y2cnLu
+2020-07-12 09:43:09,424 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$6AQ44h58.gQDEE4Xdb2AW.T9AfDQKTvIkdxzL4CLrlS9lphi.OwJO
+2020-07-12 09:43:09,440 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$LLUzQ/pjMhkHRQs84WHouOV2T14pJjvdZrsghw9BzgybGkpZ5aagy verified
+2020-07-12 09:43:09,528 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$qRX1R3Om875vq.Bss9rltePkfIp8JKNRJ92X.eRdtFxwoPNq6JP5m
+2020-07-12 09:43:21,154 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$QRD2Ew.3IFy1d5Wpa/boxehrRcH2mg/dG9gKJNJmcr5UTJ2yuezsG verified
+2020-07-12 09:43:21,228 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$wiYH2WUgTuzr2cukmf6vq.x51eLwbFDQK7/Hcih3UuNtws9d1xnSi
+2020-07-12 09:43:41,031 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$WrvqqVcKAT55AJcuRuDr.e4KoFzzT39a65nLKLiTK.y6vtDMm86pS verified
+2020-07-12 09:43:41,108 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$LcwV9f76fYx9XA9P3I.UNOjlzU1i4fhcKTOsP5Q/Vuswyc/4wo4Lq
+2020-07-12 09:43:54,404 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$we2.KhAR83c4iy2xGz3w4u8m55iiJUDc8eze.vGISNE3Jjx8pHIVi verified
+2020-07-12 09:43:54,479 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$xhOrB22GynjOgHHEog94/uTFwLVMZNBNhw1kbAig0.5ucjcVo7c0e
+2020-07-12 09:45:09,389 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$99NIOfPlwBSwrsi3Hw7gRu.qKpOUIV9gtHQcElgp4wZOPiK8tYfna verified
+2020-07-12 09:45:09,885 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$UyAvfiiefYhGCMtR21DHoeABEvtgzBBbcIE45h/zCs2aHENMDoBSK
+2020-07-12 09:45:31,963 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$XtNamTz7O8ZJvj7y7DpwH.m2cXKNYHqvlFTzg/wg7XBiAWVcurtHW verified
+2020-07-12 09:45:32,016 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$M7hRlzOz7Ad77owOv12SnehV3WOpg5ytf5zxqIz/nu9Sc8Y4GEgOG verified
+2020-07-12 09:45:32,042 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$Ura8a47D9jbKsBkRcgzm..XvUgfMB4mKbaaT7zsxcMBknmyH2CmX2
+2020-07-12 09:45:32,099 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$HLwgBT7SjuE4sNJ/g3V7seRpctuYiuQMizbWUAVLBLyEvkT33wBgS
+2020-07-12 09:45:32,231 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$vUJodT/KYKBTjWCCiFP5OOScWZ889LffTY7KrMltLzLP7xe1wAoJO verified
+2020-07-12 09:45:32,309 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$b9y30i/IbmfpSukM6KZ59eOlGiqMJ.ldKTfCXK298/d0flwPrNLmW
+2020-07-12 09:45:33,529 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$uXb7L0RLlEjjmdUhKXsbG.IoejIqz275gfT2vw4QCqXrMndk40vym verified
+2020-07-12 09:45:33,602 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$tBoY25/kEVMT9GSRmwauVOk3YZdETBv7OEhBC8CAAsyzNZKog3sC6
+2020-07-12 09:46:03,778 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$WPQcpiRjeHfLL6Uq6ays1.pd6RJIujL216z.QfpJnm/nfwd0qLHMG verified
+2020-07-12 09:46:03,815 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$Kn4BUpvQinxBAzB3wQXVb.qWK7UOiHZpykx8UOoqK254zX4xHPEuW verified
+2020-07-12 09:46:03,864 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$NzPHjLpdjMwv8jkQ/LE0ZuEgl4SRtf8eEDoWmFKoVqhmIZufRJfsK
+2020-07-12 09:46:03,910 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$KEa.4P/VHQboOJAmTLW3GejxjmFfRvaH2ByP5.P1SZkOuKrSmqZTW
+2020-07-12 09:46:03,977 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$81Gv3iDlnN7RgimMB0tYDuXKSkXWbX9B3VkX.6LZwDsIALm5zf1J2 found.
+2020-07-12 09:46:15,875 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] User $2a$10$p0fMaoQQJ4r0xfnNOX4Yd.tZK5hKrqQqlX4EIEjW8lRKS4cH4XGla verified
+2020-07-12 09:46:15,949 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] AccessToken generated for user $2a$10$i5q0BanypXV8BAFTS.uqQ.xgn3BGsyrX96/hX8UDZnpJVJ17V.i3O
+2020-07-12 09:46:26,452 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$QL0YhQ2zdVCVCPYx8zu5ae.TAStn3DDoGUC6LY3PvjwR87tOzu3da verified
+2020-07-12 09:46:26,527 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] AccessToken generated for user $2a$10$loBBjCToOn5TuWqHoVvcSOOkS.gNB5BNlkcJqqSXujFgimQjDa4yS
+2020-07-12 09:46:26,930 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$qe5pURFNV.uCrHZWjrqk6e6UU/PEAEbHClBogo3/cAANsYGkkJ1Au verified
+2020-07-12 09:46:27,005 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$flQi.nMajKdoilnaYToG0Owmw8rLeSNBlX0RVmhKTHmOSZ.4yPu..
+2020-07-12 09:46:27,319 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$LlmgWyjnGixk24jjDmuzk.cMTnJVfgijEVdSZ3CA3ZRQBRKV./lxi verified
+2020-07-12 09:46:27,392 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$g8PBjm8z4fbSfwRWfyVbvupduWONBzs27EzLdqomnkgOeptP7LLcm
+2020-07-12 09:46:28,797 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$nQg89AjTgyrwhsWy7PoyMOmK9/BcBdqA7MJkZwE5XEDPfP4e8Z2aO verified
+2020-07-12 09:46:28,797 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$b291vSB9auyYZ7j.wAFvAeQlYC7vnfKOkBlatKc3SkhP7FblpfBf2 verified
+2020-07-12 09:46:28,873 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$vR6RFNEuMFYmHIvYnvYme.C3iZaz4VEKM64t.p0iDBZu8zu2d3kD6
+2020-07-12 09:46:28,882 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$hj7SuEDQYoY.GAfeQ0XIkOoT0AKXjHdJv9YFwM6oFxY9DXo/oqDHy
+2020-07-12 09:46:30,731 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$rotDKcxtdYaoyzRlIPl.F.PJa7L8yDya6kchPCLanGdnK4ISMqRHC verified
+2020-07-12 09:46:30,808 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$FILFygYLvMkwecRy00lAeuMWXEhqZznr1dx3Y8Or0i3.ouPv6cMRO
+2020-07-12 09:46:38,369 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$ZTaLKPm9lVi2msg.HO7h/OClHTFp7DxX9YN0RdiqZJEHMsnGQbnt6 verified
+2020-07-12 09:46:38,442 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$6gqjM3Pq1lGJbSFmesuQ6eawmP2gwi6QHkChM6N1wf68fQPgDSmVe
+2020-07-12 09:46:43,208 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$SZPILa5UPUd7FILJLH4AiOaqmYz97qPKu3DPK5qXN6km3t3zgmP7u verified
+2020-07-12 09:46:43,281 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$FiDbTGz2drFf7XRD9N.nHOn5mxqAueJr.G0VyaEzxZaDI6Gi109Ia
+2020-07-12 09:48:06,729 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$szEMiRjNx8zWhksCzVwF1O0d1olOz1ZCHqDcTCZALOHBQbFHyguzS verified
+2020-07-12 09:48:06,736 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$O/0z6U9JAXWWjXeVfuTbKeaAZr6hbc5fSbmvOE/jMFPBIBGZMEyli verified
+2020-07-12 09:48:06,809 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$dlXjB2juLH85mjMk0RIPTuqv5gN2QRl904NytNKdM3E6TOXN2FaY6
+2020-07-12 09:48:06,833 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$Oi8N/9x6PNM44NA85ombquBMwPf4k.8uAnABsWT9zELy/ROjcBufW
+2020-07-12 09:48:06,926 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$p/UL8opMbm4t9H1jQ5LcaexzmyWPTCUDuG8qzpojCfwykf9gjbqbS found.
+2020-07-12 09:48:11,851 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$Npx7XzUl9O8wz/YIi3C6QOw9P7zC5Uk1FpCFZkF9DAGgobwXPNRa. verified
+2020-07-12 09:48:11,927 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$BxCd8njhoeekGlEzmv.yqeI/5i2eleqNY/plLLsJL9lPDYhiXjDea
+2020-07-12 09:48:20,776 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$W4s1EXVhxpwPM3GGG2xRtuCWGOSFfG.MNNIBKtat.40TFrb2jczwS verified
+2020-07-12 09:48:20,854 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$51EzEpLDgPNaNT2dF/UcAOV70x2PStKTeo2.pgUkJKQCs7ZOCS/zC
+2020-07-12 09:48:21,032 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$a6a0z4w.m5OboFG0H0RrbuSf.jslyA6ml29re3CKg1cdEYAZxp5Ca verified
+2020-07-12 09:48:21,110 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$bchJR5.OIbqLgEIm5p0gSOXVymL014afekJO6lYkJWVEjY1uTTA0G
+2020-07-12 09:48:21,165 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$URl0N93FZbUgtS/pIJAnOO5slTjOH56.oR12crPY9aWuyIHCUdPXy verified
+2020-07-12 09:48:21,239 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$55iWU1o8Dc5YRuJQzBBmYuBmSVFvt1RYv3E8bGhgmGr.tows2u9qa
+2020-07-12 09:48:22,345 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$WF9uW1lC56wyCbwKRqBUi.bBvkf5hpeCACf.g2GG19CIpXh7AStM6 verified
+2020-07-12 09:48:22,421 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] AccessToken generated for user $2a$10$OhWNXMDTirwxlEBWX8Uq4O61F70xNrBjY7hwEgHdCx8mkYajYcDc6
+2020-07-12 09:48:25,719 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] User $2a$10$ForBbETkZHmbEvLgMeJyX.XL3cxc0uhWZ1vSGV4dw8I6BGhfAurZW verified
+2020-07-12 09:48:25,794 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] AccessToken generated for user $2a$10$s.XgMMIfmfJEX9w5z.F1r.FiDuAcHs6c5TUJg.gbzdPiF5eY3xN.6
+2020-07-12 09:48:38,059 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$V5W7U6VmhjzHRd.C8H4ifeO/nATZ4IrP0uyR1TlUsFVCgyDbU7Az. verified
+2020-07-12 09:48:38,135 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] AccessToken generated for user $2a$10$l0tbNy2k1CPZAo9dbUvWBuEVGZT3MSBP7MNdYnDtPuG3rL7dP1leu
+2020-07-12 09:48:58,713 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$OkVuPZ7eZpdqwm6aitz6bebAX5ENZZXpbiLmBZTsjG/Es3dP/2xDu verified
+2020-07-12 09:48:58,787 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$AEWse4r/Xvg/pNWYpVhrTOxt1eIcRO8xetRnFAkomBCmmCfa1abu.
+2020-07-12 09:50:15,618 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$6ZX22.jlGWg4.ixr5v2cb.x6s4Nz8J4TIxLdCtSBxB7LVcuWllnYO verified
+2020-07-12 09:50:15,627 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$g2H.dr9DePGr0/zCwf9vf.qYD15ZFjSFc.KCQNdj6ioM7Gf8UPpnK verified
+2020-07-12 09:50:15,705 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$E/SQMOJC87b4fENUG2awY.kQKGrGRUvEpdXG7qFpvQXHnEIXI0/CK
+2020-07-12 09:50:15,713 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$Gu2HUy9rxwOKoNziR99oX.nhEN62CwMmYMpOnHKzrR5LEHXLiCJUG
+2020-07-12 09:50:15,807 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$MKlOZ07okgRTIP1i8mrA.eephd/LGHRX4kQywiWqSoXdxdaiPYf.C found.
+2020-07-12 09:51:47,349 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$rXctD6gl1CX8WRakST5T1el4ZpTIzYFdsz561C9b1ikZBecQ9QYK6 verified
+2020-07-12 09:51:47,367 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$S1nryv3C3EHZK.d6YR0b5eqMegcU7ZKkTlQ9r4B0YfTF/gZ0SYAhK verified
+2020-07-12 09:51:47,425 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$uA5Kd.bQ2A6q1nb9juJGvuHdryWUU4nuD1.SoIB4G0F4vAjcgq6fK
+2020-07-12 09:51:47,444 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$H9lkGzvvY2lwCw6xTqiEBeIOvPaiazDBuZuenqK82m9LQcLq/BfKW
+2020-07-12 09:51:47,517 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$HIhEUaGJUnUtoY0Ny8XbnuiX9fIq/MZBVLRtTJGADrHn1FAK3B5Qa found.
+2020-07-12 09:51:49,702 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$1SpWon6aTeRMGIoKFbiVqeLilDNPr8BphkP3HsGvWUf2GJ7lJwsA. verified
+2020-07-12 09:51:49,776 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$b1bljRNd8uanZtSy/bK9hOMhS18Xzmm/iqDwrEpJ88ABIGrnMO6x.
+2020-07-12 09:52:22,853 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$r2JAu6/UKlJ15lSymGrcNOzT.yh.oEyy/bf8RUFjFkPGmdsUcXpjy verified
+2020-07-12 09:52:22,926 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$REugvVKUKE/f5A03kCtdouakWclF5TocR488e5R70t5sCbAploRGO
+2020-07-12 09:52:30,214 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$hKJjpecNJG0lK8brEKbvG.6dig9M5HYPdlfNqx6nQkLtzwiBcpc2e verified
+2020-07-12 09:52:30,289 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$XRDKMulAlYzLdDIqp2riY.naohNWGhQc7GUMoCEymoXh3HdBvJE4q
+2020-07-12 09:53:09,845 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$6FHpn0tgSK0yuYRcTfVHYej8ePtzPJO4vrEVxHw740UpR28yeg9fG verified
+2020-07-12 09:53:09,848 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] User $2a$10$z5kB3Y7dZQQfho4qCF.qVuu.84EVSa.D3BnrIDVgQ6AyqHi979qY. verified
+2020-07-12 09:53:09,928 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] AccessToken generated for user $2a$10$qiL58Y9kqHyEQ1j4EJ/maOOSJvFx4Hq1DpAhY9i7Po..bUagpJRQ.
+2020-07-12 09:53:09,952 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] AccessToken generated for user $2a$10$Gai5x8rr8hnszsFfI2Y6zeEGw2jSOJDq.LCtEfzCCADnSwin/QqHa
+2020-07-12 09:53:10,050 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$JYjTQs/XzHYfou8fd3n4PuxiS611Zh4/HapGeGRGFMNC9wAu9gjm. found.
+2020-07-12 09:53:12,940 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$ZDPVvIIPrJdny6BAm6GLt.RW.a4.EEdG8hoK1T0q4On/5x/ZNQ1qe verified
+2020-07-12 09:53:13,017 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$5Bu8AIQK58WpNEoRG2DOK.AuJd1HXfRkMXc5SsOYEt5BTWC7HGf3O
+2020-07-12 09:53:19,796 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$qKqwgYTFdtLWLDH2paUEdePHEdXm6TUBsXW6KsUa1ggs8sM9Y82Bq verified
+2020-07-12 09:53:19,876 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$j1P.VSYTlj8QtAMcwutuY.O87VvPzMoK2Tux8bcFaFLcaz.0l5.qG
+2020-07-12 09:53:21,830 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$LzTaxRfNG1jCQD692uU4mer8Bbb79rhcccYd7oPK7HoMqcL7cyTka verified
+2020-07-12 09:53:21,903 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$MjtdiuEh0/JvK9ndjafSwOjDKfP2gdXZkOi4IUS0RfvLRfkXMV66a
+2020-07-12 09:54:08,418 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$4nliw6u855xd4A.9C1GoLO.eDQZ/iHxbIX1uphOhY4b4QLOfUZEXq verified
+2020-07-12 09:54:08,419 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$RIwj3eOxy.pDIWaRH9Fr6O71QMTJcW85prh/9BNSlmvtmNeVgb5Ky verified
+2020-07-12 09:54:08,502 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$ZmBcWn6AdJ7h8QVeL/KVeO0P/lDB9cH6xRC/FmQiiJuk9LpXXvC6O
+2020-07-12 09:54:08,506 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$2f9KbVwA/jk.zYE2cy2UA.I4VzuryTZwcCEN8YEjE6IUEa2Dv02UC
+2020-07-12 09:54:08,627 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$J0Dk7ZvuyR6LQMhNx52EN.285SDnN13aK.bKapCkipj5Ux2yKDxOS found.
+2020-07-12 09:54:12,832 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$Tyn.oEfUi42F4BRiFFec7euJ3p46rATYkQEUVnfMxyipvxLhx0oua verified
+2020-07-12 09:54:12,926 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] AccessToken generated for user $2a$10$ZPJWRCJUrZpaTTxO/gIMoOV1sw4weBBVngD36zhKs9pORRX5uuuIa
+2020-07-12 09:54:24,087 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] User $2a$10$F9W8rdAqbQXO1jw2bgxJC.20xQJydO9divU2W/HRdE4TXy0uLPTqC verified
+2020-07-12 09:54:24,161 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-1] AccessToken generated for user $2a$10$IEr26ZvOyFET9a1FyA5vA.EJyR9.46E0z3256eLGwlxGEmgie1p0m
+2020-07-12 09:55:26,019 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$ExlFL/9QX2vc4LtosbbOKOICDa6FjjmwvZvsI6fr5afH0sMDC.6aK verified
+2020-07-12 09:55:26,091 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$juTuJdPUwt0mO9Vue0noLuLiiNfCUCcnlfu9qtLwNOvvtrAEpvbHq
+2020-07-12 09:55:28,528 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$Zvv2GiW63u0CQGskcxzmJehIDxq8cJCFEe0gkWqa/FlRUE23YT4TG verified
+2020-07-12 09:55:28,601 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$E1RbHbUkSe0zP7Ys5Zr9i.edUtQkmoVzZtYz1Aa9AfcEH0b5zy.N.
+2020-07-12 09:55:28,829 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$nlQPi7T4KdNVJsAGZ4M4q.THip6LILwckdkYAHdy57hdDuj1DGppa verified
+2020-07-12 09:55:28,914 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$imzpSF9t2juszL/J0AKIFeh1MB1VFVpqWBekGg9bS4AEv0/IM4yHy
+2020-07-12 09:55:31,704 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$XlJzqKdDxiqhR7wr4sNA1Ox7AZ8WLANBHOvWO/WvOs8VFROowHvue verified
+2020-07-12 09:55:31,716 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$ocRNV1VIN44qPLyEXaaqFuPFi6bOUKObycQ2F8oHWj1IMBhGA8dZ. verified
+2020-07-12 09:55:31,787 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] AccessToken generated for user $2a$10$T5BUv53wdHxlLy47N5UTle/XjtVKODG4c8RbMSuRZWuUDcvnTKTmW
+2020-07-12 09:55:31,801 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$PaTZyQl5NVUT9ANbAb4wP.w5O4W44TfikUfonhuvpe5jXpUZw/4wi
+2020-07-12 09:55:58,968 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$reqlXPFBmC21EBFtix/LeO9kV6kQRR6QxLE/VO7wjz62B4lvQhsgC verified
+2020-07-12 09:55:59,041 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$oeeEiv7PK22csnlLLyxexO4RxjiIAi6TFJrEzRkZbOWsvEGWTEes.
+2020-07-12 09:55:59,122 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$FX56om4zbNcX0Olz.5Hmxuh7TdmcYLwyksNeWiQd.0H3pu/BtE9ry found.
+2020-07-12 09:56:01,348 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$lkZwFkJJZXMbk3WvNh7Vke0ej4DOX5/.gul1jZvB3QDWybCE3unpm verified
+2020-07-12 09:56:01,421 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$6S/xRjqDDYnwjCtMiq1u0ea9Ylgq5COMV2xKdjNP/TjXoZFaNyF5m
+2020-07-12 09:56:09,221 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$B6ljZUmqPas4BDMTSHLRWOzldqFUzDUUnYDXuj92ueShwnKyJG3ce verified
+2020-07-12 09:56:09,295 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$XZHa6gJUhe4v5E/AeNkUWOSonzUegTGSWAPrulGhrwThsLGsnxOTa
+2020-07-12 09:59:32,343 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$GG4KZDBkh5xZUL2JYFYNfOS3BvhgSG.t78H4daYTeTSIpAecg9dUy verified
+2020-07-12 09:59:32,353 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$F8A/Ipd61uJfRHV91kULReT35GKXzFcCVXpKWIulBdu4T.nUpC5mq verified
+2020-07-12 09:59:32,425 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] AccessToken generated for user $2a$10$NijgaFLtmS9banIjn7WNcuKkjcCcuhOPZOPBwrO8FzhcYQedSY4/K
+2020-07-12 09:59:32,443 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$DUhaXCPXs4A0qdlCi0jVMOUKygv/AtVdzSga0dzvpTEotiXV8.r3C
+2020-07-12 09:59:36,312 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$M3wPB4wnwobslczOyiS6W.AWkowbLYRMINug/E2VRNDKCIYgmL1PK verified
+2020-07-12 09:59:36,387 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$UHl6mgXgS/v5/QYJ68yhQe8ZJ/DmCzq.Mzz/2o.2p.MMJCyr7Ou/C
+2020-07-12 09:59:36,467 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$aEvreu4YAcPQCcyzUFmQ8eDR9f/JcVOqQ8h8ydnP5n18HrMIY.UFi found.
+2020-07-12 09:59:38,073 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$WJ1HDejKVdfXqPOqCxFG1OkkWVDSXE3jK.XRJhSEKJ9Q5Wy06OL2u verified
+2020-07-12 09:59:38,145 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$t72WC7mlYDev1yNdZ.vSEeTojFVsEcZ9x4MYhX0dVyAAICqUJ6vRG
+2020-07-12 09:59:46,725 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$JaiDqBBiub3MXTbBjEEcLeRJG1cclloN3dfl3bSHDAi5D.Z7mb/gu verified
+2020-07-12 09:59:46,797 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$f2gHdtqx3FlUJD5KBdwGmufilh41ZMGbmKQqdaxLZ8N8jntmH464.
+2020-07-12 09:59:46,945 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] User $2a$10$DKOqQQ6o1fwl4ONE19hfkOnozAmuEfTQYJJHOq1iQ9.whdC0CbKDa verified
+2020-07-12 09:59:47,025 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-7] AccessToken generated for user $2a$10$zEooyR0cvNVLs8cnjdcuBOZ5f8fUJyf.NhVf4qlIGZSewV8vXTkQq
+2020-07-12 09:59:50,331 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] User $2a$10$v5/yHchxdNjkoN/T/qQsfu8oXfiyZh8rwSR1dnhCQdh0GDDUA6aoy verified
+2020-07-12 09:59:50,404 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-8] AccessToken generated for user $2a$10$cTh1NOpKBPIRVJiqYR/k0.ugElpd9ANir7hJm6eE14sXr3d/CnawC
+2020-07-12 09:59:52,971 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$P5//8HLbhoCKQbYZ3a7MEuiwDyn0EcyPLmn25YNnhTJS0M9RsQB4y verified
+2020-07-12 09:59:53,044 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] AccessToken generated for user $2a$10$E3q5DrhcE4FmhDe2GOEU/.N62l6hxliZIg.OzrDUgU1kSlq.m4qTW
+2020-07-12 10:01:02,941 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] User $2a$10$9ulVoOLboe715r05JfIO1.BoUT7CFU4NsbLTOtxZuqyjrn4xUH0b6 verified
+2020-07-12 10:01:03,020 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-5] AccessToken generated for user $2a$10$uAiusjaq35QN7QY0J2OU8eJbwhJ3FJnNT/5Kth17Jqyp/uGXHyt/S
+2020-07-12 10:01:03,105 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-2] User $2a$10$dnovXIWorMawJ2VcxsEjbeUlxMR50Znf/FLznDdFKlfqp8/aMZ8F2 found.
+2020-07-12 10:01:04,792 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] User $2a$10$.Bf44PAygIUsvBDX57As0O0M2coz7ZMP66.J05V5zA6aLeOssQFHG verified
+2020-07-12 10:01:04,869 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-3] AccessToken generated for user $2a$10$xWKNq5geBlb.OvDFV4IGoOYD7NJduhVu6DQ/qd/P6UZlImPJfxowK
+2020-07-12 10:01:05,752 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] User $2a$10$2qGOKvAzep2lR092jHhlfuaPGvCDQGb3bocabVu2bjCnDmJ8vRvpy verified
+2020-07-12 10:01:05,825 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-6] AccessToken generated for user $2a$10$.PMqwnEBqSOk.UTSw7mFqOh0o4GqN1ppuyqIzZVZ8qJ8J8NwGekXm
+2020-07-12 10:01:07,677 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] User $2a$10$rnL1sX7dzmGWuE0JaDhSouIoP0tQrZ9hdWqx.S3UntouLVnIneZ1O verified
+2020-07-12 10:01:07,755 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-4] AccessToken generated for user $2a$10$lFo/k0nlLYsfYS78xQJ4sejFtgruahqm6S8wM8gxY1/cQuVnQAnRG
+2020-07-12 10:05:44,281 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] User $2a$10$5M5dlFGAo6gckTy1SYgIT.Nri.gGh13M5L/8r2z9rDoqyJBH5PsB. verified
+2020-07-12 10:05:44,354 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-10] AccessToken generated for user $2a$10$k.Od1c/EFcFkN7cbUqBqRuCuyp5c9wceeRV2k0590GondwJJn7rtW
+2020-07-12 10:05:50,129 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] User $2a$10$RMxmavfbQoHjaDKTJpDbEuVm0dhumnMceJYvcULIWU7uRc70SVnc6 verified
+2020-07-12 10:05:50,202 INFO  com.example.AuthService.service.UserService [http-nio-8080-exec-9] AccessToken generated for user $2a$10$J8wQjaI3hGJ0wPKO74wZleMe7ut6OhRt0fuV5BCu8arsY4Hid/3k.
+2020-07-12 10:09:43,502 INFO  org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default

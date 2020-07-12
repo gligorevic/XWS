@@ -46,20 +46,23 @@ public class ReservationPeriodController {
         String userEmail = (String) authentication.getPrincipal();
         try{
             ReservationPeriod reservationPeriod = reservationPeriodService.addNewReservationPeriod(reservationPeriodDTO);
+            System.out.println("\n\n\n\nLoger zeza\n\n\n\n");
             log.info("Reservation period added for advertisement {} by user {}",  bCryptPasswordEncoder.encode(reservationPeriod.getAdvertisement().getId().toString()), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(reservationPeriod, HttpStatus.OK);
         } catch(CustomException e) {
+            e.printStackTrace();
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
         catch(Exception e){
+            e.printStackTrace();
             log.error("{}. Action initiated by {}.", e.getMessage(), bCryptPasswordEncoder.encode(userEmail));
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<?> getReservationPeriodsByAdvertisement(@PathVariable Long id){
+    private ResponseEntity<?> getReservationPeriodsByAdvertisement(@PathVariable("id") Long id){
         try{
             return new ResponseEntity<>(reservationPeriodService.getReservationPeriodsByAdvertisementId(id), HttpStatus.OK);
         }catch(Exception e){
