@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface GradeRepository extends JpaRepository<Grade,Long> {
 
+    List<Grade> findAll();
+
     @Query("SELECT DISTINCT g.grade FROM Grade g WHERE g.request.advertisement.id = :adId")
     List<Integer> getGradesForAdvertisement(@Param("adId") Long adId);
 

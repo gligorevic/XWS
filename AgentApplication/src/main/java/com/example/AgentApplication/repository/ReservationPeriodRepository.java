@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface ReservationPeriodRepository extends JpaRepository<ReservationPeriod, Long> {
 
+    List<ReservationPeriod> findAll();
+
     List<ReservationPeriod> findReservationPeriodsByAdvertisementId(Long id);
 
     @Query("SELECT r FROM ReservationPeriod r WHERE r.advertisement.id = ?1 AND (r.startDate BETWEEN ?2 AND ?3 OR r.endDate BETWEEN ?2 AND ?3)")

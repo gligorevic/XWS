@@ -73,7 +73,7 @@ public class AdvertisementService {
         AdvertisementPort advertisementPort = service.getAdvertisementPortSoap11();
         GetAdvertisementRequest getAdvertisementRequest = new GetAdvertisementRequest();
         try {
-            com.baeldung.soap.ws.client.generated.Advertisement advertisement1 = new com.baeldung.soap.ws.client.generated.Advertisement(car, advertisement);
+            com.baeldung.soap.ws.client.generated.Advertisement advertisement1 = new com.baeldung.soap.ws.client.generated.Advertisement(advertisement);
             getAdvertisementRequest.setAdvertisement(advertisement1);
 
             GetAdvertisementResponse getAdvertisementResponse = advertisementPort.getAdvertisement(getAdvertisementRequest);

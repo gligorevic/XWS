@@ -18,6 +18,7 @@ import StatisticTab from "../Statistic/StatisticTab";
 import MessageTab from "../Message/MessageTab";
 import PricelistPage from "../Pricelist/PricelistPage";
 import RequestsPage from "../Request/RequestsPage";
+import Synchronize from "../Synchronization/Synchronization";
 
 const drawerWidth = 240;
 
@@ -102,7 +103,8 @@ function AgentProfile(props) {
         <Tab label="Statistic" {...a11yProps(3)} />
         <Tab label="Reserved requests" {...a11yProps(4)} />
         <Tab label="Pricelists" {...a11yProps(5)} />
-        <Tab label="Requests" {...a11yProps(4)} />
+        <Tab label="Requests" {...a11yProps(6)} />
+        <Tab label="Synchronize" {...a11yProps(7)} />
       </Tabs>
     </div>
   );
@@ -153,6 +155,9 @@ function AgentProfile(props) {
           </TabPanel>
           <TabPanel value={value} index={6}>
             {value === 6 && <RequestsPage />}
+          </TabPanel>
+          <TabPanel value={value} index={7}>
+            {value === 7 && <Synchronize />}
           </TabPanel>
         </main>
       </div>
